@@ -1,0 +1,26 @@
+<div>
+    <a href="{link Homepage:default}"><img src="{$basePath}/images/logo.jpg" width="237" height="123" class="float" alt="setalpm" /></a>																																																																	
+    <div class="topnav">
+        <span>
+            {if $user->isLoggedIn()}
+            <strong>Vítejte {$usersData->user_login}</strong> &nbsp;            
+            <a n:href="signOut!">Odhlásit se</a>
+            {else}
+            <a n:href="Sign:in">Přihlásit</a> &nbsp; | &nbsp; <a n:href="Sign:Up">Registrovat se</a></span> 
+            {/if}
+
+        <select>
+            <option>Typ produktu</option>
+            <option>Hračky</option>
+            <option>Doplňky pro pokojíčky</option>
+        </select>
+    <!--<span>Language:</span> <a href="#"><img src="{$basePath}/images/flag1.jpg" alt="" width="21" height="13" /></a> <a href="#"><img src="{$basePath}/images/flag2.jpg" alt="" width="21" height="13" /></a> <a href="#"><img src="{$basePath}/images/flag3.jpg" alt="" width="21" height="13" /></a>-->
+    </div>
+    <ul id="menu">
+        <li><a n:href="Homepage:default"><img src="{$basePath}/images/btn1.jpg" alt="" width="110" height="32" /></a></li>
+        <li><a n:href="Sign:In"><img src="{$basePath}/images/btn2.jpg" alt="" width="110" height="32" /></a></li>
+        <li><a n:href="Sign:Up"><img src="{$basePath}/images/btn3.jpg" alt="" width="110" height="32" /></a></li>
+        <li><a n:href="Basket:basketShow"><img src="{$basePath}/images/btn4.jpg" alt="" width="110" height="32" /></a></li>
+<!--        <li><a href="#"><img src="{$basePath}/images/btn5.jpg" alt="" width="110" height="32" /></a></li>-->
+    </ul>
+</div>

@@ -1,0 +1,34 @@
+<div id="sidebar">
+    <div id="navigation">
+        <ul>
+            <li><a href="{link Homepage:default}">Úvodní stránka</a></li>
+            <li><a href="#">Novinky</a></li>                        
+            <li><a href="#">Doprava a platba</a></li>
+            <li><a href="#">Obchodní podmínky</a></li>
+            <li><a href="#">Napište nám</a></li>
+            <li><a href="#">Kontakt</a></li>
+        </ul>
+        <a n:href="Basket:basketShow">
+            <div id="cart">
+                <strong>Nákupní košík</strong> <br />
+                Cena nákupu: {$_SESSION["totalPrice"]},- Kč <br /> 
+                Počet položek: {$_SESSION["count"]} <br />
+            </div>
+        </a>
+    </div>
+    <div>
+        <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
+        <ul class="categories">
+                        {foreach $categories as $category}
+            <li><a n:href="Category:categoryShow $category->cat_id, $category->cat_name">{$category->cat_name}</a></li>
+                        {/foreach}
+        </ul>
+        <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
+        <div class="review">
+            <a href="#"><img src="{$basePath}/images/pic1.jpg" alt="" width="181" height="161" /></a><br />
+            <a href="#">Produkt</a><br />
+            <p>Dolor sit amet, consetetur sadipscing elitr, seddiam nonumy eirmod tempor. invidunt ut labore et dolore magna </p>
+            <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
+        </div>
+    </div>
+</div>

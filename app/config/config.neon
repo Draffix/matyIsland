@@ -1,0 +1,49 @@
+#
+# SECURITY WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+#
+# If you don't protect this directory from direct web access, anybody will be able to see your passwords.
+# http://nette.org/security-warning
+#
+common:
+	parameters:
+
+	php:
+		date.timezone: Europe/Prague
+		# zlib.output_compression: yes
+
+
+	nette:
+		application:
+			errorPresenter: Error
+
+		session:
+			expiration: +30 days
+
+		database:
+			default:
+				dsn: 'mysql:host=127.0.0.1;dbname=matyisland2'
+				user:
+				password:
+
+
+	services:
+		authenticator: MatyIsland\Authenticator
+
+		category: MatyIsland\CategoryModel
+		order: MatyIsland\OrderModel
+		product: MatyIsland\ProductModel
+		users: MatyIsland\UserModel
+		basket: MatyIsland\BasketModel
+
+
+	factories:
+
+
+production < common:
+
+development < common:
+	nette:
+		database:
+			default:
+				user: root
+				password: jarda

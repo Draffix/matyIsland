@@ -1,0 +1,29 @@
+{block content}
+<div id="main">
+    <img src="{$basePath}/images/photo4.jpg" alt="" width="682" height="334" border="0" usemap="#Map" />
+    <br />
+    <div id="inside">
+<!--        <img src="images/title3.gif" alt="" width="159" height="15" /><br />
+        <div class="info">
+            <img src="images/pic2.jpg" alt="" width="159" height="132" />
+            <p>Dolor sit amet, consetetur sadipscing elitr, seddiam nonumy eirmod tempor. invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadip- scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur. </p>
+            <a href="#" class="more"><img src="images/more.gif" alt="" width="106" height="28" /></a>					
+        </div>-->
+        <img src="{$basePath}/images/novinky.jpg" alt="" width="159" height="17" /><br />
+        <div id="items">
+            {foreach $mainProducts as $mainProduct}
+            <div class="item">               
+                <a n:href="Product:show $mainProduct->prod_id, $mainProduct->prod_name">
+                    <img src={$mainProduct->image_path|dataStream} width="213" height="192" />
+                </a><br />
+                <p><a n:href="Product:show $mainProduct->prod_id, $mainProduct->prod_name">{$mainProduct->prod_name}
+                    </a></p>
+                <span class="price">{$mainProduct->prod_price},- Kč</span><br />
+                <a n:href="addCart! $mainProduct->prod_id, 1">Vložit do košíku</a>
+<!--                <p>Množství: <input type="text" name="quantity" size="1"/></p>-->
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{/block}
