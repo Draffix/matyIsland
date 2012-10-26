@@ -22,7 +22,8 @@ class SignPresenter extends BasePresenter {
      */
     protected function createComponentSignInForm() {
         $form = new UI\Form;
-        $form->addText('user_name', 'Přihlašovací jméno');
+        $form->addText('user_name', 'Přihlašovací jméno')
+                ->addRule($form::FILLED, 'Je nutné zadat jméno.');
         $form->addPassword('user_password', 'Heslo');
         $form->addSubmit('login', 'Přihlásit se');
         $form->addCheckbox('zapamatovat', 'Zapamatovat si mě');
