@@ -3,24 +3,96 @@
 
 <h4><i>Fakturační a dodací údaje</i> => Způsob dopravy a platby => Souhrn objednávky</h4>
 <br>
-<table width="600" height="651" border="0">
+
+{form shippingForm}
+<table width="600" border="0" align="center">
   <tr>
-    <td height="40" align="center"><h1>Doručovací údaje</h1></td>
+    <td colspan="2" align="center"><h1>Doručovací údaje</h1></td>
   </tr>
   <tr>
-    <td height="278" align="center">{control shippingForm}</td>
+    <td width="285" align="right">{label name /}</td>
+    <td width="299">{input name}</td>
   </tr>
   <tr>
-    <td height="39" align="center"><h1>Fakturační údaje</h1></td>
+    <td align="right">{label surname /}</td>
+    <td>{input surname}</td>
   </tr>
   <tr>
-    <td height="280" align="center">{control billingForm}</td>
+    <td align="right">{label telefon /}</td>
+    <td>{input telefon}</td>
+  </tr>
+  <tr>
+    <td align="right">{label email /}</td>
+    <td>{input email}</td>
+  </tr>
+  <tr>
+    <td align="right">{label street /}</td>
+    <td>{input street}</td>
+  </tr>
+  <tr>
+    <td align="right">{label city /}</td>
+    <td>{input city}</td>
+  </tr>
+  <tr>
+    <td align="right">{label psc /}</td>
+    <td>{input psc}</td>
+  </tr>
+  <tr>
+    <td align="right">{label firmName /}</td>
+    <td>{input firmName}</td>
+  </tr>
+  <tr>
+    <td align="right">{label ico /}</td>
+    <td>{input ico}</td>
+  </tr>
+  <tr>
+    <td align="right">{label dic /}</td>
+    <td>{input dic}</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><h1>Fakturační údaje</h1></td>
+  </tr>
+  <tr>
+    <td align="right">{label bName /}</td>
+    <td>{input bName}</td>
+  </tr>
+  <tr>
+    <td align="right">{label bSurname /}</td>
+    <td>{input bSurname}</td>
+  </tr>
+  <tr>
+    <td align="right">{label bTelefon /}</td>
+    <td>{input bTelefon}</td>
+  </tr>
+  <tr>
+    <td align="right">{label bEmail /}</td>
+    <td>{input bEmail}</td>
+  </tr>
+  <tr>
+    <td align="right">{label bStreet /}</td>
+    <td>{input bStreet}</td>
+  </tr>
+  <tr>
+    <td align="right">{label bCity /}</td>
+    <td>{input bCity}</td>
+  </tr>
+  <tr>
+    <td align="right">{label bPsc /}</td>
+    <td>{input bPsc}</td>
+  </tr>
+  <tr>
+    <td align="right">{label bFirmName /}</td>
+    <td>{input bFirmName}</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">
+        <div style="float: left">
+    <a n:href="Basket:basketShow"><input type="button" value="Zpět do košíku"></a></div>
+        
+        <div style="float: right">
+    <a n:href="Basket:basketShow">{input continue}</a></div>
+        </td>
   </tr>
 </table>
-
-<div style="float: left">
-    <a n:href="Basket:basketShow"><input type="button" value="Zpět do košíku"></a></div>
-<div style="float: right">
-    <a n:href="Basket:basketShow"><input type="button" value="Pokračovat k výběru platby a dopravy"></a></div>
-
+{/form}
 <br>
