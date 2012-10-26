@@ -1,1 +1,26 @@
 {block content}
+<script src="netteForms.js"></script>
+
+<h4><i>Fakturační a dodací údaje</i> => Způsob dopravy a platby => Souhrn objednávky</h4>
+<br>
+<table width="600" height="651" border="0">
+  <tr>
+    <td height="40" align="center"><h1>Doručovací údaje</h1></td>
+  </tr>
+  <tr>
+    <td height="278" align="center">{control shippingForm}</td>
+  </tr>
+  <tr>
+    <td height="39" align="center"><h1>Fakturační údaje</h1></td>
+  </tr>
+  <tr>
+    <td height="280" align="center">{control billingForm}</td>
+  </tr>
+</table>
+
+<div style="float: left">
+    <a n:href="Basket:basketShow"><input type="button" value="Zpět do košíku"></a></div>
+<div style="float: right">
+    <a n:href="Basket:basketShow"><input type="button" value="Pokračovat k výběru platby a dopravy"></a></div>
+
+<br>
