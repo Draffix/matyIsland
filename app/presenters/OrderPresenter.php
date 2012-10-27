@@ -17,7 +17,7 @@ class OrderPresenter extends BasePresenter {
             $this->redirect('Homepage:');
         }
     }
-    
+       
     protected function createComponentShippingForm() {
         $form = new UI\Form;
         $form->addText('name', 'Jméno:')
@@ -44,18 +44,15 @@ class OrderPresenter extends BasePresenter {
         $form->addText('bFirmName', 'Název firmy:');
 
         $form->addSubmit('continue', 'Pokračovat k výběru platby a dopravy');
-        $form->onSuccess[] = callback($this, 'ShippingFormSubmitted');
+        $form->onSuccess[] = $this->ShippingFormSubmitted;
         return $form;
     }
 
 // volá se po úspěšném odeslání registrace
     public function ShippingFormSubmitted(UI\Form $form) {
-        $values = $form->getValues();
-        
-        $_SESSION["order"] = $values;
-        
-        $this->flashMessage('Byl jsi úspěšně zaregistrován.');
-        $this->redirect('Homepage:');
+        $values = $form->getValues();        
+        $_SESSION["order"] = $values;        
+        $this->redirect('Order:step2');
     }
 
 }
