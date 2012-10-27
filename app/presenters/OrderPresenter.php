@@ -17,12 +17,11 @@ class OrderPresenter extends BasePresenter {
             $this->redirect('Homepage:');
         }
     }
-
+    
     protected function createComponentShippingForm() {
         $form = new UI\Form;
         $form->addText('name', 'Jméno:')
-                ->addRule($form::FILLED, 'Je nutné zadat jméno.');
-
+                ->addRule($form::FILLED);
         $form->addText('surname', 'Příjmení:')
                 ->addRule($form::FILLED, 'Je nutné zadat jméno.');
         $form->addText('telefon', 'Telefon:');
@@ -52,6 +51,9 @@ class OrderPresenter extends BasePresenter {
 // volá se po úspěšném odeslání registrace
     public function ShippingFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
+        
+        $_SESSION["order"] = $values;
+        
         $this->flashMessage('Byl jsi úspěšně zaregistrován.');
         $this->redirect('Homepage:');
     }
