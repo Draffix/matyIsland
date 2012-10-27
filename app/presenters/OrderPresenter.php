@@ -13,11 +13,11 @@ class OrderPresenter extends BasePresenter {
     // a přesměrujeme ho na úvodní stránku
     protected function startup() {
         parent::startup();
-        if(!isset($_SESSION["cart"]) || $_SESSION["cart"]==null) {
+        if (!isset($_SESSION["cart"]) || $_SESSION["cart"] == null) {
             $this->redirect('Homepage:');
         }
     }
-       
+
     protected function createComponentShippingForm() {
         $form = new UI\Form;
         $form->addText('name', 'Jméno:')
@@ -50,9 +50,38 @@ class OrderPresenter extends BasePresenter {
 
 // volá se po úspěšném odeslání registrace
     public function ShippingFormSubmitted(UI\Form $form) {
-        $values = $form->getValues();        
-        $_SESSION["order"] = $values;        
+        $values = $form->getValues();
+        $_SESSION["order"] = $values;
         $this->redirect('Order:step2');
+    }
+
+    protected function createComponentPaymentAndDeliveryForm() {
+        $payment = array(
+            'directDebit' => 'Převodem na účet (0,00 CZK)',
+            'cash' => 'Hotově (0,00 CZK)',
+            'cashOnDelivery' => 'Dobírkou (130,00 CZK) '
+        );
+        
+        $delivery = array(
+            'post' => 'Česká pošta (79,00 CZK)',
+            'postWithCashOnDelivery' => 'Česká pošta-dobírkou (130,00 CZK)',
+            'personalCollection' => 'Osobní převzetí (0,00 CZK)'
+          );
+
+        $form = new UI\Form;
+        $form->addRadioList('payment', 'Placení:', $payment)
+                ->addRule($form::FILLED);
+        $form->addRadioList('delivery', 'Doprava:', $delivery)
+                ->addRule($form::FILLED);
+        $form->addSubmit('continue', 'Pokračovat k přehledu objednávky');
+        $form->onSuccess[] = callback($this, 'paymentAndDeliveryFormSubmitted');
+        return $form;
+    }
+
+    public function paymentAndDeliveryFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+        $_SESSION["payment"] = $values->payment;
+        $_SESSION["delivery"] = $values->delivery;
     }
 
 }
