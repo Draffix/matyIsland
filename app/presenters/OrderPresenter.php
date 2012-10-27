@@ -85,5 +85,3 @@ class OrderPresenter extends BasePresenter {
     }
 
 }
-
-?>
