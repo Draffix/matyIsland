@@ -92,11 +92,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             
             // uložení údajů do pole
             $items = array('basket_session_id' => $s, 'user_id' => $u, 'basket_ip_address' => $ip,
-                'basket_quantity' => $q, 'product_prod_id' => $product);
+                'basket_quantity' => $q);
 
             // zjišťujeme, jestli v košíku uživatele už existuje produkt
             if ($this->basket->findProduct($id, $u) == 0) { // pokud ne, tak ho uložíme
-                $this->basket->saveItemIntoBasket($items); // uložení do tabulky 'basket'
+                $this->basket->saveItemIntoBasket($items, $product); // uložení do tabulky 'basket'
             } else {
                 $q = $this->basket->findQuantity($id); // zjistění množství jednoho produktu v košíku
                 $quantum = $q->quan + $quantity; // přidání nově zvoleného množství
