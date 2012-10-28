@@ -13,19 +13,33 @@ class BasketModel extends Table {
     protected $tableName = 'basket';
 
     /**
-     * Ukládá vložený produkt do tabulky 'basket'
+     * Ukládá údaje o dané session a množství daného produktu
+     * Ukládá údaj o poslední vloženém ID (z tabulky basket => basket_id) a
+     * id produktu
      * @param type $items
+     * @param type $product
      */
-    public function saveItemIntoBasket($items) {
-        $this->connection->table($this->tableName)->insert($items);
-    }
-    
-        public function updateItemIntoBasket($id, $quantity) {
+    public function saveItemIntoBasket($items, $product) {
         $this->connection->query(
-                    'UPDATE `basket` 
-                    SET basket_quantity = ? + basket_quantity 
-                    WHERE product_prod_id = ?',$quantity, $id
-                );
+        'INSERT INTO `basket` ?;' , $items);
+                
+        $this->connection->query(           
+        'INSERT INTO basket_has_product (basket_basket_id, product_prod_id)
+        VALUES(LAST_INSERT_ID(), ?)', $product);
+    }
+
+    /**
+     * Aktualizuje zboží pro přihlášení z košíku do databáze
+     * @param type $id
+     * @param type $quantity
+     */
+    public function updateItemIntoBasket($id, $quantity) {
+        $this->connection->query(
+                    'UPDATE basket_has_product AS bp JOIN basket AS b ON b.basket_id = bp.basket_basket_id
+                    JOIN product AS p ON p.prod_id = bp.product_prod_id
+                    SET b.basket_quantity = ? + basket_quantity 
+                    WHERE p.prod_id = ?', $quantity, $id
+        );
     }
 
     /**
@@ -38,9 +52,9 @@ class BasketModel extends Table {
         return $this->connection->query(
                         'SELECT SUM(basket_quantity * prod_price) AS totalPrice, 
                         SUM( basket_quantity ) AS totalCount
-                        FROM product, basket
-                        WHERE product.prod_id = basket.product_prod_id 
-                        AND user_id = ?', $user)->fetch();
+                        FROM basket_has_product AS bp JOIN basket AS b ON b.basket_id = bp.basket_basket_id 
+                        JOIN product AS p ON p.prod_id = bp.product_prod_id
+                        WHERE user_id = ?', $user)->fetch();
     }
 
     /**
@@ -51,8 +65,9 @@ class BasketModel extends Table {
      */
     public function findProduct($id_product, $user_id) {
         return $this->connection->query(
-                        'SELECT * FROM `basket` 
-                        WHERE product_prod_id = ? 
+                        'SELECT b.* FROM basket_has_product AS bp JOIN basket AS b ON b.basket_id = bp.basket_basket_id
+                        JOIN product AS p ON p.prod_id = bp.product_prod_id
+                        WHERE prod_id = ?
                         AND user_id = ?', $id_product, $user_id)->rowCount();
     }
 
@@ -63,9 +78,10 @@ class BasketModel extends Table {
      */
     public function updateProduct($id, $quantity) {
         $this->connection->query(
-                'UPDATE basket 
-                        SET basket_quantity = ? 
-                        WHERE product_prod_id = ?', $quantity, $id);
+                'UPDATE basket_has_product AS bp JOIN basket AS b ON b.basket_id = bp.basket_basket_id
+                JOIN product AS p ON p.prod_id = bp.product_prod_id 
+                SET b.basket_quantity = ? 
+                WHERE p.prod_id = ?', $quantity, $id);
     }
 
     /**
@@ -75,11 +91,17 @@ class BasketModel extends Table {
      */
     public function findQuantity($id) {
         return $this->connection->query(
-                        'SELECT basket_quantity AS quan 
-                        FROM `basket` 
-                        WHERE product_prod_id = ?', $id)->fetch();
+                        'SELECT b.basket_quantity AS quan 
+                        FROM basket_has_product AS bp JOIN basket AS b ON b.basket_id = bp.basket_basket_id
+                        JOIN product AS p ON p.prod_id = bp.product_prod_id
+                        WHERE p.prod_id = ?', $id)->fetch();
     }
 
+    /**
+     * Zjišťuju cenu daného produktu
+     * @param type $id
+     * @return type
+     */
     public function findPrice($id) {
         return $this->connection->query(
                         'SELECT prod_price AS price 
@@ -87,6 +109,12 @@ class BasketModel extends Table {
                         WHERE prod_id = ?', $id)->fetch();
     }
 
+    
+    /**
+     * Zjišťuje veškeré informace o daném produktu
+     * @param type $id
+     * @return type
+     */
     public function fetchImagesAndAll($id) {
         return $this->connection->query(
                         'SELECT * FROM product, image
@@ -94,21 +122,33 @@ class BasketModel extends Table {
              AND product.prod_id = ?', $id)->fetch();
     }
 
+    /**
+     * Maže údaj z tabulky basket_has_product a jeho podřízený záznam (ON DELETE CASCADE)
+     * @param type $id_product
+     * @param type $id_user
+     */
     public function dropItemFromBasket($id_product, $id_user) {
         $this->connection->query(
-                'DELETE FROM `basket` 
-                 WHERE `product_prod_id` = ? 
-                 AND `user_id` = ?', $id_product, $id_user);
+                'DELETE bp, b FROM basket_has_product AS bp INNER JOIN basket AS b ON b.basket_id = bp.basket_basket_id 
+                 INNER JOIN product AS p ON p.prod_id = bp.product_prod_id
+                 WHERE prod_id = ?
+                 AND user_id = ?', $id_product, $id_user);
     }
 
+    /**
+     * Zjišťujeme, jestli má uživatel uloženy v košíku nějaké produkty
+     * @param type $user_id
+     * @return type
+     */
     public function findProductInBasket($user_id) {
         return $this->connection->query(
-                        'SELECT basket.product_prod_id AS product_id, basket . * , product . * , image . * , 
-                            SUM( basket_quantity * product.prod_price ) AS totalPrice
-                        FROM basket, product, image
-                        WHERE product.prod_id = basket.product_prod_id
-                        AND product.prod_id = image.product_prod_id
+                        'SELECT b.*, p.*, i.*, SUM( b.basket_quantity * p.prod_price ) AS totalPrice 
+                        FROM basket_has_product AS bp JOIN basket AS b ON b.basket_id = bp.basket_basket_id 
+                        JOIN product AS p ON p.prod_id = bp.product_prod_id,
+                        image AS i
+                        WHERE p.prod_id = i.product_prod_id
                         AND user_id = ?
-                        GROUP BY basket_id', $user_id);
+                        GROUP BY b.basket_id', $user_id);
     }
+
 }
