@@ -1,0 +1,38 @@
+{block content}
+
+<table width="600" border="1">
+    <?php 
+    if(!isset($_SESSION["cart"]) || $_SESSION["cart"]==null) { ?>
+    <p> Nemáte nic v košíku </p>
+    <?php } else { ?>
+    <caption>
+        <strong>Obsah košíku</strong>
+    </caption>
+    <tr>
+        <th width="113" scope="col"></th>
+        <th width="207" scope="col">Název produktu</th>
+        <th width="121" scope="col">Název výrobce</th>
+        <th width="75" scope="col">Množství</th>
+        <th width="69" scope="col">Cena</th>
+        <th width="75" scope="col">Akce</th>
+    </tr>
+    {foreach $_SESSION["cart"] as $product}
+    {form updateForm}
+    <tr>
+        {input product_id value => $product->prod_id}
+        <td><img src={$product->image_path|dataStream} width="113" height="92" /></td>
+        <td><a n:href="Product:show $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
+        <td>{$product->prod_producer}</td>
+        <td>{input quantity size => 1, value => $product->basket_quantity}</td>
+        <td>{$product->totalPrice}</td>
+        <td><a n:href="removeFromCart! $product->prod_id"><input type="button" value="Odstranit"></a>
+            {input update}</td>
+    </tr>
+    {/form}
+    {/foreach}   
+</table>
+<br>
+<p style="color: red"><b>Mezisoučet: <?php echo $_SESSION["totalPrice"] ?></b></p>
+<br>
+<a n:href="Order:"><input type="button" value="Objednat zboží"></a>
+        <?php } ?>
