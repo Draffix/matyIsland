@@ -53,12 +53,17 @@ $container->router[] = new Route('index.php', array(
             'action' => 'default',
                 ), Route::ONE_WAY);
 
-$container->router[] = new Route('kategorie/<id>&<titleCategory>', array(
+$container->router[] = new Route('kategorie/<id>-<titleCategory>', array(
     'presenter' => 'Category',
     'action' => 'default'
 ));
 
-$container->router[] = new Route('<presenter>/<action>/[<id>][-<titleProduct>]', array(
+$container->router[] = new Route('produkt/<id>-<titleProduct>', array(
+    'presenter' => 'Product',
+    'action' => 'default'
+));
+
+$container->router[] = new Route('[<presenter>[/<action>[/<id>]]]', array(
             'presenter' => array(
                 Route::VALUE => 'Homepage',
                 Route::FILTER_TABLE => array(
@@ -68,10 +73,15 @@ $container->router[] = new Route('<presenter>/<action>/[<id>][-<titleProduct>]',
                     'kategorie' => 'Category',
                     'objednavka' => 'Order',
                     'prihlaseni' => 'Login',
-                    'registrace' => 'Registration'
+                    'registrace' => 'Registration',
                 ),
             ),
-            'action' => 'default',
+            'action' =>  array(
+                Route::VALUE => 'default',
+                Route::FILTER_TABLE => array(
+                    'platba-doprava' => 'paymentDelivery'
+                ),
+            ),
             'id' => NULL,
         ));
 
