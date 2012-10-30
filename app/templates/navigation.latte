@@ -20,7 +20,7 @@
         <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
         <ul class="categories">
                         {foreach $categories as $category}
-            <li><a n:href="Category:categoryShow $category->cat_id, $category->cat_name">{$category->cat_name}</a></li>
+            <li><a n:href="Category: $category->cat_id, $category->cat_name">{$category->cat_name}</a></li>
                         {/foreach}
         </ul>
         <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
