@@ -106,12 +106,4 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
         $this->presenter->redirect('this');
     }
-
-    public function renderCategoryShow($id, $titleCategory) {
-        if ($this->category->categoryFilter($id)->rowCount() == 0) {
-            $this->setView('notFound');
-        }
-        $this->template->category = $this->category->categoryFilter($id);
-    }
-
 }
