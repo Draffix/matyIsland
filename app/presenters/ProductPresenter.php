@@ -12,12 +12,12 @@ class ProductPresenter extends BasePresenter {
      */
     protected $products;
 
-        /**
+    /**
      * Hodnota vhozených mincí.
      * @persistent - proměnná se přenáší mezi HTTP požadavky
      */
     public $money;
-    
+
     /**
      * (non-phpDoc)
      *
@@ -27,12 +27,12 @@ class ProductPresenter extends BasePresenter {
         parent::startup();
         $this->products = $this->context->product;
     }
-    
+
     public function actionAddcart() {
         $this->setView('notFound');
     }
 
-    public function renderShow($id = 0, $titleProduct = '') {
+    public function renderDefault($id = 0, $titleProduct = '') {
         $this->template->product = $this->products->fetchImagesAndAll($id, $titleProduct);
         $this->template->price = $this->money;
         if ($this->template->product === FALSE) {
