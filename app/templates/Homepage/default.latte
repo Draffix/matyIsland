@@ -13,10 +13,10 @@
         <div id="items">
             {foreach $mainProducts as $mainProduct}
             <div class="item">               
-                <a n:href="Product:show $mainProduct->prod_id, $mainProduct->prod_name">
+                <a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">
                     <img src={$mainProduct->image_path|dataStream} width="213" height="192" />
                 </a><br />
-                <p><a n:href="Product:show $mainProduct->prod_id, $mainProduct->prod_name">{$mainProduct->prod_name}
+                <p><a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">{$mainProduct->prod_name}
                     </a></p>
                 <span class="price">{$mainProduct->prod_price},- Kč</span><br />
                 <a n:href="addCart! $mainProduct->prod_id, 1">Vložit do košíku</a>
