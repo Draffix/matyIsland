@@ -52,7 +52,7 @@ class OrderPresenter extends BasePresenter {
     public function ShippingFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
         $_SESSION["order"] = $values;
-        $this->redirect('Order:step2');
+        $this->redirect('Order:paymentDelivery');
     }
 
     protected function createComponentPaymentAndDeliveryForm() {
