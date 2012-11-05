@@ -2,18 +2,20 @@
 
 namespace MatyIsland;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of OrderModel
+ * Description of ProductModel
  *
  * @author Draffix
  */
-class OrderModel {
-    //put your code here
-}
+class OrderModel extends Table {
 
-?>
+    /** @var string */
+    protected $tableName = 'basket';
+    
+    public function saveOrder($order, $payment, $delivery, $comment) {
+        $this->connection->query(
+                'INSERT INTO `order` (cust_name) VALUES (?)', $_SESSION["order"]['name']
+                );
+    }
+
+}
