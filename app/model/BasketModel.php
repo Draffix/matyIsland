@@ -22,7 +22,7 @@ class BasketModel extends Table {
     public function saveItemIntoBasket($items, $product) {
         $this->connection->query(
         'INSERT INTO `basket` ?;' , $items);
-                
+                        
         $this->connection->query(           
         'INSERT INTO basket_has_product (basket_basket_id, product_prod_id)
         VALUES(LAST_INSERT_ID(), ?)', $product);
