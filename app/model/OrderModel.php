@@ -2,6 +2,8 @@
 
 namespace MatyIsland;
 
+use Nette\DateTime;
+
 /**
  * Description of ProductModel
  *
@@ -10,12 +12,11 @@ namespace MatyIsland;
 class OrderModel extends Table {
 
     /** @var string */
-    protected $tableName = 'basket';
-    
-    public function saveOrder($order, $payment, $delivery, $comment) {
-        $this->connection->query(
-                'INSERT INTO `order` (cust_name) VALUES (?)', $_SESSION["order"]['name']
-                );
+    protected $tableName = 'order';
+
+    public function saveOrder($items) {
+        $row = $this->connection->table($this->tableName)->insert($items);
+        return $row->ord_id; //zjistíme ID vložené objednávky
     }
 
 }
