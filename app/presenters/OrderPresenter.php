@@ -83,5 +83,7 @@ class OrderPresenter extends BasePresenter {
         $_SESSION["payment"] = $values->payment;
         $_SESSION["delivery"] = $values->delivery;
     }
+    
+    
 
 }
