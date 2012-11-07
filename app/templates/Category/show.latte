@@ -1,9 +1,0 @@
-{block content}
-{foreach $category as $cat}
-<div id="items">
-    <div class="item">
-        <a href="#"><img src={$cat->image_path|dataStream} width="213" height="192" /></a><br />
-        <p><a href="#">{$cat->prod_name}</a></p><span class="price">{$cat->prod_price}</span><br />
-    </div>
-</div>
-{/foreach}

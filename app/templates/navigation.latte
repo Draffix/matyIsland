@@ -1,14 +1,14 @@
 <div id="sidebar">
     <div id="navigation">
         <ul>
-            <li><a href="{link Homepage:default}">Úvodní stránka</a></li>
+            <li><a href="{link Homepage:}">Úvodní stránka</a></li>
             <li><a href="#">Novinky</a></li>                        
             <li><a href="#">Doprava a platba</a></li>
             <li><a href="#">Obchodní podmínky</a></li>
             <li><a href="#">Napište nám</a></li>
             <li><a href="#">Kontakt</a></li>
         </ul>
-        <a n:href="Basket:basketShow">
+        <a n:href="Basket:">
             <div id="cart">
                 <strong>Nákupní košík</strong> <br />
                 Cena nákupu: {$_SESSION["totalPrice"]},- Kč <br /> 
@@ -20,7 +20,7 @@
         <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
         <ul class="categories">
                         {foreach $categories as $category}
-            <li><a n:href="Category:categoryShow $category->cat_id, $category->cat_name">{$category->cat_name}</a></li>
+            <li><a n:href="Category: $category->cat_id, $category->cat_name">{$category->cat_name}</a></li>
                         {/foreach}
         </ul>
         <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															

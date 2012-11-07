@@ -4,9 +4,11 @@ use Nette\Application\UI,
     Nette\Security as NS;
 
 /**
- * Sign in/out presenters.
+ * Description of LoginPresenter
+ *
+ * @author Draffix
  */
-class SignPresenter extends BasePresenter {
+class LoginPresenter extends BasePresenter {
 
     /** @var MatyIsland\UserModel */
     private $user;
@@ -75,30 +77,6 @@ class SignPresenter extends BasePresenter {
         } catch (NS\AuthenticationException $e) {
             $form->addError('Neplatné uživatelské jméno nebo heslo.');
         }
-    }
-
-    protected function createComponentSignUpForm() {
-        $form = new UI\Form;
-        $form->addText('nick', 'Přezdívka:');
-        $form->addText('email', 'Email:');
-        $form->addPassword('pass', 'Heslo:');
-        $form->addSubmit('register', 'Registrovat');
-        $form->onSuccess[] = callback($this, 'signUpFormSubmitted');
-        return $form;
-    }
-
-// volá se po úspěšném odeslání registrace
-    public function signUpFormSubmitted(UI\Form $form) {
-        $values = $form->getValues();
-        $this->user->saveUser($values);
-        $this->flashMessage('Byl jsi úspěšně zaregistrován.');
-        $this->redirect('Homepage:');
-    }
-
-    public function actionOut() {
-        $this->getUser()->logout();
-        $this->flashMessage('You have been signed out.');
-        $this->redirect('in');
     }
 
 }

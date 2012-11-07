@@ -2,18 +2,21 @@
 
 namespace MatyIsland;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+use Nette\DateTime;
 
 /**
- * Description of OrderModel
+ * Description of ProductModel
  *
  * @author Draffix
  */
-class OrderModel {
-    //put your code here
-}
+class OrderModel extends Table {
 
-?>
+    /** @var string */
+    protected $tableName = 'order';
+
+    public function saveOrder($items) {
+        $row = $this->connection->table($this->tableName)->insert($items);
+        return $row->ord_id; //zjistíme ID vložené objednávky
+    }
+
+}

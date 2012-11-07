@@ -6,11 +6,9 @@ use Nette\Application\UI;
  * Presenter pro nákupní košík
  */
 class BasketPresenter extends BasePresenter {
-
-    public function renderBasketShow($id = 0) {
-        if ($this->getUser()->isLoggedIn()) {
-            
-        }
+    
+    public function renderDefault() {
+        
     }
 
     public function handleRemoveFromCart($id) {

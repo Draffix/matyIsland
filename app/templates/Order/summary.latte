@@ -1,0 +1,147 @@
+{block content}
+<div id="main">
+    <div id="inside">
+        <div id="order">
+        <div id="order_title">
+            <h4>Fakturační a dodací údaje => Způsob dopravy a platby => <i>Souhrn objednávky</i></h4>    
+        </div><!-- #order_title end -->
+            
+        <div id="order_adress">
+            <h3>Adresa dodání:</h3>
+                  <table width="300" border="0">
+                    <tr>
+                      <td width="120">Jméno a příjmení:</td>
+                      <td width="194"><?php echo $_SESSION["order"]["cust_name"]. " " . $_SESSION["order"]["cust_surname"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Ulice:</td>
+                      <td><?php echo $_SESSION["order"]["cust_street"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Město:</td>
+                      <td><?php echo $_SESSION["order"]["cust_city"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>PSČ:</td>
+                      <td><?php echo $_SESSION["order"]["cust_psc"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Telefon:</td>
+                      <td><?php echo $_SESSION["order"]["cust_telefon"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>E-mail:</td>
+                      <td><?php echo $_SESSION["order"]["cust_email"] ?></td>
+                    </tr>
+                    {if $user->isLoggedIn()}
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    {/if}
+                  </table>
+        </div><!-- #order_adress end -->
+        
+        
+        <div id="order_facture">
+            <h3>Fakturační údaje:</h3>
+                  <table width="300" border="0">
+                    <tr>
+                      <td width="120">Jméno a příjmení:</td>
+                      <td width="194"><?php echo $_SESSION["order"]["cust_name"]. " " . $_SESSION["order"]["cust_surname"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Ulice:</td>
+                      <td><?php echo $_SESSION["order"]["cust_street"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Město:</td>
+                      <td><?php echo $_SESSION["order"]["cust_city"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>PSČ:</td>
+                      <td><?php echo $_SESSION["order"]["cust_psc"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Telefon:</td>
+                      <td><?php echo $_SESSION["order"]["cust_telefon"] ?></td>
+                    </tr>
+                    <tr>
+                      <td>E-mail:</td>
+                      <td><?php echo $_SESSION["order"]["cust_email"] ?></td>
+                    </tr>
+                    {if $user->isLoggedIn()}
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    {/if}
+                  </table>
+        </div><!-- #order_facture end -->
+            <div id="order_basket_info">
+                <h3>Seznam položek zboží:</h3>
+                <table width="600" border="1">
+                    <tr>
+                        <th width="113" scope="col"></th>
+                        <th width="207" scope="col">Název produktu</th>
+                        <th width="121" scope="col">Název výrobce</th>
+                        <th width="75" scope="col">Množství</th>
+                        <th width="69" scope="col">Cena</th>
+                        <th width="75" scope="col">Akce</th>
+                    </tr>
+                    {foreach $_SESSION["cart"] as $product}
+                    <tr>
+                        <td><img src={$product->image_path|dataStream} width="113" height="92" /></td>
+                        <td><a n:href="Product: $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
+                        <td>{$product->prod_producer}</td>
+                        <td>{$product->basket_quantity}</td>
+                        <td>{$product->totalPrice}</td>
+                        <td><a n:href="removeFromCart! $product->prod_id"><input type="button" value="Odstranit"></a>
+                            </td>
+                    </tr>
+                    {/foreach}   
+                </table>
+          </div><!-- #order_basket_info end -->
+            
+            <div id="order_comment">
+                {form commentForm}
+                    {label cust_note /} <br>
+                    {input cust_note cols=>45, rows=>5}
+            </div><!-- #order_send end -->
+            
+            <div id="order_send">
+                Souhlasím s všeobecnými obchodními podmínkami e-shopu Hračky MATYLAND {input agree}
+                <br>
+                <br>
+                <div style="float: right">{input complete}</div>
+                {/form}
+            </div>
+            
+        </div>
+    </div>
+</div>
+{/block}

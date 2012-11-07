@@ -15,9 +15,12 @@ class CategoryPresenter extends BasePresenter {
     protected function startup() {
         parent::startup();
     }
-
-    public function renderDefault($titleCategory) {
-        
+   
+        public function renderDefault($id, $titleCategory) {
+        if ($this->category->categoryFilter($id)->rowCount() == 0) {
+            $this->setView('notFound');
+        }
+        $this->template->category = $this->category->categoryFilter($id);
     }
 
 }
