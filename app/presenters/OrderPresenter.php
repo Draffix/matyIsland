@@ -1,10 +1,8 @@
 <?php
 
 use Nette\Application\UI;
-use Nette\Diagnostics\Debugger;
 use Nette\DateTime;
 use Nette\Mail\Message;
-use Nette\Templating\FileTemplate;
 
 /**
  * Description of OrderPresenter
@@ -16,14 +14,35 @@ class OrderPresenter extends BasePresenter {
     /** @var MatyIsland\OrderModel */
     private $order;
 
-    // pokud nic není v košíku nepovolíme přístup k obejdnávce
+    // pokud nic není v košíku nepovolíme přístup k objednávce
     // a přesměrujeme ho do košíku, kde ho upozorníme, že v něm nic nemá
     protected function startup() {
         parent::startup();
+        $this->order = $this->context->order;
+    }
+
+    public function renderDefault() {
         if (!isset($_SESSION["cart"]) || $_SESSION["cart"] == null) {
             $this->redirect('Basket:');
         }
-        $this->order = $this->context->order;
+    }
+
+    public function renderPaymentDelivery() {
+        if (!isset($_SESSION["cart"]) || $_SESSION["cart"] == null) {
+            $this->redirect('Basket:');
+        }
+    }
+
+    public function renderSummary() {
+        if (!isset($_SESSION["cart"]) || $_SESSION["cart"] == null) {
+            $this->redirect('Basket:');
+        }
+    }
+
+    public function renderComplete() {
+        $_SESSION["totalPrice"] = 0;
+        $_SESSION["count"] = 0;
+        unset($_SESSION["cart"], $_SESSION["order"]);
     }
 
     protected function createComponentShippingForm() {
@@ -110,18 +129,26 @@ class OrderPresenter extends BasePresenter {
 
         $_SESSION["order"] = array_merge($_SESSION["order"], $dateTime, $values); // doplníme o nové údaje
 
+        $orderID = $this->order->saveOrder($_SESSION["order"]); //vrací ID vložené objednávky
+
+        foreach ($_SESSION["cart"] as $key => $value) {
+            $this->order->saveIntoOrderHasProduct(
+                    $orderID, $value->prod_id, $value->basket_quantity, $value->prod_price);
+        }
+
         $template = $this->createTemplate();
         $template->setFile(__DIR__ . '/../templates/Order/orderEmail.latte');
         $template->registerFilter(new Nette\Latte\Engine);
-        $template->orderId = $this->order->saveOrder($_SESSION["order"]);
+        $template->orderId = $orderID;
 
-        $mail = new Message;
-        $mail->setFrom('MatyLand.cz <info@matyland.com>')
-                ->addTo('jerry.klimcik@gmail.com')
-                ->setSubject('Potvrzení objednávky')
-                ->setHtmlBody($template)
-                ->send();
+//        $mail = new Message;
+//        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+//                ->addTo('jerry.klimcik@gmail.com')
+//                ->setSubject('Potvrzení objednávky')
+//                ->setHtmlBody($template)
+//                ->send();
 
         $this->redirect('Order:complete');
     }
+
 }
