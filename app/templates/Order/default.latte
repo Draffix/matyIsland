@@ -1,5 +1,4 @@
 {block content}
-<!--<script src="{$basePath}/js/netteForms.js"></script>-->
 <script type="text/javascript">
 $(document).ready(function(){
         $("#hide").css("display","none");
@@ -16,28 +15,6 @@ $(document).ready(function(){
 
 <h4><i>Fakturační a dodací údaje</i> => Způsob dopravy a platby => Souhrn objednávky</h4>
 <br>
-
-{form shippingForm}
-<!--<div class="div-table">
-    <div class="div-table-caption">Doručovací údaje</div>
-    <div class="div-table-row">
-        <div class="div-table-col">{label cust_name /} {input cust_name}</div>
-        <div class="div-table-col">sfsdfsf</div>
-    </div>
-    <div class="div-table-row">
-        <input type="radio" name="age1" value="Yes" class="aboveage1" /> Yes
-        <input type="radio" name="age1" value="No" class="aboveage1" /> No
-    </div>
-    <div id="hide">
-        <div class="div-table-row">
-            <div class="div-table-col">{label cust_street /} {input cust_street}</div>
-        </div>
-        <div class="div-table-row">
-            <div class="div-table-col">{label cust_surname /} {input cust_surname}</div>
-        </div>
-    </div>
-</div>-->
-{/form}
 
 {form shippingForm}
 <div class="div-table-caption">Doručovací údaje</div>
@@ -98,5 +75,4 @@ $(document).ready(function(){
     </div>
     <div class="div-table-col" style="text-align: right">{input continue}</div>
 </div>
-
 {/form}

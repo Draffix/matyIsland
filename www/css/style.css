@@ -266,6 +266,8 @@ body{
     font-size:11px
 }
 
+/* order properties */
+
 #order
 {
     float:left;
@@ -310,19 +312,6 @@ body{
 }
 
 /* delivery&payment */
-#yes_box{
-    border: 1px solid;  
-    background-repeat: no-repeat;  
-    color: black;     
-
-}
-
-#no_box{
-    border: 1px solid;  
-    color: black;      
-
-}
-
 #left
 {
     float: left;
