@@ -308,3 +308,56 @@ body{
     width: 638px;
     background-color: #92A117;
 }
+
+/* delivery&payment */
+#yes_box{
+    border: 1px solid;  
+    background-repeat: no-repeat;  
+    color: black;     
+
+}
+
+#no_box{
+    border: 1px solid;  
+    color: black;      
+
+}
+
+#left
+{
+    float: left;
+    width: 319px;
+    background-color: wheat;
+}
+#right
+{
+    float: left;
+    width: 319px;
+    background-color: darkmagenta;
+}
+
+/* table properties */
+.div-table
+{
+    display:table; 
+    border:1px solid #003399;
+}
+
+.div-table-caption
+{
+    display:table-caption; 
+    background:#009999;
+}
+
+.div-table-row
+{
+    display:table-row;
+    text-align: right;
+}
+
+.div-table-col
+{
+    display:table-cell; 
+    padding: 5px; 
+    border: 0px solid #003399;
+}    
