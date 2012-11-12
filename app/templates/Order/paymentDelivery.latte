@@ -1,4 +1,54 @@
 {block content}
+<script type="text/javascript">
+    function toggleStatus() {
+    if ($('#post').is(':checked')) {
+        $('#elementsToOperateOn :input').removeAttr('disabled');
+        if($('#cash').is(':checked')) {
+            $('#cashOnDelivery').attr('checked', 'checked');
+        }
+        $('#cash').attr('disabled', true);
+        
+    } else if ($('#dpd').is(':checked')){
+        $('#elementsToOperateOn :input').removeAttr('disabled');
+        if($('#cash').is(':checked')) {
+            $('#cashOnDelivery').attr('checked', 'checked');
+        }
+        $('#cash').attr('disabled', true);
+        
+    } else if ($('#personally').is(':checked')){
+        $('#elementsToOperateOn :input').removeAttr('disabled');
+        if($('#cashOnDelivery').is(':checked')) {
+            $('#cash').attr('checked', 'checked');
+        }
+        $('#cashOnDelivery').attr('disabled', true);
+    }
+}
+</script>
+
 <h4>Fakturační a dodací údaje => <i>Způsob dopravy a platby</i> => Souhrn objednávky</h4>
 
-{control paymentAndDeliveryForm}
+<div id="main">
+    <div id="inside">
+        <div id="order">
+            <div id="left">
+                <input id="post" type="radio" name="delivery" onchange="toggleStatus()" />
+                Česká pošta - balík do ruky, doručení do 1-2 pracovní dnů - 89 Kč<br/> 
+                <input id="dpd" type="radio" name="delivery" onchange="toggleStatus()" />
+                Kurýr DPD - dodání do 1-2 pracovních dnů - 89 Kč<br/>
+                <input id="personally" type="radio" name="delivery" onchange="toggleStatus()" />
+                Osobní převzetí - 0 Kč
+            </div>
+            <!-- #delivery end -->
+            <div id="right">
+                <div id="elementsToOperateOn">
+                    <input id="cashOnDelivery" type="radio" name="payment" onchange="toggleStatus()" />
+                    Dobírka<br/> 
+                    <input id="directDebit" type="radio" name="payment" onchange="toggleStatus()" />
+                    Bankovní převod<br/>
+                    <input id="cash" type="radio" name="payment" onchange="toggleStatus()" />
+                    Hotově
+                </div>
+           </div><!-- #payment end -->
+        </div>
+    </div>
+</div>
