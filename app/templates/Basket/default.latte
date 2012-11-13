@@ -1,36 +1,89 @@
 {block content}
+<style>
+    input[type="text"]
+    {
+        width:20px
+    }
+    input[name=update] {
+        background : transparent url("{$basePath}/images/order/checkmark.png") no-repeat center center;
+        width : 18px;
+        height : 100%;
+        border : none;
+        padding-top: 10px;
+        font-size : 0
+    }
+    input[name=remove] {
+        background : transparent url("{$basePath}/images/order/cross.png") no-repeat center center;
+        width : 18px;
+        height : 18px;
+        border : none;
+        padding-top: 10px;
+        font-size : 0
+    }
+    /* Table Styles */
+    table {
+        border: 1px solid #cef;
+        margin: 15px 25px;
+        text-align: left; 
+    }
 
-<table width="600" border="1">
-    <?php 
-    if(!isset($_SESSION["cart"]) || $_SESSION["cart"]==null) { ?>
-    <p> Nemáte nic v košíku </p>
-    <?php } else { ?>
-    <caption>
-        <strong>Obsah košíku</strong>
-    </caption>
-    <tr>
-        <th width="113" scope="col"></th>
-        <th width="207" scope="col">Název produktu</th>
-        <th width="69" scope="col">Cena za kus</th>
+    th {
+        font-weight: bold;
+
+    }
+
+    td,th {
+        padding: 4px 5px; 
+    }
+    /* stripped rows */
+    .odd {
+        /*        background-color: #FFFFFF; */
+    }
+    .odd td {
+        border-bottom: 1px solid #cef;
+    }   
+    .even {
+        /*        background-color: #FFFFFF */
+    }
+    .even td {
+        border-bottom: 1px solid #cef; }   
+    </style>
+    <script>
+    $(document).ready(function(){
+       $("tr:even").addClass("even");
+       $("tr:odd").addClass("odd");
+    });
+    </script>
+    <table width="686" border="0" cellpadding="6" cellspacing="0">
+        <?php 
+        if(!isset($_SESSION["cart"]) || $_SESSION["cart"]==null) { ?>
+        <p> Nemáte nic v košíku </p>
+        <?php } else { ?>
+        <tr class="header-wrapper">
+        <th colspan="2" scope="col">Název produktu</th>
+        <th width="200" scope="col">Cena za kus</th>
         <th width="75" scope="col">Množství</th>
         <th width="75" scope="col">Dostupnost</th>
         <th width="75" scope="col">Celkem</th>
+        <th width="75" scope="col"></th>
     </tr>
     {foreach $_SESSION["cart"] as $product}
     {form updateForm}
     <tr>
         {input product_id value => $product->prod_id}
-        <td><img src={$product->image_path|dataStream} width="113" height="92" /></td>
-        <td><a n:href="Product:show $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
-        <td>{$product->prod_price}</td>
+        <td width="113"><img src={$product->image_path|dataStream} width="113" height="92" /></td>
+        <td width="207"><a n:href="Product:show $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
+        <td>{$product->prod_price},- Kč</td>
         <td>
             {input quantity size => 1, value => $product->basket_quantity}
-            <a n:href="removeFromCart! $product->prod_id"><input type="button" value="Odstranit"></a>
-            {input update}
+
+            {input update name => "update", title => "Přepočítat"}
         </td>
-        <td></td>
-        <td>{$product->totalPrice}</td>
+        <td> Skladem </td>
+        <td>{$product->totalPrice},- Kč</td>
+        <td><a n:href="removeFromCart! $product->prod_id"><input type="button" name="remove" title="Smazat položku"></a></td>
     </tr>
+
     {/form}
     {/foreach}   
 </table>
