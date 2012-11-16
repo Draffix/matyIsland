@@ -1,0 +1,147 @@
+/*
+ * CSS Breadcrumbs - LIGHT
+ *
+ * @author: Francisco Neves
+*/
+
+/**
+ *  START FREEBIE STYLES
+*/
+
+/*! Freebie Structure */
+ul#breadcrumbs
+{
+    font-family: Verdana, Sans-Serif, Arial;
+    overflow: hidden;
+    list-style: none;
+    border: 1px solid #cccccc;
+    padding: 1px;
+
+    color: #000;
+    font-size: 10px; 
+
+    /* Radius */
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+    /* Box-Shadow */
+    -moz-box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .6), 0 0 0 4px rgba(255, 255, 255, .3);
+    -webkit-box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .6), 0 0 0 4px rgba(255, 255, 255, .3);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .6), 0 0 0 4px rgba(255, 255, 255, .3);
+}
+
+ul#breadcrumbs li:first-child
+{
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+ul#breadcrumbs li:last-child
+{
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    -moz-border-radius-bottomright: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+ul#breadcrumbs li
+{
+    float: left;
+    margin: 0;
+    position: relative;
+
+
+    /* Gradient */
+    background: #f8f8f8; /* Old browsers */
+    background: -moz-linear-gradient(top, #f8f8f8 0%, #efefef 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#efefef)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f8f8f8 0%,#efefef 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f8f8f8 0%,#efefef 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f8f8f8 0%,#efefef 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #f8f8f8 0%,#efefef 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#efefef',GradientType=0 ); /* IE6-9 */
+
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 1);
+}
+
+ul#breadcrumbs li span:not(.arrow)
+{
+    display: table;
+    padding: 17px;
+    padding-right: 14px;
+    padding-left: 37px;
+}
+ul#breadcrumbs li:first-child span:not(.arrow)
+{
+    padding-left: 17px;
+}
+ul#breadcrumbs li:last-child span:not(.arrow)
+{
+    display: table;
+    padding: 17px;
+    padding-left: 37px;
+}
+
+ul#breadcrumbs li .arrow
+{
+    position: absolute;
+    top: 0;
+    right: -23px;
+    display: block;
+    background: url(../images/order/light-arrow.png) no-repeat left top;
+    width: 23px;
+    height: 45px;
+    z-index: 5;
+}
+
+/* Mouse Events */
+ul#breadcrumbs li:hover
+{
+    background: #e9e9e9; /* Old browsers */
+    background: -moz-linear-gradient(top, #e9e9e9 0%, #e1e1e1 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e9e9e9), color-stop(100%,#e1e1e1)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #e9e9e9 0%,#e1e1e1 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #e9e9e9 0%,#e1e1e1 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #e9e9e9 0%,#e1e1e1 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #e9e9e9 0%,#e1e1e1 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9e9e9', endColorstr='#e1e1e1',GradientType=0 ); /* IE6-9 */
+}
+ul#breadcrumbs li:active
+{
+    background: #dbdbdb; /* Old browsers */
+    background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(100%,#d3d3d3)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #dbdbdb 0%,#d3d3d3 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #dbdbdb 0%,#d3d3d3 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #dbdbdb 0%,#d3d3d3 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #dbdbdb 0%,#d3d3d3 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#d3d3d3',GradientType=0 ); /* IE6-9 */
+}
+ul#breadcrumbs li:hover .arrow
+{
+    background: url(../images/order/light-arrow.png) no-repeat left center;
+}
+ul#breadcrumbs li:active .arrow
+{
+    background: url(../images/order/light-arrow.png) no-repeat left bottom;
+}
+/**
+ *  END FREEBIE STYLES
+*/
+
+
+/**
+ *	Not important styles
+*/
+
+ul#breadcrumbs-freebie { display: table; padding-left: 16px; margin: 2px; list-style: none; }
+ul#breadcrumbs-freebie:last-child { padding-right: 0; }
+ul#breadcrumbs-freebie > li { float: left; margin-right: 12px; }
+ul#breadcrumbs-freebie > li:last-child { margin-right: 0; }
+
