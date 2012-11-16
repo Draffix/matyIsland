@@ -16,6 +16,8 @@ body{
     display:block;
     float:left;
 }
+
+/* přihlásit se, registrovat se */
 .topnav{
     width:534px;
     float:left;
@@ -49,6 +51,8 @@ body{
     float:left;
     margin:0 10px 0 0
 }
+
+/* katalog, přihlásit se, registrovat se, nákupní košík */
 #menu{
     display:block;
     float:left;
@@ -62,12 +66,16 @@ body{
     float:left;
     margin:0 0 0 1px;
 }
+
+/* navigace a obsah */
 #content{
     width:923px;
     overflow:hidden;
     float:left;
     padding:0 0 7px 0;
 }
+
+/* navigace */
 #sidebar{
     width:233px;
     float:left;
@@ -107,7 +115,7 @@ body{
     color: #000;
 }
 
-
+/* nákupní košík v navigaci */
 #cart{
     height:60px;
     line-height:16px;
@@ -117,6 +125,8 @@ body{
     background-position:top left;
     background-repeat:no-repeat;
 }
+
+/* kategorie v navigaci */
 .categories{
     border:1px solid #BBBBBB;
     border-top:0px;
@@ -141,6 +151,8 @@ body{
 }
 .categories a:visited{text-decoration:none}
 .categories a:hover{text-decoration:underline}
+
+/* recenze v navigaci */
 .review{
     border:1px solid #BBBBBB;
     border-top:0px;
@@ -164,14 +176,20 @@ body{
 .stars{
     margin:0 0 0 30px;
 }
+
+/* samotný obsah */
 #main{
     width:686px;
     float:left;
 }
+
+/* nové zboží na úvodní straně včetně nadpisu novinky*/
 #inside{
-    padding:15px 0 0 17px;
-    float:left
+    padding:15px 0 0 -10px;
+    float:left;
 }
+
+/* informace o stránce (momentálně vypnuté) */
 .info{
     font-family:Tahoma, sans-serif;
     font-size:11px;
@@ -184,6 +202,8 @@ body{
     float:left;
     margin:0 22px 0 0
 }
+
+/* informace o stránce - tlačítko more (momentálně vypnuté) */
 .more{
     display:block;
 }
@@ -192,9 +212,13 @@ body{
     float:left;
     padding:0 0 12px 0
 }
+
+/* nové zboží na úvodní stránce bez nadpisu novinky */
 #items{
     float:left;
 }
+
+/* to samé jako #items ale rozšířené */
 .item{
     width:215px;
     border:1px solid #BBBBBB;
@@ -248,26 +272,8 @@ body{
 }
 #footer ul a:visited{text-decoration:none}
 #footer ul a:hover{text-decoration:underline}
-.bft{
-    color:#3792AE;
-    text-decoration:underline
-}
-.bft:visited{text-decoration:underline}
-.bft:hover{text-decoration:none}
-.inner_copy{
-    border:0;
-    color:#fff;
-    float:right;
-    width:0.09%!important;
-    margin:-100px;
-    overflow:hidden;
-    line-height:0px;
-    padding:0px;
-    font-size:11px
-}
 
-/* order properties */
-
+/* order šablona */
 #order
 {
     float:left;
@@ -311,7 +317,7 @@ body{
     background-color: #92A117;
 }
 
-/* delivery&payment */
+/* delivery&payment šablona */
 #left
 {
     float: left;
@@ -352,9 +358,25 @@ body{
     border: 0px solid #003399;
 }
 
+/* basket šablona */
+
+/* kroková navigace */
 .header-wrapper {
     width:670px;
     height:45px;
     background:url('../images/table/header-bg.jpg');
     background-repeat:repeat-x;
+}
+
+#basket-box{
+    float: left;
+}
+
+.basket-price {
+    height: 92px;
+}
+
+.basket-price td span{
+    font-weight: bold;
+    font-family: Verdana, Sans-Serif, Arial;
 }
