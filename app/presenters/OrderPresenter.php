@@ -84,22 +84,27 @@ class OrderPresenter extends BasePresenter {
 
     protected function createComponentPaymentAndDeliveryForm() {
         $payment = array(
-            'directDebit' => 'Převodem na účet (0,00 CZK)',
-            'cash' => 'Hotově (0,00 CZK)',
-            'cashOnDelivery' => 'Dobírkou (130,00 CZK) '
+            'directDebit' => 'Bankovní převod',
+            'cash' => 'Hotově',
+            'cashOnDelivery' => 'Dobírka'
         );
 
         $delivery = array(
-            'post' => 'Česká pošta (79,00 CZK)',
-            'postWithCashOnDelivery' => 'Česká pošta-dobírkou (130,00 CZK)',
-            'personalCollection' => 'Osobní převzetí (0,00 CZK)'
+            'post' => 'Česká pošta - balík do ruky, doručení do 1-2 pracovní dnů - 89 Kč',
+            'postWithCashOnDelivery' => 'Kurýr DPD - dodání do 1-2 pracovních dnů - 89 Kč',
+            'personalCollection' => 'Osobní převzetí - 0 Kč'
         );
 
         $form = new UI\Form;
         $form->addRadioList('cust_payment', 'Placení:', $payment)
-                ->addRule($form::FILLED);
+                ->addRule($form::FILLED)
+                ->setHtmlId('payment')
+                ->setAttribute('onchange', 'toggleStatus()');
         $form->addRadioList('cust_delivery', 'Doprava:', $delivery)
-                ->addRule($form::FILLED);
+                ->addRule($form::FILLED)
+                ->setHtmlId('delivery')
+                ->setAttribute('onchange', 'toggleStatus()');
+
         $form->addSubmit('continue', 'Pokračovat k přehledu objednávky');
         $form->onSuccess[] = callback($this, 'paymentAndDeliveryFormSubmitted');
         return $form;
@@ -141,12 +146,12 @@ class OrderPresenter extends BasePresenter {
         $template->registerFilter(new Nette\Latte\Engine);
         $template->orderId = $orderID;
 
-//        $mail = new Message;
-//        $mail->setFrom('MatyLand.cz <info@matyland.com>')
-//                ->addTo('jerry.klimcik@gmail.com')
-//                ->setSubject('Potvrzení objednávky')
-//                ->setHtmlBody($template)
-//                ->send();
+        $mail = new Message;
+        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+                ->addTo('jerry.klimcik@gmail.com')
+                ->setSubject('Potvrzení objednávky')
+                ->setHtmlBody($template)
+                ->send();
 
         $this->redirect('Order:complete');
     }
