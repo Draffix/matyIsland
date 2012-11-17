@@ -1,26 +1,35 @@
 {block content}
+<!--
+delivery-0 = post
+delivery-1 = dpd
+delivery-2 = personally
+
+payment-1 = cash
+payment-2 = casOnDelivery
+-->
+
 <script type="text/javascript">
     function toggleStatus() {
-    if ($('#post').is(':checked')) {
+    if ($('#delivery-0').is(':checked')) {
         $('#elementsToOperateOn :input').removeAttr('disabled');
-        if($('#cash').is(':checked')) {
-            $('#cashOnDelivery').attr('checked', 'checked');
+        if($('#payment-1').is(':checked')) {
+            $('#payment-2').attr('checked', 'checked');
         }
-        $('#cash').attr('disabled', true);
+        $('#payment-1').attr('disabled', true);
         
-    } else if ($('#dpd').is(':checked')){
+    } else if ($('#delivery-1').is(':checked')){
         $('#elementsToOperateOn :input').removeAttr('disabled');
-        if($('#cash').is(':checked')) {
-            $('#cashOnDelivery').attr('checked', 'checked');
+        if($('#payment-1').is(':checked')) {
+            $('#payment-2').attr('checked', 'checked');
         }
-        $('#cash').attr('disabled', true);
+        $('#payment-1').attr('disabled', true);
         
-    } else if ($('#personally').is(':checked')){
+    } else if ($('#delivery-2').is(':checked')){
         $('#elementsToOperateOn :input').removeAttr('disabled');
-        if($('#cashOnDelivery').is(':checked')) {
-            $('#cash').attr('checked', 'checked');
+        if($('#payment-2').is(':checked')) {
+            $('#payment-1').attr('checked', 'checked');
         }
-        $('#cashOnDelivery').attr('disabled', true);
+        $('#payment-2').attr('disabled', true);
     }
 }
 </script>
@@ -30,25 +39,17 @@
 <div id="main">
     <div id="inside">
         <div id="order">
-            <div id="left">
-                <input id="post" type="radio" name="delivery" onchange="toggleStatus()" />
-                Česká pošta - balík do ruky, doručení do 1-2 pracovní dnů - 89 Kč<br/> 
-                <input id="dpd" type="radio" name="delivery" onchange="toggleStatus()" />
-                Kurýr DPD - dodání do 1-2 pracovních dnů - 89 Kč<br/>
-                <input id="personally" type="radio" name="delivery" onchange="toggleStatus()" />
-                Osobní převzetí - 0 Kč
+            {form paymentAndDeliveryForm}
+            <div id="left"> 
+                {input cust_delivery}
             </div>
-            <!-- #delivery end -->
             <div id="right">
                 <div id="elementsToOperateOn">
-                    <input id="cashOnDelivery" type="radio" name="payment" onchange="toggleStatus()" />
-                    Dobírka<br/> 
-                    <input id="directDebit" type="radio" name="payment" onchange="toggleStatus()" />
-                    Bankovní převod<br/>
-                    <input id="cash" type="radio" name="payment" onchange="toggleStatus()" />
-                    Hotově
+                    {input cust_payment}
                 </div>
-           </div><!-- #payment end -->
+            </div>
         </div>
+    {input continue}
+    {/form}
     </div>
 </div>
