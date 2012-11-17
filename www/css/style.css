@@ -369,7 +369,8 @@ body{
 }
 
 #basket-box{
-    float: left;
+    width: 670px;
+    margin-left: 228px;
 }
 
 .basket-price {
