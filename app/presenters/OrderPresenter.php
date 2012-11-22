@@ -47,21 +47,22 @@ class OrderPresenter extends BasePresenter {
 
     protected function createComponentShippingForm() {
         $form = new UI\Form;
-        $form->addText('cust_name', 'Jméno:')
+        $form->addText('cust_name', 'Jméno: *')
                 ->addRule($form::FILLED);
-        $form->addText('cust_surname', 'Příjmení:')
-                ->addRule($form::FILLED, 'Je nutné zadat jméno.');
-        $form->addText('cust_telefon', 'Telefon:');
-        $form->addText('cust_email', 'E-mail:');
-        $form->addText('cust_street', 'Ulice a č. popisné:');
-        $form->addText('cust_city', 'Město:');
-        $form->addText('cust_psc', 'PSČ:');
+        $form->addText('cust_surname', 'Příjmení: *')
+                ->addRule($form::FILLED);
+        $form->addText('cust_telefon', 'Telefon: *');
+        $form->addText('cust_email', 'E-mail: *');
+        $form->addText('cust_street', 'Ulice a č. popisné: *');
+        $form->addText('cust_city', 'Město: *');
+        $form->addText('cust_psc', 'PSČ: *');
         $form->addText('cust_firmName', 'Název firmy:');
         $form->addText('cust_ico', 'IČO:');
         $form->addText('cust_dic', 'DIČ:');
 
         // billing formulář pro fakturaci
-        $form->addText('cust_bName', 'Jméno:');
+        $form->addText('cust_bName', 'Jméno:')
+                ->addRule($form::FILLED);
         $form->addText('cust_bSurname', 'Příjmení:');
         $form->addText('cust_bTelefon', 'Telefon:');
         $form->addText('cust_bEmail', 'E-mail:');
@@ -70,7 +71,9 @@ class OrderPresenter extends BasePresenter {
         $form->addText('cust_bPsc', 'PSČ:');
         $form->addText('cust_bFirmName', 'Název firmy:');
 
-        $form->addSubmit('continue', 'Pokračovat k výběru platby a dopravy');
+        $form->addCheckbox('isGift');
+
+        $form->addSubmit('continue');
         $form->onSuccess[] = $this->ShippingFormSubmitted;
         return $form;
     }
