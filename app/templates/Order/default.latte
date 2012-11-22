@@ -12,67 +12,103 @@ $(document).ready(function(){
      });            
 });
 </script>
-
-<h4><i>Fakturační a dodací údaje</i> => Způsob dopravy a platby => Souhrn objednávky</h4>
-<br>
-
 {form shippingForm}
-<div class="div-table-caption">Doručovací údaje</div>
-<div class="div-table-row">
-    <div class="div-table-col">{label cust_name /} {input cust_name}</div>
-    <div class="div-table-col">{label cust_street /} {input cust_street}</div>
+<div class="shipping-header">
+    <ul id="breadcrumbs-freebie">
+        <li>
+                <!-- Start Freebie -->
+            <ul id="breadcrumbs">
+                <li>
+                    <a n:href="Basket:">
+                        <span>Košík</span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a n:href="Order:">
+                        <span><b>Fakturační a dodací údaje</b></span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
+
+                    <span><a n:href="Order:paymentDelivery"><input id="submitlink" name="submitlink" type="submit" value="Způsob dopravy a platby" /></a></span>
+                    <span class="arrow"></span>
+
+                </li>
+                <li>
+                    <span>Souhrn objednávky</span>
+                    <span class="arrow"></span>
+                </li>
+            </ul>
+            <!-- End Freebie -->
+        </li>
+    </ul>
 </div>
-<div class="div-table-row">
-    <div class="div-table-col">{label cust_surname /} {input cust_surname}</div>
-    <div class="div-table-col">{label cust_city /} {input cust_city}</div>
-</div>
-<div class="div-table-row">
-    <div class="div-table-col">{label cust_firmName /} {input cust_firmName}</div>
-    <div class="div-table-col">{label cust_psc /} {input cust_psc}</div>
-</div>
-<div class="div-table-row">
-    <div class="div-table-col">{label cust_email /} {input cust_email}</div>
-    <div class="div-table-col">{label cust_ico /} {input cust_ico}</div>
-</div>
-<div class="div-table-row">
-    <div class="div-table-col">{label cust_telefon /} {input cust_telefon}</div>
-</div>
-<div class="div-table-row">
-    <div class="div-table-col">
-        <input type="checkbox" name="facture" class="isFacture" value="checked"/> 
-        Chci aby bylo zboží doručeno na jinou adresu <br/>
-    </div>
-</div>
-<div id="hide">
+<div class="shipping-form">    
+    <h1>Osobní údaje a fakturační adresa</h1>
+<fieldset class="row1">
     <div class="div-table-row">
-        <div class="div-table-col">
-            <h1>Fakturační údaje</h1>
-        </div>
-    </div>
-    <div class="div-table-row">
-        <div class="div-table-col">{label cust_bName /} {input cust_bName}</div>
-        <div class="div-table-col">{label cust_bStreet /} {input cust_bStreet}</div>
-    </div>
-    <div class="div-table-row">
-        <div class="div-table-col">{label cust_bSurname /} {input cust_bSurname}</div>
-        <div class="div-table-col">{label cust_bCity /} {input cust_bCity}</div>
-    </div>
-    <div class="div-table-row">
-        <div class="div-table-col">{label cust_bFirmName /} {input cust_bFirmName}</div>
-        <div class="div-table-col">{label cust_bPsc /} {input cust_bPsc}</div>
+        <div class="div-table-col"><b>{label cust_name /}</b> {input cust_name}</div>
+        <div class="div-table-col"><b>{label cust_street /}</b> {input cust_street}</div>
     </div>
     <div class="div-table-row">
-        <div class="div-table-col">{label cust_email /} {input cust_email}</div>
+        <div class="div-table-col"><b>{label cust_surname /}</b> {input cust_surname}</div>
+        <div class="div-table-col"><b>{label cust_city /}</b> {input cust_city}</div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col">{label cust_firmName /} {input cust_firmName}</div>
+        <div class="div-table-col"><b>{label cust_psc /}</b> {input cust_psc}</div>
+    </div>
+    <div class="div-table-row">
+        <div class="div-table-col"><b>{label cust_email /}</b> {input cust_email}</div>
         <div class="div-table-col">{label cust_ico /} {input cust_ico}</div>
     </div>
     <div class="div-table-row">
-        <div class="div-table-col">{label cust_telefon /} {input cust_telefon}</div>
+        <div class="div-table-col"><b>{label cust_telefon /}</b> {input cust_telefon}</div>
     </div>
+
+    <div class="checkbox">
+        <input type="checkbox" name="facture" class="isFacture" value="checked"/> 
+        Chci aby bylo zboží doručeno na jinou adresu <br/>
+    </div>
+
+    <div id="hide">
+        <div class="div-table-row">
+            <div class="div-table-col">
+                <h1>Doručovací údaje</h1>
+            </div>
+        </div>
+        <div class="div-table-row">
+            <div class="div-table-col">{label cust_bName /} {input cust_bName}</div>
+            <div class="div-table-col">{label cust_bStreet /} {input cust_bStreet}</div>
+        </div>
+        <div class="div-table-row">
+            <div class="div-table-col">{label cust_bSurname /} {input cust_bSurname}</div>
+            <div class="div-table-col">{label cust_bCity /} {input cust_bCity}</div>
+        </div>
+        <div class="div-table-row">
+            <div class="div-table-col">{label cust_bFirmName /} {input cust_bFirmName}</div>
+            <div class="div-table-col">{label cust_bPsc /} {input cust_bPsc}</div>
+        </div>
+        <div class="div-table-row">
+            <div class="div-table-col">{label cust_email /} {input cust_email}</div>
+            <div class="div-table-col">{label cust_ico /} {input cust_ico}</div>
+        </div>
+        <div class="div-table-row">
+            <div class="div-table-col">{label cust_telefon /} {input cust_telefon}</div>
+        </div>
+    </div>
+
+    <div class="checkbox" style="padding-bottom: 10px;">
+        {input isGift}
+        Nepřikládejte do balíku fakturu, jedná se o dárek
+    </div>
+
+</fieldset>
+
+<div class="buttons"><a n:href="Basket:"><img src="{$basePath}/images/order/btn-back.png" width="116" height="35" border="0" style="margin-left: 15px"/></a>
+        {input continue}
 </div>
-<div class="div-table-row" style="text-align: left">
-    <div class="div-table-col">
-        <a n:href="Basket:"><input type="button" value="Zpět do košíku"></a>
-    </div>
-    <div class="div-table-col" style="text-align: right">{input continue}</div>
 </div>
 {/form}
