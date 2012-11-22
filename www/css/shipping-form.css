@@ -1,0 +1,94 @@
+.shipping-header input#submitlink {
+    background: transparent;
+    border: 0;
+    cursor:pointer;
+    font-size: 10px; 
+    height: 12px;
+    font-family: Verdana, Sans-Serif, Arial;
+}
+
+.shipping-form {
+    float: left;
+    width:618px;
+    margin: 20px 0px 0px 17px;
+    background-color: #ececec;
+    -moz-border-radius:20px;
+    -webkit-border-radius:20px;
+}
+
+.shipping-form h1 {
+    font-weight:200;
+    color: #888888;
+    font-size:16pt;
+    background: transparent url(../img/h1.png) no-repeat center left;
+    padding-left:33px;
+    margin:7px 5px 8px 8px;
+}
+.shipping-form h4 {
+    padding:1px;
+    color: #ACACAC;
+    font-size:9pt;
+    font-weight:100;
+    text-transform:uppercase;
+}
+
+.shipping-form .checkbox{
+    margin-left:50px;
+    padding-top: 5px;
+}
+
+.shipping-form  fieldset.row1
+{
+
+    float:left;
+    border-top:1px solid #F5F5F5;
+    border-bottom: 1px solid #F5F5F5;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 10px;
+
+}
+.shipping-form  fieldset.row1 label{
+    width:140px;
+    float: left;
+    text-align: right;
+    margin-right: 1px;
+    margin-top:2px;
+}
+
+.shipping-form .button
+{
+    background: #abda0f url(../img/overlay.png) repeat-x;
+    padding: 8px 10px 8px;
+    color: #fff;
+    text-decoration: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    cursor: pointer;
+    float:left;
+    font-size:18px;
+    margin:10px;
+}
+
+.shipping-form input:focus, select:focus{
+    background-color: #efffe0;
+}
+
+.shipping-form input#frmshippingForm-continue {
+    background:transparent url('../images/order/btn-continue.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 116px;
+    height: 35px;
+    float: right;
+    margin-right: 15px; 
+    cursor: pointer;
+}
+
+.shipping-form .buttons {
+    margin-top: 19px;
+    margin-bottom: 10px;
+}
