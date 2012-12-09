@@ -1,3 +1,79 @@
+/* basket template*/
+/* kroková navigace */
+.header-wrapper {
+    width:670px;
+    height:45px;
+    background:url('../images/table/header-bg.jpg');
+    background-repeat:repeat-x;
+}
+
+.basket input[type="text"]
+{
+    width:20px
+}
+.basket input[name=update] {
+    background : transparent url(../images/order/checkmark.png) no-repeat center center;
+    width : 18px;
+    height : 20px;
+    border : none;
+    padding-top: 10px;
+    font-size : 0;
+    cursor:pointer;
+}
+.basket input[name=remove] {
+    background : transparent url(../images/order/cross.png) no-repeat center center;
+    width : 18px;
+    height : 18px;
+    border : none;
+    padding-top: 10px;
+    font-size : 0;
+    cursor:pointer;
+}
+
+#basket-box{
+    width: 670px;
+    margin-left: 228px;
+}
+
+.basket-price {
+    height: 92px;
+}
+
+.basket-price td span{
+    font-weight: bold;
+    font-family: Verdana, Sans-Serif, Arial;
+}
+
+/* Table Styles of Basket */
+.basket table {
+    border: 1px solid #cef;
+    margin: 15px 25px;
+    text-align: left; 
+}
+
+.basket th {
+    font-weight: bold;
+
+}
+
+.basket td,th {
+    padding: 4px 5px; 
+}
+/* stripped rows */
+.basket .odd {
+    /*        background-color: #FFFFFF; */
+}
+.basket .odd td {
+    border-bottom: 1px solid #cef;
+}   
+.basket .even {
+    /*        background-color: #FFFFFF */
+}
+.basket .even td {
+    border-bottom: 1px solid #cef; 
+} 
+
+/* contact form */
 .shipping-header input#submitlink {
     background: transparent;
     border: 0;
@@ -91,4 +167,144 @@
 .shipping-form .buttons {
     margin-top: 19px;
     margin-bottom: 10px;
+}
+
+/* payment and delivery */
+.shipping-form  fieldset.paymentAndDelivery
+{
+    padding-left: 10px;
+    border-bottom: 1px solid #F5F5F5;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding-bottom: 5px;
+}
+
+.shipping-form  fieldset.paymentAndDelivery label {
+    padding-left: 10px;
+}
+
+.shipping-form fieldset.paymentAndDelivery input[type=radio] {
+    margin-bottom: 7px;
+}
+
+.shipping-form input#frmpaymentAndDeliveryForm-continue {
+    background:transparent url('../images/order/btn-continue.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 116px;
+    height: 35px;
+    float: right;
+    margin-right: 15px; 
+    cursor: pointer;
+}
+
+/* summary */
+#order_adress
+{
+    float: left;
+    width: 297px;
+    padding-left: 20px;
+    padding-bottom: 15px;
+     
+}
+#order_facture
+{
+    float: left;
+    width: 300px;
+    padding-bottom: 59px;
+}
+
+#order_comment
+{
+    float: left;
+    width: 618px;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+#order_send
+{
+    float: left;
+    width: 618px;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+#order_basket_info
+{    
+    width: 618px;
+}
+
+/* .order_basket_info*/
+/* kroková navigace */
+#order_basket_info .header-wrapper {
+    width:670px;
+    height:45px;
+    background:url('../images/table/header-bg.jpg');
+    background-repeat:repeat-x;
+}
+
+#order_basket_info input[type="text"]
+{
+    width:20px
+}
+
+#order_basket_info #basket-box{
+    width: 670px;
+}
+
+#order_basket_info #basket-price {
+    height: 70px;
+}
+
+#order_basket_info #basket-price td span{
+    display:inline-block;
+    font-family: Verdana, Sans-Serif, Arial;
+    margin-bottom: 10px;
+}
+
+#order_basket_info #total-price td span{
+    font-family: Verdana, Sans-Serif, Arial;
+    font-weight: bold;
+}
+/* Table Styles of Basket */
+#order_basket_info table {
+    border: 1px solid #cef;
+    margin: 15px 7px;
+    text-align: left;
+    background-color: #fff
+}
+
+#order_basket_info th {
+    font-weight: bold;
+
+}
+
+#order_basket_info td,th {
+    padding: 4px 5px; 
+}
+/* stripped rows */
+#order_basket_info .odd {
+    /*        background-color: #FFFFFF; */
+}
+#order_basket_info .odd td {
+    border-bottom: 1px solid #ACACAC;
+}   
+#order_basket_info .even {
+    /*        background-color: #FFFFFF */
+}
+#order_basket_info .even td {
+    border-bottom: 1px solid #ACACAC; 
+}
+
+.shipping-form input#frmcommentForm-complete {
+    background:transparent url('../images/order/btn-complete.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 116px;
+    height: 35px;
+    float: right;
+    margin-right: 15px; 
+    cursor: pointer;
 }
