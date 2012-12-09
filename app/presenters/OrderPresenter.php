@@ -40,9 +40,24 @@ class OrderPresenter extends BasePresenter {
     }
 
     public function renderComplete() {
-        $_SESSION["totalPrice"] = 0;
-        $_SESSION["count"] = 0;
-        unset($_SESSION["cart"], $_SESSION["order"]);
+        if ($_SESSION["totalPrice"] == 0) {
+            $this->redirect('Homepage:');
+        }
+
+        $date = Date("j.m.Y", Time());
+
+        $this->template->orderID = $_SESSION["order_id"];
+        $this->template->date = $date;
+
+        $this->template->order = $this->order->fetchOrder($_SESSION["order_id"]);
+        $this->template->totalPrice = $_SESSION["totalPrice"];
+        $this->template->deliveryPrice = $_SESSION["order"]["deliveryPrice"];
+        $this->template->total = $_SESSION["totalPrice"] + $_SESSION["order"]["deliveryPrice"];
+
+//        $_SESSION["totalPrice"] = 0;
+//        $_SESSION["count"] = 0;
+//        unset($_SESSION["cart"], $_SESSION["order"]);
+//        unset($_SESSION["order_id"]);
     }
 
     protected function createComponentShippingForm() {
@@ -95,7 +110,7 @@ class OrderPresenter extends BasePresenter {
         if ($_SESSION["order"]["cust_bPsc"] == "") {
             $_SESSION["order"]["cust_bPsc"] = $_SESSION["order"]["cust_psc"];
         }
-        
+
         // change from TRUE to 1 due to MySQL
         if ($_SESSION["order"]["isGift"] == "TRUE") {
             $_SESSION["order"]["isGift"] = 1;
@@ -188,6 +203,8 @@ class OrderPresenter extends BasePresenter {
 
         $orderID = $this->order->saveOrder($_SESSION["order"]); //vrací ID vložené objednávky
 
+        $_SESSION["order_id"] = $orderID;
+
         foreach ($_SESSION["cart"] as $key => $value) {
             $this->order->saveIntoOrderHasProduct(
                     $orderID, $value->prod_id, $value->basket_quantity, $value->prod_price);
@@ -198,12 +215,12 @@ class OrderPresenter extends BasePresenter {
         $template->registerFilter(new Nette\Latte\Engine);
         $template->orderId = $orderID;
 
-        $mail = new Message;
-        $mail->setFrom('MatyLand.cz <info@matyland.com>')
-                ->addTo('jerry.klimcik@gmail.com')
-                ->setSubject('Potvrzení objednávky')
-                ->setHtmlBody($template)
-                ->send();
+//        $mail = new Message;
+//        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+//                ->addTo('jerry.klimcik@gmail.com')
+//                ->setSubject('Potvrzení objednávky')
+//                ->setHtmlBody($template)
+//                ->send();
 
         $this->redirect('Order:complete');
     }
