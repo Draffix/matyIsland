@@ -1,39 +1,39 @@
 {block content}
-    <script>
-    $(document).ready(function(){
-       $("tr:even").addClass("even");
-       $("tr:odd").addClass("odd");
-    });
-    </script>
-    <ul id="breadcrumbs-freebie">
-        <li>
-                <!-- Start Freebie -->
-            <ul id="breadcrumbs">
-                <li>
-                    <a n:href="Basket:">
-                        <span><b>Košík</b></span>
-                        <span class="arrow"></span>
-                    </a>
-                </li>
-                <li>
-                    <a n:href="Order:">
-                        <span>Fakturační a dodací údaje</span>
-                        <span class="arrow"></span>
-                    </a>
-                </li>
-                <li>
-                    <span>Způsob dopravy a platby</span>
+<script>
+$(document).ready(function(){
+   $("tr:even").addClass("even");
+   $("tr:odd").addClass("odd");
+});
+</script>
+<ul id="breadcrumbs-freebie">
+    <li>
+            <!-- Start Freebie -->
+        <ul id="breadcrumbs">
+            <li>
+                <a n:href="Basket:">
+                    <span><b>Košík</b></span>
                     <span class="arrow"></span>
-                </li>
-                <li>
-                    <span>Souhrn objednávky</span>
+                </a>
+            </li>
+            <li>
+                <a n:href="Order:">
+                    <span>Fakturační a dodací údaje</span>
                     <span class="arrow"></span>
-                </li>
-            </ul>
-            <!-- End Freebie -->
-        </li>
-    </ul>
-    <div class="basket">
+                </a>
+            </li>
+            <li>
+                <span>Způsob dopravy a platby</span>
+                <span class="arrow"></span>
+            </li>
+            <li>
+                <span>Souhrn objednávky</span>
+                <span class="arrow"></span>
+            </li>
+        </ul>
+        <!-- End Freebie -->
+    </li>
+</ul>
+<div class="basket">
     <div id="basket-box">
         <table width="635" border="0" cellpadding="6" cellspacing="0">
             <?php 
@@ -77,7 +77,7 @@
             </tr>
         </table>
     </div>
-        
-        <div style="text-align: right"><a n:href="Order:"><img src="{$basePath}/images/order/btn-continue.png" width="116" height="35" border="0"/></a></div>
-        <?php } ?>
-    </div>
+    <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
+    <a n:href="Order:"><input type="button" name="continue"/></a>
+    <?php } ?>
+</div>
