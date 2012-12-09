@@ -1,56 +1,4 @@
 {block content}
-<style>
-    input[type="text"]
-    {
-        width:20px
-    }
-    input[name=update] {
-        background : transparent url("{$basePath}/images/order/checkmark.png") no-repeat center center;
-        width : 18px;
-        height : 20px;
-        border : none;
-        padding-top: 10px;
-        font-size : 0;
-        cursor:pointer;
-    }
-    input[name=remove] {
-        background : transparent url("{$basePath}/images/order/cross.png") no-repeat center center;
-        width : 18px;
-        height : 18px;
-        border : none;
-        padding-top: 10px;
-        font-size : 0;
-        cursor:pointer;
-    }
-
-    /* Table Styles */
-    table {
-        border: 1px solid #cef;
-        margin: 15px 25px;
-        text-align: left; 
-    }
-
-    th {
-        font-weight: bold;
-
-    }
-
-    td,th {
-        padding: 4px 5px; 
-    }
-    /* stripped rows */
-    .odd {
-        /*        background-color: #FFFFFF; */
-    }
-    .odd td {
-        border-bottom: 1px solid #cef;
-    }   
-    .even {
-        /*        background-color: #FFFFFF */
-    }
-    .even td {
-        border-bottom: 1px solid #cef; }   
-    </style>
     <script>
     $(document).ready(function(){
        $("tr:even").addClass("even");
@@ -85,6 +33,7 @@
             <!-- End Freebie -->
         </li>
     </ul>
+    <div class="basket">
     <div id="basket-box">
         <table width="635" border="0" cellpadding="6" cellspacing="0">
             <?php 
@@ -104,7 +53,7 @@
             <tr>
         {input product_id value => $product->prod_id}
                 <td width="113"><img src={$product->image_path|dataStream} width="113" height="92" /></td>
-                <td width="207"><a n:href="Product:show $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
+                <td width="207"><a n:href="Product: $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
                 <td>{$product->prod_price},- Kč</td>
                 <td>
             {input quantity size => 1, value => $product->basket_quantity}
@@ -127,6 +76,8 @@
                 </td>
             </tr>
         </table>
+    </div>
+        
         <div style="text-align: right"><a n:href="Order:"><img src="{$basePath}/images/order/btn-continue.png" width="116" height="35" border="0"/></a></div>
         <?php } ?>
     </div>

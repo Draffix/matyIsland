@@ -61,15 +61,11 @@ class OrderPresenter extends BasePresenter {
         $form->addText('cust_dic', 'DIČ:');
 
         // billing formulář pro fakturaci
-        $form->addText('cust_bName', 'Jméno:')
-                ->addRule($form::FILLED);
+        $form->addText('cust_bName', 'Jméno:');
         $form->addText('cust_bSurname', 'Příjmení:');
-        $form->addText('cust_bTelefon', 'Telefon:');
-        $form->addText('cust_bEmail', 'E-mail:');
         $form->addText('cust_bStreet', 'Ulice a č. popisné:');
         $form->addText('cust_bCity', 'Město:');
         $form->addText('cust_bPsc', 'PSČ:');
-        $form->addText('cust_bFirmName', 'Název firmy:');
 
         $form->addCheckbox('isGift');
 
@@ -80,8 +76,33 @@ class OrderPresenter extends BasePresenter {
 
     // volá se po úspěšném odeslání registrace
     public function ShippingFormSubmitted(UI\Form $form) {
-        $values = $form->getValues(TRUE); // array
+        $values = $form->getValues(TRUE); // array      
         $_SESSION["order"] = $values;
+
+        // check if the billing form was filled
+        if ($_SESSION["order"]["cust_bName"] == "") {
+            $_SESSION["order"]["cust_bName"] = $_SESSION["order"]["cust_name"];
+        }
+        if ($_SESSION["order"]["cust_bSurname"] == "") {
+            $_SESSION["order"]["cust_bSurname"] = $_SESSION["order"]["cust_surname"];
+        }
+        if ($_SESSION["order"]["cust_bStreet"] == "") {
+            $_SESSION["order"]["cust_bStreet"] = $_SESSION["order"]["cust_street"];
+        }
+        if ($_SESSION["order"]["cust_bCity"] == "") {
+            $_SESSION["order"]["cust_bCity"] = $_SESSION["order"]["cust_city"];
+        }
+        if ($_SESSION["order"]["cust_bPsc"] == "") {
+            $_SESSION["order"]["cust_bPsc"] = $_SESSION["order"]["cust_psc"];
+        }
+        
+        // change from TRUE to 1 due to MySQL
+        if ($_SESSION["order"]["isGift"] == "TRUE") {
+            $_SESSION["order"]["isGift"] = 1;
+        } else {
+            $_SESSION["order"]["isGift"] = 0;
+        }
+
         $this->redirect('Order:paymentDelivery');
     }
 
@@ -89,7 +110,7 @@ class OrderPresenter extends BasePresenter {
         $payment = array(
             'directDebit' => 'Bankovní převod',
             'cash' => 'Hotově',
-            'cashOnDelivery' => 'Dobírka'
+            'cashOnDelivery' => 'Dobírka (+ 30 Kč)'
         );
 
         $delivery = array(
@@ -116,7 +137,35 @@ class OrderPresenter extends BasePresenter {
     public function paymentAndDeliveryFormSubmitted(UI\Form $form) {
         $values = $form->getValues(TRUE);
         $_SESSION["order"] = array_merge($_SESSION["order"], $values);
+
+        switch ($_SESSION["order"]["cust_delivery"]) {
+            case "post":
+                $_SESSION["order"]["deliveryPrice"] = 89;
+                break;
+            case "postWithCashOnDelivery":
+                $_SESSION["order"]["deliveryPrice"] = 89;
+                break;
+            case "personalCollection":
+                $_SESSION["order"]["deliveryPrice"] = 0;
+                break;
+            default:
+                break;
+        }
+
+        if ($_SESSION["order"]["cust_payment"] == "cashOnDelivery") {
+            $_SESSION["order"]["deliveryPrice"] += 30;
+        }
+
         $this->redirect('Order:summary');
+    }
+
+    protected function createComponentUpdateForm() {
+        $form = new UI\Form;
+        $form->addText('quantity', 'Množství');
+        $form->addHidden('product_id');
+        $form->addSubmit('update', 'Upravit');
+        $form->onSuccess[] = callback($this, 'updateFormSubmitted');
+        return $form;
     }
 
     protected function createComponentCommentForm() {

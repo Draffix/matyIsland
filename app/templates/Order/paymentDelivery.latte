@@ -33,23 +33,55 @@ payment-2 = casOnDelivery
     }
 }
 </script>
+{form paymentAndDeliveryForm}
+<div class="shipping-header">
+    <ul id="breadcrumbs-freebie">
+        <li>
+                <!-- Start Freebie -->
+            <ul id="breadcrumbs">
+                <li>
+                    <a n:href="Basket:">
+                        <span>Košík</span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a n:href="Order:">
+                        <span>Fakturační a dodací údaje</span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a n:href="Order:paymentDelivery">
+                        <span><b>Způsob dopravy a platby</b></span>
+                    <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
 
-<h4>Fakturační a dodací údaje => <i>Způsob dopravy a platby</i> => Souhrn objednávky</h4>
+                    <span><a n:href="Order:paymentDelivery"><input id="submitlink" name="submitlink" type="submit" value="Souhrn objednávky" /></a></span>
+                    <span class="arrow"></span>
 
-<div id="main">
-    <div id="inside">
-        <div id="order">
-            {form paymentAndDeliveryForm}
-            <div id="left"> 
-                {input cust_delivery}
-            </div>
-            <div id="right">
-                <div id="elementsToOperateOn">
-                    {input cust_payment}
-                </div>
-            </div>
-        </div>
-    {input continue}
-    {/form}
-    </div>
+                </li>
+            </ul>
+            <!-- End Freebie -->
+        </li>
+    </ul>
 </div>
+
+<div class="shipping-form">
+    <fieldset class="paymentAndDelivery">
+        <h1>Vyberte způsob dopravy</h1>
+                {input cust_delivery}
+        <br/>
+        <h1>Vyberte způsob placení</h1>
+        <div id="elementsToOperateOn">
+                    {input cust_payment}
+        </div>
+    </fieldset>
+    <div class="buttons"><a n:href="Order:"><img src="{$basePath}/images/order/btn-back.png" width="116" height="35" border="0" style="margin-left: 15px"/></a>
+        {input continue}
+    </div>
+
+</div>
+{/form}
