@@ -1,7 +1,67 @@
 {block content}
-<h2>Děkujeme Vám za objednání zboží. Vaší objednávku se pokusíme vyřídit co nejrychleji. 
-        Informace o objednávce Vám byli zaslány na Vaší uvedenou e-mailovou adresu.
-        S pozdravem Váš MatyLand.cz</h2>
-<form>
-    <a n:href="Homepage:"><input type="button" value="Pokračovat v nákupu"></a>
-</form>
+<script>
+$(document).ready(function(){
+   $("tr:even").addClass("even");
+   $("tr:odd").addClass("odd");
+});
+</script>
+<div class="shipping-form" style="width:635px"> 
+    <fieldset class="paymentAndDelivery">
+        <div class="basket-box">
+            <div id="complete">
+                <h2>Děkujeme Vám za objednání zboží</h2>
+                <p>Objednávku <b>č. {$orderID}</b> se pokusíme vyřídit co nejrychleji. 
+                    Informace o objednávce byli zaslány na Vaší uvedenou e-mailovou adresu.
+                    S pozdravem Váš MatyLand.cz</p>
+
+                <div id="detail">
+                    <span>Číslo objednávky: {$orderID}</span><br>
+                    <span>Datum: {$date}</span>
+                </div>
+
+                <table width="600" border="0" cellpadding="6" cellspacing="0">
+                    <tr>
+                        <th width="50" scope="col">Č. produktu</th>
+                        <th width="200" scope="col">Název produktu</th>
+                        <th width="100" scope="col">Cena za kus</th>
+                        <th width="75" scope="col">Množství</th>
+                        <th width="100" scope="col">Celkem</th>
+                    </tr>
+                    {foreach $order as $product}
+                    <tr style="text-align: center">
+                        <td>{$product->prod_id}</td>
+                        <td>{$product->prod_name}</td>
+                        <td>{$product->prod_price}</td>
+                        <td>{$product->quantity}</td>
+                        <td>{$product->actual_price_of_product * $product->quantity},- Kč</td>
+                    </tr>
+                    {/foreach}
+                    <tr id="basket-price">
+                        <td colspan="4" style="text-align: right" >
+                            <span>Mezisoučet včetně DPH:</span><br>
+                            <span>Doprava:</span>
+                        </td>
+                        <td colspan="2">
+                            <span>{$totalPrice} Kč</span><br>
+                            <span>{$deliveryPrice} Kč</span>
+                        </td>
+                    </tr>
+                    <tr id="total-price">
+                        <td colspan="4" style="text-align: right" >
+                            <span>Celkem:</span><br>
+                        </td>
+                        <td colspan="2">
+                            <span>{$total} Kč</span><br>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <p>V případě jakýchkoliv nejasností či problémů ohledně Vaší objednávky nás ihned kontaktujte</p>
+            </div>
+        </div>
+    </fieldset>
+    <div id="complete">
+        <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
+    </div>
+</div>
+{/block}
