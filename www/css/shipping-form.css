@@ -73,6 +73,28 @@
     border-bottom: 1px solid #cef; 
 } 
 
+.basket input[name=backToShopping] {
+    background:transparent url('../images/order/button-continue-shopping.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 168px;
+    height: 35px;
+    float: left;
+    margin-left: 15px; 
+    cursor: pointer;
+}
+
+.basket input[name=continue] {
+    background:transparent url('../images/order/btn-continue.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 116px;
+    height: 35px;
+    float: right;
+    margin-right: 35px; 
+    cursor: pointer;
+}
+
 /* contact form */
 .shipping-header input#submitlink {
     background: transparent;
@@ -92,7 +114,7 @@
     -webkit-border-radius:20px;
 }
 
-.shipping-form h1 {
+.shipping-form h2 {
     font-weight:200;
     color: #888888;
     font-size:16pt;
@@ -206,7 +228,7 @@
     width: 297px;
     padding-left: 20px;
     padding-bottom: 15px;
-     
+
 }
 #order_facture
 {
@@ -307,4 +329,62 @@
     float: right;
     margin-right: 15px; 
     cursor: pointer;
+}
+
+/* complete */
+#complete #detail span {
+    display:inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#complete table {
+    border: 1px solid #cef;
+    margin: 15px 8px;
+}
+
+/* stripped rows */
+#complete .odd {
+    /*        background-color: #FFFFFF; */
+}
+#complete .odd td {
+    border-bottom: 1px solid #cef;
+}   
+#complete .even {
+    /*        background-color: #FFFFFF */
+}
+#complete .even td {
+    border-bottom: 1px solid #cef; 
+} 
+
+#complete .basket-price {
+    height: 80px;
+}
+
+#complete #basket-price td span{
+    display:inline-block;
+    font-family: Verdana, Sans-Serif, Arial;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#complete #total-price td span{
+    display:inline-block;
+    font-family: Verdana, Sans-Serif, Arial;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#complete input[name=backToShopping] {
+    background:transparent url('../images/order/button-continue-shopping.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 168px;
+    height: 35px;
+    float: left;
+    margin-left: 15px; 
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
