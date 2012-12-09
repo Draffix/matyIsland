@@ -248,6 +248,17 @@ body{
 .center{
     margin:10px 10px 0 10px;
 }
+
+/* pro všechno co je uvnitř */
+.inside-content {
+    float: left;
+    width:618px;
+    margin: 20px 0px 0px 17px;
+    background-color: #ececec;
+    -moz-border-radius:20px;
+    -webkit-border-radius:20px;
+}
+
 #footer{
     background-image:url(../images/footer.jpg);
     background-position:bottom center;
