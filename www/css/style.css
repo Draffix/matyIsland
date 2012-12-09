@@ -273,64 +273,6 @@ body{
 #footer ul a:visited{text-decoration:none}
 #footer ul a:hover{text-decoration:underline}
 
-/* order šablona */
-#order
-{
-    float:left;
-    background-color: #C22
-}
-#order_title
-{
-    width: 638px;
-    background-color: #ffcc33
-}
-#order_adress
-{
-    float: left;
-    width: 319px;
-    background-color: #BBBBBB;
-}
-#order_facture
-{
-    float: left;
-    width: 319px;
-    background-color: #3792AE;
-}
-#order_basket_info
-{
-    float: left;
-    width: 638px;
-    background-color: darkmagenta;
-}
-
-#order_comment
-{
-    float: left;
-    width: 638px;
-    background-color: wheat;
-}
-
-#order_send
-{
-    float: left;
-    width: 638px;
-    background-color: #92A117;
-}
-
-/* delivery&payment šablona */
-#left
-{
-    float: left;
-    width: 319px;
-    background-color: wheat;
-}
-#right
-{
-    float: left;
-    width: 319px;
-    background-color: darkmagenta;
-}
-
 /* table properties */
 .div-table
 {
@@ -355,28 +297,4 @@ body{
     display:table-cell; 
     padding: 5px; 
     border: 0px solid #003399;
-}
-
-/* basket šablona */
-
-/* kroková navigace */
-.header-wrapper {
-    width:670px;
-    height:45px;
-    background:url('../images/table/header-bg.jpg');
-    background-repeat:repeat-x;
-}
-
-#basket-box{
-    width: 670px;
-    margin-left: 228px;
-}
-
-.basket-price {
-    height: 92px;
-}
-
-.basket-price td span{
-    font-weight: bold;
-    font-family: Verdana, Sans-Serif, Arial;
 }
