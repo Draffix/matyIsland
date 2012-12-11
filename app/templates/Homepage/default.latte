@@ -9,18 +9,19 @@
             <p>Dolor sit amet, consetetur sadipscing elitr, seddiam nonumy eirmod tempor. invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadip- scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur. </p>
             <a href="#" class="more"><img src="images/more.gif" alt="" width="106" height="28" /></a>					
         </div>-->
-        <img src="{$basePath}/images/novinky.jpg" alt="" width="159" height="17" /><br />
+        <div id="news"><img src="{$basePath}/images/novinky.jpg" alt="" width="159" height="17" /></div>
         <div id="items">
             {foreach $mainProducts as $mainProduct}
-            <div class="item">               
+            <div class="item">        
+                <p><a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">{$mainProduct->prod_name}</a></p>
+                <br />
                 <a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">
-                    <img src={$mainProduct->image_path|dataStream} width="213" height="192" />
-                </a><br />
-                <p><a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">{$mainProduct->prod_name}
-                    </a></p>
-                <span class="price">{$mainProduct->prod_price},- Kč</span><br />
-                <a n:href="addCart! $mainProduct->prod_id, 1">Vložit do košíku</a>
-<!--                <p>Množství: <input type="text" name="quantity" size="1"/></p>-->
+                    <img src={$mainProduct->image_path|dataStream} width="150" height="150" /></a>
+                <br />
+                <span class="describe">{$mainProduct->prod_describe|truncate:60}</span>
+                <span class="store">Skladem</span><br>
+                <span class="price">{$mainProduct->prod_price},- Kč</span>
+                <a n:href="addCart! $mainProduct->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
             </div>
             {/foreach}
         </div>
