@@ -54,10 +54,10 @@ class OrderPresenter extends BasePresenter {
         $this->template->deliveryPrice = $_SESSION["order"]["deliveryPrice"];
         $this->template->total = $_SESSION["totalPrice"] + $_SESSION["order"]["deliveryPrice"];
 
-//        $_SESSION["totalPrice"] = 0;
-//        $_SESSION["count"] = 0;
-//        unset($_SESSION["cart"], $_SESSION["order"]);
-//        unset($_SESSION["order_id"]);
+        $_SESSION["totalPrice"] = 0;
+        $_SESSION["count"] = 0;
+        unset($_SESSION["cart"], $_SESSION["order"]);
+        unset($_SESSION["order_id"]);
     }
 
     protected function createComponentShippingForm() {
