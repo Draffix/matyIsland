@@ -18,7 +18,7 @@ class ProductModel extends Table {
      */
     public function fetchImagesAndNews() {
         return $this->connection->query(
-                        'SELECT product.prod_id, product.prod_name, product.prod_price,
+            'SELECT product.prod_id, product.prod_name, product.prod_price, product.prod_describe,
             image.image_id, image.image_path, image.product_prod_id
             FROM product, image 
             WHERE product.prod_id = image.product_prod_id 
