@@ -81,7 +81,10 @@ $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]', array(
                 Route::FILTER_TABLE => array(
                     'platba-doprava' => 'paymentDelivery',
                     'shrnuti' => 'summary',
-                    'dokonceni' => 'complete'
+                    'dokonceni' => 'complete',
+                    'obchodni-podminky' => 'tradeTerms',
+                    'napiste-nam' => 'tellUs',
+                    'kontakt' => 'contact'
                 ),
             ),
             'id' => NULL,
