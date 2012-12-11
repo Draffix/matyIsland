@@ -161,7 +161,7 @@ body{
     font-size:11px;
     color:#565656;
 }
-.review a, .item a{
+.review a {
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
     color:#4B4B4B;
@@ -185,7 +185,7 @@ body{
 
 /* nové zboží na úvodní straně včetně nadpisu novinky*/
 #inside{
-    padding:15px 0 0 -10px;
+    padding:0px 0px 0px 10px;
     float:left;
 }
 
@@ -213,6 +213,12 @@ body{
     padding:0 0 12px 0
 }
 
+#news {
+    margin-left: 0px; 
+    margin-top: 5px; 
+    margin-bottom: 0px; 
+}
+
 /* nové zboží na úvodní stránce bez nadpisu novinky */
 #items{
     float:left;
@@ -222,31 +228,82 @@ body{
 .item{
     width:215px;
     border:1px solid #BBBBBB;
-    margin:10px 6px 0 0px;
+    margin:10px 6px 0px 0px;
     float:left;
+    height: 300px;
+    position: relative;
+    border-color: #D4D4D4;
+    border-style: solid;
+    border-width: 1px 1px 1px;
+    background-color:#F4F8EE;
 }
+
+/* nadpis produktu */
 .item p{
     display:block;
-    line-height:23px;
+    line-height:30px;
     background-color:#F4F8EE;
     padding:0 0 0 10px;
     float:left;
-    width:149px;
+    width:205px;
 }
+
+.item a{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    color:#4B4B4B;
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+.item img {
+    padding-left: 30px
+}
+
+.store {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    float: right;
+    padding-right: 20px;
+    color:#4B4B4B;
+}
+
+.describe {
+    display:block;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    margin: 10px 10px 10px 10px;
+}
+
 .price{
     display:block;
-    width:54px;
+    width:70px;
     float:left;
-    background-color:#3792AE;
+    background-color:#4ca849;
     text-align:center;
     font-size:12px;
     font-family:Arial, Helvetica, sans-serif;
     color:#FFFFFF;
     font-weight:bold;
-    line-height:23px;
+    margin-top: 2px;
+    line-height:26px;
+    margin-left: 10px;
+    -moz-border-radius:20px;
+    -webkit-border-radius:20px;
 }
 .center{
     margin:10px 10px 0 10px;
+}
+
+.btn-into-basket input[name=addCart] {
+    background:transparent url('../images/info/btn-into-basket2.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 116px;
+    height: 35px;
+    float: right;
+    margin-right: 0px; 
+    cursor: pointer;
 }
 
 /* pro všechno co je uvnitř */
@@ -297,6 +354,48 @@ body{
 .inside-content #list ul li { 
     line-height:20px;
     padding-top: 5px;
+}
+/* END OF LIST */
+
+/* BUTTON SEND */
+.inside-content input[name=send] {
+    background:transparent url('../images/info/button_send.png') no-repeat top left;
+    border: 0;
+    color: transparent;
+    width: 116px;
+    height: 35px;
+    float: right;
+    margin-top: 10px;
+    cursor: pointer;
+}
+/* END OF BUTTON SEND */
+
+/*** FLASH MESSAGES ***/
+div.flash {
+    padding: .8em;
+    margin-bottom: 1em;
+    border: 2px solid #ddd;
+}
+
+div.flash.success {
+    background: #E6EFC2;
+    color: #264409;
+    border-color: #C6D880;
+}
+
+div.flash.info {
+    display:inline-block;
+    float: right;
+    background: #FFF6BF;
+    color: #514721;
+    border-color: #FFD324;
+    margin-right: 15px;
+}
+
+div.flash.error {
+    background: #FBE3E4;
+    color: #8a1f11;
+    border-color: #FBC2C4;
 }
 
 #footer{
