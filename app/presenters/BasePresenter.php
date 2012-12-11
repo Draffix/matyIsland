@@ -32,7 +32,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->category = $this->context->category;
         $this->basket = $this->context->basket;
         $this->users = $this->context->users;
-        
+
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
         @session_start();
     }
@@ -89,7 +89,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             $ip = $_SERVER['REMOTE_ADDR'];
             $q = $quantity;
             $product = $id;
-            
+
             // uložení údajů do pole
             $items = array('basket_session_id' => $s, 'user_id' => $u, 'basket_ip_address' => $ip,
                 'basket_quantity' => $q);
@@ -106,4 +106,5 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
         $this->presenter->redirect('this');
     }
+
 }
