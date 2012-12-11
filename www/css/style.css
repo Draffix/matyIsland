@@ -69,7 +69,7 @@ body{
 
 /* navigace a obsah */
 #content{
-    width:923px;
+    width:1000px;
     overflow:hidden;
     float:left;
     padding:0 0 7px 0;
@@ -257,6 +257,46 @@ body{
     background-color: #ececec;
     -moz-border-radius:20px;
     -webkit-border-radius:20px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 16px;
+    font-family: Arial
+}
+
+.inside-content h2 {
+    font-weight:200;
+    color: #888888;
+    font-size:16pt;
+    background: transparent url(../img/h1.png) no-repeat center left;
+    margin:7px 5px 8px 8px;
+}
+
+.inside-content h4 {
+    padding:1px; 
+    font-size:10pt;
+    font-weight: bold;
+    text-transform:uppercase;
+    padding-top: 10px;
+}
+
+.inside-content p {
+    padding-top: 5px;
+    padding-right: 15px;
+    font-size: 14px;
+}
+
+/* LIST */
+.inside-content #list {
+}
+.inside-content #list ul { 
+    list-style-image: url("../images/arrow.png");
+    font-size:16px;
+    padding-left: 40px;
+}
+.inside-content #list ul li { 
+    line-height:20px;
+    padding-top: 5px;
 }
 
 #footer{
