@@ -104,7 +104,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             }
         }
 
-        $this->presenter->redirect('this');
+        $this->presenter->redirect('Basket:');
     }
 
 }
