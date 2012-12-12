@@ -63,7 +63,7 @@ $container->router[] = new Route('produkt/<id>-<titleProduct>', array(
     'action' => 'default'
 ));
 
-$container->router[] = new Route('[<presenter>[/<action>[/<id>]]]', array(
+$container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<paginator-page>', array(
             'presenter' => array(
                 Route::VALUE => 'Homepage',
                 Route::FILTER_TABLE => array(
@@ -89,7 +89,6 @@ $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]', array(
             ),
             'id' => NULL,
         ));
-
 
 // Configure and run the application!
 $container->application->run();
