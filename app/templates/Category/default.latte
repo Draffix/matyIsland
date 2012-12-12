@@ -1,9 +1,16 @@
 {block content}
-{foreach $category as $cat}
-<div id="items">
-    <div class="item">
-        <a href="#"><img src={$cat->image_path|dataStream} width="213" height="192" /></a><br />
-        <p><a href="#">{$cat->prod_name}</a></p><span class="price">{$cat->prod_price}</span><br />
+<div id="items" style="margin-left: 10px">
+            {foreach $category as $cat}
+    <div class="item">        
+        <p><a n:href="Product: $cat->prod_id, $cat->prod_name">{$cat->prod_name}</a></p>
+        <br />
+        <a n:href="Product: $cat->prod_id, $cat->prod_name">
+            <img src={$cat->image_path|dataStream} width="150" height="150" /></a>
+        <br />
+        <span class="describe">{$cat->prod_describe|truncate:60}</span>
+        <span class="store">Skladem</span><br>
+        <span class="price">{$cat->prod_price},- Kč</span>
+        <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
     </div>
+            {/foreach}
 </div>
-{/foreach}
