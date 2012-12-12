@@ -12,15 +12,32 @@ class HomepagePresenter extends BasePresenter {
     protected $users;
 
     /* zaregistruji si všechny potřebné služby v Homepage */
+
     protected function startup() {
         parent::startup();
         $this->products = $this->context->product;
         $this->users = $this->context->users;
     }
 
+    protected function createComponentPaginator() {
+        $visualPaginator = new VisualPaginator();
+        return $visualPaginator;
+    }
+
     public function renderDefault() {
-        $this->template->mainProducts = $this->mainProduct->fetchImagesAndNews();
         $this->template->usersData = $this->users->find($this->getUser()->getId()); //v templatu mám k dispozici všechny údaje z přihlášeného ID
+
+        $model = $this->products;
+        $paginator = $this['paginator']->getPaginator();
+        $paginator->itemsPerPage = 5;
+        $paginator->setBase(1);
+        $paginator->itemCount = $model->countNews()->pocet;
+        $mainProducts = $model->fetchImagesAndNews($paginator->itemsPerPage, $paginator->offset);
+
+        $this->template->mainProducts = $mainProducts;
+        if ($this->isAjax()) {
+            $this->invalidateControl('list');
+        }
     }
 
 }
