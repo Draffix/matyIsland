@@ -16,13 +16,22 @@ class ProductModel extends Table {
      * Vrací řádky, které obsahují nové produkty a jejich obrázky
      * @return type
      */
-    public function fetchImagesAndNews() {
+    public function fetchImagesAndNews($limit, $offset) {
         return $this->connection->query(
-            'SELECT product.prod_id, product.prod_name, product.prod_price, product.prod_describe,
+                        'SELECT product.prod_id, product.prod_name, product.prod_price, product.prod_describe,
             image.image_id, image.image_path, image.product_prod_id
             FROM product, image 
             WHERE product.prod_id = image.product_prod_id 
-            AND product.prod_isnew = 1');
+            AND product.prod_isnew = 1
+            ORDER BY product.prod_id DESC LIMIT ? OFFSET ?', $limit, $offset);
+    }
+
+    public function countNews() {
+        return $this->connection->query(
+                        'SELECT COUNT(*) AS pocet FROM product, image 
+            WHERE product.prod_id = image.product_prod_id 
+            AND product.prod_isnew = 1'
+        )->fetch();
     }
 
     /**
