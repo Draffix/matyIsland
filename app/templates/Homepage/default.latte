@@ -10,6 +10,7 @@
             <a href="#" class="more"><img src="images/more.gif" alt="" width="106" height="28" /></a>					
         </div>-->
         <div id="news"><img src="{$basePath}/images/novinky.jpg" alt="" width="159" height="17" /></div>
+        {snippet list}
         <div id="items">
             {foreach $mainProducts as $mainProduct}
             <div class="item">        
@@ -25,6 +26,9 @@
             </div>
             {/foreach}
         </div>
+
     </div>
+        {control paginator}
+        {/snippet}
 </div>
 {/block}
