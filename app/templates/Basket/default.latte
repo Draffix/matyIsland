@@ -38,7 +38,10 @@ $(document).ready(function(){
         <table width="635" border="0" cellpadding="6" cellspacing="0">
             <?php 
             if(!isset($_SESSION["cart"]) || $_SESSION["cart"]==null) { ?>
-            <p> Nemáte nic v košíku </p>
+            <div id="notice" style="margin-top: 10px; margin-left: 25px; width: 595px">Momentálně nemáte v košíku vloženo žádné zboží.</div>
+            <div id="complete" style="margin-top: 20px">
+                <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
+            </div>
             <?php } else { ?>
             <tr class="header-wrapper">
                 <th colspan="2" scope="col">Název produktu</th>
@@ -79,6 +82,6 @@ $(document).ready(function(){
     </div>
     <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
     <a n:href="Order:"><input type="button" name="continue"/></a>
-    </div>
-    <?php } ?>
+</div>
+<?php } ?>
 </div>
