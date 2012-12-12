@@ -1,10 +1,65 @@
 {block content}
+<script type="text/javascript">
+$(document).ready(function(){
+    //  When user clicks on tab, this code will be executed
+    $("#tabs li").click(function() {
+        //  First remove class "active" from currently active tab
+        $("#tabs li").removeClass('active');
+ 
+        //  Now add class "active" to the selected/clicked tab
+        $(this).addClass("active");
+ 
+        //  Hide all tab content
+        $(".tab_content").hide();
+ 
+        //  Here we get the href value of the selected tab
+        var selected_tab = $(this).find("a").attr("href");
+ 
+        //  Show the selected tab content
+        $(selected_tab).fadeIn();
+ 
+        //  At the end, we add return false so that the click on the link is not executed
+        return false;
+    });
+});
+</script>
+<div class="inside-content" style="padding-top: 0px; padding-left: 0px; padding-right: 0px; width: 650px">
+    <div class="itemDetail">        
+        <p><a n:href="Product: $product->prod_id, $product->prod_name">{$product->prod_name}</a>
+            <span class="price">{$product->prod_price},- Kč</span>
+            <span class="priceText">Naše cena s DPH:</span>
+        </p>
+        <br />
+        <span class="itemImage"><a n:href="Product: $product->prod_id, $product->prod_name">
+                <img src={$product->image_path|dataStream} width="150" height="150" /></a></span>
+        <br />
+        <span class="describe">{$product->prod_describe}</span><br>
 
-<div id="items">
-    <div class="item">
-        <a href="#"><img src={$product->image_path|dataStream} width="213" height="192" /></a><br />
-        <p><a href="#">{$product->prod_name}</a></p>
-        <span class="price">{$product->prod_price}</span><br />
-        <a n:href="addCart! $product->prod_id, 1">Vložit do košíku</a>
+        <div style="width: 200px; float: right;">
+            <span class="rating">Hodnocení:</span><br>
+            <span class="ratingImage" style="padding-left: 30px"><img src="{$basePath}/images/info/stars.jpg"/></span><br>
+            <span class="delivery">Doprava: <b>2-3 pracovní dny</b></span><br>
+            <span class="store">Dostupnost: <b>skladem</b></span><br>
+            <a n:href="addCart! $product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+        </div>
+    </div>
+
+    <div id="tabs_container">
+        <ul id="tabs">
+            <li class="active"><a class="icon_accept" href="#tab1">Podrobnější popis</a></li>
+            <li><a class="icon_accept" href="#tab2">Obrázky</a></li>
+            <li><a class="icon_accept" href="#tab3">Komentáře</a></li>
+        </ul>
+    </div>
+    <div id="tabs_content_container">
+        <div id="tab1" class="tab_content" style="display: block;">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer laoreet placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. Proin nunc erat, gravida a facilisis quis, ornare id lectus. Proin consectetur nibh quis urna gravida mollis.</p>
+        </div>
+        <div id="tab2" class="tab_content">
+            <p>This tab has icon in it.</p>
+        </div>
+        <div id="tab3" class="tab_content">
+            <p>Suspendisse blandit velit eget erat suscipit in malesuada odio venenatis.</p>
+        </div>
     </div>
 </div>
