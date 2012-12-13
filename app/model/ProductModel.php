@@ -13,7 +13,8 @@ class ProductModel extends Table {
     protected $tableName = 'product';
 
     /**
-     * Vrací řádky, které obsahují nové produkty a jejich obrázky
+     * Vrací řádky, které obsahují nové produkty a jejich obrázky. Je dán limit
+     * a offset pro stránkování
      * @return type
      */
     public function fetchImagesAndNews($limit, $offset) {
@@ -26,12 +27,16 @@ class ProductModel extends Table {
             ORDER BY product.prod_id DESC LIMIT ? OFFSET ?', $limit, $offset);
     }
 
+    /**
+     * Vrací počet všech nejnovějších produktů pro stránkování
+     * @return type
+     */
     public function countNews() {
         return $this->connection->query(
                         'SELECT COUNT(*) AS pocet FROM product, image 
             WHERE product.prod_id = image.product_prod_id 
             AND product.prod_isnew = 1'
-        )->fetch();
+                )->fetch();
     }
 
     /**
@@ -67,7 +72,7 @@ class ProductModel extends Table {
     }
 
     /**
-     * Vrací celkový počet produktů a celkovou cenu
+     * Vrací celkový počet produktů a celkovou cenu košíku
      * podle id uživatele
      * @param type $user
      * @return type
@@ -78,6 +83,17 @@ class ProductModel extends Table {
                         FROM product, basket
                         WHERE product.prod_id = basket.product_prod_id 
                         AND user_id = ?', $user)->fetch();
+    }
+
+    public function searchProduct($text) {
+        return $this->connection->query(
+                        'SELECT * FROM product, image 
+                        WHERE product.prod_id = image.product_prod_id
+                        AND prod_describe LIKE ? 
+                        OR prod_name LIKE ?
+                        OR prod_producer LIKE ?
+                        GROUP BY prod_id
+                        ', $text, $text, $text)->fetchAll();
     }
 
 }
