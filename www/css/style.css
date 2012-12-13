@@ -19,13 +19,12 @@ body{
 
 /* přihlásit se, registrovat se */
 .topnav{
-    width:534px;
+    width:600px;
     float:left;
-    border-top:5px solid #E3E1D5;
-    padding:17px 0 0 148px;
+    padding:0px 0 0 80px;
     font-family:Arial, Helvetica, sans-serif;
     font-size:11px;
-    color:#0D0D0D
+    color:#0D0D0D;
 }
 .topnav a{
     color:#0D0D0D;
@@ -33,15 +32,7 @@ body{
 }
 .topnav a:visited{text-decoration:none}
 .topnav a:hover{text-decoration:underline}
-.topnav select{
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:11px;
-    color:#0D0D0D;
-    height:18px;
-    width:160px;
-    margin:0 42px 0 19px;
-    float:left;
-}
+
 .topnav img{
     float:left;
     margin:0 2px;
@@ -49,14 +40,67 @@ body{
 .topnav span{
     display:block;
     float:left;
-    margin:0 10px 0 0
+    margin:17px 10px 0 60px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+}
+
+.topnav img[id=userIcon] {
+    height: 12px;
+    width: 12px;
+    padding: 2px 5px 0 0;
+}
+
+.topnav img[id=regIcon] {
+    height: 12px;
+    width: 12px;
+    float: right;
+    padding: 2px 0px 0 2px;
+}
+
+.topnav .cart {
+    margin-top: -105px;
+    height:90px;
+    float: right;
+    width: 210px;
+    padding:5px 0 0 10px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    background: transparent url(../images/info/bg-cart.png) no-repeat center left;
+    border:1px solid #BBBBBB;
+    border-color: #D4D4D4;
+    border-style: solid;
+    border-width: 0px 1px 1px;
+    -moz-border-radius:20px;
+    border-radius: 0px 0px 10px 10px;
+
+}
+
+.topnav .cart img {
+    float: left;
+    margin-right: -20px;
+    padding-top: 20px;
+}
+
+.topnav .cart strong {
+    display: inline;
+    font-size:17px;
+    margin: 5px 5px 3px 15px;
+}
+
+.topnav .cart .priceCount {
+    padding:0px 0px 5px 2px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    float: right;
+    margin: 10px 5px 0 0;
 }
 
 /* katalog, přihlásit se, registrovat se, nákupní košík */
 #menu{
     display:block;
     float:left;
-    margin:53px 0 0 16px;
+    margin:0px 0 0 16px;
 }
 #menu li{
     display:inline;
@@ -113,17 +157,6 @@ body{
 #navigation a{
     text-decoration: none;
     color: #000;
-}
-
-/* nákupní košík v navigaci */
-#cart{
-    height:60px;
-    line-height:16px;
-    margin:35px 0 0 0;
-    padding:9px 0 0 50px;
-    background-image:url(../images/cart_bg2.jpg);
-    background-position:top left;
-    background-repeat:no-repeat;
 }
 
 /* kategorie v navigaci */
