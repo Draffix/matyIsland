@@ -6,14 +6,25 @@
             <strong>Vítejte {$usersData->user_login}</strong> &nbsp;            
             <a n:href="signOut!">Odhlásit se</a>
             {else}
-            <a n:href="Login:">Přihlásit</a> &nbsp; | &nbsp; <a n:href="Registration:">Registrovat se</a></span> 
+            <a n:href="Login:">Přihlásit<img id="userIcon" src="{$basePath}/images/info/user.png"></a>&nbsp; | &nbsp; <a n:href="Registration:"><img id="regIcon" src="{$basePath}/images/info/pencil.png">Registrovat se</a></span> 
             {/if}
 
-        <select>
-            <option>Typ produktu</option>
-            <option>Hračky</option>
-            <option>Doplňky pro pokojíčky</option>
-        </select>
+        {form search class => 'form-wrapper cf'}
+            {input search placeholder => 'Hledaný výraz...'}
+        <button>{input btnSearch}</button>
+
+        {/form}
+
+        <a n:href="Basket:">
+            <div class="cart">
+                <strong>Váš nákupní košík:</strong>
+                <img src="{$basePath}/images/info/mini-cart.png"/>
+                <span class="priceCount">
+                    Cena nákupu: {$_SESSION["totalPrice"]} Kč <br /> 
+                    Počet položek: {$_SESSION["count"]} <br />
+                </span>
+            </div>
+        </a>
     <!--<span>Language:</span> <a href="#"><img src="{$basePath}/images/flag1.jpg" alt="" width="21" height="13" /></a> <a href="#"><img src="{$basePath}/images/flag2.jpg" alt="" width="21" height="13" /></a> <a href="#"><img src="{$basePath}/images/flag3.jpg" alt="" width="21" height="13" /></a>-->
     </div>
     <ul id="menu">
