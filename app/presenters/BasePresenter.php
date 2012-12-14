@@ -107,18 +107,21 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->presenter->redirect('Basket:');
     }
 
-    protected function createComponentSearch() {
+    protected function createComponentHledej() {
         $form = new UI\Form;
+        $form->setMethod('GET');
+
         $form->addText('search')
                 ->addRule($form::FILLED);
         $form->addButton('btnSearch', 'Hledat');
-        $form->onSuccess[] = callback($this, 'searchSubmitted');
+        $form->onSuccess[] = callback($this, 'hledejSubmitted');
         return $form;
     }
 
-    public function searchSubmitted(UI\Form $form) {
+    public function hledejSubmitted(UI\Form $form) {
         $values = $form->getValues();
-        $_SESSION["search"] = $this->mainProduct->searchProduct('%'.$values->search.'%');     
+        unset($values['btnSearch']);
+        $this->redirect('Search:s', $values->search);
     }
 
 }
