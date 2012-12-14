@@ -17,7 +17,7 @@
                 <p><a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">{$mainProduct->prod_name}</a></p>
                 <br />
                 <a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">
-                    <img src="{$basePath}/images/products/{$mainProduct->image_path}" width="150" height="150" /></a>
+                    <img src="{$basePath}/images/products/{$mainProduct->image_name}" width="150" height="150" /></a>
                 <br />
                 <span class="describe">{$mainProduct->prod_describe|truncate:60}</span>
                 <span class="store">Skladem</span><br>

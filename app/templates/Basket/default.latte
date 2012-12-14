@@ -55,7 +55,7 @@ $(document).ready(function(){
     {form updateForm}
             <tr>
         {input product_id value => $product->prod_id}
-                <td width="113"><img src={$product->image_path|dataStream} width="113" height="92" /></td>
+                <td width="113"><img src="{$basePath}/images/products/{$product->image_name}" width="113" height="92" /></td>
                 <td width="207"><a n:href="Product: $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
                 <td>{$product->prod_price},- Kč</td>
                 <td>

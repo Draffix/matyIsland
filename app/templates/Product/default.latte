@@ -31,7 +31,7 @@ $(document).ready(function(){
         </p>
         <br />
         <span class="itemImage"><a n:href="Product: $product->prod_id, $product->prod_name">
-                <img src={$product->image_path|dataStream} width="150" height="150" /></a></span>
+                <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a></span>
         <br />
         <span class="describe">{$product->prod_describe}</span><br>
 
