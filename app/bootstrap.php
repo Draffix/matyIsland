@@ -63,7 +63,7 @@ $container->router[] = new Route('produkt/<id>-<titleProduct>', array(
     'action' => 'default'
 ));
 
-$container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<paginator-page>', array(
+$container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<paginator-page> ', array(
             'presenter' => array(
                 Route::VALUE => 'Homepage',
                 Route::FILTER_TABLE => array(
@@ -74,11 +74,13 @@ $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<pagina
                     'objednavka' => 'Order',
                     'prihlaseni' => 'Login',
                     'registrace' => 'Registration',
+                    'vyhledavani' => 'Search',
                 ),
             ),
             'action' =>  array(
                 Route::VALUE => 'default',
                 Route::FILTER_TABLE => array(
+                    // řetězec v URL => akce
                     'platba-doprava' => 'paymentDelivery',
                     'shrnuti' => 'summary',
                     'dokonceni' => 'complete',
