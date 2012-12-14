@@ -1,0 +1,18 @@
+{block content}
+<div id="inside" style="width: 700px">
+    <div id="items" style="margin-left: 10px">
+            {foreach $search as $s}
+        <div class="item">        
+            <p><a n:href="Product: $s->prod_id, $s->prod_name">{$s->prod_name}</a></p>
+            <br />
+            <a n:href="Product: $s->prod_id, $s->prod_name">
+                <img src={$s->image_path|dataStream} width="150" height="150" /></a>
+            <br />
+            <span class="describe">{$s->prod_describe|truncate:60}</span>
+            <span class="store">Skladem</span><br>
+            <span class="price">{$s->prod_price},- Kč</span>
+            <a n:href="addCart! $s->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+        </div>
+            {/foreach}
+    </div>
+</div>
