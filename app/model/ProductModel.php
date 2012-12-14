@@ -87,13 +87,14 @@ class ProductModel extends Table {
 
     public function searchProduct($text) {
         return $this->connection->query(
-                        'SELECT * FROM product, image 
-                        WHERE product.prod_id = image.product_prod_id
-                        AND prod_describe LIKE ? 
-                        OR prod_name LIKE ?
-                        OR prod_producer LIKE ?
-                        GROUP BY prod_id
-                        ', $text, $text, $text)->fetchAll();
+                        'SELECT product.prod_id, product.prod_name, product.prod_price, product.prod_describe,
+            image.image_id, image.image_path, image.product_prod_id
+            FROM product, image 
+            WHERE product.prod_id = image.product_prod_id
+            AND product.prod_name LIKE ?
+            OR product.prod_describe LIKE ?
+            GROUP BY product.prod_id
+                        ', $text, $text)->fetchAll();
     }
 
 }
