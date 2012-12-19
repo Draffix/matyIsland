@@ -668,7 +668,97 @@ div.flash.error {
     display: none;
 }
 
+/* COMMENT FORM */
+
+.comment-form {
+    border: solid 1px #ccc;
+    padding: 0 0 5px 10px;
+}
+
+.comment-form input, textarea {
+    padding: 5px;
+    border: solid 1px #E5E5E5;
+    outline: 0;
+    font: normal 13px/100% Verdana, Tahoma, sans-serif;
+    width: 200px;
+    background: #FFFFFF url('bg_form.png') left top repeat-x;
+    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
+    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
+    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+}
+.comment-form textarea {
+    width: 400px;
+    max-width: 400px;
+    height: 75px;
+    line-height: 150%;
+    margin-top: -10px;
+    margin-left: 50px;
+}
+
+.comment-form .name input{
+    margin-left: 2px;
+}
+
+.comment-form input:hover, textarea:hover,
+.comment-form input:focus, textarea:focus {
+    border-color: #C9C9C9;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
+}
+.comment-form .form label {
+    margin-left: 10px;
+    color: #999999;
+}
+.comment-form input[name=btnComment] {
+    width: auto;
+    padding: 9px 15px;
+    margin-left: 380px;
+    background: #617798;
+    border: 0;
+    font-size: 14px;
+    color: #FFFFFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+/* COMMENT LIST */
+.commment-list {
+    font: normal 13px/100% Verdana, Tahoma, sans-serif;
+}
+
+.commment-list .subject {
+    font-weight: 600;
+    padding-top: 15px;
+}
+
+.commment-list .login {
+    font-size: 12px;
+}
+
+.commment-list .date {
+    font-size: 10px;
+}
+
+.commment-list .text {
+    padding: 10px 0 10px 0;
+}
+
+.commment-list .separator {
+    border: 1px solid #ccc;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+
+.zeroCom {
+    margin-top: 15px;
+}
+
+/******************/
 /* NOTICE MESSAGE */
+/******************/
+
 #notice {
     border: 1px solid #B0B0B0;
     padding: 1ex;
