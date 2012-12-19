@@ -1,0 +1,26 @@
+{block content}
+<div class="ratingblock">
+    <div id="unit_long2id">  
+        <ul id="unit_ul2id" class="unit-rating" style="width:150px;">  
+            <li class="current-rating" style="width:{($rating_unitwidth) * $rating1}px;"></li>
+            {for $ncount = 1; $ncount <= $units; $ncount++}
+            {if !$voted}
+            <li><a n:href="rate! $ncount, $id, $ip, $units" title="{$ncount} z {$units}" class="r{$ncount}-unit rater" rel="nofollow">{$ncount}</a></li>
+            {/if}
+            {/for}
+            <?php $ncount = 0 ?>
+        </ul>
+        <?php
+        if ($count == 1) {
+        $tense = 'hlas';
+        } elseif ($count >= 2 && $count <= 4) {
+        $tense = 'hlasy';
+        } elseif ($count == 0 || $count >= 5) {
+        $tense = 'hlasů';
+        }
+        ?>
+        <span class="rating" style="padding-top: 5px">Hodnocení: <strong> {$rating1} </strong> ({$count} {$tense})</span>
+        {if $voted}
+        {/if}
+    </div>
+</div>
