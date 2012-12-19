@@ -1,4 +1,7 @@
 <?php
+
+use Nette\Application\UI;
+
 class ProductPresenter extends BasePresenter {
 
     /**
@@ -33,6 +36,37 @@ class ProductPresenter extends BasePresenter {
         if ($this->template->product === FALSE) {
             $this->setView('notFound');
         }
+        
+        $this->template->comments = $this->products->fetchAllComments($id);
+        $this->template->countComments = $this->products->countAllComments($id);
     }
+
+    protected function createComponentCommentForm() {
+        $commentForm = new UI\Form();
+        $commentForm->addText('name', 'Jméno: ')
+                ->addRule($commentForm::FILLED)
+                ->setAttribute('readonly');
+        $commentForm->addText('com_subject', 'Nadpis: ')
+                ->addRule($commentForm::FILLED);
+        $commentForm->addTextArea('com_text', 'Text: ')
+                ->addRule($commentForm::FILLED);
+        $commentForm->addSubmit('btnComment');
+
+        $commentForm->onSuccess[] = callback($this, 'validSubmitCommentForm');
+        return $commentForm;
+    }
+
+    public function validSubmitCommentForm(UI\Form $commentForm) {
+        $values = $commentForm->getValues();
+        unset($values['name']);
+
+        $values['com_date'] = new DateTime();
+        $values['product_prod_id'] = (int) $this->getParam('id');
+        $values['user_user_id'] = $this->getUser()->getId();
+
+        $id = $this->products->insertComment($values);
+        $this->flashMessage('Komentář uložen!');
+        $this->redirect("this#comment-$id");
+     }
 
 }
