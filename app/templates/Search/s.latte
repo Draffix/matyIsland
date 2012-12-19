@@ -1,5 +1,18 @@
 {block content}
 <div id="inside" style="width: 700px">
+    {if $count == 0}
+    <div id="fail">
+        <img src="{$basePath}/images/info/fail.png" style="float: left">
+        <p>Pro hledanou frázi <b>"{$word}"</b> nebyly nalezeny žádné výsledky</p></div>
+    <div id="complete" style="margin-top: 20px">
+        * Zkontrolujte prosím, zda ve vyhledávaném výrazu nemáte překlep.<br>
+        * Zkuste hledat obecnější výraz. <br>
+        <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
+    </div>
+    {else}
+    <div id="valid">
+    <img src="{$basePath}/images/info/valid.png" style="float: left">
+    <p>Pro hledanou frázi <b>"{$word}"</b> bylo nalezeno <b>{$count} produktů</b></p></div>
     <div id="items" style="margin-left: 10px">
             {foreach $search as $s}
         <div class="item">        
@@ -15,4 +28,6 @@
         </div>
             {/foreach}
     </div>
+    {control paginator}
+    {/if}
 </div>
