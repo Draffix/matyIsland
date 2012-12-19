@@ -85,16 +85,29 @@ class ProductModel extends Table {
                         AND user_id = ?', $user)->fetch();
     }
 
-    public function searchProduct($text) {
+    public function searchProduct($text, $limit, $offset) {
         return $this->connection->query(
-                        'SELECT product.prod_id, product.prod_name, product.prod_price, product.prod_describe,
-            image.image_id, image.image_name, image.product_prod_id
-            FROM product, image 
-            WHERE product.prod_id = image.product_prod_id
-            AND product.prod_name LIKE ?
-            OR product.prod_describe LIKE ?
-            GROUP BY product.prod_id
-                        ', $text, $text)->fetchAll();
+                        'SELECT product.prod_id, product.prod_name, product.prod_price, 
+                        product.prod_describe, product.prod_producer,
+                        image.image_id, image.image_name, image.product_prod_id
+                        FROM product
+                        LEFT JOIN image ON product.prod_id = image.product_prod_id
+                        WHERE product.prod_name LIKE ?
+                        OR product.prod_describe LIKE ?
+                        OR product.prod_producer LIKE ?
+                        ORDER BY product.prod_name ASC LIMIT ? OFFSET ?
+                        ', $text, $text, $text, $limit, $offset);
+    }
+    
+    public function countSearchProduct($text) {
+                return $this->connection->query(
+                        'SELECT COUNT(*) AS pocet 
+                        FROM product, image
+                        WHERE product.prod_id = image.product_prod_id
+                        AND (product.prod_name LIKE ?
+                        OR product.prod_describe LIKE ?
+                        OR product.prod_producer LIKE ?)
+                        ', $text, $text, $text)->fetch();
     }
 
 }
