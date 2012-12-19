@@ -1,22 +1,10 @@
 <?php
-
-/**
- * Description of ProductPresenter
- *
- * @author Draffix
- */
 class ProductPresenter extends BasePresenter {
 
     /**
      * @var MatyIsland\ProductModel
      */
     protected $products;
-
-    /**
-     * Hodnota vhozených mincí.
-     * @persistent - proměnná se přenáší mezi HTTP požadavky
-     */
-    public $money;
 
     /**
      * (non-phpDoc)
@@ -28,15 +16,23 @@ class ProductPresenter extends BasePresenter {
         $this->products = $this->context->product;
     }
 
+    protected function createComponentRating() {
+        $rating = new Rating();
+        return $rating;
+    }
+
     public function actionAddcart() {
         $this->setView('notFound');
     }
 
     public function renderDefault($id = 0, $titleProduct = '') {
+        $control = $this->getComponent('rating');
+        $_SESSION['productID'] = $id;
+
         $this->template->product = $this->products->fetchImagesAndAll($id, $titleProduct);
-        $this->template->price = $this->money;
         if ($this->template->product === FALSE) {
             $this->setView('notFound');
         }
     }
+
 }
