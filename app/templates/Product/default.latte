@@ -34,10 +34,10 @@ $(document).ready(function(){
                 <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a></span>
         <br />
         <span class="describe">{$product->prod_describe}</span><br>
-
         <div style="width: 200px; float: right;">
-            <span class="rating">Hodnocení:</span><br>
-            <span class="ratingImage" style="padding-left: 30px"><img src="{$basePath}/images/info/stars.jpg"/></span><br>
+                {control rating}
+            <br>
+            <br>
             <span class="delivery">Doprava: <b>2-3 pracovní dny</b></span><br>
             <span class="store">Dostupnost: <b>skladem</b></span><br>
             <a n:href="addCart! $product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
@@ -53,13 +53,23 @@ $(document).ready(function(){
     </div>
     <div id="tabs_content_container">
         <div id="tab1" class="tab_content" style="display: block;">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer laoreet placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. Proin nunc erat, gravida a facilisis quis, ornare id lectus. Proin consectetur nibh quis urna gravida mollis.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. 
+                Integer laoreet placerat suscipit. Sed sodales scelerisque commodo. 
+                Nam porta cursus lectus. Proin nunc erat, gravida a facilisis quis, ornare id lectus. 
+                Proin consectetur nibh quis urna gravida mollis.</p>
         </div>
         <div id="tab2" class="tab_content">
             <p>This tab has icon in it.</p>
         </div>
         <div id="tab3" class="tab_content">
+            {if $user->isLoggedIn()}
             <p>Suspendisse blandit velit eget erat suscipit in malesuada odio venenatis.</p>
+            {else}
+            <p>Vkládání komentářů a recenzí je umožněno pouze <a n:href="Login:">registrovaným a přihlášeným uživatelům</a></p>
+            <br>
+            <p>K tomuto zboží ještě nenapsal nikdo komentář. <b>Buďte první!</b></p>
+            {/if}
         </div>
     </div>
 </div>
