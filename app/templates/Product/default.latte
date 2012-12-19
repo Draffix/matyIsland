@@ -48,7 +48,7 @@ $(document).ready(function(){
         <ul id="tabs">
             <li class="active"><a class="icon_accept" href="#tab1">Podrobnější popis</a></li>
             <li><a class="icon_accept" href="#tab2">Obrázky</a></li>
-            <li><a class="icon_accept" href="#tab3">Komentáře</a></li>
+            <li><a class="icon_accept" href="#tab3">Komentáře ({$countComments})</a></li>
         </ul>
     </div>
     <div id="tabs_content_container">
@@ -63,12 +63,41 @@ $(document).ready(function(){
             <p>This tab has icon in it.</p>
         </div>
         <div id="tab3" class="tab_content">
-            {if $user->isLoggedIn()}
-            <p>Suspendisse blandit velit eget erat suscipit in malesuada odio venenatis.</p>
-            {else}
+    {if $user->isLoggedIn()}
+            <div class="comment-form">
+            {form commentForm}
+                <p class="name">
+                        {label name/}
+                        {input name value => $usersData->user_login}
+                </p>
+                <p class="subject">
+                        {label com_subject/}
+                        {input com_subject}
+                </p>
+                <p class="text">
+                        {label com_text/}
+                        {input com_text}
+                </p>
+                <p class="submit">
+                        {input btnComment}
+                </p>
+            {/form}
+            </div>
+        {else}
             <p>Vkládání komentářů a recenzí je umožněno pouze <a n:href="Login:">registrovaným a přihlášeným uživatelům</a></p>
-            <br>
-            <p>K tomuto zboží ještě nenapsal nikdo komentář. <b>Buďte první!</b></p>
+    {/if}
+    {if $countComments != 0}
+        {foreach $comments as $comment}
+            <div class="commment-list">
+                <p class="subject">{$comment['com_subject']}</p>
+                <p class="login">{$comment['user_login']}</p>
+                <p class="date">{$comment['com_date']|date:'%d.%m.%Y – %H:%M'}</p>
+                <p class="text">{$comment['com_text']}</p>
+                {sep}<div class="separator"></div>{/sep}
+            </div>
+        {/foreach}
+    {else}
+            <p class="zeroCom">K tomuto zboží ještě nenapsal nikdo komentář. <b>Buďte první!</b></p>
             {/if}
         </div>
     </div>
