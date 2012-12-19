@@ -531,10 +531,6 @@ div.flash.error {
     background-color:#F4F8EE;
 }
 
-.itemDetail img {
-    margin: 10px 10px 10px 10px;
-}
-
 .itemDetail .store {
     font-family:Arial, Helvetica, sans-serif;
     font-size:14px;
@@ -678,6 +674,38 @@ div.flash.error {
     padding: 1ex;
     background-color: #EAEAEA;
     color: #404040;
+}
+
+#valid {
+    border: 1px solid #B0B0B0;
+    padding: 1ex;
+    background-color: #EAEAEA;
+    color: #404040;
+    margin-top: 10px;
+    margin-left: 7px;
+    width: 650px;
+}
+
+#valid p {
+    padding-top: 7px;
+    padding-left: 40px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+#fail {
+    border: 1px solid #B0B0B0;
+    padding: 1ex;
+    background-color: #edb7b7;
+    color: #404040;
+    margin-top: 10px;
+    margin-left: 5px;
+    width: 595px;
+}
+
+#fail p {
+    padding-top: 7px;
+    padding-left: 40px;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 /* STRÁNKOVÁNÍ PRODUKTŮ */
