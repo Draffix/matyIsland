@@ -52,9 +52,9 @@ class LoginPresenter extends BasePresenter {
             if (isset($_SESSION["cart"])) {
                 foreach ($_SESSION["cart"] as $product) {
                     $items = array('basket_session_id' => $s, 'user_id' => $u, 'basket_ip_address' => $ip,
-                        'basket_quantity' => $product->basket_quantity, 'product_prod_id' => $product->product_prod_id);
+                        'basket_quantity' => $product->basket_quantity);
                     if ($this->basket->findProduct($product->product_prod_id, $u) == 0) {
-                        $this->basket->saveItemIntoBasket($items);
+                        $this->basket->saveItemIntoBasket($items, $product->product_prod_id);
                     } else {
                         $this->basket->updateItemIntoBasket($product->product_prod_id, $product->basket_quantity);
                     }
