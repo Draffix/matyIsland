@@ -98,9 +98,9 @@ class ProductModel extends Table {
                         ORDER BY product.prod_name ASC LIMIT ? OFFSET ?
                         ', $text, $text, $text, $limit, $offset);
     }
-    
+
     public function countSearchProduct($text) {
-                return $this->connection->query(
+        return $this->connection->query(
                         'SELECT COUNT(*) AS pocet 
                         FROM product, image
                         WHERE product.prod_id = image.product_prod_id
@@ -110,6 +110,23 @@ class ProductModel extends Table {
                         ', $text, $text, $text)->fetch();
     }
 
-}
+    public function insertComment($values) {
+        $row = $this->connection->table('comments')->insert($values);
+        return $row->com_id;
+    }
 
-?>
+    public function fetchAllComments($product_id) {
+                return $this->connection->query(
+                        'SELECT comments.*, user.user_login
+                        FROM comments, user
+                        WHERE comments.product_prod_id = ?
+                        AND user.user_id = comments.user_user_id
+                        ORDER BY comments.com_date DESC
+                        ', $product_id);
+    }
+
+    public function countAllComments($id) {
+        $row = $this->connection->table('comments')->where('product_prod_id', $id)->count();
+        return $row;
+    }
+}
