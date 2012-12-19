@@ -15,6 +15,7 @@ $("form.ajax :submit").live("click", function () {
     return false;
 });
 
+/* AJAXové volání stránkování */
 $("a.ajax, .paginator a").live("click", function (event) {
     event.preventDefault();
     $.get(this.href);
