@@ -11,15 +11,16 @@
     </div>
     {else}
     <div id="valid">
-    <img src="{$basePath}/images/info/valid.png" style="float: left">
-    <p>Pro hledanou frázi <b>"{$word}"</b> bylo nalezeno <b>{$count} produktů</b></p></div>
+        <img src="{$basePath}/images/info/valid.png" style="float: left">
+        <p>Pro hledanou frázi <b>"{$word}"</b> bylo nalezeno <b>{$count} produktů</b></p></div>
     <div id="items" style="margin-left: 10px">
             {foreach $search as $s}
-        <div class="item">        
+        <div id="item">        
             <p><a n:href="Product: $s->prod_id, $s->prod_name">{$s->prod_name}</a></p>
             <br />
-            <a n:href="Product: $s->prod_id, $s->prod_name">
-                <img src="{$basePath}/images/products/{$s->image_name}" width="150" height="150" /></a>
+            <div style="padding-left: 30px;"><a n:href="Product: $s->prod_id, $s->prod_name">
+                    <img src="{$basePath}/images/products/{$s->image_name}" width="150" height="150" /></a>
+            </div>
             <br />
             <span class="describe">{$s->prod_describe|truncate:60}</span>
             <span class="store">Skladem</span><br>
