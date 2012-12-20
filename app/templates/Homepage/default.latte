@@ -13,7 +13,7 @@
         {snippet list}
         <div id="items">
             {foreach $mainProducts as $mainProduct}
-            <div class="item">        
+            <div id="item">        
                 <p><a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">{$mainProduct->prod_name}</a></p>
                 <br />
                 <div style="padding-left: 30px;"><a n:href="Product: $mainProduct->prod_id, $mainProduct->prod_name">
