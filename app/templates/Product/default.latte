@@ -38,8 +38,8 @@ $(document).ready(function() {
             <span class="priceText">Naše cena s DPH:</span>
         </p>
         <br />
-        <span class="itemImage"><a n:href="Product: $product->prod_id, $product->prod_name">
-                <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a></span>
+        <span class="itemImage"><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
+                <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150"/></a></span>
         <br />
         <span class="describe">{$product->prod_describe}</span><br>
         <div style="width: 200px; float: right;">
@@ -70,8 +70,8 @@ $(document).ready(function() {
         <div id="tab2" class="tab_content">
             <div id="galerie">
                 <ul>
-                    <li><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
-                            <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a>
+                    <li><a href="{$basePath}/images/products/item1.jpg" rel="gallery" class="pirobox_gall">
+                            <img src="{$basePath}/images/products/item1.jpg" width="150" height="150" /></a>
                     </li>
                     <li><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
                             <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a>
