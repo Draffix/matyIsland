@@ -1,11 +1,12 @@
 {block content}
 <div id="items" style="margin-left: 10px">
             {foreach $category as $cat}
-    <div class="item">        
+    <div id="item">        
         <p><a n:href="Product: $cat->prod_id, $cat->prod_name">{$cat->prod_name}</a></p>
         <br />
-        <a n:href="Product: $cat->prod_id, $cat->prod_name">
-            <img src="{$basePath}/images/products/{$cat->image_name}" width="150" height="150" /></a>
+        <div style="padding-left: 30px;"><a n:href="Product: $cat->prod_id, $cat->prod_name">
+                <img src="{$basePath}/images/products/{$cat->image_name}" width="150" height="150" /></a>
+        </div>
         <br />
         <span class="describe">{$cat->prod_describe|truncate:60}</span>
         <span class="store">Skladem</span><br>
