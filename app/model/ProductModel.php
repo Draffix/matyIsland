@@ -4,8 +4,6 @@ namespace MatyIsland;
 
 /**
  * Description of ProductModel
- *
- * @author Draffix
  */
 class ProductModel extends Table {
 
@@ -20,10 +18,11 @@ class ProductModel extends Table {
     public function fetchImagesAndNews($limit, $offset) {
         return $this->connection->query(
                         'SELECT product.prod_id, product.prod_name, product.prod_price, product.prod_describe,
-            image.image_id, image.image_name, image.product_prod_id
+            image.image_id, image.image_name, image.product_prod_id, image.image_is_main
             FROM product, image 
             WHERE product.prod_id = image.product_prod_id 
             AND product.prod_isnew = 1
+            AND image.image_is_main = 1
             ORDER BY product.prod_id DESC LIMIT ? OFFSET ?', $limit, $offset);
     }
 
@@ -45,10 +44,23 @@ class ProductModel extends Table {
      * @return \Nette\Database\Table\ActiveRow|FALSE
      */
     public function fetchImagesAndAll($id) {
-        return $this->connection->query(
-                        'SELECT * FROM product, image 
-             WHERE product.prod_id = image.product_prod_id 
-             AND product.prod_id = ?', $id)->fetch();
+        $images = $this->connection->table('image')->where(array('product_prod_id' => $id, 'image_is_main' => 1))->fetch();
+        return $images;
+
+//        return $this->connection->query(
+//                        'SELECT * FROM product, image 
+//             WHERE product.prod_id = image.product_prod_id 
+//             AND product.prod_id = ?', $id)->fetch();
+    }
+
+    public function fetchAllProductsImages($id) {
+        $images = $this->connection->table('image')->where('product_prod_id', $id);
+        return $images;
+    }
+
+    public function pokus($id) {
+        $images = $this->connection->table("image")->where("product_prod_id", $id)->fetch();
+        \Nette\Diagnostics\Debugger::barDump($images->product->prod_producer);
     }
 
     /**
@@ -64,27 +76,13 @@ class ProductModel extends Table {
     }
 
     /**
-     * Ukládá vložený produkt do tabulky 'basket'
-     * @param type $items
-     */
-    public function saveItemIntoBasket($items) {
-        $this->connection->table('basket')->insert($items);
-    }
-
-    /**
-     * Vrací celkový počet produktů a celkovou cenu košíku
-     * podle id uživatele
-     * @param type $user
+     * Vrací záznamy podle hledaného slova a podle limitu a offsetu
+     * daného v paginatoru
+     * @param type $text
+     * @param type $limit
+     * @param type $offset
      * @return type
      */
-    public function fetchItemsFromBasket($user) {
-        return $this->connection->query(
-                        'SELECT SUM(prod_price) AS totalPrice, SUM( basket_quantity ) AS totalCount
-                        FROM product, basket
-                        WHERE product.prod_id = basket.product_prod_id 
-                        AND user_id = ?', $user)->fetch();
-    }
-
     public function searchProduct($text, $limit, $offset) {
         return $this->connection->query(
                         'SELECT product.prod_id, product.prod_name, product.prod_price, 
@@ -99,6 +97,11 @@ class ProductModel extends Table {
                         ', $text, $text, $text, $limit, $offset);
     }
 
+    /**
+     * Vrací počet nalezených záznamů podle hledaného slova
+     * @param type $text
+     * @return type
+     */
     public function countSearchProduct($text) {
         return $this->connection->query(
                         'SELECT COUNT(*) AS pocet 
@@ -110,23 +113,37 @@ class ProductModel extends Table {
                         ', $text, $text, $text)->fetch();
     }
 
-    public function insertComment($values) {
-        $row = $this->connection->table('comments')->insert($values);
-        return $row->com_id;
+    public function fetchRankValues($productID) {
+        return $this->connection->query('
+                        SELECT total_votes, total_value, used_ips 
+                        FROM product 
+                        WHERE prod_id = ?'
+                        , $productID)->fetch();
     }
 
-    public function fetchAllComments($product_id) {
-                return $this->connection->query(
-                        'SELECT comments.*, user.user_login
-                        FROM comments, user
-                        WHERE comments.product_prod_id = ?
-                        AND user.user_id = comments.user_user_id
-                        ORDER BY comments.com_date DESC
-                        ', $product_id);
+    public function insertRankIfNotExists($totalVotes = 0, $totalValue = 0, $usedIPs = '', $productID) {
+        return $this->connection->query('
+                        UPDATE product 
+                        SET total_votes = ?, total_value = ?, used_ips = ? 
+                        WHERE prod_id = ?'
+                        , $totalVotes, $totalValue, $usedIPs, $productID);
     }
 
-    public function countAllComments($id) {
-        $row = $this->connection->table('comments')->where('product_prod_id', $id)->count();
-        return $row;
+    public function whetherUserVoted($ip, $productID) {
+        return $this->connection->query('
+                        SELECT used_ips 
+                        FROM product 
+                        WHERE used_ips 
+                        LIKE ? AND prod_id= ?
+                        ', $ip, $productID)->rowCount();
     }
+
+    public function updateRank($totalVotes, $totalValue, $usedIPs, $productID) {
+        return $this->connection->query('
+                        UPDATE product 
+                        SET total_votes = ?, total_value = ?, used_ips = ? 
+                        WHERE prod_id = ?'
+                        , $totalVotes, $totalValue, $usedIPs, $productID);
+    }
+
 }
