@@ -9,6 +9,9 @@ class ProductPresenter extends BasePresenter {
      */
     protected $products;
 
+    /** @var MatyIsland\CommentModel * */
+    protected $comments;
+
     /**
      * (non-phpDoc)
      *
@@ -17,10 +20,11 @@ class ProductPresenter extends BasePresenter {
     protected function startup() {
         parent::startup();
         $this->products = $this->context->product;
+        $this->comments = $this->context->comments;
     }
 
     protected function createComponentRating() {
-        $rating = new Rating();
+        $rating = new Rating($this->products);
         return $rating;
     }
 
@@ -33,12 +37,14 @@ class ProductPresenter extends BasePresenter {
         $_SESSION['productID'] = $id;
 
         $this->template->product = $this->products->fetchImagesAndAll($id, $titleProduct);
+        $this->template->images = $this->products->fetchAllProductsImages($id);
         if ($this->template->product === FALSE) {
             $this->setView('notFound');
         }
-        
-        $this->template->comments = $this->products->fetchAllComments($id);
-        $this->template->countComments = $this->products->countAllComments($id);
+
+        //hodnoty z databáze vložíme do šablony
+        $this->template->comments = $this->comments->fetchAllComments($id);
+        $this->template->countComments = $this->comments->countAllComments($id);
     }
 
     protected function createComponentCommentForm() {
@@ -64,9 +70,9 @@ class ProductPresenter extends BasePresenter {
         $values['product_prod_id'] = (int) $this->getParam('id');
         $values['user_user_id'] = $this->getUser()->getId();
 
-        $id = $this->products->insertComment($values);
+        $id = $this->comments->insertComment($values);
         $this->flashMessage('Komentář uložen!');
         $this->redirect("this#comment-$id");
-     }
+    }
 
 }
