@@ -1,12 +1,6 @@
 <?php
 
 namespace MatyIsland;
-use Nette;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 class CategoryModel extends Table {
 

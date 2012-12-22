@@ -2,12 +2,8 @@
 
 namespace MatyIsland;
 
-use Nette\DateTime;
-
 /**
  * Description of ProductModel
- *
- * @author Draffix
  */
 class OrderModel extends Table {
 

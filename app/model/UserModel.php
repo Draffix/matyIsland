@@ -4,8 +4,6 @@ namespace MatyIsland;
 
 /**
  * Description of UserModel
- *
- * @author Draffix
  */
 class UserModel extends Table {
 
