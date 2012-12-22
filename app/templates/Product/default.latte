@@ -33,22 +33,22 @@ $(document).ready(function() {
 </script>
 <div class="inside-content" style="padding-top: 0px; padding-left: 0px; padding-right: 0px; width: 650px">
     <div class="itemDetail">        
-        <p><a n:href="Product: $product->prod_id, $product->prod_name">{$product->prod_name}</a>
-            <span class="price">{$product->prod_price},- Kč</span>
+        <p><a n:href="Product: $product->product->prod_id, $product->product->prod_name">{$product->product->prod_name}</a>
+            <span class="price">{$product->product->prod_price},- Kč</span>
             <span class="priceText">Naše cena s DPH:</span>
         </p>
         <br />
         <span class="itemImage"><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
                 <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150"/></a></span>
         <br />
-        <span class="describe">{$product->prod_describe}</span><br>
+        <span class="describe">{$product->product->prod_describe}</span><br>
         <div style="width: 200px; float: right;">
                 {control rating}
             <br>
             <br>
             <span class="delivery">Doprava: <b>2-3 pracovní dny</b></span><br>
             <span class="store">Dostupnost: <b>skladem</b></span><br>
-            <a n:href="addCart! $product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+            <a n:href="addCart! $product->product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
         </div>
     </div>
 
@@ -70,18 +70,11 @@ $(document).ready(function() {
         <div id="tab2" class="tab_content">
             <div id="galerie">
                 <ul>
-                    <li><a href="{$basePath}/images/products/item1.jpg" rel="gallery" class="pirobox_gall">
-                            <img src="{$basePath}/images/products/item1.jpg" width="150" height="150" /></a>
+                    {foreach $images as $image}
+                    <li><a href="{$basePath}/images/products/{$image->image_name}" rel="gallery" class="pirobox_gall">
+                            <img src="{$basePath}/images/products/{$image->image_name}" width="150" height="150" /></a>
                     </li>
-                    <li><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
-                            <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a>
-                    </li>
-                    <li><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
-                            <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a>
-                    </li>
-                    <li><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
-                            <img src="{$basePath}/images/products/{$product->image_name}" width="150" height="150" /></a>
-                    </li>
+                    {/foreach}
                 </ul>
             </div>
         </div>
