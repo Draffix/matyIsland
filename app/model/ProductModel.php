@@ -19,10 +19,10 @@ class ProductModel extends Table {
     public function fetchImagesAndNews($limit, $offset) {
         return $this->connection->table($this->image)
                         ->where('product.prod_isnew = ?
-                    AND image.image_is_main = ?', array(1, 1))
+                            AND product.prod_is_active = ?
+                            AND image.image_is_main = ?', array(1, 1, 1))
                         ->order('product.prod_id DESC')
                         ->limit($limit, $offset);
-        ;
     }
 
     /**
@@ -32,7 +32,8 @@ class ProductModel extends Table {
     public function countNews() {
         return $this->getTable()
                         ->select('COUNT(*) AS pocet')
-                        ->where('product.prod_isnew = 1')
+                        ->where('product.prod_isnew = ?
+                            AND product.prod_is_active = ?', array(1, 1))
                         ->fetch();
     }
 
@@ -44,7 +45,9 @@ class ProductModel extends Table {
      */
     public function fetchImagesAndAll($id) {
         return $this->connection->table($this->image)
-                        ->where(array('product_prod_id' => $id, 'image_is_main' => 1))
+                ->where('product_prod_id = ?
+                    AND product.prod_is_active = ?
+                    AND image_is_main = ?', array($id, 1, 1))
                         ->fetch();
     }
 
@@ -68,9 +71,10 @@ class ProductModel extends Table {
      */
     public function searchProduct($text, $limit, $offset) {
         return $this->connection->table($this->image)
-                        ->where('product.prod_name LIKE ?
+                        ->where('product.prod_is_active = ?
+                    AND (product.prod_name LIKE ?
                     OR product.prod_describe LIKE ?
-                    OR product.prod_producer LIKE ?', array($text, $text, $text))
+                    OR product.prod_producer LIKE ?)', array(1, $text, $text, $text))
                         ->group('product.prod_id')
                         ->limit($limit, $offset);
     }
@@ -83,9 +87,10 @@ class ProductModel extends Table {
     public function countSearchProduct($text) {
         return $this->getTable()
                         ->select('COUNT(*) AS pocet')
-                        ->where('product.prod_name LIKE ?
+                        ->where('product.prod_is_active = ?
+                    AND (product.prod_name LIKE ?
                     OR product.prod_describe LIKE ?
-                    OR product.prod_producer LIKE ?', array($text, $text, $text))->fetch();
+                    OR product.prod_producer LIKE ?)', array(1, $text, $text, $text))->fetch();
     }
 
     public function fetchRankValues($productID) {
