@@ -42,7 +42,7 @@ class ProductPresenter extends BasePresenter {
             $this->setView('notFound');
         }
 
-        //hodnoty z databáze vložíme do šablony
+        //komentáře z databáze vložíme do šablony
         $this->template->comments = $this->comments->fetchAllComments($id);
         $this->template->countComments = $this->comments->countAllComments($id);
     }
