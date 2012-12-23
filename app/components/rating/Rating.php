@@ -3,12 +3,6 @@
 use Nette\Application\UI;
 
 class Rating extends UI\Control {
-
-    private $rating_dbhost = 'localhost';
-    private $rating_dbuser = 'root';
-    private $rating_dbpass = 'jarda';
-    private $rating_dbname = 'matyisland';
-    private $rating_tableName = 'ratings';
     private $rating_unitwidth = 30; // the width (in pixels) of each rating unit (star, etc.)
     private $id;
     private $units;
@@ -50,7 +44,7 @@ class Rating extends UI\Control {
         } else {
             $this->count = $numbers['total_votes']; //how many votes total
         }
-        $current_rating = $numbers['total_value']; //total number of rating added together and stored
+        $current_rating = $numbers->total_value; //total number of rating added together and stored
         // determine whether the user has voted, so we know how to draw the ul/li
         $this->voted = $this->products->whetherUserVoted('%' . $this->ip . '%', $productID);
 
@@ -95,7 +89,7 @@ class Rating extends UI\Control {
             
 // get votes, values, ips for the current rating bar
         $numbers = $this->products->fetchRankValues($productID);
-        $usedIP = $numbers['used_ips'];
+        $usedIP = unserialize($numbers['used_ips']);
         $count = $numbers['total_votes']; //how many votes total
         $current_rating = $numbers['total_value']; //total number of rating added together and stored
         $sum = $vote_sent + $current_rating; // add together the current vote value and the total vote value
