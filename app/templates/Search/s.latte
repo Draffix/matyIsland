@@ -16,16 +16,16 @@
     <div id="items" style="margin-left: 10px">
             {foreach $search as $s}
         <div id="item">        
-            <p><a n:href="Product: $s->prod_id, $s->prod_name">{$s->prod_name}</a></p>
+            <p><a n:href="Product: $s->product->prod_id, $s->product->prod_name">{$s->product->prod_name}</a></p>
             <br />
-            <div style="padding-left: 30px;"><a n:href="Product: $s->prod_id, $s->prod_name">
+            <div style="padding-left: 30px;"><a n:href="Product: $s->product->prod_id, $s->product->prod_name">
                     <img src="{$basePath}/images/products/{$s->image_name}" width="150" height="150" /></a>
             </div>
             <br />
-            <span class="describe">{$s->prod_describe|truncate:60}</span>
+            <span class="describe">{$s->product->prod_describe|truncate:60}</span>
             <span class="store">Skladem</span><br>
-            <span class="price">{$s->prod_price},- Kč</span>
-            <a n:href="addCart! $s->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+            <span class="price">{$s->product->prod_price},- Kč</span>
+            <a n:href="addCart! $s->product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
         </div>
             {/foreach}
     </div>

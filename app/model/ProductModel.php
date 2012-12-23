@@ -9,21 +9,20 @@ class ProductModel extends Table {
 
     /** @var string */
     protected $tableName = 'product';
+    protected $image = 'image';
 
     /**
-     * Vrací řádky, které obsahují nové produkty a jejich obrázky. Je dán limit
-     * a offset pro stránkování
+     * Vrací řádky, které obsahují nové produkty a jeji primární obrázky. 
+     * Je dán limit a offset pro stránkování
      * @return type
      */
     public function fetchImagesAndNews($limit, $offset) {
-        return $this->connection->query(
-                        'SELECT product.prod_id, product.prod_name, product.prod_price, product.prod_describe,
-            image.image_id, image.image_name, image.product_prod_id, image.image_is_main
-            FROM product, image 
-            WHERE product.prod_id = image.product_prod_id 
-            AND product.prod_isnew = 1
-            AND image.image_is_main = 1
-            ORDER BY product.prod_id DESC LIMIT ? OFFSET ?', $limit, $offset);
+        return $this->connection->table($this->image)
+                        ->where('product.prod_isnew = ?
+                    AND image.image_is_main = ?', array(1, 1))
+                        ->order('product.prod_id DESC')
+                        ->limit($limit, $offset);
+        ;
     }
 
     /**
@@ -31,48 +30,32 @@ class ProductModel extends Table {
      * @return type
      */
     public function countNews() {
-        return $this->connection->query(
-                        'SELECT COUNT(*) AS pocet FROM product, image 
-            WHERE product.prod_id = image.product_prod_id 
-            AND product.prod_isnew = 1'
-                )->fetch();
+        return $this->connection->table($this->tableName)
+                        ->select('COUNT(*) AS pocet')
+                        ->where('product.prod_isnew = 1')
+                        ->fetch();
     }
 
     /**
-     * Vrací záznam s daným primárním klíčem
+     * Vrací všechny informace o produktu i s jeho primárním obrázkem (boolean
+     * TRUE)
      * @param int $id
      * @return \Nette\Database\Table\ActiveRow|FALSE
      */
     public function fetchImagesAndAll($id) {
-        $images = $this->connection->table('image')->where(array('product_prod_id' => $id, 'image_is_main' => 1))->fetch();
-        return $images;
-
-//        return $this->connection->query(
-//                        'SELECT * FROM product, image 
-//             WHERE product.prod_id = image.product_prod_id 
-//             AND product.prod_id = ?', $id)->fetch();
-    }
-
-    public function fetchAllProductsImages($id) {
-        $images = $this->connection->table('image')->where('product_prod_id', $id);
-        return $images;
-    }
-
-    public function pokus($id) {
-        $images = $this->connection->table("image")->where("product_prod_id", $id)->fetch();
-        \Nette\Diagnostics\Debugger::barDump($images->product->prod_producer);
+        return $this->connection->table($this->image)
+                        ->where(array('product_prod_id' => $id, 'image_is_main' => 1))
+                        ->fetch();
     }
 
     /**
-     * Vrací cenu auktálního produktu podle jeho ID
+     * Vrací pouze všechny obrázky které patří k produktu
      * @param type $id
      * @return type
      */
-    public function fetchPrice($id) {
-        return $this->connection->query(
-                        'SELECT prod_price 
-                        FROM `product` 
-                        WHERE prod_id = ?', $id)->fetch();
+    public function fetchAllProductsImages($id) {
+        return $this->connection->table($this->image)
+                        ->where('product_prod_id', $id);
     }
 
     /**
@@ -84,17 +67,12 @@ class ProductModel extends Table {
      * @return type
      */
     public function searchProduct($text, $limit, $offset) {
-        return $this->connection->query(
-                        'SELECT product.prod_id, product.prod_name, product.prod_price, 
-                        product.prod_describe, product.prod_producer,
-                        image.image_id, image.image_name, image.product_prod_id
-                        FROM product
-                        LEFT JOIN image ON product.prod_id = image.product_prod_id
-                        WHERE product.prod_name LIKE ?
-                        OR product.prod_describe LIKE ?
-                        OR product.prod_producer LIKE ?
-                        ORDER BY product.prod_name ASC LIMIT ? OFFSET ?
-                        ', $text, $text, $text, $limit, $offset);
+        return $this->connection->table($this->image)
+                        ->where('product.prod_name LIKE ?
+                    OR product.prod_describe LIKE ?
+                    OR product.prod_producer LIKE ?', array($text, $text, $text))
+                        ->group('product.prod_id')
+                        ->limit($limit, $offset);
     }
 
     /**
@@ -103,47 +81,41 @@ class ProductModel extends Table {
      * @return type
      */
     public function countSearchProduct($text) {
-        return $this->connection->query(
-                        'SELECT COUNT(*) AS pocet 
-                        FROM product, image
-                        WHERE product.prod_id = image.product_prod_id
-                        AND (product.prod_name LIKE ?
-                        OR product.prod_describe LIKE ?
-                        OR product.prod_producer LIKE ?)
-                        ', $text, $text, $text)->fetch();
+        return $this->connection->table($this->tableName)
+                        ->select('COUNT(*) AS pocet')
+                        ->where('product.prod_name LIKE ?
+                    OR product.prod_describe LIKE ?
+                    OR product.prod_producer LIKE ?', array($text, $text, $text))->fetch();
     }
 
     public function fetchRankValues($productID) {
-        return $this->connection->query('
-                        SELECT total_votes, total_value, used_ips 
-                        FROM product 
-                        WHERE prod_id = ?'
-                        , $productID)->fetch();
+        return $this->connection->table($this->tableName)
+                        ->where('product.prod_id', $productID)
+                        ->fetch();
     }
 
     public function insertRankIfNotExists($totalVotes = 0, $totalValue = 0, $usedIPs = '', $productID) {
-        return $this->connection->query('
-                        UPDATE product 
-                        SET total_votes = ?, total_value = ?, used_ips = ? 
-                        WHERE prod_id = ?'
-                        , $totalVotes, $totalValue, $usedIPs, $productID);
+        return $this->connection->table($this->tableName)
+                        ->where('prod_id', $productID)
+                        ->update(array('total_votes' => $totalVotes,
+                            'total_value' => $totalValue,
+                            'used_ips' => $usedIPs));
     }
 
     public function whetherUserVoted($ip, $productID) {
-        return $this->connection->query('
-                        SELECT used_ips 
-                        FROM product 
-                        WHERE used_ips 
-                        LIKE ? AND prod_id= ?
-                        ', $ip, $productID)->rowCount();
+        return $this->connection->table($this->tableName)
+                        ->select('used_ips')
+                        ->where('used_ips LIKE ?
+                    AND prod_id = ?', array($ip, $productID))
+                        ->count();
     }
 
     public function updateRank($totalVotes, $totalValue, $usedIPs, $productID) {
-        return $this->connection->query('
-                        UPDATE product 
-                        SET total_votes = ?, total_value = ?, used_ips = ? 
-                        WHERE prod_id = ?'
-                        , $totalVotes, $totalValue, $usedIPs, $productID);
+        return $this->connection->table($this->tableName)
+                        ->where('prod_id', $productID)
+                        ->update(array('total_votes' => $totalVotes,
+                            'total_value' => $totalValue,
+                            'used_ips' => $usedIPs));
     }
 
 }
