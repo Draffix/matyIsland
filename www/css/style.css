@@ -259,12 +259,12 @@ body{
 
 /* to samé jako #items ale rozšířené */
 #item{
-    width:215px;
+    width:217px;
+    min-height: 300px;
     border:1px solid #BBBBBB;
     margin:10px 6px 0px 0px;
     padding-bottom: 10px;
     float:left;
-    height: 300px;
     position: relative;
     border-color: #D4D4D4;
     border-style: solid;
@@ -275,11 +275,11 @@ body{
 /* nadpis produktu */
 #item p{
     display:block;
-    line-height:30px;
     background-color:#F4F8EE;
-    padding:0 0 0 10px;
+    padding:10px 0 5px 10px;
     float:left;
     width:205px;
+    height: 35px;
 }
 
 #item a{
@@ -288,6 +288,18 @@ body{
     color:#4B4B4B;
     text-decoration:underline;
     font-weight:bold;
+}
+
+#image {
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+#image img {
+    width: 205px;
+    height: 150px;
+    border: 1px solid #D4D4D4;
 }
 
 .store {
