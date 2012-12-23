@@ -215,12 +215,12 @@ class OrderPresenter extends BasePresenter {
         $template->registerFilter(new Nette\Latte\Engine);
         $template->orderId = $orderID;
 
-//        $mail = new Message;
-//        $mail->setFrom('MatyLand.cz <info@matyland.com>')
-//                ->addTo('jerry.klimcik@gmail.com')
-//                ->setSubject('Potvrzení objednávky')
-//                ->setHtmlBody($template)
-//                ->send();
+        $mail = new Message;
+        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+                ->addTo('jerry.klimcik@gmail.com')
+                ->setSubject('Potvrzení objednávky')
+                ->setHtmlBody($template)
+                ->send();
 
         $this->redirect('Order:complete');
     }
