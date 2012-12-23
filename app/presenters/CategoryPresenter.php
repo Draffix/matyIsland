@@ -7,20 +7,31 @@
  */
 class CategoryPresenter extends BasePresenter {
 
-    /**
-     * (non-phpDoc)
-     *
-     * @see Nette\Application\Presenter#startup()
-     */
+    /** @var MatyIsland\CategoryModel */
+    protected $category;
+
+    /* zaregistruji si všechny potřebné služby v Homepage */
+
     protected function startup() {
         parent::startup();
+        $this->category = $this->context->category;
     }
-   
-        public function renderDefault($id, $titleCategory) {
-        if ($this->category->categoryFilter($id)->rowCount() == 0) {
+
+    protected function createComponentPaginator() {
+        $visualPaginator = new VisualPaginator();
+        return $visualPaginator;
+    }
+
+    public function renderDefault($id, $titleCategory) {
+        if ($this->category->countCategoryFilter($id)->pocet == 0) {
             $this->setView('notFound');
         }
-        $this->template->category = $this->category->categoryFilter($id);
+
+        $paginator = $this['paginator']->getPaginator();
+        $paginator->itemsPerPage = 6;
+        $paginator->setBase(1);
+        $paginator->itemCount = $this->category->countCategoryFilter($id)->pocet;
+        $this->template->category = $this->category->categoryFilter($id, $paginator->itemsPerPage, $paginator->offset);
     }
 
 }
