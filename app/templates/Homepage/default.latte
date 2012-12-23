@@ -16,8 +16,8 @@
             <div id="item">        
                 <p><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">{$mainProduct->product->prod_name}</a></p>
                 <br />
-                <div style="padding-left: 30px;"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">
-                        <img src="{$basePath}/images/products/{$mainProduct->image_name}" width="150" height="150" /></a></div>
+                <div id="image"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">
+                        <img src="{$basePath}/images/products/{$mainProduct->image_name}" /></a></div>
                 <br />
                 <span class="describe">{$mainProduct->product->prod_describe|truncate:60}</span>
                 <span class="store">Skladem</span><br>
