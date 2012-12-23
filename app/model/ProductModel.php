@@ -45,7 +45,7 @@ class ProductModel extends Table {
      */
     public function fetchImagesAndAll($id) {
         return $this->connection->table($this->image)
-                ->where('product_prod_id = ?
+                        ->where('product_prod_id = ?
                     AND product.prod_is_active = ?
                     AND image_is_main = ?', array($id, 1, 1))
                         ->fetch();
@@ -121,6 +121,16 @@ class ProductModel extends Table {
                         ->update(array('total_votes' => $totalVotes,
                             'total_value' => $totalValue,
                             'used_ips' => $usedIPs));
+    }
+
+    public function randomProduct() {
+        return $this->connection->table($this->image)
+                        ->where('product.prod_isnew = ?
+                            AND product.prod_is_active = ?
+                            AND image.image_is_main = ?', array(0, 1, 1))
+                        ->order('RAND()')
+                        ->limit(1)
+                        ->fetch();
     }
 
 }
