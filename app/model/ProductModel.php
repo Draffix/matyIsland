@@ -30,7 +30,7 @@ class ProductModel extends Table {
      * @return type
      */
     public function countNews() {
-        return $this->connection->table($this->tableName)
+        return $this->getTable()
                         ->select('COUNT(*) AS pocet')
                         ->where('product.prod_isnew = 1')
                         ->fetch();
@@ -81,7 +81,7 @@ class ProductModel extends Table {
      * @return type
      */
     public function countSearchProduct($text) {
-        return $this->connection->table($this->tableName)
+        return $this->getTable()
                         ->select('COUNT(*) AS pocet')
                         ->where('product.prod_name LIKE ?
                     OR product.prod_describe LIKE ?
@@ -89,13 +89,13 @@ class ProductModel extends Table {
     }
 
     public function fetchRankValues($productID) {
-        return $this->connection->table($this->tableName)
+        return $this->getTable()
                         ->where('product.prod_id', $productID)
                         ->fetch();
     }
 
     public function insertRankIfNotExists($totalVotes = 0, $totalValue = 0, $usedIPs = '', $productID) {
-        return $this->connection->table($this->tableName)
+        return $this->getTable()
                         ->where('prod_id', $productID)
                         ->update(array('total_votes' => $totalVotes,
                             'total_value' => $totalValue,
@@ -103,7 +103,7 @@ class ProductModel extends Table {
     }
 
     public function whetherUserVoted($ip, $productID) {
-        return $this->connection->table($this->tableName)
+        return $this->getTable()
                         ->select('used_ips')
                         ->where('used_ips LIKE ?
                     AND prod_id = ?', array($ip, $productID))
@@ -111,7 +111,7 @@ class ProductModel extends Table {
     }
 
     public function updateRank($totalVotes, $totalValue, $usedIPs, $productID) {
-        return $this->connection->table($this->tableName)
+        return $this->getTable()
                         ->where('prod_id', $productID)
                         ->update(array('total_votes' => $totalVotes,
                             'total_value' => $totalValue,
