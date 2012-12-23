@@ -204,7 +204,7 @@ body{
 .review a:visited, .item a:visited{text-decoration:underline}
 .review a:hover, .item a:hover{text-decoration:none}
 .review p{
-    padding:10px 32px 13px 0;
+    padding:0px 32px 13px 0;
 }
 .stars{
     margin:0 0 0 30px;
@@ -538,6 +538,11 @@ div.flash.error {
     border-style: solid;
     border-width: 1px 1px 1px;
     background-color:#F4F8EE;
+}
+
+.itemDetail .itemImage img {
+    width: 180px;
+    height: 150px;
 }
 
 .itemDetail .store {
