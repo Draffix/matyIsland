@@ -24,9 +24,13 @@ class LoginPresenter extends BasePresenter {
      */
     protected function createComponentSignInForm() {
         $form = new UI\Form;
-        $form->addText('user_name', 'Přihlašovací jméno')
-                ->addRule($form::FILLED, 'Je nutné zadat jméno.');
-        $form->addPassword('user_password', 'Heslo');
+        $form->addText('user_email', 'Přihlašovací jméno')
+                ->addRule($form::FILLED, 'Je nutné zadat jméno.')
+                ->setAttribute('placeholder', 'Váš e-mail')
+                ->setAttribute('autofocus');
+        $form->addPassword('user_password', 'Heslo')
+                ->addRule($form::FILLED, 'Je nutné zadat heslo.')
+                ->setAttribute('placeholder', 'Heslo');
         $form->addSubmit('login', 'Přihlásit se');
         $form->addCheckbox('zapamatovat', 'Zapamatovat si mě');
         $form->onSuccess[] = callback($this, 'signInFormSubmitted');
@@ -40,7 +44,7 @@ class LoginPresenter extends BasePresenter {
             if ($values->zapamatovat) {
                 $user->setExpiration('+30 days', FALSE);
             }
-            $user->login($values->user_name, $values->user_password);
+            $user->login($values->user_email, $values->user_password);
             $this->flashMessage('Přihlášení bylo úspěšné.', 'success');
 
             // bezpečnostní prvky
@@ -75,7 +79,8 @@ class LoginPresenter extends BasePresenter {
 
             $this->redirect('Homepage:default');
         } catch (NS\AuthenticationException $e) {
-            $form->addError('Neplatné uživatelské jméno nebo heslo.');
+            $this->flashMessage('Neplatné uživatelské jméno nebo heslo.', 'wrong');
+            $this->redirect('this');
         }
     }
 
