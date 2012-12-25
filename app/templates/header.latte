@@ -3,7 +3,7 @@
     <div class="topnav">
         <span>
             {if $user->isLoggedIn()}
-            <strong>Vítejte {$usersData->user_login}</strong> &nbsp; | &nbsp;            
+            <strong>Vítejte {$usersData->user_name}</strong> &nbsp; | &nbsp;            
             <a n:href="signOut!">Odhlásit se</a></span>
             {else}
             <a n:href="Login:">Přihlásit<img id="userIcon" src="{$basePath}/images/info/user.png"></a>&nbsp; | &nbsp; <a n:href="Registration:"><img id="regIcon" src="{$basePath}/images/info/pencil.png">Registrovat se</a></span> 
