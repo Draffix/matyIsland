@@ -1,7 +1,19 @@
-{var $robots = noindex}
-<script src="netteForms.js"></script>
-
 {block content}
-<h1 n:block=title>Sign in</h1>
-
-{control signInForm}
+<div class="inside-content" style="padding: 0 0 0 0; width: 465px">
+    {foreach $flashes as $flash}
+    <div class="flash {$flash->type}" style="float: left">{$flash->message}</div>
+{/foreach}
+    <div id="loginForm">
+    {form signInForm id=>'login'}
+        <h1>Přihlásit se</h1>
+        <fieldset id="inputs">
+        {input user_email id => username}
+        {input user_password id => password}
+        </fieldset>
+        <fieldset id="actions">
+            <input type="submit" id="submit" value="Přihlásit se">
+            <a href="">Zapomněli jste heslo?</a><a n:href="Registration:">Registrovat se</a>
+        </fieldset>
+    {/form}
+    </div>
+</div>
