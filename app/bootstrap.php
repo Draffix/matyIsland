@@ -86,7 +86,8 @@ $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<pagina
                     'dokonceni' => 'complete',
                     'obchodni-podminky' => 'tradeTerms',
                     'napiste-nam' => 'tellUs',
-                    'kontakt' => 'contact'
+                    'kontakt' => 'contact',
+                    'novinky' => 'news',
                 ),
             ),
             'id' => NULL,
