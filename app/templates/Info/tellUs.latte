@@ -6,5 +6,28 @@
     <h2>Napište nám</h2>
 <p style="padding-bottom: 20px">V případě, že potřebujete poradit, chcete se dozvědět podrobnější informace 
     či chcete nahlásit nějakou chybu, neváhejte a klidně nám napište. Rádi Vám odpovíme</p>
-    {control contactForm}
+
+<div id="pretty-form">
+        {form contactForm}
+    <p class="name">
+        {label name/}
+        {input name} <b style="font-size: large">*</b>
+    </p>
+    <p class="telefon">
+        {label telefon/}
+        {input telefon}
+    </p>
+    <p class="email">
+        {label email/}
+        {input email} <b style="font-size: large">*</b>
+    </p>
+    <p class="text">
+        {label message/}
+        {input message} <b style="font-size: large; float: right; padding-right: 50px;">*</b>
+    </p>
+    <p class="submit">
+        {input send}
+    </p>
+        {/form}
+</div>
 </div>
