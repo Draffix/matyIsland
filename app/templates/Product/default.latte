@@ -84,11 +84,11 @@ $(document).ready(function() {
             {form commentForm}
                     <p class="name">
                         {label name/}
-                        {input name value => $usersData->user_login}
+                        {input name}
                     </p>
                     <p class="subject">
                         {label com_subject/}
-                        {input com_subject}
+                        {input com_subject value => $product->product->prod_name}
                     </p>
                     <p class="text">
                         {label com_text/}
@@ -106,7 +106,7 @@ $(document).ready(function() {
         {foreach $comments as $comment}
                 <div class="commment-list">
                     <p class="subject">{$comment['com_subject']}</p>
-                    <p class="login">{$comment['user_login']}</p>
+                    <p class="login">{$comment['user_name']} {$comment['user_surname']}</p>
                     <p class="date">{$comment['com_date']|date:'%d.%m.%Y – %H:%M'}</p>
                     <p class="text">{$comment['com_text']}</p>
                 {sep}<div class="separator"></div>{/sep}
