@@ -10,20 +10,16 @@ class UserModel extends Table {
     /** @var string */
     protected $tableName = 'user';
 
-    /** @var Nette\Database\Connection */
-    private $database;
-
-
     public function saveUser($values) {
-        $this->connection->exec('INSERT INTO user', array(
-            'user_login' => $values->nick,
-            'user_email' => $values->email,
-            'user_password' => Authenticator::calculateHash($values->pass)
-        ));
+        return $this->getTable()->insert($values);
     }
 
-    public function findByName($username) {
-        return $this->findAll()->where('user_login', $username)->fetch();
+    public function findByName($useremail) {
+        return $this->findAll()->where('user_email', $useremail)->fetch();
+    }
+
+    public function countFindByEmail($useremail) {
+        return $this->findAll()->where('user_email', $useremail)->count();
     }
 
     public function setPassword($id, $password) {
