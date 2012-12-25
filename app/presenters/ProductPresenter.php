@@ -28,6 +28,11 @@ class ProductPresenter extends BasePresenter {
         return $rating;
     }
 
+    protected function createComponentPaginator() {
+        $visualPaginator = new VisualPaginator();
+        return $visualPaginator;
+    }
+
     public function actionAddcart() {
         $this->setView('notFound');
     }
@@ -47,11 +52,27 @@ class ProductPresenter extends BasePresenter {
         $this->template->countComments = $this->comments->countAllComments($id);
     }
 
+    public function renderNews() {
+        $model = $this->products;
+        $paginator = $this['paginator']->getPaginator();
+        $paginator->itemsPerPage = 6;
+        $paginator->setBase(1);
+        $paginator->itemCount = $model->countNews()->pocet;
+        $mainProducts = $model->fetchImagesAndNews($paginator->itemsPerPage, $paginator->offset);
+
+        $this->template->mainProducts = $mainProducts;
+    }
+
     protected function createComponentCommentForm() {
+        $user = $this->users->find($this->getUser()->getId());
+        $name = ''.$user->user_name.' '.$user->user_surname; // jméno a příjmení pro defaultní hodnotu
+        
         $commentForm = new UI\Form();
+        $commentForm->addAntispam();
         $commentForm->addText('name', 'Jméno: ')
                 ->addRule($commentForm::FILLED)
-                ->setAttribute('readonly');
+                ->setAttribute('readonly')
+                ->setDefaultValue($name);
         $commentForm->addText('com_subject', 'Nadpis: ')
                 ->addRule($commentForm::FILLED);
         $commentForm->addTextArea('com_text', 'Text: ')
@@ -64,7 +85,7 @@ class ProductPresenter extends BasePresenter {
 
     public function validSubmitCommentForm(UI\Form $commentForm) {
         $values = $commentForm->getValues();
-        unset($values['name']);
+        unset($values['name'], $values['spam'], $values['form_created']);
 
         $values['com_date'] = new DateTime();
         $values['product_prod_id'] = (int) $this->getParam('id');
