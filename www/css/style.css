@@ -412,6 +412,78 @@ body{
 }
 /* END OF BUTTON SEND */
 
+/****************/
+/* PRETTY FORM */
+/***************/
+#pretty-form {
+    border: solid 1px #ccc;
+    padding: 10px 10px 5px 10px;
+    margin-right: 30px;
+}
+
+#pretty-form input, #pretty-form textarea {
+    padding: 5px;
+    border: solid 1px #E5E5E5;
+    outline: 0;
+    font: normal 13px/100% Verdana, Tahoma, sans-serif;
+    width: 200px;
+    background: #FFFFFF url('bg_form.png') left top repeat-x;
+    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
+    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
+    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+}
+#pretty-form textarea {
+    width: 400px;
+    max-width: 400px;
+    height: 75px;
+}
+
+#pretty-form .text label{
+    float: left;
+}
+
+#pretty-form input:hover, #pretty-form textarea:hover,
+#pretty-form input:focus, #pretty-form textarea:focus {
+    border-color: #C9C9C9;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
+}
+#pretty-form label {
+    display: inline-block;
+    float: left;
+    margin-left: 10px;
+    width: 65px;
+}
+#pretty-form form[name=registration] {
+    margin-bottom: 50px;
+}
+
+
+#pretty-form form[name=registration] label {
+    text-align: right;
+    padding-right: 10px;
+    width: 90px;
+    margin-top: 14px;
+}
+
+#pretty-form form[name=registration] input {
+    width: 150px;
+    margin-top: 10px;
+}
+
+#pretty-form input[name=send] {
+    width: auto;
+    padding: 9px 15px;
+    margin-left: 380px;
+    background: #617798;
+    border: 0;
+    font-size: 14px;
+    color: #FFFFFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
 /******************/
 /* FLASH MESSAGES */
 /******************/
@@ -440,6 +512,15 @@ div.flash.error {
     background: #FBE3E4;
     color: #8a1f11;
     border-color: #FBC2C4;
+}
+
+div.flash.wrong {
+    padding: 5px;
+    width: 430px;
+    background: #FBE3E4;
+    float: left;
+    margin: 10px 0 0 15px;
+    font-weight: bold;
 }
 
 /**********/
@@ -682,8 +763,9 @@ div.flash.error {
     display: none;
 }
 
+/****************/
 /* COMMENT FORM */
-
+/***************/
 .comment-form {
     border: solid 1px #ccc;
     padding: 0 0 5px 10px;
@@ -715,8 +797,8 @@ div.flash.error {
     margin-left: 2px;
 }
 
-.comment-form input:hover, textarea:hover,
-.comment-form input:focus, textarea:focus {
+.comment-form input:hover, .comment-form textarea:hover,
+.comment-form input:focus, .comment-form textarea:focus {
     border-color: #C9C9C9;
     -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
 }
@@ -855,4 +937,198 @@ div.flash.error {
     border: 1px solid #4ca849;
     color: white;
     font-weight: bold;
+}
+
+/**************/
+/* LOGIN FORM */
+/**************/
+#loginForm #login
+{
+
+    height: 240px;
+    width: 400px;
+    margin-top: 10px;
+    padding: 30px;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;  
+
+}
+
+/*--------------------*/
+
+#loginForm h1
+{
+    text-transform: uppercase;
+    text-align: center;
+    color: #666;
+    padding-top: 10px;
+    margin: 0 0 30px 0;
+    letter-spacing: 4px;
+    font: normal 13px/1 Verdana, Helvetica;
+    position: relative;
+}
+
+#loginForm h1:after, h1:before
+{
+    background-color: #777;
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: 15px;
+    width: 120px;   
+}
+
+#loginForm h1:after
+{ 
+    background-image: -webkit-gradient(linear, left top, right top, from(#777), to(#fff));
+    background-image: -webkit-linear-gradient(left, #777, #fff);
+    background-image: -moz-linear-gradient(left, #777, #fff);
+    background-image: -ms-linear-gradient(left, #777, #fff);
+    background-image: -o-linear-gradient(left, #777, #fff);
+    background-image: linear-gradient(left, #777, #fff);      
+    right: 0;
+}
+
+#loginForm h1:before
+{
+    background-image: -webkit-gradient(linear, right top, left top, from(#777), to(#fff));
+    background-image: -webkit-linear-gradient(right, #777, #fff);
+    background-image: -moz-linear-gradient(right, #777, #fff);
+    background-image: -ms-linear-gradient(right, #777, #fff);
+    background-image: -o-linear-gradient(right, #777, #fff);
+    background-image: linear-gradient(right, #777, #fff);
+    left: 0;
+}
+
+/*--------------------*/
+
+#loginForm fieldset
+{
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/*--------------------*/
+
+#loginForm #inputs input
+{
+    background: #f1f1f1 url(../images/info/login-sprite.png) no-repeat;
+    padding: 15px 15px 15px 30px;
+    margin: 0 0 10px 0;
+    width: 353px; /* 353 + 2 + 45 = 400 */
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+}
+
+#loginForm #username
+{
+    background-position: 5px -2px !important;
+}
+
+#loginForm #password
+{
+    background-position: 5px -52px !important;
+}
+
+#loginForm #inputs input:focus
+{
+    background-color: #fff;
+    border-color: #e8c291;
+    outline: none;
+    -moz-box-shadow: 0 0 0 1px #e8c291 inset;
+    -webkit-box-shadow: 0 0 0 1px #e8c291 inset;
+    box-shadow: 0 0 0 1px #e8c291 inset;
+}
+
+/*--------------------*/
+#loginForm #actions
+{
+    margin: 25px 0 0 0;
+}
+
+#loginForm #submit
+{		
+    background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+
+    float: left;
+    height: 35px;
+    padding: 0;
+    width: 120px;
+    cursor: pointer;
+    font: bold 15px Arial, Helvetica;
+    color: #8f5a0a;
+}
+
+#loginForm #submit:hover,#loginForm #submit:focus
+{		
+    background-color: #fddb6f;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb94b), to(#fddb6f));
+    background-image: -webkit-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: -moz-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: -ms-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: -o-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: linear-gradient(top, #ffb94b, #fddb6f);
+}	
+
+#loginForm #submit:active
+{		
+    outline: none;
+
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+#loginForm #submit::-moz-focus-inner
+{
+    border: none;
+}
+
+#loginForm #actions a
+{
+    color: #3151A2;    
+    float: right;
+    line-height: 35px;
+    margin-left: 10px;
+}
+
+/*--------------------*/
+
+#loginForm #back
+{
+    display: block;
+    text-align: center;
+    position: relative;
+    top: 60px;
+    color: #999;
 }
