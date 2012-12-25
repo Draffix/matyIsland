@@ -46,7 +46,12 @@ class LoginPresenter extends BasePresenter {
             }
             $user->login($values->user_email, $values->user_password);
             $this->flashMessage('Přihlášení bylo úspěšné.', 'success');
-
+            
+                } catch (NS\AuthenticationException $e) {
+            $this->flashMessage('Neplatné uživatelské jméno nebo heslo.', 'wrong');
+            $this->redirect('this');
+            }
+            
             // bezpečnostní prvky
             $s = session_id();
             $ip = $_SERVER['REMOTE_ADDR'];
@@ -78,10 +83,6 @@ class LoginPresenter extends BasePresenter {
             $_SESSION["totalPrice"] = $this->basket->fetchItemsFromBasket($this->getUser()->getId())->totalPrice;
 
             $this->redirect('Homepage:default');
-        } catch (NS\AuthenticationException $e) {
-            $this->flashMessage('Neplatné uživatelské jméno nebo heslo.', 'wrong');
-            $this->redirect('this');
-        }
     }
 
 }
