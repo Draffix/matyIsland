@@ -1,0 +1,10 @@
+{block content}
+<div class="inside-content">
+    <h2>Dokončení registrace</h2>
+<p>Děkujeme Vám za registraci na MatyLand.cz. Na uvedenou e-mailovou adresu Vám
+    odešleme zprávu s odkazem, přes který budete moci registraci dokončit.</p>
+        {foreach $flashes as $flash}
+<div class="flash {$flash->type}" style="width: auto; margin-top: 20px; margin-right: 20px">{$flash->message}</div>
+    {/foreach}
+
+</div>
