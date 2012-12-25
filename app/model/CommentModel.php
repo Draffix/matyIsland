@@ -14,11 +14,11 @@ class CommentModel extends Table {
 
     public function fetchAllComments($product_id) {
         return $this->connection->query(
-                        'SELECT comments.*, user.user_login
+                        'SELECT comments.*, user.user_name, user.user_surname
                         FROM comments, user
                         WHERE comments.product_prod_id = ?
                         AND user.user_id = comments.user_user_id
-                        ORDER BY comments.com_date DESC
+                        ORDER BY comments.com_date ASC
                         ', $product_id);
     }
 
