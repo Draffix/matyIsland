@@ -28,6 +28,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
     protected function startup() {
         parent::startup();
+        
+        AntispamControl::register();
+        
         $this->mainProduct = $this->context->product;
         $this->category = $this->context->category;
         $this->basket = $this->context->basket;
