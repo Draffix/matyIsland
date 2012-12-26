@@ -47,8 +47,9 @@ $(document).ready(function() {
             <br>
             <br>
             <span class="delivery">Doprava: <b>2-3 pracovní dny</b></span><br>
-            <span class="store">Dostupnost: <b>skladem</b></span><br>
+            {if $product->product->prod_on_stock != 0}<span class="store">Dostupnost: <b>skladem</b></span>
             <a n:href="addCart! $product->product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+                    {else}<span class="store" style="padding-bottom: 10px">Dostupnost: <b style="color: #ff6600">nedostupné</b></span>{/if}<br>
         </div>
     </div>
 
@@ -78,43 +79,43 @@ $(document).ready(function() {
                 </ul>
             </div>
         </div>
-            <div id="tab3" class="tab_content">
+        <div id="tab3" class="tab_content">
     {if $user->isLoggedIn()}
-                <div class="comment-form">
+            <div class="comment-form">
             {form commentForm}
-                    <p class="name">
+                <p class="name">
                         {label name/}
                         {input name}
-                    </p>
-                    <p class="subject">
+                </p>
+                <p class="subject">
                         {label com_subject/}
                         {input com_subject value => $product->product->prod_name}
-                    </p>
-                    <p class="text">
+                </p>
+                <p class="text">
                         {label com_text/}
                         {input com_text}
-                    </p>
-                    <p class="submit">
+                </p>
+                <p class="submit">
                         {input btnComment}
-                    </p>
+                </p>
             {/form}
-                </div>
+            </div>
         {else}
-                <p>Vkládání komentářů a recenzí je umožněno pouze <a n:href="Login:">registrovaným a přihlášeným uživatelům</a></p>
+            <p>Vkládání komentářů a recenzí je umožněno pouze <a n:href="Login:">registrovaným a přihlášeným uživatelům</a></p>
     {/if}
     {if $countComments != 0}
         {foreach $comments as $comment}
-                <div class="commment-list">
-                    <p class="subject">{$comment['com_subject']}</p>
-                    <p class="login">{$comment['user_name']} {$comment['user_surname']}</p>
-                    <p class="date">{$comment['com_date']|date:'%d.%m.%Y – %H:%M'}</p>
-                    <p class="text">{$comment['com_text']}</p>
+            <div class="commment-list">
+                <p class="subject">{$comment['com_subject']}</p>
+                <p class="login">{$comment['user_name']} {$comment['user_surname']}</p>
+                <p class="date">{$comment['com_date']|date:'%d.%m.%Y – %H:%M'}</p>
+                <p class="text">{$comment['com_text']}</p>
                 {sep}<div class="separator"></div>{/sep}
-                </div>
+            </div>
         {/foreach}
     {else}
-                <p class="zeroCom">K tomuto zboží ještě nenapsal nikdo komentář. <b>Buďte první!</b></p>
+            <p class="zeroCom">K tomuto zboží ještě nenapsal nikdo komentář. <b>Buďte první!</b></p>
             {/if}
-            </div>
         </div>
     </div>
+</div>

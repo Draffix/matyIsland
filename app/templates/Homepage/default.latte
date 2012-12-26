@@ -1,6 +1,6 @@
 {block content}
 <div id="main">
-    <img src="{$basePath}/images/photo4.jpg" alt="" width="682" height="334" border="0" usemap="#Map" />
+    <img src="{$basePath}/images/photo4.jpg" alt="" width="682" height="334" border="0" usemap="#Map" style="margin-top: -1px"/>
     <br />
     <div id="inside">
 <!--        <img src="images/title3.gif" alt="" width="159" height="15" /><br />
@@ -20,9 +20,12 @@
                         <img src="{$basePath}/images/products/{$mainProduct->image_name}" /></a></div>
                 <br />
                 <span class="describe">{$mainProduct->product->prod_describe|truncate:60}</span>
-                <span class="store">Skladem</span><br>
+                {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
                 <span class="price">{$mainProduct->product->prod_price},- Kč</span>
                 <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+                {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
+                <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+                {/if}
             </div>
             {/foreach}
         </div>
@@ -32,3 +35,4 @@
         {/snippet}
 </div>
 {/block}
+
