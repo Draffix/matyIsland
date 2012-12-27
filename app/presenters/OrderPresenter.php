@@ -3,6 +3,7 @@
 use Nette\Application\UI;
 use Nette\DateTime;
 use Nette\Mail\Message;
+use Nette\Utils\Html;
 
 /**
  * Description of OrderPresenter
@@ -14,28 +15,62 @@ class OrderPresenter extends BasePresenter {
     /** @var MatyIsland\OrderModel */
     private $order;
 
+    /**
+     * @var MatyIsland\ProductModel
+     */
+    protected $products;
+
     // pokud nic není v košíku nepovolíme přístup k objednávce
     // a přesměrujeme ho do košíku, kde ho upozorníme, že v něm nic nemá
     protected function startup() {
         parent::startup();
         $this->order = $this->context->order;
+        $this->products = $this->context->product;
     }
 
     public function renderDefault() {
         if (!isset($_SESSION["cart"]) || $_SESSION["cart"] == null) {
             $this->redirect('Basket:');
         }
+        $this->checkProducts();
     }
 
     public function renderPaymentDelivery() {
         if (!isset($_SESSION["cart"]) || $_SESSION["cart"] == null) {
             $this->redirect('Basket:');
         }
+        $this->checkProducts();
     }
 
     public function renderSummary() {
         if (!isset($_SESSION["cart"]) || $_SESSION["cart"] == null) {
             $this->redirect('Basket:');
+        }
+        $this->checkProducts();
+    }
+
+    private function checkProducts() {
+        // v případě, že byl právě prodán poslední kus
+        foreach (array_keys($_SESSION['cart']) as $key) {
+            if ($this->products->countProductQuantity($key)->pocet == 0) {
+                $name = $_SESSION['cart'][$key]['prod_name']; //zjistíme si jméno produktu
+                $el = Html::el('span', 'Omlouváme se, ale zboží "' . $name . '", které si hodláte koupit,
+                    právě někdo koupil a jednalo se o poslední kus. V případě zájmu o produkt nás
+                    můžete ');
+                $el2 = Html::el('a', 'kontaktovat.')->href($this->link('Info:contact')); //vyvoříme odkaz
+                $el->add($el2); // spojíme dvě zprávy
+                $this->flashMessage($el, 'wrong');
+
+                // odečteme celkovou cenu a množství v košíku
+                $_SESSION["totalPrice"] -= ($_SESSION["cart"][$key]["basket_quantity"] * $this->basket->findPrice($key)->price);
+                $_SESSION["count"] -= $_SESSION["cart"][$key]["basket_quantity"];
+                unset($_SESSION["cart"][$key]);
+
+                if ($this->getUser()->isLoggedIn()) {
+                    $this->basket->dropItemFromBasket($key, $this->getUser()->getId());
+                }
+                $this->redirect('Basket:');
+            }
         }
     }
 
@@ -198,16 +233,14 @@ class OrderPresenter extends BasePresenter {
 
         unset($values["agree"]); // odstraníme z pole zbytečný prvek checkbox
         $dateTime = array("ord_date" => new DateTime); // zjistíme aktuální čas a datum
-
         $_SESSION["order"] = array_merge($_SESSION["order"], $dateTime, $values); // doplníme o nové údaje
-
-        $orderID = $this->order->saveOrder($_SESSION["order"]); //vrací ID vložené objednávky
+        $orderID = $this->order->saveOrder($_SESSION["order"]); //uloží a vrací ID vložené objednávky
 
         $_SESSION["order_id"] = $orderID;
-
         foreach ($_SESSION["cart"] as $key => $value) {
             $this->order->saveIntoOrderHasProduct(
-                    $orderID, $value->prod_id, $value->basket_quantity, $value->prod_price);
+                    $orderID, $value->prod_id, $value->basket_quantity, $value->prod_price); //svážeme produkty s objednávkou
+            $this->products->updateProductQuantity($value->prod_id, $this->products->countProductQuantity($value->prod_id)->pocet - $value->basket_quantity); //snížíme množství produktů na skladě
         }
 
         $template = $this->createTemplate();
