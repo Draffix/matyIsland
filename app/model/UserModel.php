@@ -33,8 +33,8 @@ class UserModel extends Table {
     }
 
     public function setPassword($id, $password) {
-        $this->getTable()->where(array('id' => $id))->update(array(
-            'password' => Authenticator::calculateHash($password)
+        $this->getTable()->where(array('user_id' => $id))->update(array(
+            'user_password' => Authenticator::calculateHash($password)
         ));
     }
 
