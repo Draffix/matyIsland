@@ -133,4 +133,17 @@ class ProductModel extends Table {
                         ->fetch();
     }
 
+    public function countProductQuantity($id_product) {
+        return $this->getTable()
+                        ->select('product.prod_on_stock AS pocet')
+                        ->where('product.prod_id', $id_product)
+                        ->fetch();
+    }
+
+    public function updateProductQuantity($id_product, $quantityInOrder) {
+                return $this->getTable()
+                        ->where('product.prod_id', $id_product)
+                        ->update(array('prod_on_stock' => $quantityInOrder));
+    }
+
 }
