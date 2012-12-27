@@ -33,6 +33,9 @@ $(document).ready(function(){
         <!-- End Freebie -->
     </li>
 </ul>
+    {foreach $flashes as $flash}
+<div class="flash {$flash->type}" style="float: left; width: 622px">{$flash->message}</div>
+{/foreach}
 <div class="basket">
     <div id="basket-box">
         <table width="635" border="0" cellpadding="6" cellspacing="0">
@@ -63,7 +66,9 @@ $(document).ready(function(){
 
             {input update name => "update", title => "Přepočítat"}
                 </td>
-                <td> Skladem </td>
+                {if $product->prod_on_stock != 0}<td> Skladem </td> {else}
+                <td><span style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span></td>
+                {/if}
                 <td>{$product->totalPrice},- Kč</td>
                 <td><a n:href="removeFromCart! $product->prod_id"><input type="button" name="remove" title="Smazat položku"></a></td>
             </tr>
