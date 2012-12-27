@@ -3,7 +3,7 @@
     {foreach $flashes as $flash}
     <div class="flash {$flash->type}" style="float: left">{$flash->message}</div>
 {/foreach}
-    <div id="loginForm">
+    <div class="loginForm">
     {form signInForm id=>'login'}
         <h1>Přihlásit se</h1>
         <fieldset id="inputs">
@@ -12,7 +12,7 @@
         </fieldset>
         <fieldset id="actions">
             <input type="submit" id="submit" value="Přihlásit se">
-            <a href="">Zapomněli jste heslo?</a><a n:href="Registration:">Registrovat se</a>
+            <a n:href="Login:passwordRecovery">Zapomněli jste heslo?</a><a n:href="Registration:">Registrovat se</a>
         </fieldset>
     {/form}
     </div>
