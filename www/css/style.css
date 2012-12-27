@@ -942,7 +942,7 @@ div.flash.wrong {
 /**************/
 /* LOGIN FORM */
 /**************/
-#loginForm #login
+.loginForm #login
 {
 
     height: 240px;
@@ -960,7 +960,7 @@ div.flash.wrong {
 
 /*--------------------*/
 
-#loginForm h1
+.loginForm h1
 {
     text-transform: uppercase;
     text-align: center;
@@ -972,17 +972,17 @@ div.flash.wrong {
     position: relative;
 }
 
-#loginForm h1:after, h1:before
+.loginForm h1:after, h1:before
 {
     background-color: #777;
     content: "";
     height: 1px;
     position: absolute;
     top: 15px;
-    width: 120px;   
+    width: 100px;   
 }
 
-#loginForm h1:after
+.loginForm h1:after
 { 
     background-image: -webkit-gradient(linear, left top, right top, from(#777), to(#fff));
     background-image: -webkit-linear-gradient(left, #777, #fff);
@@ -990,10 +990,10 @@ div.flash.wrong {
     background-image: -ms-linear-gradient(left, #777, #fff);
     background-image: -o-linear-gradient(left, #777, #fff);
     background-image: linear-gradient(left, #777, #fff);      
-    right: 0;
+    right: 0px;
 }
 
-#loginForm h1:before
+.loginForm h1:before
 {
     background-image: -webkit-gradient(linear, right top, left top, from(#777), to(#fff));
     background-image: -webkit-linear-gradient(right, #777, #fff);
@@ -1006,7 +1006,7 @@ div.flash.wrong {
 
 /*--------------------*/
 
-#loginForm fieldset
+.loginForm fieldset
 {
     border: 0;
     padding: 0;
@@ -1015,7 +1015,7 @@ div.flash.wrong {
 
 /*--------------------*/
 
-#loginForm #inputs input
+.loginForm #inputs input
 {
     background: #f1f1f1 url(../images/info/login-sprite.png) no-repeat;
     padding: 15px 15px 15px 30px;
@@ -1030,17 +1030,17 @@ div.flash.wrong {
     box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
 }
 
-#loginForm #username
+.loginForm #username
 {
     background-position: 5px -2px !important;
 }
 
-#loginForm #password
+.loginForm #password
 {
     background-position: 5px -52px !important;
 }
 
-#loginForm #inputs input:focus
+.loginForm #inputs input:focus
 {
     background-color: #fff;
     border-color: #e8c291;
@@ -1051,12 +1051,12 @@ div.flash.wrong {
 }
 
 /*--------------------*/
-#loginForm #actions
+.loginForm #actions
 {
     margin: 25px 0 0 0;
 }
 
-#loginForm #submit
+.loginForm #submit
 {		
     background-color: #ffb94b;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
@@ -1089,7 +1089,7 @@ div.flash.wrong {
     color: #8f5a0a;
 }
 
-#loginForm #submit:hover,#loginForm #submit:focus
+.loginForm #submit:hover,.loginForm #submit:focus
 {		
     background-color: #fddb6f;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb94b), to(#fddb6f));
@@ -1100,7 +1100,7 @@ div.flash.wrong {
     background-image: linear-gradient(top, #ffb94b, #fddb6f);
 }	
 
-#loginForm #submit:active
+.loginForm #submit:active
 {		
     outline: none;
 
@@ -1109,12 +1109,12 @@ div.flash.wrong {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
 }
 
-#loginForm #submit::-moz-focus-inner
+.loginForm #submit::-moz-focus-inner
 {
     border: none;
 }
 
-#loginForm #actions a
+.loginForm #actions a
 {
     color: #3151A2;    
     float: right;
@@ -1124,7 +1124,7 @@ div.flash.wrong {
 
 /*--------------------*/
 
-#loginForm #back
+.loginForm #back
 {
     display: block;
     text-align: center;
