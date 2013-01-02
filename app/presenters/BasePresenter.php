@@ -9,20 +9,20 @@ use Nette\Diagnostics\Debugger;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
-    /** @var MatyIsland\ProductModel */
+    /** @var ProductModel */
     protected $mainProduct;
 
-    /** @var MatyIsland\CategoryModel */
+    /** @var CategoryModel */
     protected $category;
 
-    /** @var MatyIsland\BasketModel */
+    /** @var BasketModel */
     protected $basket;
 
-    /** @var MatyIsland\UserModel */
+    /** @var UserModel */
     protected $users;
 
     /* zaregistruji si všechny potřebné služby společné pro všechny presentery
-     * "odstartuji" session ze sekce MatyIsland
+     * "odstartuji" session
      * Vložení služby do modelu z configu 
      */
 

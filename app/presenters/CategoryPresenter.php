@@ -7,7 +7,7 @@
  */
 class CategoryPresenter extends BasePresenter {
 
-    /** @var MatyIsland\CategoryModel */
+    /** @var CategoryModel */
     protected $category;
 
     /* zaregistruji si všechny potřebné služby v Homepage */

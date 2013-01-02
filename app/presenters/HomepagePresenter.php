@@ -5,10 +5,10 @@
  */
 class HomepagePresenter extends BasePresenter {
 
-    /** @var MatyIsland\ProductModel */
+    /** @var ProductModel */
     private $products;
 
-    /** @var MatyIsland\UserModel */
+    /** @var UserModel */
     protected $users;
 
     /* zaregistruji si všechny potřebné služby v Homepage */

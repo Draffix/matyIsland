@@ -1,9 +1,4 @@
 <?php
-
-namespace MatyIsland;
-
-use Nette;
-
 /**
  * Reprezentuje repozitář pro databázovou tabulku
  */

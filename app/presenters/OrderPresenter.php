@@ -12,11 +12,11 @@ use Nette\Utils\Html;
  */
 class OrderPresenter extends BasePresenter {
 
-    /** @var MatyIsland\OrderModel */
+    /** @var OrderModel */
     private $order;
 
     /**
-     * @var MatyIsland\ProductModel
+     * @var ProductModel
      */
     protected $products;
 

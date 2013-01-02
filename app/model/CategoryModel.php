@@ -1,7 +1,4 @@
 <?php
-
-namespace MatyIsland;
-
 class CategoryModel extends Table {
 
     /** @var string */

@@ -1,8 +1,5 @@
 <?php
 
-namespace MatyIsland;
-
-use Nette;
 use Nette\Security as NS;
 
 /**

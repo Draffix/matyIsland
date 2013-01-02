@@ -19,7 +19,7 @@ class Rating extends UI\Control {
      */
     protected $products;
 
-    public function __construct(MatyIsland\ProductModel $products) {
+    public function __construct(ProductModel $products) {
         parent::__construct();
         $this->products = $products;
     }

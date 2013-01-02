@@ -5,11 +5,11 @@ use Nette\Application\UI;
 class ProductPresenter extends BasePresenter {
 
     /**
-     * @var MatyIsland\ProductModel
+     * @var ProductModel
      */
     protected $products;
 
-    /** @var MatyIsland\CommentModel * */
+    /** @var CommentModel * */
     protected $comments;
 
     /**

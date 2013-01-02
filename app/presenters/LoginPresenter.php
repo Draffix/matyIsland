@@ -11,7 +11,7 @@ use Nette\Application\UI,
  */
 class LoginPresenter extends BasePresenter {
 
-    /** @var MatyIsland\UserModel */
+    /** @var UserModel */
     private $user;
 
     protected function startup() {

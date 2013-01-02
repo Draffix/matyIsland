@@ -1,7 +1,4 @@
 <?php
-
-namespace MatyIsland;
-
 class CommentModel extends Table {
 
     /** @var String * */
