@@ -8,7 +8,7 @@ use Nette\Application\UI;
 class BasketPresenter extends BasePresenter {
 
     /**
-     * @var MatyIsland\ProductModel
+     * @var ProductModel
      */
     protected $products;
 
@@ -18,9 +18,11 @@ class BasketPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-        foreach (array_keys($_SESSION['cart']) as $key) {
-            if ($this->products->countProductQuantity($key)->pocet == 0) {
-                $_SESSION['cart'][$key]['prod_on_stock'] = 0;
+        if (isset($_SESSION["cart"])) {
+            foreach (array_keys($_SESSION['cart']) as $key) {
+                if ($this->products->countProductQuantity($key)->pocet == 0) {
+                    $_SESSION['cart'][$key]['prod_on_stock'] = 0;
+                }
             }
         }
     }
