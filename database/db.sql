@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: localhost
--- Vygenerováno: Stř 26. pro 2012, 14:03
+-- Vygenerováno: Úte 01. led 2013, 23:28
 -- Verze MySQL: 5.5.27
 -- Verze PHP: 5.3.15
 
@@ -28,14 +28,15 @@ CREATE TABLE IF NOT EXISTS `basket` (
   `basket_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(11) DEFAULT '0',
   PRIMARY KEY (`basket_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Vypisuji data pro tabulku `basket`
 --
 
 INSERT INTO `basket` (`basket_id`, `basket_session_id`, `basket_quantity`, `basket_ip_address`, `basket_timestamp`, `user_id`) VALUES
-(4, 'fupkhii5d9gum32om4scg7a5m5', 1, '127.0.0.1', '2012-12-23 22:11:41', 1);
+(4, 'fupkhii5d9gum32om4scg7a5m5', 1, '127.0.0.1', '2012-12-23 22:11:41', 1),
+(6, '15obgd57vt1hegi34kkr1q1gq3', 22, '127.0.0.1', '2012-12-26 15:32:55', 3);
 
 -- --------------------------------------------------------
 
@@ -56,7 +57,8 @@ CREATE TABLE IF NOT EXISTS `basket_has_product` (
 --
 
 INSERT INTO `basket_has_product` (`basket_basket_id`, `product_prod_id`) VALUES
-(4, 6);
+(4, 6),
+(6, 4);
 
 -- --------------------------------------------------------
 
@@ -207,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `deliveryPrice` int(11) NOT NULL,
   PRIMARY KEY (`ord_id`),
   KEY `fk_order_user` (`user_user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
 
 --
 -- Vypisuji data pro tabulku `orders`
@@ -252,7 +254,12 @@ INSERT INTO `orders` (`ord_id`, `ord_date`, `user_user_id`, `cust_name`, `cust_s
 (36, '2012-12-10 23:17:58', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'directDebit', 'postWithCashOnDelivery', '', 0, 89),
 (37, '2012-12-10 23:18:56', NULL, 'Jarda', 'sdfsdf', '', '', '', '', '', '', '', '', 'Jarda', 'sdfsdf', NULL, NULL, '', '', '', NULL, 'cashOnDelivery', 'postWithCashOnDelivery', '', 0, 119),
 (38, '2012-12-12 21:08:28', NULL, 'asd', 'asf', '', '', '', '', '', '', '', '', 'asd', 'asf', NULL, NULL, '', '', '', NULL, 'directDebit', 'post', '', 0, 89),
-(39, '2012-12-15 19:38:28', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'cashOnDelivery', 'postWithCashOnDelivery', '', 0, 119);
+(39, '2012-12-15 19:38:28', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'cashOnDelivery', 'postWithCashOnDelivery', '', 0, 119),
+(40, '2012-12-26 15:28:08', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'cashOnDelivery', 'postWithCashOnDelivery', '', 0, 119),
+(41, '2012-12-26 15:28:19', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'cashOnDelivery', 'postWithCashOnDelivery', '', 0, 119),
+(42, '2012-12-26 15:28:33', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'cashOnDelivery', 'postWithCashOnDelivery', '', 0, 119),
+(43, '2012-12-26 15:30:08', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'cashOnDelivery', 'postWithCashOnDelivery', '', 0, 119),
+(44, '2012-12-26 16:33:40', NULL, 'Jarda', 'Klimčík', '', '', '', '', '', '', '', '', 'Jarda', 'Klimčík', NULL, NULL, '', '', '', NULL, 'cash', 'personalCollection', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -277,7 +284,11 @@ CREATE TABLE IF NOT EXISTS `order_has_product` (
 INSERT INTO `order_has_product` (`order_ord_id`, `product_prod_id`, `quantity`, `actual_price_of_product`) VALUES
 (38, 1, 10, 125),
 (38, 5, 1, 27),
-(39, 6, 2, 40);
+(39, 6, 2, 40),
+(41, 6, 1, 419),
+(42, 6, 1, 419),
+(43, 6, 1, 419),
+(44, 4, 11, 129);
 
 -- --------------------------------------------------------
 
@@ -305,15 +316,15 @@ CREATE TABLE IF NOT EXISTS `product` (
 --
 
 INSERT INTO `product` (`prod_id`, `prod_name`, `prod_producer`, `prod_price`, `prod_describe`, `prod_isnew`, `prod_on_stock`, `prod_is_active`, `total_votes`, `total_value`, `used_ips`) VALUES
-(1, 'Vodní kobereček + pěnové puzzle zdarma', 'babyShop', 179, 'Výjimečná vodní podložka (součástí vodní pero) je dokonalou hračkou pro nejmenší už od 12. měsíců', 1, 0, 1, 0, 0, ''),
-(2, 'Play-Doh - Pizza hrací set', 'babyShop', 279, 'Novinka Play-Doh. Děti si z této sady mohou připravit výbornou snídani s pizzou, palačinkami, vajíčky nebo vaflemi! Modelína s formou, se ktrou si užijete spousty zábavy.', 1, 0, 1, 0, 0, ''),
-(3, 'Robot skládací cca 16 cm', 'babyShop', 55, 'Skládací robot, který se umí přeměnit v letadlo', 1, 0, 1, 0, 0, ''),
-(4, 'Tučňáci POP N'' DROP', 'babyShop', 129, 'Zábavná rodinná hra Tučňáci je zábavnější forma klasické hry Člověče nezlob se', 1, 0, 1, 2, 9, 'a:2:{i:0;s:9:"127.1.0.1";i:1;s:9:"127.0.0.1";}'),
-(5, 'Panenka hadrová 40 cm', 'babyShop', 115, 'Tradiční hadrová panenka, která je opravdu krásná. Po jednom kusu z každé barvy.', 1, 0, 1, 0, 0, ''),
+(1, 'Vodní kobereček + pěnové puzzle zdarma', 'babyShop', 179, 'Výjimečná vodní podložka (součástí vodní pero) je dokonalou hračkou pro nejmenší už od 12. měsíců', 1, 3, 1, 0, 0, ''),
+(2, 'Play-Doh - Pizza hrací set', 'babyShop', 279, 'Novinka Play-Doh. Děti si z této sady mohou připravit výbornou snídani s pizzou, palačinkami, vajíčky nebo vaflemi! Modelína s formou, se ktrou si užijete spousty zábavy.', 1, 4, 1, 0, 0, ''),
+(3, 'Robot skládací cca 16 cm', 'babyShop', 55, 'Skládací robot, který se umí přeměnit v letadlo', 1, 6, 1, 0, 0, ''),
+(4, 'Tučňáci POP N'' DROP', 'babyShop', 129, 'Zábavná rodinná hra Tučňáci je zábavnější forma klasické hry Člověče nezlob se', 1, 11, 1, 2, 9, 'a:2:{i:0;s:9:"127.1.0.1";i:1;s:9:"127.0.0.1";}'),
+(5, 'Panenka hadrová 40 cm', 'babyShop', 115, 'Tradiční hadrová panenka, která je opravdu krásná. Po jednom kusu z každé barvy.', 1, 4, 1, 0, 0, ''),
 (6, 'Panenka', 'babyShop', 419, 'Položíte-li ji do postýlky, zavře oči a pokud ji vezmete zpět do náruče tak otevře očka.', 1, 0, 1, 0, 0, ''),
-(7, 'Rybka plastová pískací na kolečkách 9cm', 'babyShop', 15, 'Rybka plastová pískací na kolečkách 9cm', 1, 0, 1, 0, 0, ''),
-(8, 'Mikrovlná trouba', 'babyShop', 215, 'Růžová mikrovlná trouba pro malé hospodyňky.', 0, 0, 1, 0, 0, ''),
-(9, 'Dřevěné PUZZLE', 'babyShop', 32, 'Dřevěné puzzle s devíti díly. Tato tradiční dřevěná hračka zábavnou formou rozvíjí představivost a koordinaci dětí a učí trpělivosti.', 0, 0, 1, 0, 0, '');
+(7, 'Rybka plastová pískací na kolečkách 9cm', 'babyShop', 15, 'Rybka plastová pískací na kolečkách 9cm', 1, 27, 1, 0, 0, ''),
+(8, 'Mikrovlná trouba', 'babyShop', 215, 'Růžová mikrovlná trouba pro malé hospodyňky.', 0, 2, 1, 0, 0, ''),
+(9, 'Dřevěné PUZZLE', 'babyShop', 32, 'Dřevěné puzzle s devíti díly. Tato tradiční dřevěná hračka zábavnou formou rozvíjí představivost a koordinaci dětí a učí trpělivosti.', 0, 25, 1, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -369,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_is_active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   KEY `fk_user_basket` (`basket_basket_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Vypisuji data pro tabulku `user`
@@ -377,7 +388,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`user_id`, `user_password`, `user_email`, `basket_basket_id`, `user_name`, `user_surname`, `user_telefon`, `user_street`, `user_city`, `user_psc`, `user_firmName`, `user_ico`, `user_dic`, `user_hash`, `user_is_active`) VALUES
 (1, '$2a$07$y5b4rwqnzua3bdb2q9hqmuvt.JyOygnsK/dpoShRvyen3aGvlxWtq', 'admin@admin.cz', NULL, 'Admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(3, '$2a$07$7enf3g58gn71xgu7m8eg8uO8ZmlWPz8g.FSIZbjOKN3g7ciwWjQuq', 'Jerry.klimcik@gmail.com', NULL, 'Jaroslav', 'Klimčík', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+(3, '$2a$07$qiipnkgx2rxyucejj93tgeRY4C19qini3IWQNEOO6j3uPMloo7dca', 'Jerry.klimcik@gmail.com', NULL, 'Jaroslav', 'Klimčík', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
 
 --
 -- Omezení pro exportované tabulky
