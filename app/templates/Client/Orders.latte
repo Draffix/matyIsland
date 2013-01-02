@@ -1,1 +1,8 @@
 {block content}
+    {foreach $flashes as $flash}
+<div class="flash {$flash->type}" style="width: auto;">{$flash->message}</div>
+    {/foreach}
+<div class="inside-content" style="width: 660px" >
+    <p>Zde budou mé objednávky</p>
+    <a n:href="Client:">Vrátit se zpět</a>
+</div>
