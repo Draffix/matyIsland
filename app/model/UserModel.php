@@ -1,7 +1,5 @@
 <?php
 
-namespace MatyIsland;
-
 /**
  * Description of UserModel
  */
@@ -14,10 +12,17 @@ class UserModel extends Table {
         return $this->getTable()->insert($values);
     }
 
+    public function updateUser($values, $userID) {
+        return $this->getTable()
+                        ->where('user_id', $userID)
+                        ->update($values);
+    }
+
     public function findByName($useremail) {
-        return $this->findAll()->where('user_email', $useremail)
-                ->where('user_is_active', 1)
-                ->fetch();
+        return $this->findAll()
+                        ->where('user_email', $useremail)
+                        ->where('user_is_active', 1)
+                        ->fetch();
     }
 
     //zjišťujeme jestli již existuje zadaný email (pokud 0 tak neexistuje)
@@ -27,9 +32,9 @@ class UserModel extends Table {
 
     public function updateHash($hash) {
         return $this->getTable()
-                ->where('user_hash', $hash)
-                ->update(array('user_hash' => NULL,
-                    'user_is_active' => 1));
+                        ->where('user_hash', $hash)
+                        ->update(array('user_hash' => NULL,
+                            'user_is_active' => 1));
     }
 
     public function setPassword($id, $password) {
