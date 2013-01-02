@@ -497,6 +497,11 @@ div.flash.success {
     background: #E6EFC2;
     color: #264409;
     border-color: #C6D880;
+    float: left;
+    margin: 10px 0 0 15px;
+    font-weight: bold;
+    padding: 5px;
+    width: 430px;
 }
 
 div.flash.info {
