@@ -11,7 +11,7 @@ use Nette\Mail\Message;
  */
 class RegistrationPresenter extends BasePresenter {
 
-    /** @var MatyIsland\UserModel */
+    /** @var UserModel */
     private $user;
 
     protected function startup() {
@@ -25,37 +25,21 @@ class RegistrationPresenter extends BasePresenter {
         $this->redirect('Login:');
     }
 
-    protected function createComponentSignUpForm() {
-        $form = new UI\Form;
+    protected function createComponentPersonalForm() {
+        $form = new personalForm();
         $form->addAntispam();
-        $form->addText('user_name', 'Jméno:')
-                ->addRule($form::FILLED);
-        $form->addText('user_surname', 'Příjmení:')
-                ->addRule($form::FILLED);
-        $form->addPassword('user_password', 'Heslo:')
-                ->addRule($form::FILLED);
-        $form->addPassword('user_confirmPassword', 'Ověření hesla:')
-                ->addRule($form::FILLED);
-        $form->addText('user_telefon', 'Telefon:')
-                ->addRule($form::FILLED);
-        $form->addText('user_email', 'E-mail:')
-                ->addRule($form::FILLED);
-        $form->addText('user_street', 'Ulice a číslo:')
-                ->addRule($form::FILLED);
-        $form->addText('user_city', 'Město:')
-                ->addRule($form::FILLED);
-        $form->addText('user_psc', 'PSČ:')
-                ->addRule($form::FILLED);
-        $form->addText('user_firmName', 'Název firmy:');
-        $form->addText('user_ico', 'IČO');
-        $form->addText('user_dic', 'DIČ');
+        
+        $form['user_password']->addRule($this::FILLED);
+        $form['user_confirmPassword']->addRule($this::FILLED);
+        
+        $form['user_name']->setDefaultValue($user->user_name);
         $form->addSubmit('send', 'Registrovat');
-        $form->onSuccess[] = callback($this, 'signUpFormSubmitted');
+        $form->onSuccess[] = callback($this, 'personalFormSubmitted');
         return $form;
     }
 
     // volá se po úspěšném odeslání registrace
-    public function signUpFormSubmitted(UI\Form $form) {
+    public function personalFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
 
         //provedeme kontrolu získaných dat
@@ -104,7 +88,7 @@ class RegistrationPresenter extends BasePresenter {
 
         unset($values['spam'], $values['form_created'], $values['user_confirmPassword']);
         $values->user_hash = $activation;
-        $values['user_password'] = \MatyIsland\Authenticator::calculateHash($values['user_password']);
+        $values['user_password'] = Authenticator::calculateHash($values['user_password']);
         $this->user->saveUser($values);
 
         $template = $this->createTemplate();
