@@ -46,6 +46,13 @@ Route::setStyleProperty('titleCategory', Route::FILTER_IN, function($url) {
             return Strings::webalize($url);
         });
 
+// Admin router
+$container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]', array(
+            'module' => "admin",
+            'presenter' => "Homepage",
+            'action' => "default",
+        ));
+
 
 // Setup router
 $container->router[] = new Route('index.php', array(
@@ -54,14 +61,14 @@ $container->router[] = new Route('index.php', array(
                 ), Route::ONE_WAY);
 
 $container->router[] = new Route('kategorie/<id>-<titleCategory>', array(
-    'presenter' => 'Category',
-    'action' => 'default'
-));
+            'presenter' => 'Category',
+            'action' => 'default'
+        ));
 
 $container->router[] = new Route('produkt/<id>-<titleProduct>', array(
-    'presenter' => 'Product',
-    'action' => 'default'
-));
+            'presenter' => 'Product',
+            'action' => 'default'
+        ));
 
 $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<paginator-page> ', array(
             'presenter' => array(
@@ -77,7 +84,7 @@ $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<pagina
                     'vyhledavani' => 'Search',
                 ),
             ),
-            'action' =>  array(
+            'action' => array(
                 Route::VALUE => 'default',
                 Route::FILTER_TABLE => array(
                     // řetězec v URL => akce
