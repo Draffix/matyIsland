@@ -1,2 +1,65 @@
-
 {block content}
+<div class="right_content">            
+
+    <h2>Seznam všech objednávek</h2> 
+
+
+    <table id="rounded-corner" style="width: 835px">
+    <thead>
+        <tr>
+            <th scope="col" class="rounded-company"></th>
+            <th scope="col" class="rounded">Zákazník</th>
+            <th scope="col" class="rounded">Detail</th>
+            <th scope="col" class="rounded">Cena</th>
+            <th scope="col" class="rounded">Položek</th>
+            <th scope="col" class="rounded">Datum vložení</th>
+            <th scope="col" class="rounded">Upravit</th>
+            <th scope="col" class="rounded-q4">Smazat</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="rounded-foot-left"><em>Zde se zobrazují šest nejnovějších objednávek.</em></td>
+            <td class="rounded-foot-right">&nbsp;</td>
+
+        </tr>
+    </tfoot>
+    <tbody>
+        {foreach $mainOrders as $order}
+        <tr>
+            <td><input type="checkbox" name="" /></td>
+            <td>{$order->cust_name} {$order->cust_surname}</td>
+            <td><a n:href="#">detail</a></td>
+            <td>{$order->sum_price},-</td>
+            <td>{$order->sum_quantity}</td>
+            <td>{$order->ord_date|date:'j. n. Y, H:i:s'}</td>
+
+            <td><a href="#"><img src="{$basePath}/images/administration/user_edit.png" alt="" title="" border="0" /></a></td>
+            <td><a href="#" class="ask"><img src="{$basePath}/images/administration/trash.png" alt="" title="" border="0" /></a></td>
+        </tr>
+        {/foreach}
+    </tbody>
+</table>
+
+<a href="#" class="bt_green"><span class="bt_green_lft"></span><strong>Přidat nový produkt</strong><span class="bt_green_r"></span></a>
+<a href="#" class="bt_blue"><span class="bt_blue_lft"></span><strong>Zobrazit vybrané produkty</strong><span class="bt_blue_r"></span></a>
+<a href="#" class="bt_red"><span class="bt_red_lft"></span><strong>Smazat vybrané produkty</strong><span class="bt_red_r"></span></a> 
+
+
+<div class="pagination">
+    {control paginator}
+</div> 
+
+<h2>Warning Box examples</h2>
+
+<div class="warning_box">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.
+</div>
+<div class="valid_box">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.
+</div>
+<div class="error_box">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.
+</div>      
+
+</div><!-- end of right content-->
