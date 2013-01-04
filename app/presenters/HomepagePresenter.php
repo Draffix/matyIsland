@@ -35,6 +35,8 @@ class HomepagePresenter extends BasePresenter {
         $mainProducts = $model->fetchImagesAndNews($paginator->itemsPerPage, $paginator->offset);
 
         $this->template->mainProducts = $mainProducts;
+        
+        
         if ($this->isAjax()) {
             $this->invalidateControl('list');
         }
