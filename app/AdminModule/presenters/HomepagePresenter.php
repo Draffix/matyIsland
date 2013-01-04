@@ -4,14 +4,6 @@ namespace AdminModule;
 
 class HomepagePresenter extends BasePresenter {
 
-    /** @var \OrderModel */
-    protected $order;
-
-    protected function startup() {
-        parent::startup();
-        $this->order = $this->context->order;
-    }
-
     protected function createComponentPaginator() {
         $visualPaginator = new \VisualPaginator();
         return $visualPaginator;
