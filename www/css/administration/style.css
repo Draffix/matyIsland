@@ -457,3 +457,257 @@ div.pagination span.disabled {
     border: 1px solid #f3f3f3;
     color: #ccc;
 }
+
+/******************/
+/** ORDER DETAIL **/
+/******************/
+
+.orderFieldset {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+    font:88% verdana,arial,sans-serif;
+    margin: 20px 0 0px 0px;
+    padding: 20px;
+    min-width: 300px;
+    max-width: 1000px;
+    width: 840px;
+}
+
+.orderFieldset fieldset {
+    border-color: #000;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;        /* padding in fieldset support spotty in IE */
+    margin: 0 10px 20px 0;
+    background-color: #ffffff;
+}
+
+.orderFieldset fieldset legend {
+    font-size:1.1em; /* bump up legend font size, not too large or it'll overwrite border on left */
+    /* be careful with padding, it'll shift the nice offset on top of border  */
+    border: 1px solid #BBB;
+    background: #EEE;
+    padding: 3px 20px;
+    margin-bottom: 5px;
+}
+
+.orderFieldset br {
+    clear:left; /* setting clear on inputs didn't work consistently, so brs added for degrade */
+}
+
+.orderFieldset .leftColumn {
+    float: left;
+    width: 400px;
+    margin-top: 30px;
+}
+
+.orderFieldset .rightColumn {
+    float: right;
+    width: 400px;
+    margin-top: 30px;
+}
+
+.orderFieldset .order_table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: gray;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: black;
+}
+
+.orderFieldset .order_table td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+.orderFieldset .order_table th {
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+}
+
+.orderFieldset .order_table th.required {
+    font-weight: bold;
+}
+
+.orderFieldset .order_table label {
+    cursor: default;
+    padding-right: 20px;
+}
+
+.orderFieldset #submit {		
+    background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+
+    margin-right: 50px;
+    height: 35px;
+    width: auto;
+    cursor: pointer;
+    font: bold 15px Arial, Helvetica;
+    color: #8f5a0a;
+}
+
+.orderFieldset #submit:hover,.orderFieldset #submit:focus
+{		
+    background-color: #fddb6f;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb94b), to(#fddb6f));
+    background-image: -webkit-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: -moz-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: -ms-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: -o-linear-gradient(top, #ffb94b, #fddb6f);
+    background-image: linear-gradient(top, #ffb94b, #fddb6f);
+}	
+
+.orderFieldset #submit:active
+{		
+    outline: none;
+
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+.orderFieldset #submit::-moz-focus-inner
+{
+    border: none;
+}
+
+/** Tabulka se seznamem produktů **/
+.orderFieldset .datagrid {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    line-height: 1.5em;	
+}
+
+.orderFieldset table.datagrid {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    line-height: 1.5em;	
+    border-style: solid;
+    border-collapse: separate;
+    border-width: 1px;
+    border-color: #9e9e9e;
+    color: #222;
+    width: 800px;
+}
+
+.orderFieldset table.datagrid tr.even {
+    background: #e8e8e9;
+}
+.orderFieldset table.datagrid tr.odd {
+    background: #d3d3d3;
+}
+.orderFieldset table.datagrid tr.hover {
+    background: #ffc160 !important;
+}
+.orderFieldset table.datagrid td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    padding: 2px 4px;
+}
+.orderFieldset table.datagrid tr th {
+    background: transparent url(../../images/administration/sort_row_bg.gif) repeat-x scroll 0 50%;
+    background: #a5a5a5 url(../../images/administration/dg_header_bg.png) repeat-x;
+    padding: 2px 5px;
+    border-collapse: collapse;
+    border-color: #F9F9F9 #D1CFCF #F9F9F9 #F9F9F9;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 0.9em;
+    padding-bottom: 0;
+    padding-top: 1px;
+    /*color: #777;*/
+    color: white;
+    height: 25px;
+    font-weight: normal;
+    font-family: tahoma;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.orderFieldset table.datagrid th.sort_selected a {
+
+    padding-left: 20px;
+    position: relative;
+
+}
+
+.orderFieldset table.datagrid th.sort_selected a img {
+    border: 0px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.orderFieldset table.datagrid tr th a {
+    display: block;
+    /*color: #555;*/
+    color: white;
+    /*	padding: 2px;*/
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.orderFieldset table.datagrid tr th a:hover {
+    color: #ffc160;
+}
+
+.orderFieldset table.datagrid img {
+    border: 1px solid #888;	
+    width: 113px;
+    height: 92px;
+
+}
+
+
+
+/*
+ * Aligns
+*/
+.orderFieldset table.datagrid .left {
+    text-align: left;
+}
+.orderFieldset table.datagrid .right {
+    text-align: right;
+}
+.orderFieldset table.datagrid .center {
+    text-align: center;
+}
+.orderFieldset table.datagrid .top {
+    vertical-align: top;
+}
+.orderFieldset table.datagrid .bottom {
+    vertical-align: bottom;
+}
+.orderFieldset table.datagrid .middle {
+    vertical-align: middle;
+}
+.orderFieldset table.datagrid .nowrap {
+    white-space: nowrap;
+}
+
+
+.orderFieldset table.datagrid img.dg_icon {
+    border: 0px;
+    vertical-align: middle;
+    padding: 0px 5px;
+}
