@@ -190,20 +190,20 @@ class OrderPresenter extends BasePresenter {
 
         switch ($_SESSION["order"]["cust_delivery"]) {
             case "post":
-                $_SESSION["order"]["deliveryPrice"] = 89;
+                $_SESSION["order"]["deliverySinglePrice"] = 89;
                 break;
             case "postWithCashOnDelivery":
-                $_SESSION["order"]["deliveryPrice"] = 89;
+                $_SESSION["order"]["deliverySinglePrice"] = 89;
                 break;
             case "personalCollection":
-                $_SESSION["order"]["deliveryPrice"] = 0;
+                $_SESSION["order"]["deliverySinglePrice"] = 0;
                 break;
             default:
                 break;
         }
 
         if ($_SESSION["order"]["cust_payment"] == "cashOnDelivery") {
-            $_SESSION["order"]["deliveryPrice"] += 30;
+            $_SESSION["order"]["deliveryPrice"] = $_SESSION["order"]["deliverySinglePrice"] + 30;
         }
 
         $this->redirect('Order:summary');
