@@ -46,7 +46,7 @@ Route::setStyleProperty('titleCategory', Route::FILTER_IN, function($url) {
             return Strings::webalize($url);
         });
 
-// Admin router
+// Admin base router
 $container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]', array(
             'module' => "admin",
             'presenter' => "Homepage",
