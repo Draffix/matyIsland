@@ -27,8 +27,8 @@ class OrderModel extends Table {
      */
     public function saveIntoOrderHasProduct($id_order, $id_product, $quantity, $price) {
         $this->connection->query(
-                'INSERT INTO order_has_product (order_ord_id, product_prod_id, quantity, actual_price_of_product)
-                VALUES (?, ?, ?, ?)', $id_order, $id_product, $quantity, $price);
+                'INSERT INTO order_has_product (order_ord_id, product_prod_id, quantity, actual_price_of_product, totalPrice)
+                VALUES (?, ?, ?, ?, ?)', $id_order, $id_product, $quantity, $price, $quantity*$price);
     }
 
     /**
@@ -38,20 +38,32 @@ class OrderModel extends Table {
      */
     public function fetchOrder($id) {
         return $this->connection->query(
-                        'SELECT * FROM order_has_product AS op JOIN orders AS o ON o.ord_id = op.order_ord_id 
+                        'SELECT *, sum(op.actual_price_of_product) AS sum_price, 
+                            sum(op.quantity) AS sum_quantity 
+                 FROM order_has_product AS op JOIN orders AS o ON o.ord_id = op.order_ord_id 
                  JOIN product AS p ON p.prod_id = op.product_prod_id
                  WHERE ord_id = ?', $id);
     }
 
+    /**
+     * Vrací počet objednávek seskupené podle jejich ID
+     * @return type
+     */
     public function countOrders() {
         return $this->connection->table('order_has_product')
-                ->group('order_ord_id')
-                ->count();
+                        ->group('order_ord_id')
+                        ->count();
     }
 
+    /**
+     * Vrací všechny objednávky s omezením limitu a offsetu
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function fetchAllOrdersWithOffset($limit, $offset) {
         return $this->connection->query(
-                        'SELECT *, sum(op.actual_price_of_product) AS sum_price, 
+                        'SELECT *, SUM(totalPrice) AS sum_price, 
                             sum(op.quantity) AS sum_quantity FROM order_has_product AS op JOIN orders AS o ON o.ord_id = op.order_ord_id 
                  JOIN product AS p ON p.prod_id = op.product_prod_id
                  GROUP BY ord_id
@@ -60,4 +72,20 @@ class OrderModel extends Table {
                 OFFSET ?', $limit, $offset);
     }
 
+    /**
+     * Vrací všechny objednávky z dané ID spolu s obrázky a bez jakýchkoliv
+     * sum - pro výpis produktů
+     * @param type $id
+     * @return type
+     */
+    public function fetchAllOrdersWithID($id) {
+        return $this->connection->query(
+                        'SELECT *
+                FROM order_has_product AS op 
+                JOIN orders AS o ON o.ord_id = op.order_ord_id 
+                JOIN product AS p ON p.prod_id = op.product_prod_id
+                JOIN image AS i ON i.product_prod_id = p.prod_id
+                WHERE i.image_is_main = 1
+                AND ord_id = ?', $id);
+    }
 }
