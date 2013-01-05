@@ -1,0 +1,38 @@
+{block content}
+<div class="left_content">
+    <div class="sidebarmenu">
+        <a class="menuitem" n:href="Order:mainInfo">Základní údaje</a>                 
+        <a class="menuitem" href="">Položky</a>                 
+        <a class="menuitem" n:href="Order:sendEmail">Email zákazníkovi</a>                 
+    </div>
+</div>
+<div class="right_content" style="padding-left: 15px; padding-top: 20px">
+    <div class="orderFieldset" style="width: 250px; padding: 0; margin: 0;">
+        {foreach $flashes as $flash}
+        <div class="flash {$flash->type}" style="width: 565px">{$flash->message}</div>
+        {/foreach}
+        {form sendEmailForm}
+        <fieldset style="background: whiteSmoke">
+            <legend>Odeslání emailu</legend> 
+            <table class="order_table"><tbody><tr>
+                        <th class="order_label required"><label for="predmet">Předmět*:</label></th><td class="form_element"><span original-title="">
+                                <input type="text" name="predmet" id="predmet" value="" class="long-input"></span>
+                        </td></tr><tr>
+                        <th class="order_label required"><label for="email_komu">Příjemce:</label></th><td class="form_element"><span original-title="">
+                                <input type="text" name="email_komu" id="email_komu" value="@" class="long-input"></span>
+                        </td></tr><tr>
+                        <th class="order_label required"><label for="email_od">Odesílatel:</label></th><td class="form_element"><span original-title="">
+                                <input type="text" name="email_od" id="email_od" value="info@matyland.cz" class="long-input"></span>
+                        </td></tr><tr>
+                        <th class="order_label required"><label for="zprava">Zpráva:</label></th><td class="form_element"><span original-title="">
+                                <textarea rows="4" cols="63" id="zprava" n:input="text"></textarea></span></td></tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <div style="width: 500px;">
+            <input type="submit" id="submit" style="margin-right: 50px" value="Odeslat email">
+            <a n:href="Homepage:"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
+        </div>
+        {/form}
+    </div>
+</div>
