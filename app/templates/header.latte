@@ -6,19 +6,19 @@
             <strong>Vítejte {$usersData->user_name}</strong> &nbsp; | &nbsp;            
             <a n:href="signOut!">Odhlásit se</a></span>
             {else}
-        <a n:href="Login:">Přihlásit<img id="userIcon" src="{$basePath}/images/info/user.png"></a>&nbsp; | &nbsp; <a n:href="Registration:"><img id="regIcon" src="{$basePath}/images/info/pencil.png">Registrovat se</a></span> 
+        <a n:href="Login:">Přihlásit<img id="userIcon" alt="userIcon" src="{$basePath}/images/info/user.png"></a>&nbsp; | &nbsp; <a n:href="Registration:"><img id="regIcon" alt="pencilIcon" src="{$basePath}/images/info/pencil.png">Registrovat se</a></span> 
             {/if}
 
         {form hledej class => 'form-wrapper cf'}
             {input search placeholder => 'Hledaný výraz...'}
-        <button>{input btnSearch}</button>
+        <button type="submit" n:input="btnSearch">Hledat</button>
 
         {/form}
 
         <a n:href="Basket:">
             <div class="cart">
                 <strong>Váš nákupní košík:</strong>
-                <img src="{$basePath}/images/info/mini-cart.png"/>
+                <img src="{$basePath}/images/info/mini-cart.png" alt="miniCart"/>
                 <span class="priceCount">
                     Cena nákupu: {$_SESSION["totalPrice"]} Kč <br /> 
                     Počet položek: {$_SESSION["count"]} <br />
