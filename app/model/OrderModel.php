@@ -28,7 +28,7 @@ class OrderModel extends Table {
     public function saveIntoOrderHasProduct($id_order, $id_product, $quantity, $price) {
         $this->connection->query(
                 'INSERT INTO order_has_product (order_ord_id, product_prod_id, quantity, actual_price_of_product, totalPrice)
-                VALUES (?, ?, ?, ?, ?)', $id_order, $id_product, $quantity, $price, $quantity*$price);
+                VALUES (?, ?, ?, ?, ?)', $id_order, $id_product, $quantity, $price, $quantity * $price);
     }
 
     /**
@@ -53,6 +53,12 @@ class OrderModel extends Table {
         return $this->connection->table('order_has_product')
                         ->group('order_ord_id')
                         ->count();
+    }
+
+    public function updateOrder($ord_id, $values) {
+        return $this->getTable()
+                ->where('ord_id', $ord_id)
+                ->update($values);
     }
 
     /**
@@ -88,4 +94,5 @@ class OrderModel extends Table {
                 WHERE i.image_is_main = 1
                 AND ord_id = ?', $id);
     }
+
 }

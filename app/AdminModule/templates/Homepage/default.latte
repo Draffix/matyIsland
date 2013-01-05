@@ -8,11 +8,13 @@
     <thead>
         <tr>
             <th scope="col" class="rounded-company"></th>
+            <th scope="col" class="rounded">ID</th>
             <th scope="col" class="rounded">Zákazník</th>
             <th scope="col" class="rounded">Detail</th>
             <th scope="col" class="rounded">Cena</th>
             <th scope="col" class="rounded">Položek</th>
             <th scope="col" class="rounded">Datum vložení</th>
+            <th scope="col" class="rounded">Stav</th>
             <th scope="col" class="rounded">Upravit</th>
             <th scope="col" class="rounded-q4">Smazat</th>
         </tr>
@@ -28,13 +30,15 @@
         {foreach $mainOrders as $order}
         <tr>
             <td><input type="checkbox" name="" /></td>
+            <td>{$order->ord_id}</td>
             <td>{$order->cust_name} {$order->cust_surname}</td>
             <td><a n:href="Order:show $order->ord_id">detail</a></td>
             <td>{$order->sum_price},-</td>
             <td>{$order->sum_quantity}</td>
             <td>{$order->ord_date|date:'j.n.Y, H:i:s'}</td>
+            <td>{$order->ord_status}</td>
 
-            <td><a href="#"><img src="{$basePath}/images/administration/user_edit.png" alt="" title="" border="0" /></a></td>
+            <td><a n:href="Order:mainInfo $order->ord_id"><img src="{$basePath}/images/administration/user_edit.png" alt="" title="" border="0" /></a></td>
             <td><a href="#" class="ask"><img src="{$basePath}/images/administration/trash.png" alt="" title="" border="0" /></a></td>
         </tr>
         {/foreach}

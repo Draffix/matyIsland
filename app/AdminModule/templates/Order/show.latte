@@ -4,7 +4,7 @@
         <legend>Základní údaje</legend> 
         <table class="order_table">
             <tbody><tr>
-                    <th class="order_label"><label for="objednavka_stav_id">Stav objednávky:</label></th><td class="form_element"><span id="objednavka_stav_id">{if $order->isDone == 1} Vyřízeno {else} Nevyřízeno {/if}</span></td></tr><tr>
+                    <th class="order_label"><label for="objednavka_stav_id">Stav objednávky:</label></th><td class="form_element"><span id="objednavka_stav_id">{if $order->ord_status == 'Vyřízeno'} Vyřízeno {else} Nevyřízeno {/if}</span></td></tr><tr>
                     <th class="order_label"><label for="poslat_email">Poslat email při změně stavu:</label></th><td class="form_element"><span id="poslat_email" class="true"><span>Ano</span></span></td></tr><tr>
                     <th class="order_label"><label for="cislo_objednavky">Číslo objednávky:</label></th><td class="form_element"><span id="cislo_objednavky">{$order->ord_id}</span></td></tr><tr>
                     <th class="order_label"><label for="datum">Datum:</label></th><td class="form_element"><span id="datum">{$order->ord_date|date:'j.n.Y, H:i:s'}</span></td></tr><tr>
@@ -73,7 +73,7 @@
             <table class="order_table">
                 <tbody><tr>
                         <th class="order_label"><label for="poznamka_uzivatele">Poznámka uživatele:</label></th><td class="form_element"><span id="poznamka_uzivatele">{if $order->cust_note == ''}Žádná{else}{$order->cust_note}{/if}</span></td></tr><tr>
-                        <th class="order_label"><label for="poznamka_prodejce">Poznámka prodejce:</label></th><td class="form_element"><span id="poznamka_prodejce">{if $order->seller_note == ''}Žádná{else}{$order->cust_note}{/if}</span></td></tr>
+                        <th class="order_label"><label for="poznamka_prodejce">Poznámka prodejce:</label></th><td class="form_element"><span id="poznamka_prodejce">{if $order->seller_note == ''}Žádná{else}{$order->seller_note}{/if}</span></td></tr>
                 </tbody>
             </table>
         </fieldset>
@@ -110,6 +110,7 @@
 
     <center>
         <a n:href="Homepage:"><input type="submit" id="submit" value="Zpět na seznam"></a>
-        <input type="submit" id="submit" value="Upravit objednávku">
+        <a n:href="Order:mainInfo $order->ord_id"><input type="submit" id="submit" value="Upravit objednávku"></a>
+        <a n:href="#"><input type="submit" id="submit-delete" value="Smazat objednávku"></a>
     </center>
 </div>
