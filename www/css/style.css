@@ -2,7 +2,9 @@
     margin:0px;
     padding:0px;
 }
-img{border:0px}
+img{
+    border:0;
+}
 html{
     width:100%;
     height:100%
@@ -258,7 +260,7 @@ body{
 }
 
 /* to samé jako #items ale rozšířené */
-#item{
+.productItem{
     width:217px;
     min-height: 300px;
     border:1px solid #BBBBBB;
@@ -273,7 +275,7 @@ body{
 }
 
 /* nadpis produktu */
-#item p{
+.productItem p{
     display:block;
     background-color:#F4F8EE;
     padding:10px 0 5px 10px;
@@ -282,7 +284,7 @@ body{
     height: 35px;
 }
 
-#item a{
+.productItem a{
     font-family:Arial, Helvetica, sans-serif;
     font-size:14px;
     color:#4B4B4B;
@@ -290,13 +292,13 @@ body{
     font-weight:bold;
 }
 
-#image {
+.image {
     padding-left: 5px;
     padding-right: 5px;
 
 }
 
-#image img {
+.image img {
     width: 205px;
     height: 150px;
     border: 1px solid #D4D4D4;
@@ -337,7 +339,7 @@ body{
     margin:10px 10px 0 10px;
 }
 
-.btn-into-basket input[name=addCart] {
+.btn-into-basket {
     background:transparent url('../images/info/btn-into-basket2.png') no-repeat top left;
     border: 0;
     color: transparent;
@@ -690,7 +692,7 @@ div.flash.wrong {
     margin:10px 10px 0 10px;
 }
 
-.itemDetail .btn-into-basket input[name=addCart] {
+.itemDetail .btn-into-basket {
     background:transparent url('../images/info/btn-into-basket-big.png') no-repeat top left;
     border: 0;
     color: transparent;
