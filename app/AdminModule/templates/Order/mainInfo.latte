@@ -1,0 +1,128 @@
+{block content}
+{foreach $flashes as $flash}
+<div class="flash {$flash->type}">{$flash->message}</div>
+{/foreach}
+<div class="left_content">
+    <div class="sidebarmenu">
+        <a class="menuitem" href="">Základní údaje</a>                 
+        <a class="menuitem" href="">Položky</a>                 
+        <a class="menuitem" href="">Email zákazníkovi</a>                 
+    </div>
+</div>
+<div class="right_content" style="padding-left: 15px; padding-top: 20px">
+    <div class="orderFieldset" style="width: 250px; padding: 0; margin: 0;">
+        {form mainInfoForm}
+        <fieldset style="background: whiteSmoke">
+            <legend>Základní údaje</legend> 
+            <table class="order_table">
+                <tbody><tr>
+                        <th class="order_label"><label for="objednavka_stav_id">Stav objednávky:</label></th>
+                        <td class="form_element"><span id="objednavka_stav_id">
+                                <select n:input="ord_status">
+                                    <option value="Expedováno" {if $order->ord_status == 'expedition'}selected="selected"{/if}>Expedováno</option>
+                                    <option value="Nevyřízeno" {if $order->ord_status == 'Nevyřízeno'}selected="selected"{/if}>Nevyřízeno</option>
+                                    <option value="Vyřízeno" {if $order->ord_status == 'Vyřízeno'}selected="selected"{/if}>Vyřízeno</option>
+                                    <option value="Stornováno" {if $order->ord_status == 'Stornováno'}selected="selected"{/if}>Stornováno</option>
+                                    <option value="Vráceno" {if $order->ord_status == 'Vráceno'}selected="selected"{/if}>Vráceno</option>
+                                </select>
+                            </span></td></tr><tr>
+                        <th class="order_label"><label for="poslat_email">Poslat email při změně stavu:</label></th><td class="form_element"><span id="poslat_email" class="true"><span>Ano</span></span></td></tr><tr>
+                        <th class="order_label"><label for="cislo_objednavky">Číslo objednávky:</label></th><td class="form_element"><span id="cislo_objednavky">{$order->ord_id}</span></td></tr><tr>
+                        <th class="order_label"><label for="datum">Datum:</label></th><td class="form_element"><span id="datum">{$order->ord_date|date:'j.n.Y, H:i:s'}</span></td></tr><tr>
+                        <th class="order_label"><label for="cena_celkem">Cena:</label></th><td class="form_element"><span id="cena_celkem">{$totalPrice},-</span></td></tr><tr>
+                        <th class="order_label"><label for="cena_celkem_dph">Počet položek:</label></th><td class="form_element"><span id="cena_celkem_dph">{$order->sum_quantity}</span></td></tr>
+                </tbody>
+            </table>
+
+            <div class="leftColumn" style="width: 300px">
+                <fieldset style="height: 150px;">
+                    <legend>Zákazník</legend>
+                    <table class="order_table">
+                        <tbody><tr>
+                                <th class="order_label required"><label for="zakaznik-uzivatel_jmeno">Jméno*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="zakaznik-uzivatel_jmeno" n:input="cust_name" value="{$order->cust_name}"></span></td></tr><tr>
+                                <th class="order_label required"><label for="zakaznik-uzivatel_prijmeni">Příjmení*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="zakaznik-uzivatel_prijmeni" n:input="cust_surname" value="{$order->cust_surname}"></span></td></tr><tr>
+                                <th class="order_label required"><label for="zakaznik-uzivatel_email">Email*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="zakaznik-uzivatel_email" n:input="cust_email" value="{$order->cust_email}"></span></td></tr><tr>
+                                <th class="order_label"><label for="zakaznik-uzivatel_telefon">Telefon:</label></th><td class="form_element"><span>
+                                        <input type="text" id="zakaznik-uzivatel_telefon" n:input="cust_telefon" value="{$order->cust_telefon}"></span></td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+                <fieldset style="height: 280px;">
+                    <legend>Dodací adresa</legend>
+                    <table class="order_table">
+                        <table class="order_table">
+                            <tbody><tr>
+                                    <th class="order_label required"><label for="dodaci_adresa-jmeno">Jméno*:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-jmeno" n:input="cust_name" value="{$order->cust_name}"></span></td></tr><tr>
+                                    <th class="order_label required"><label for="dodaci_adresa-prijmeni">Příjmení*:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-prijmeni" n:input="cust_surname" value="{$order->cust_surname}"></span></td></tr><tr>
+                                    <th class="order_label required"><label for="dodaci_adresa-ulice">Ulice*:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-ulice" n:input="cust_street" value="{$order->cust_street}"></span></td></tr><tr>
+                                    <th class="order_label required"><label for="dodaci_adresa-mesto">Město*:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-mesto" n:input="cust_city" value="{$order->cust_city}"></span></td></tr><tr>
+                                    <th class="order_label required"><label for="dodaci_adresa-psc">PSČ*:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-psc" n:input="cust_psc" value="{$order->cust_psc}"></span></td></tr><tr>
+                                    <th class="order_label"><label for="dodaci_adresa-firma">Firma:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-firma" n:input="cust_firmName" value="{$order->cust_firmName}"></span></td></tr><tr>
+                                    <th class="order_label"><label for="dodaci_adresa-ico">IČO:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-ico" n:input="cust_ico" value="{$order->cust_ico}"></span></td></tr><tr>
+                                    <th class="order_label"><label for="dodaci_adresa-dic">DIČ:</label></th><td class="form_element"><span>
+                                            <input type="text" id="dodaci_adresa-dic" n:input="cust_dic" value="{$order->cust_dic}"></span></td></tr>
+                            </tbody></table>
+                </fieldset>
+            </div>
+
+            <div class="rightColumn" style="width: 300px">
+                <fieldset style="height: 150px;">
+                    <legend>Doprava/Platba</legend>
+                    <table class="order_table">
+                        <tbody><tr>
+                                <th class="order_label"><label for="doprava-doprava_typ">Typ:</label></th><td class="form_element"><span id="doprava-doprava_typ">{if $order->cust_delivery == 'post'}Česká pošta{elseif $order->cust_delivery == 'postWithCashOnDelivery'}Kurýr{else}Osobní odběr{/if}</span></td></tr><tr>
+                                <th class="order_label"><label for="doprava-doprava_cena">Cena dopravy:</label></th><td class="form_element"><span id="doprava-doprava_cena">{$order->deliverySinglePrice},-</span></td></tr><tr>
+                                <th class="order_label"><label for="doprava-doprava_platba">Platba:</label></th><td class="form_element"><span id="doprava-doprava_platba">{if $order->cust_payment == 'directDebit'}Převodem na účet{elseif $order->cust_payment == 'cashOnDelivery'}Dobírkou{else}Hotově{/if}</span></td></tr>
+                            <tr>{if $order->cust_payment == 'cashOnDelivery'}<tr><th class="order_label"><label for="doprava-doprava_dobirka">Cena za dobírku:</label></th><td class="form_element"><span id="doprava-doprava_dobirka">30,-</span></td></tr>{/if}
+                        </tbody>
+                    </table>
+                </fieldset>
+                <fieldset style="height: 280px;">
+                    <legend>Fakturační adresa</legend>
+                    <table class="order_table">
+                        <tbody><tr>
+                                <th class="order_label required"><label for="fakturační_adresa-jmeno">Jméno*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="fakturační_adresa-jmeno" n:input="cust_bname" value="{$order->cust_bname}"></span></td></tr><tr>
+                                <th class="order_label required"><label for="fakturační_adresa-prijmeni">Příjmení*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="fakturační_adresa-prijmeni" n:input="cust_bsurname" value="{$order->cust_bsurname}"></span></td></tr><tr>
+                                <th class="order_label required"><label for="fakturační_adresa-ulice">Ulice*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="fakturační_adresa-ulice" n:input="cust_bstreet" value="{$order->cust_street}"></span></td></tr><tr>
+                                <th class="order_label required"><label for="fakturační_adresa-mesto">Město*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="fakturační_adresa-mesto" n:input="cust_bcity" value="{$order->cust_bcity}"></span></td></tr><tr>
+                                <th class="order_label required"><label for="fakturační_adresa-psc">PSČ*:</label></th><td class="form_element"><span>
+                                        <input type="text" id="fakturační_adresa-psc" n:input="cust_bpsc" value="{$order->cust_bpsc}"></span></td></tr><tr>
+                                <th class="order_label"><label for="fakturační_adresa-firma">Firma:</label></th><td class="form_element"><span>
+                                        <input type="text" id="fakturační_adresa-firma" n:input="cust_bfirmName" value="{$order->cust_bfirmName}"></span></td></tr>
+                        </tbody></table>
+                </fieldset>
+            </div>
+            <fieldset>
+                <legend >Poznámky</legend>
+                <table class="order_table">
+                    <tbody><tr>
+                            <th class="order_label"><label for="poznamka_uzivatele">Poznámka uživatele:</label></th><td class="form_element"><span original-title="">
+                                    <textarea id="poznamka_uzivatele" style="max-width: 500px" rows="5" cols="60" n:input="cust_note">{$order->cust_note}</textarea></span>
+                            </td></tr><tr>
+                            <th class="order_label"><label for="poznamka_prodejce">Poznámka prodejce:</label></th><td class="form_element"><span>
+                                    <textarea id="poznamka_prodejce" style="max-width: 500px" rows="5" cols="60" n:input="seller_note">{$order->seller_note}</textarea></span>
+                            </td></tr>
+                    </tbody></table>
+            </fieldset>
+        </fieldset>
+        <div style="width: 500px;">
+            <input type="submit" id="submit" style="margin-right: 50px" n:input="save_change" value="Uložit změny">
+            <a n:href="Homepage:"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
+        </div>
+         {/form}
+    </div>
+</div>
