@@ -3,6 +3,7 @@
 namespace AdminModule;
 
 use Nette\Application\UI;
+use Nette\Mail\Message;
 
 class OrderPresenter extends BasePresenter {
 
@@ -31,6 +32,10 @@ class OrderPresenter extends BasePresenter {
         $this->template->totalPrice = $totalPrice;
     }
 
+    public function renderSendEmail($id) {
+        
+    }
+
     protected function createComponentMainInfoForm() {
         $form = new mainInfoForm();
         $form->onSuccess[] = callback($this, 'mainInfoFormSubmitted');
@@ -42,8 +47,29 @@ class OrderPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->order->updateOrder($this->id, $values);
 
-//        $_SESSION['a'] = $values;
-        $this->flashMessage('Úspěch');
+        $this->flashMessage('Objednávka byla uložena', 'valid');
+        $this->redirect('this');
+    }
+
+    protected function createComponentSendEmailForm() {
+        $form = new UI\Form;
+        $form->addTextArea('text')
+                ->getControlPrototype()->class('mceEditor');
+        $form->addSubmit('send', 'Odeslat');
+        $form->onSuccess[] = callback($this, 'sendEmailFormSubmitted');
+        return $form;
+    }
+
+    public function sendEmailFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+
+        $mail = new Message;
+        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+                ->addTo('jerry.klimcik@gmail.com')
+                ->setSubject('Změna údajů')
+                ->setHtmlBody($values['text'])
+                ->send();
+
         $this->redirect('this');
     }
 
