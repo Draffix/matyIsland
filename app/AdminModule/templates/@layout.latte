@@ -10,6 +10,17 @@
         <script type="text/javascript" src="{$basePath}/js/administration/ddaccordion.js"></script>
         <script src="{$basePath}/js/administration/jquery.jclock-1.2.0.js.txt" type="text/javascript"></script>
         <script type="text/javascript" src="{$basePath}/js/administration/jconfirmaction.jquery.js"></script>
+
+        <script type="text/javascript" src="{$basePath}/js/tiny_mce/tiny_mce.js" ></script >
+        <script type="text/javascript" >
+        tinyMCE.init({
+            language : "cs",
+            mode: "specific_textareas",
+            editor_selector: "mceEditor",
+            theme : "advanced",
+        });
+        </script >
+        
         <script type="text/javascript">
 	
                 $(document).ready(function() {
