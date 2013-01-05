@@ -48,7 +48,7 @@ $(document).ready(function() {
             <br>
             <span class="delivery">Doprava: <b>2-3 pracovní dny</b></span><br>
             {if $product->product->prod_on_stock != 0}<span class="store">Dostupnost: <b>skladem</b></span>
-            <a n:href="addCart! $product->product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+            <a n:href="addCart! $product->product->prod_id, 1"><span class="btn-into-basket"></span></a>
                     {else}<span class="store" style="padding-bottom: 10px">Dostupnost: <b style="color: #ff6600">nedostupné</b></span>{/if}<br>
         </div>
     </div>
