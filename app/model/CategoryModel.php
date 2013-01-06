@@ -1,4 +1,5 @@
 <?php
+
 class CategoryModel extends Table {
 
     /** @var string */
@@ -26,6 +27,11 @@ class CategoryModel extends Table {
                 AND cat_id = ?
                 AND product.prod_is_active = ?
                 GROUP BY product.prod_id', $id, 1)->fetch();
+    }
+
+    public function fetchAllCategoryNames() {
+        return $this->connection->table('category')
+                        ->select('cat_name');
     }
 
 }
