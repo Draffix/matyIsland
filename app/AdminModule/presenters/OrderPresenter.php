@@ -10,7 +10,12 @@ class OrderPresenter extends BasePresenter {
     /** @persistent */
     public $id;
 
-    public function renderShow($id) {
+    protected function createComponentPaginator() {
+        $visualPaginator = new \VisualPaginator();
+        return $visualPaginator;
+    }
+
+    public function renderDetail($id) {
         $this->template->order = $this->order->fetchOrder($id)->fetch();
         $this->template->orderProducts = $this->order->fetchAllOrdersWithID($id);
 
@@ -34,6 +39,16 @@ class OrderPresenter extends BasePresenter {
 
     public function renderSendEmail($id) {
         
+    }
+
+    public function renderShow() {
+        $paginator = $this['paginator']->getPaginator();
+        $paginator->itemsPerPage = 30;
+        $paginator->setBase(1);
+        $paginator->itemCount = $this->order->countOrders();
+        $orders = $this->order->fetchAllOrdersWithOffset($paginator->itemsPerPage, $paginator->offset);
+
+        $this->template->orders = $orders;
     }
 
     protected function createComponentMainInfoForm() {
