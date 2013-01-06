@@ -15,7 +15,7 @@ class Rating extends UI\Control {
     private $count;
 
     /**
-     * @var MatyIsland\ProductModel
+     * @var ProductModel
      */
     protected $products;
 
