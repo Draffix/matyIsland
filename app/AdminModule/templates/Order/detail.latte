@@ -91,7 +91,7 @@
                     <th>Cena celkem</th>
                 </tr>
                 {foreach $orderProducts as $o}
-                <tr class="odd">
+                <tr {if $iterator->isOdd()} class="odd" {else} class="even"{/if}>
                     <td>{$o->prod_id}</td>
                     <td><a href=""><img src="{$basePath}/images/products/{$o->image_name}" alt=""></a></td>
                     <td>{$o->prod_name}</td>
@@ -109,7 +109,7 @@
     </fieldset>
 
     <center>
-        <a n:href="Homepage:"><input type="submit" id="submit" value="Zpět na seznam"></a>
+        <a n:href="Order:show"><input type="submit" id="submit" value="Zpět na seznam"></a>
         <a n:href="Order:mainInfo $order->ord_id"><input type="submit" id="submit" value="Upravit objednávku"></a>
         <a n:href="#"><input type="submit" id="submit-delete" value="Smazat objednávku"></a>
     </center>
