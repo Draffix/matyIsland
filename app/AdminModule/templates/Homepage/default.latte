@@ -32,7 +32,7 @@
             <td><input type="checkbox" name="" /></td>
             <td>{$order->ord_id}</td>
             <td>{$order->cust_name} {$order->cust_surname}</td>
-            <td><a n:href="Order:show $order->ord_id">detail</a></td>
+            <td><a n:href="Order:detail $order->ord_id">detail</a></td>
             <td>{$order->sum_price},-</td>
             <td>{$order->sum_quantity}</td>
             <td>{$order->ord_date|date:'j.n.Y, H:i:s'}</td>
