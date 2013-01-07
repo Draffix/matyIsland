@@ -15,16 +15,16 @@
         <p>Pro hledanou frázi <b>"{$word}"</b> bylo nalezeno <b>{$count} produktů</b></p></div>
     <div id="items" style="margin-left: 10px">
             {foreach $search as $s}
-        <div id="item">        
+        <div class="productItem">        
             <p><a n:href="Product: $s->product->prod_id, $s->product->prod_name">{$s->product->prod_name}</a></p>
             <br />
-            <div id="image"><a n:href="Product: $s->product->prod_id, $s->product->prod_name">
+            <div class="image"><a n:href="Product: $s->product->prod_id, $s->product->prod_name">
                     <img src="{$basePath}/images/products/{$s->image_name}" /></a></div>
             <br />
             <span class="describe">{$s->product->prod_describe|truncate:60}</span>
             {if $s->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
             <span class="price">{$s->product->prod_price},- Kč</span>
-            <a n:href="addCart! $s->product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+            <a n:href="addCart! $s->product->prod_id, 1"><span class="btn-into-basket"></span></a>
             {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
             <span class="price">{$s->product->prod_price},- Kč</span>
            {/if}
