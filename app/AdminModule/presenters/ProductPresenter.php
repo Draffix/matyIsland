@@ -27,31 +27,44 @@ class ProductPresenter extends BasePresenter {
 
     public function editProductFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
+        
+        $_SESSION['c'] = $values['prod_describe'];
 
-        if ($values['image']->isImage() == FALSE || $values['image'] == '') {
+        if ($values['image_name']->isImage() == FALSE ||
+                $values['image_name'] == '') {
             $this->flashMessage('Nebyl zadán hlavní obrázek nebo není obrázek v platném formátu JPG, PNG nebo GIF', 'error');
             $this->redirect('this');
         }
 
-        if ($values['image']->isOk()) {
-            $filename = $values['image']->getSanitizedName();
-            $targetPath = $this->context->params['wwwDir'] . '/images/';
-            if ($values['folder'] !== '') {
-                $targetPath .= "/$values[folder]";
-            }
-            // @TODO vyřešit kolize
-            $values['image']->move("$targetPath/$filename");
-        } else {
-            $this->flashMessage('chyba', 'error');
+        if ($values['image_name2'] != '' && $values['image_name2']->isImage() == FALSE ||
+                $values['image_name3'] != '' && $values['image_name3']->isImage() == FALSE ||
+                $values['image_name4'] != '' && $values['image_name4']->isImage() == FALSE) {
+            $this->flashMessage('Nebyl zadán obrázek v platném formátu JPG, PNG nebo GIF', 'error');
             $this->redirect('this');
         }
 
+        if ($values['image_name'] != '') {
+            $this->moveImage($values['folder'], $values['image_name']);
+        }
+        if ($values['image_name2'] != '') {
+            $this->moveImage($values['folder'], $values['image_name2']);
+        }
+        if ($values['image_name3'] != '') {
+            $this->moveImage($values['folder'], $values['image_name3']);
+        }
+        if ($values['image_name4'] != '') {
+            $this->moveImage($values['folder'], $values['image_name4']);
+        }
+    }
 
-//        if ($values->image->isImage() == FALSE) {
-//            $this->flashMessage('chyba');
-//            $this->redirect('this');
-//            return;
-//        }
+    private function moveImage($folder, $name) {
+        $filename = $name->getSanitizedName();
+        $targetPath = $this->context->params['wwwDir'] . '/images/upload/';
+        if ($folder !== '') {
+            $targetPath .= "/$folder";
+        }
+        // @TODO vyřešit kolize
+        $name->move("$targetPath/$filename");
     }
 
 }
