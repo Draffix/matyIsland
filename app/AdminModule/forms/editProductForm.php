@@ -38,12 +38,15 @@ class editProductForm extends UI\Form {
         $this->addText('prod_code');
 //                ->addRule($this::FILLED);
         $this->addTextArea('prod_describe')
-                ->addRule($this::FILLED)
+//                ->addRule($this::FILLED)
                 ->getControlPrototype()->class('mceEditor');
         $this->addTextArea('prod_long_describe')
-                ->addRule($this::FILLED)
+//                ->addRule($this::FILLED)
                 ->getControlPrototype()->class('mceEditor');
-        $this->addUpload('image', 'chyba');
+        $this->addUpload('image_name');
+        $this->addUpload('image_name2');
+        $this->addUpload('image_name3');
+        $this->addUpload('image_name4');
         $this->addSubmit('save_change');
     }
 
