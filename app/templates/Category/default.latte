@@ -2,16 +2,16 @@
 <div id="inside" style="width: 700px">
     <div id="items" style="margin-left: 10px">
             {foreach $category as $cat}
-        <div id="item">        
+        <div class="productItem">        
             <p><a n:href="Product: $cat->prod_id, $cat->prod_name">{$cat->prod_name}</a></p>
             <br />
-            <div id="image"><a n:href="Product: $cat->prod_id, $cat->prod_name">
+            <div class="image"><a n:href="Product: $cat->prod_id, $cat->prod_name">
                     <img src="{$basePath}/images/products/{$cat->image_name}" /></a></div>
             <br />
             <span class="describe">{$cat->prod_describe|truncate:60}</span>
                 {if $cat->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
                 <span class="price">{$cat->prod_price},- Kč</span>
-                <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
+                <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
                 {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
                 <span class="price">{$cat->prod_price},- Kč</span>
                 {/if}
