@@ -1,2 +1,22 @@
 Order Allow,Deny
 Deny from all
+
+Options +FollowSymLinks
+DirectoryIndex index.php
+
+# disable directory listing
+Options -Indexes
+# enable cool URL
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # RewriteBase /
+
+    # front controller
+    RewriteBase /www/
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9} /www/index.php HTTP/
+    RewriteRule ^index.php$ http://localhost/matyisland/www/ [R=301,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /www/index.php [L]
+</IfModule>
