@@ -14,12 +14,12 @@
         <div id="items">
             {foreach $mainProducts as $mainProduct}
             <div class="productItem">        
-                <p><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">{$mainProduct->product->prod_name}</a></p>
+                <span class="title"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">{$mainProduct->product->prod_name}</a></span>
                 <br />
                 <div class="image"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">
                         <img src="{$basePath}/images/products/{$mainProduct->image_name}" alt="{$mainProduct->image_name}" /></a></div>
                 <br />
-                <span class="describe">{$mainProduct->product->prod_describe|truncate:60}</span>
+                <span class="describe"><p>{!$mainProduct->product->prod_describe|truncate:60}</p></span>
                 {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
                 <span class="price">{$mainProduct->product->prod_price},- Kč</span>
                 <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>

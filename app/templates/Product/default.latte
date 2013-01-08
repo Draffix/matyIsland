@@ -33,15 +33,15 @@ $(document).ready(function() {
 </script>
 <div class="inside-content" style="padding-top: 0px; padding-left: 0px; padding-right: 0px; width: 650px">
     <div class="itemDetail">        
-        <p><a n:href="Product: $product->product->prod_id, $product->product->prod_name">{$product->product->prod_name}</a>
+        <span class="title"><a n:href="Product: $product->product->prod_id, $product->product->prod_name">{$product->product->prod_name}</a>
             <span class="price">{$product->product->prod_price},- Kč</span>
             <span class="priceText">Naše cena s DPH:</span>
-        </p>
+        </span>
         <br />
         <span class="itemImage"><a href="{$basePath}/images/products/{$product->image_name}" rel="gallery" class="pirobox_gall">
                 <img src="{$basePath}/images/products/{$product->image_name}"/></a></span>
         <br />
-        <span class="describe">{$product->product->prod_describe}</span><br>
+        <span class="describe">{!$product->product->prod_describe}</span><br>
         <div style="width: 200px; float: right;">
                 {control rating}
             <br>
@@ -62,11 +62,7 @@ $(document).ready(function() {
     </div>
     <div id="tabs_content_container">
         <div id="tab1" class="tab_content" style="display: block;">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. 
-                Integer laoreet placerat suscipit. Sed sodales scelerisque commodo. 
-                Nam porta cursus lectus. Proin nunc erat, gravida a facilisis quis, ornare id lectus. 
-                Proin consectetur nibh quis urna gravida mollis.</p>
+            {!$product->product->prod_long_describe}
         </div>
         <div id="tab2" class="tab_content">
             <div id="galerie">
