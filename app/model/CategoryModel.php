@@ -34,4 +34,19 @@ class CategoryModel extends Table {
                         ->select('cat_name');
     }
 
+    public function insertProductIntoCategoryHasProduct($cat_id, $prod_id) {
+        return $this->connection->table('category_has_product')
+                        ->insert(array('category_cat_id' => $cat_id,
+                            'product_prod_id' => $prod_id));
+    }
+
+    public function fetchAllCategoryNamesForProduct($id) {
+        return $this->connection->query('
+                        SELECT p.prod_id, c.cat_name 
+                        FROM category_has_product AS cp 
+                        JOIN product AS p ON p.prod_id = cp.product_prod_id
+                        JOIN category AS c ON c.cat_id = cp.category_cat_id
+                        WHERE product_prod_id = ?', $id);
+    }
+
 }
