@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of ProductModel
  */
@@ -138,9 +139,43 @@ class ProductModel extends Table {
     }
 
     public function updateProductQuantity($id_product, $quantityInOrder) {
-                return $this->getTable()
+        return $this->getTable()
                         ->where('product.prod_id', $id_product)
                         ->update(array('prod_on_stock' => $quantityInOrder));
+    }
+
+    public function insertProduct($values) {
+        return $this->getTable()
+                        ->insert(array('prod_name' => $values['prod_name'],
+                            'prod_price' => $values['prod_price'],
+                            'prod_code' => $values['prod_code'],
+                            'prod_describe' => $values['prod_describe'],
+                            'prod_long_describe' => $values['prod_long_describe'],
+                            'prod_isnew' => $values['prod_isnew'],
+                            'prod_on_stock' => $values['prod_on_stock'],
+                            'prod_is_active' => $values['prod_is_active']));
+    }
+
+    public function insertImage($productID, $name, $isMain = 0) {
+        return $this->connection->table($this->image)
+                        ->insert(array('product_prod_id' => $productID,
+                            'image_name' => $name,
+                            'image_is_main' => $isMain));
+    }
+
+    public function fetchAllProductsWithOffset($limit, $offset) {
+        return $this->connection->table($this->image)
+                        ->where('image.image_is_main = ?', 1)
+                        ->limit($limit, $offset)
+                        ->order('product.prod_id');
+    }
+
+    public function countProducts() {
+        return $this->getTable()->count();
+    }
+
+    public function fetchProductForDetail($id) {
+        return $this->getTable()->fetch();
     }
 
 }
