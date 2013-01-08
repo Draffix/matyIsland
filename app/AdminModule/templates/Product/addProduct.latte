@@ -6,7 +6,7 @@
         <li n:foreach="$form->errors as $error">{$error}</li>
     </ul>
     {foreach $flashes as $flash}
-        <div class="flash {$flash->type}" style="width: 770px; font-weight: bold">{$flash->message}</div>
+    <div class="flash {$flash->type}" style="width: 770px; font-weight: bold">{$flash->message}</div>
     {/foreach}
     <div id="v-nav">
         <ul>
@@ -35,6 +35,16 @@
                         <tbody><tr>
                                 <th class="order_label required" style="width: 120px"><label for="kategorie">Kategorie:</label></th><td class="form_element"><span>
                                         {input category id=>kategorie}   
+                                    </span>
+                                </td></tr>
+                            <tr>
+                                <th class="order_label" style="width: 120px"><label for="kategorie">Další kategorie (nepovinná):</label></th><td class="form_element"><span>
+                                        {input category2 id=>kategorie2}   
+                                    </span>
+                                </td></tr>
+                            <tr>
+                                <th class="order_label" style="width: 120px"><label for="kategorie">Další kategorie (nepovinná):</label></th><td class="form_element"><span>
+                                        {input category3 id=>kategorie3}   
                                     </span>
                                 </td></tr>
                         </tbody>
