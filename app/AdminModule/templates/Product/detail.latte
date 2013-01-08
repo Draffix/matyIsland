@@ -1,0 +1,146 @@
+{block content}
+<script type="text/javascript">
+$(document).ready(function() {
+        $().piroBox_ext({
+        piro_speed : 700,
+                bg_alpha : 0.5,
+                piro_scroll : true // pirobox always positioned at the center of the page
+        });
+});
+</script>
+<section id="wrapper" class="wrapper">
+    {form editProductForm}
+    <ul class="errors" n:if="$form->hasErrors()">
+        <li n:foreach="$form->errors as $error">{$error}</li>
+    </ul>
+    {foreach $flashes as $flash}
+    <div class="flash {$flash->type}" style="width: 770px; font-weight: bold">{$flash->message}</div>
+    {/foreach}
+    <div id="v-nav">
+        <ul>
+            <li tab="tab1" class="first current">Hlavní údaje</li>
+            <li tab="tab2">Cena, kód</li>
+            <li tab="tab3">Popis</li>
+            <li tab="tab4" class="last">Obrázky</li>
+        </ul>
+        <div class="tab-content">
+            <div class="orderFieldset" style="width: 600px; padding: 0; margin: 0;">
+                <fieldset>
+                    <legend>Název</legend>
+                    <table class="form_table">
+                        <tbody><tr>
+                                <th class="order_label required" style="width: 120px"><label for="nazev_produktu">Název produktu:</label></th><td class="form_element"><span>
+                                        {$product->prod_name}   
+                                    </span>
+                                </td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Zařazení</legend>
+                    <table class="order_table">
+                        <tbody><tr>
+                                <th class="order_label required" style="width: 120px"><label for="kategorie">Kategorie:</label></th>
+                                        {foreach $category as $c}
+                                            <td class="form_element"><span>{$c->cat_name}{sep}, {/sep}</span>
+                                        {/foreach}   
+                                    
+                                </td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Množství</legend>
+                    <table class="order_table">
+                        <tbody><tr>
+                                <th class="order_label required" style="width: 120px"><label for="mnozstvi">Množství na skladě:</label></th><td class="form_element"><span>
+                                        {$product->prod_on_stock}
+                                    </span>
+                                </td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Označení/Zveřejnění</legend>
+                    <table class="order_table">
+                        <tbody><tr>
+                                <th class="order_label required" style="width: 120px"><label for="novinka">Novinka:</label></th><td class="form_element"><span>
+                                        {if $product->prod_isnew == '1'}Ano{else}Ne{/if}</span></td></tr><tr>
+                                <th class="order_label required" style="width: 120px"><label for="zverejneno">Zveřejněno:</label></th><td class="form_element"><span>
+                                        {if $product->prod_is_active == '1'}Ano{else}Ne{/if}
+                                    </span></td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="orderFieldset" style="width: 600px; padding: 0; margin: 0;">
+                <fieldset>
+                    <legend>Cena/Kód</legend>
+                    <table class="form_table">
+                        <tbody><tr>
+                                <th class="order_label required" style="width: 120px"><label for="cena_produktu">Cena produktu:</label></th><td class="form_element"><span>
+                                        {$product->prod_price},- Kč</span></td></tr><tr>
+                                <th class="order_label required" style="width: 120px"><label for="kod_produktu">Kód produktu:</label></th><td class="form_element"><span>
+                                        {$product->prod_code}</span></td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="orderFieldset" style="width: 560px; padding: 0; margin: 0;">
+                <fieldset>
+                    <legend>Krátký popis produktu</legend>
+                    <table class="form_table">
+                        <tbody><tr>
+                                <td class="form_element"><span original-title="">
+                                        {!$product->prod_describe}</span></td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>Dlouhý popis produktu</legend>
+                    <table class="form_table">
+                        <tbody><tr>
+                                <td class="form_element"><span original-title="">
+                                        {!$product->prod_long_describe}</textarea></span></td></tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>                  
+        </div>
+        <div class="tab-content">
+            <div class="orderFieldset" style="width: 600px; padding: 0; margin: 0;">
+                <fieldset>
+                    <legend>Přehled obrázků</legend>
+                    <div id="galerie">
+                        <center>
+                            <ul>
+                    {foreach $images as $image}
+                                <li><a href="{$basePath}/images/products/{$image->image_name}" rel="gallery" class="pirobox_gall">
+                                        <img src="{$basePath}/images/products/{$image->image_name}" width="150" height="120" /></a>
+                                </li>
+                    {/foreach}
+                            </ul>
+                        </center>
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+        <center>
+            <div style="width: 650px; float: right;">
+                <a n:href="Product:show"><input type="button" id="submit" value="Zpět na seznam"></a>
+                <a n:href="Product:edit $product->prod_id"><input type="button" id="submit" value="Upravit produkt"></a>
+                <a n:href="#"><input type="submit" id="submit-delete" value="Smazat produkt"></a>
+            </div>
+        </center>
+    </div>
+
+    {/form}
+</section>

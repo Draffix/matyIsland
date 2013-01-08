@@ -1,0 +1,36 @@
+{block content}
+<div class="orderFieldset">
+    <fieldset style="background: whiteSmoke">
+        <legend>Seznam všech produktů</legend> 
+        <table class="datagrid" cellspacing="0">
+            <tbody>
+                <tr class="">	
+                    <th class="center">ID</th>
+                    <th width="113">Náhled</th>
+                    <th width="300">Název</th>
+                    <th width="100">Cena</th>
+                    <th>Novinka</th>
+                    <th>Zveřejněno</th>
+                    <th>Na skladě</th>
+                    <th width="150">Akce</th>
+                </tr>
+                {foreach $products as $p}
+                <tr {if $iterator->isOdd()} class="odd" {else} class="even"{/if}>
+                    <td>{$p->product->prod_id}</td>
+                    <td><img src="{$basePath}/images/products/{$p->image_name}" width="113" height="93" /></td>
+                    <td align="right">{$p->product->prod_name}</td>
+                    <td align="right">{$p->product->prod_price},- Kč</td>
+                    <td align="center">{if $p->product->prod_isnew == 1}Ano{else}Ne{/if}</td>
+                    <td align="center">{if $p->product->prod_is_active == 1}Ano{else}Ne{/if}</td>
+                    <td align="right">{$p->product->prod_on_stock}</td>
+                    <td align="center"><a n:href="Product:detail $p->product->prod_id">Detail</a> | 
+                        <a n:href="Product:edit $p->product->prod_id">Upravit</a></td>
+                </tr>
+                {/foreach}
+            </tbody>
+        </table>
+        <div class="pagination">
+            {control paginator}
+        </div> 
+    </fieldset>
+</div>
