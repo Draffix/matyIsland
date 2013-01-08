@@ -275,7 +275,7 @@ body{
 }
 
 /* nadpis produktu */
-.productItem p{
+.productItem .title{
     display:block;
     background-color:#F4F8EE;
     padding:10px 0 5px 10px;
@@ -316,7 +316,15 @@ body{
     display:block;
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
-    margin: 10px 10px 10px 10px;
+    margin: 0px 10px 10px 10px;
+    min-height: 30px;
+}
+
+.describe p {
+    margin: 0;
+    padding:0;
+    float:left;
+    padding-bottom: 10px;
 }
 
 .price{
@@ -602,7 +610,7 @@ div.flash.wrong {
 }
 
 /* nadpis produktu */
-.itemDetail p{
+.itemDetail .title{
     display: inline;
     line-height:30px;
     padding:0 0 0 30px;
