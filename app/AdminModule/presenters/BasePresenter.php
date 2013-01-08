@@ -12,10 +12,14 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     /** @var \CategoryModel */
     protected $category;
 
+    /** @var \ProductModel */
+    protected $product;
+
     protected function startup() {
         parent::startup();
         $this->order = $this->context->order;
         $this->category = $this->context->category;
+        $this->product = $this->context->product;
     }
 
     public function beforeRender() {
