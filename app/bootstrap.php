@@ -48,10 +48,36 @@ Route::setStyleProperty('titleCategory', Route::FILTER_IN, function($url) {
         });
 
 // Admin base router
-$container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]', array(
+$container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]?strana=<paginator-page> ', array(
             'module' => "admin",
-            'presenter' => "Homepage",
-            'action' => "default",
+            'presenter' => array(
+                Route::VALUE => 'Homepage',
+                Route::FILTER_TABLE => array(
+                    // řetězec v URL => presenter
+                    'produkt' => 'Product',
+                    'objednavka' => 'Order'                   
+                ),
+            ),
+            'action' => array(
+                Route::VALUE => 'default',
+                Route::FILTER_TABLE => array(
+                    // řetězec v URL => akce
+                    'ukaz' => 'show',
+                ),
+            ),
+            'id' => NULL,
+        ));
+
+$container->router[] = new Route('admin/produkt/<id>', array(
+            'module' => "admin",
+            'presenter' => 'Product',
+            'action' => 'default'
+        ));
+
+$container->router[] = new Route('admin/objednavka/<id>', array(
+            'module' => "admin",
+            'presenter' => 'Order',
+            'action' => 'default'
         ));
 
 
