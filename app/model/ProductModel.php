@@ -163,6 +163,13 @@ class ProductModel extends Table {
                             'image_is_main' => $isMain));
     }
 
+    public function updateImage($productID, $name, $isMain = 0) {
+        return $this->connection->table($this->image)
+                        ->update(array('product_prod_id' => $productID,
+                            'image_name' => $name,
+                            'image_is_main' => $isMain));
+    }
+
     public function fetchAllProductsWithOffset($limit, $offset) {
         return $this->connection->table($this->image)
                         ->where('image.image_is_main = ?', 1)
@@ -175,7 +182,21 @@ class ProductModel extends Table {
     }
 
     public function fetchProductForDetail($id) {
-        return $this->getTable()->fetch();
+        return $this->getTable()
+                        ->where('prod_id', $id)
+                        ->fetch();
     }
 
+    public function updateProduct($values, $id_product) {
+        return $this->getTable()
+                        ->where('prod_id', $id_product)
+                        ->update(array('prod_name' => $values['prod_name'],
+                            'prod_price' => $values['prod_price'],
+                            'prod_code' => $values['prod_code'],
+                            'prod_describe' => $values['prod_describe'],
+                            'prod_long_describe' => $values['prod_long_describe'],
+                            'prod_isnew' => $values['prod_isnew'],
+                            'prod_on_stock' => $values['prod_on_stock'],
+                            'prod_is_active' => $values['prod_is_active']));
+    }
 }
