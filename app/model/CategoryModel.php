@@ -40,6 +40,21 @@ class CategoryModel extends Table {
                             'product_prod_id' => $prod_id));
     }
 
+    public function updateProductIntoCategoryHasProduct($old_cat_id, $new_cat_id, $prod_id) {
+        return $this->connection->table('category_has_product')
+                        ->where(array('category_cat_id' => $old_cat_id,
+                            'product_prod_id' => $prod_id))
+                        ->update(array('category_cat_id' => $new_cat_id,
+                            'product_prod_id' => $prod_id));
+    }
+
+    public function deleteProductIntoCategoryHasProduct($old_cat_id, $prod_id) {
+        return $this->connection->table('category_has_product')
+                        ->where(array('category_cat_id' => $old_cat_id,
+                            'product_prod_id' => $prod_id))
+                        ->delete();
+    }
+
     public function fetchAllCategoryNamesForProduct($id) {
         return $this->connection->query('
                         SELECT p.prod_id, c.cat_name 
@@ -47,6 +62,12 @@ class CategoryModel extends Table {
                         JOIN product AS p ON p.prod_id = cp.product_prod_id
                         JOIN category AS c ON c.cat_id = cp.category_cat_id
                         WHERE product_prod_id = ?', $id);
+    }
+
+    public function findCategoryID($name) {
+        return $this->getTable()
+                        ->select('cat_id')
+                        ->where('cat_name', $name);
     }
 
 }
