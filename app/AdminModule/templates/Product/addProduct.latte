@@ -1,7 +1,7 @@
 {block content}
 <!--<script src="{$basePath}/js/netteForms.js"></script>-->
 <section id="wrapper" class="wrapper">
-    {form editProductForm}
+    {form addProductForm}
     <ul class="errors" n:if="$form->hasErrors()">
         <li n:foreach="$form->errors as $error">{$error}</li>
     </ul>
@@ -86,7 +86,7 @@
                         <tbody><tr>
                                 <th class="order_label required" style="width: 120px"><label for="cena_produktu">Cena produktu:</label></th><td class="form_element"><span>
                                         <input type="text" id="cena_produktu" n:input="prod_price" size="20">,- Kč</span></td></tr><tr>
-                                <th class="order_label required" style="width: 120px"><label for="kod_produktu">Kód produktu:</label></th><td class="form_element"><span>
+                                <th class="order_label" style="width: 120px"><label for="kod_produktu">Kód produktu:</label></th><td class="form_element"><span>
                                         <input type="text" id="kod_produktu" n:input="prod_code" size="20"></span></td></tr>
                         </tbody>
                     </table>
