@@ -7,9 +7,6 @@ use Nette\Mail\Message;
 
 class OrderPresenter extends BasePresenter {
 
-    /** @persistent */
-    public $id;
-
     protected function createComponentPaginator() {
         $visualPaginator = new \VisualPaginator();
         return $visualPaginator;
@@ -60,7 +57,7 @@ class OrderPresenter extends BasePresenter {
     // volá se po úspěšném odeslání registrace
     public function mainInfoFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
-        $this->order->updateOrder($this->id, $values);
+        $this->order->updateOrder($this->getParameter('id'), $values);
 
         $this->flashMessage('Objednávka byla uložena', 'valid');
         $this->redirect('this');
