@@ -1,4 +1,13 @@
 {block content}
+<script type="text/javascript">  
+			
+jQuery(function($){
+        $('.bar').mosaic({
+                animation	:	'slide'
+        });
+});
+		    
+</script>
 <!--<script src="{$basePath}/js/netteForms.js"></script>-->
 <section id="wrapper" class="wrapper">
     {form editProductForm}
@@ -70,7 +79,7 @@
                                 <th class="order_label required" style="width: 120px"><label for="novinka">Novinka:</label></th><td class="form_element"><span>
                                         {if $product->prod_isnew == '1'}{input prod_isnew id=>novinka, checked=>checked}{else}{input prod_isnew id=>novinka}{/if}</span></td></tr><tr>
                                 <th class="order_label required" style="width: 120px"><label for="zverejneno">Zveřejněno:</label></th><td class="form_element"><span>
-                                        {if $product->prod_is_active == '0'}{input prod_is_active id=>zverejneno}{/if}    
+                                        {input prod_is_active id=>zverejneno}   
                                     </span></td></tr>
                         </tbody>
                     </table>
@@ -82,11 +91,11 @@
                 <div class="warning-box">Cenu zboží zadávejte s DPH</div>
                 <fieldset>
                     <legend>Cena/Kód</legend>
-                    <table class="form_table">
+                    <table class="order_table">
                         <tbody><tr>
                                 <th class="order_label required" style="width: 120px"><label for="cena_produktu">Cena produktu:</label></th><td class="form_element"><span>
                                         <input type="text" id="cena_produktu" n:input="prod_price" size="20" value="{$product->prod_price}">,- Kč</span></td></tr><tr>
-                                <th class="order_label required" style="width: 120px"><label for="kod_produktu">Kód produktu:</label></th><td class="form_element"><span>
+                                <th class="order_label" style="width: 120px"><label for="kod_produktu">Kód produktu:</label></th><td class="form_element"><span>
                                         <input type="text" id="kod_produktu" n:input="prod_code" size="20" value="{$product->prod_code}"></span></td></tr>
                         </tbody>
                     </table>
@@ -117,13 +126,26 @@
         </div>
         <div class="tab-content">
             <div class="orderFieldset" style="width: 600px; padding: 0; margin: 0;">
-                <div class="warning-box">Musí být vložen minimálně hlavní obrázek ve formátu JPG, PNG nebo GIF</div>
+                <div class="warning-box">Obrázky vkládejte ve formátu JPG, PNG nebo GIF</div>
+                <fieldset>
+                    <legend>Přehled obrázků</legend>
+                    <div id="galerie">
+                        <center>
+                            <ul>
+                    {foreach $images as $image}
+                                <li><a href="{$basePath}/images/products/{$image->image_name}" rel="gallery" class="pirobox_gall">
+                                        <img src="{$basePath}/images/products/{$image->image_name}" width="150" height="120" /></a><br>
+                                        <span class="delete-image"><a href=""><img src="{$basePath}/images/administration/error.png" title="Smazat obrázek"/></a></span>
+                                </li>
+                    {/foreach}
+                            </ul>
+                        </center>
+                    </div>
+                </fieldset>
                 <fieldset>
                     <legend>Přidat obrázky</legend>
                     <table class="order_table">
                         <tbody><tr>
-                                <th class="order_label required" style="width: 140px"><label for="cena_produktu">Hlavní obrázek:</label></th><td class="form_element"><span>
-                                        <input type="file" n:input="image_name"></span></td></tr><tr>
                                 <th class="order_label" style="width: 120px"><label for="cena_produktu">Další obrázek:</label></th><td class="form_element"><span>
                                         <input type="file" n:input="image_name2"></span></td></tr><tr>
                                 <th class="order_label" style="width: 120px"><label for="cena_produktu">Další obrázek:</label></th><td class="form_element"><span>
@@ -133,7 +155,6 @@
                         </tbody>
                     </table>
                 </fieldset>
-
             </div>
         </div>
         <center>
