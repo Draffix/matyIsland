@@ -23,7 +23,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     }
 
     public function beforeRender() {
-        Debugger::barDump($_SESSION);
+            Debugger::barDump($_SESSION);
     }
 
     public function handleSignOut() {

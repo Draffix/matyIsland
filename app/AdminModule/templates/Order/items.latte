@@ -1,0 +1,76 @@
+{block content}
+<div class="left_content">
+    <div class="sidebarmenu">
+        <a class="menuitem" n:href="Order:mainInfo $order->ord_id">Základní údaje</a>                 
+        <a class="menuitem" n:href="Order:items $order->ord_id">Položky</a>                 
+        <a class="menuitem" n:href="Order:sendEmail $order->ord_id">Email zákazníkovi</a>                 
+    </div>
+</div>
+<div class="right_content" style="padding-left: 15px; padding-top: 20px">
+    <div class="orderFieldset" style="width: 250px; padding: 0; margin: 0;">
+        {foreach $flashes as $flash}
+        <div class="flash {$flash->type}" style="width: 565px">{$flash->message}</div>
+        {/foreach}
+        <fieldset style="background: whiteSmoke">
+            <legend>Položky</legend>
+            <table class="datagrid" cellspacing="0" style="width: 630px">
+                <tbody>
+                    <tr class="">	
+                        <th class="center">ID</th>
+                        <th>Název</th>
+                        <th>Množství</th>
+                        <th>Cena za kus</th>
+                        <th>Cena celkem</th>
+                        <th>Akce</th>
+                    </tr>
+                {foreach $orderProducts as $o}
+                    <tr {if $iterator->isOdd()} class="odd" {else} class="even"{/if}>
+                        <td>{$o->prod_id}</td>
+                        <td>{$o->prod_name}</td>
+                        <td align="right">{$o->quantity}</td>
+                        <td align="right">{$o->actual_price_of_product},- Kč</td>
+                        <td align="right">{$o->actual_price_of_product * $o->quantity},- Kč</td>
+                        <td align="right"><a n:href="removeProductIntoOrder! $o->prod_id, $order->ord_id">Smazat</a></td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </fieldset>
+
+        <fieldset style="background: whiteSmoke">
+            <legend>Seznam všech produktů</legend> 
+            <table class="datagrid" cellspacing="0" style="width: 630px">
+                <tbody>
+                    <tr class="">	
+                        <th class="center">ID</th>
+                        <th width="113">Náhled</th>
+                        <th width="300">Název</th>
+                        <th width="150">Množství</th>
+                        <th width="150">Akce</th>
+                    </tr>
+                {foreach $products as $p}
+                    <tr {if $iterator->isOdd()} class="odd" {else} class="even"{/if}>
+                        <td>{$p->product->prod_id}</td>
+                        <td><img src="{$basePath}/images/products/{$p->image_name}" width="113" height="93" /></td>
+                        <td align="left">{$p->product->prod_name}</td>
+                        {form addItemForm}
+                        {input product_id value => $p->product->prod_id}
+                        {input order_id value => $order->ord_id}
+                        {input price value => $p->product->prod_price}
+                        <td align="center"><input type="text" size="2" n:input="quantity" value="1"/></td>
+                        <td align="center"><input type="submit" n:input="add_item" value="Přidat"/></td>
+                        {/form}
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            <div class="pagination">
+            {control paginator}
+            </div> 
+        </fieldset>
+
+        <div style="width: 500px;">
+            <a n:href="Order:show"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,4 @@
 {block content}
-<script type="text/javascript">  
-			
-jQuery(function($){
-        $('.bar').mosaic({
-                animation	:	'slide'
-        });
-});
-		    
-</script>
-<!--<script src="{$basePath}/js/netteForms.js"></script>-->
 <section id="wrapper" class="wrapper">
     {form editProductForm}
     <ul class="errors" n:if="$form->hasErrors()">
@@ -135,7 +125,14 @@ jQuery(function($){
                     {foreach $images as $image}
                                 <li><a href="{$basePath}/images/products/{$image->image_name}" rel="gallery" class="pirobox_gall">
                                         <img src="{$basePath}/images/products/{$image->image_name}" width="150" height="120" /></a><br>
-                                        <span class="delete-image"><a href=""><img src="{$basePath}/images/administration/error.png" title="Smazat obrázek"/></a></span>
+                                    <span class="delete-image">
+                                        <a n:href="removeImage! $image->image_id, $product->prod_id, $image->image_name"><img src="{$basePath}/images/administration/error.png" title="Smazat obrázek"/></a>
+                                    </span>
+                                {if $image->image_is_main == 1}
+                                    <span class="delete-image">
+                                        <img src="{$basePath}/images/administration/valid.png" title="Hlavní obrázek"/>
+                                    </span>
+                                {/if}
                                 </li>
                     {/foreach}
                             </ul>
@@ -160,7 +157,7 @@ jQuery(function($){
         <center>
             <div style="width: 500px;">
                 <input type="submit" id="submit" style="margin-right: 50px" n:input="save_change" value="Uložit produkt">
-                <a n:href="Order:show"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
+                <a n:href="Product:show"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
             </div>
         </center>
     </div>

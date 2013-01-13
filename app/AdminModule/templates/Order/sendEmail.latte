@@ -1,9 +1,9 @@
 {block content}
 <div class="left_content">
     <div class="sidebarmenu">
-        <a class="menuitem" n:href="Order:mainInfo">Základní údaje</a>                 
-        <a class="menuitem" href="">Položky</a>                 
-        <a class="menuitem" n:href="Order:sendEmail">Email zákazníkovi</a>                 
+        <a class="menuitem" n:href="Order:mainInfo $order->ord_id">Základní údaje</a>                 
+        <a class="menuitem" n:href="Order:items $order->ord_id">Položky</a>                 
+        <a class="menuitem" n:href="Order:sendEmail $order->ord_id">Email zákazníkovi</a>                 
     </div>
 </div>
 <div class="right_content" style="padding-left: 15px; padding-top: 20px">
@@ -31,7 +31,7 @@
         </fieldset>
         <div style="width: 500px;">
             <input type="submit" id="submit" style="margin-right: 50px" value="Odeslat email">
-            <a n:href="Homepage:"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
+            <a n:href="Order:show"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
         </div>
         {/form}
     </div>

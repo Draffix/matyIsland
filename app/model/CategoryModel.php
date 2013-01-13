@@ -70,4 +70,7 @@ class CategoryModel extends Table {
                         ->where('cat_name', $name);
     }
 
+    public function pokus() {
+        return $this->getTable();
+    }
 }

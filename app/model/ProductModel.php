@@ -172,8 +172,9 @@ class ProductModel extends Table {
 
     public function fetchAllProductsWithOffset($limit, $offset) {
         return $this->connection->table($this->image)
-                        ->where('image.image_is_main = ?', 1)
+                        ->where('image.image_is_main = 1')
                         ->limit($limit, $offset)
+                        ->group('image.product_prod_id')
                         ->order('product.prod_id');
     }
 
@@ -199,4 +200,40 @@ class ProductModel extends Table {
                             'prod_on_stock' => $values['prod_on_stock'],
                             'prod_is_active' => $values['prod_is_active']));
     }
+
+    public function deleteImage($id) {
+        return $this->connection->table($this->image)
+                        ->where('image_id', $id)
+                        ->delete();
+    }
+
+    public function fetchSingleMainImage($image_id, $product_id) {
+        return $this->connection->table($this->image)
+                        ->where(array('image_id' => $image_id,
+                            'product_prod_id' => $product_id))
+                        ->fetch();
+    }
+
+    public function findMinimumImageID($product_id) {
+        return $this->connection->table($this->image)
+                        ->select('MIN(image_id) AS min')
+                        ->where('product_prod_id', $product_id)
+                        ->group('product_prod_id')
+                        ->fetch();
+    }
+
+    public function updateImageWithHisID($image_id, $product_id) {
+        return $this->connection->table($this->image)
+                        ->where(array('image_id' => $image_id,
+                            'product_prod_id' => $product_id))
+                        ->update(array('image_is_main' => 1));
+    }
+
+    public function pokus() {
+        return $this->connection->table($this->image)
+                ->select('image_id')
+                ->select('image_name')
+                ->select('product.prod_name');
+    }
+
 }

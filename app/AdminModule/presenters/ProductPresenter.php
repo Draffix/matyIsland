@@ -14,7 +14,16 @@ class ProductPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-        $this->redirect('Product:show');
+//        $this->redirect('Product:show');
+    }
+
+    protected function createComponentProductGrid($name) {
+        $grid = new \Grido\Grid($this, $name);
+        $grid->setModel($this->product->pokus());
+        $grid->addColumn('image_id', 'ID');
+        $grid->addFilter('image_id', 'Birthday');
+        $grid->addColumn('image_name', 'name');
+        $grid->addColumn('prod_name', 'namee');
     }
 
     public function renderAddProduct() {
@@ -32,6 +41,9 @@ class ProductPresenter extends BasePresenter {
         $products = $this->product->fetchAllProductsWithOffset($paginator->itemsPerPage, $paginator->offset);
 
         $this->template->products = $products;
+
+//        \Nette\Diagnostics\Debugger::barDump($this->product->pokus());
+//        $_SESSION['a'] = $this->product->pokus();
     }
 
     public function renderDetail($id) {
@@ -50,6 +62,19 @@ class ProductPresenter extends BasePresenter {
         $this->template->images = $this->product->fetchAllProductsImages($id);
         //získáme všechny kategorie do kterých produkt spadá
         $this->template->category = $this->category->fetchAllCategoryNamesForProduct($id);
+    }
+
+    public function handleRemoveImage($id_image, $id_product, $name) {
+        if ($this->product->fetchSingleMainImage($id_image, $id_product)->image_is_main == 1) { //pokud je to hlavní obrázek
+            $this->product->deleteImage($id_image);
+            $min = $this->product->findMinimumImageID($id_product)->min; // zjistíme další obrázek produktu (ten s menším id)
+            $this->product->updateImageWithHisID($min, $id_product);
+        } else {
+            $this->product->deleteImage($id_image);
+        }
+        $targetPath = $this->context->params['wwwDir'] . '/images/products/';
+        unlink("$targetPath/$name");
+        $this->redirect('Product:edit', $id_product);
     }
 
     protected function createComponentAddProductForm() {
@@ -195,15 +220,15 @@ class ProductPresenter extends BasePresenter {
 
         if ($values['image_name2'] != '') {
             $this->moveImage($values['folder'], $values['image_name2']);
-            $this->product->updateImage($this->getParameter('id'), $values['image_name2']->getSanitizedName());
+            $this->product->insertImage($this->getParameter('id'), $values['image_name2']->getSanitizedName());
         }
         if ($values['image_name3'] != '') {
             $this->moveImage($values['folder'], $values['image_name3']);
-            $this->product->updateImage($this->getParameter('id'), $values['image_name3']->getSanitizedName());
+            $this->product->insertImage($this->getParameter('id'), $values['image_name3']->getSanitizedName());
         }
         if ($values['image_name4'] != '') {
             $this->moveImage($values['folder'], $values['image_name4']);
-            $this->product->updateImage($this->getParameter('id'), $values['image_name4']->getSanitizedName());
+            $this->product->insertImage($this->getParameter('id'), $values['image_name4']->getSanitizedName());
         }
 
         $this->flashMessage('Uložení proběhlo v pořádku', 'valid');
@@ -212,7 +237,7 @@ class ProductPresenter extends BasePresenter {
 
     private function moveImage($folder, $name) {
         $filename = $name->getSanitizedName();
-        $targetPath = $this->context->params['wwwDir'] . '/images/upload/';
+        $targetPath = $this->context->params['wwwDir'] . '/images/products/';
         if ($folder !== '') {
             $targetPath .= "/$folder";
         }

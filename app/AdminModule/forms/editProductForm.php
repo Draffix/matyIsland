@@ -78,7 +78,9 @@ class editProductForm extends UI\Form {
                 $this->categorySelect[2] = $name2[0]; //jinak nastavíme jako "nezvoleno"
             }
         }
-        $this->categoryID = $this->category->findCategoryID($this->categorySelect)->fetch()->cat_id;
+        if (isset($this->categorySelect[0])) {
+            $this->categoryID = $this->category->findCategoryID($this->categorySelect)->fetch()->cat_id;
+        }
 
         $prod_is_active = array(
             '1' => 'Ano',
@@ -93,7 +95,7 @@ class editProductForm extends UI\Form {
                 $isActive = 0;
             };
         }
-
+        
         $this->addText('prod_name');
         if ($id === NULL) {
             $this->addSelect('category', 'kategorie', $name);

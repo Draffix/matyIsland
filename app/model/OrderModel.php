@@ -8,6 +8,9 @@ class OrderModel extends Table {
     /** @var string */
     protected $tableName = 'orders';
 
+    /** @var string */
+    protected $orderHasProduct = 'order_has_product';
+
     /**
      * Uložíme objednávku a zjistíme ID poslední vložené objednávky
      * @param type $items
@@ -29,6 +32,28 @@ class OrderModel extends Table {
         $this->connection->query(
                 'INSERT INTO order_has_product (order_ord_id, product_prod_id, quantity, actual_price_of_product, totalPrice)
                 VALUES (?, ?, ?, ?, ?)', $id_order, $id_product, $quantity, $price, $quantity * $price);
+    }
+
+    public function deleteIntoOrderHasProduct($id_order, $id_product) {
+        $this->connection->table($this->orderHasProduct)
+                ->where(array('order_ord_id' => $id_order,
+                    'product_prod_id' => $id_product))
+                ->delete();
+    }
+
+    public function countOfOrderHasProduct($id_order, $id_product) {
+        return $this->connection->table($this->orderHasProduct)
+                        ->select('COUNT(*) AS pocet')
+                        ->where(array('order_ord_id' => $id_order,
+                            'product_prod_id' => $id_product))
+                        ->fetch();
+    }
+
+    public function countOfSingleOrderHasProduct($id_order) {
+        return $this->connection->table($this->orderHasProduct)
+                        ->select('COUNT(*) AS pocet')
+                        ->where(array('order_ord_id' => $id_order))
+                        ->fetch();
     }
 
     /**
@@ -57,8 +82,8 @@ class OrderModel extends Table {
 
     public function updateOrder($ord_id, $values) {
         return $this->getTable()
-                ->where('ord_id', $ord_id)
-                ->update($values);
+                        ->where('ord_id', $ord_id)
+                        ->update($values);
     }
 
     /**
