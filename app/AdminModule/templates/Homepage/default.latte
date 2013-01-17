@@ -1,56 +1,99 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+</li>
+{/block}
 {block content}
-<div class="right_content">            
+<div class="sortable row-fluid">
+    <a data-rel="tooltip" title="6 nevyřízených objednávek." class="well span3 top-block" href="#">
+        <span class="icon32 icon-red icon-cart"></span>
+        <div>Celkem objednávek</div>
+        <div>507</div>
+        <span class="notification">6</span>
+    </a>
 
-    <h2>Seznam nejnovějších objednávek</h2> 
+    <a data-rel="tooltip" title="4 noví uživatelé." class="well span3 top-block" href="#">
+        <span class="icon32 icon-color icon-users"></span>
+        <div>Uživatelů</div>
+        <div>228</div>
+        <span class="notification green">4</span>
+    </a>
 
+    <a data-rel="tooltip" title="$34 new sales." class="well span3 top-block" href="#">
+        <span class="icon32 icon-color icon-basket"></span>
+        <div>Produktů</div>
+        <div>156</div>
+        <span class="notification yellow">44</span>
+    </a>
 
-    <table id="rounded-corner" style="width: 835px">
-    <thead>
-        <tr>
-            <th scope="col" class="rounded-company"></th>
-            <th scope="col" class="rounded">ID</th>
-            <th scope="col" class="rounded">Zákazník</th>
-            <th scope="col" class="rounded">Detail</th>
-            <th scope="col" class="rounded">Cena</th>
-            <th scope="col" class="rounded">Položek</th>
-            <th scope="col" class="rounded">Datum vložení</th>
-            <th scope="col" class="rounded">Stav</th>
-            <th scope="col" class="rounded">Upravit</th>
-            <th scope="col" class="rounded-q4">Smazat</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <td colspan="6" class="rounded-foot-left"><em>Zde se zobrazují šest nejnovějších objednávek.</em></td>
-            <td class="rounded-foot-right">&nbsp;</td>
+    <a data-rel="tooltip" title="12 new messages." class="well span3 top-block" href="#">
+        <span class="icon32 icon-color icon-folder-open"></span>
+        <div>Kategorií</div>
+        <div>5</div>
+        <span class="notification red">5</span>
+    </a>
+</div>
 
-        </tr>
-    </tfoot>
-    <tbody>
-        {foreach $mainOrders as $order}
-        <tr>
-            <td><input type="checkbox" name="" /></td>
-            <td>{$order->ord_id}</td>
-            <td>{$order->cust_name} {$order->cust_surname}</td>
-            <td><a n:href="Order:detail $order->ord_id">detail</a></td>
-            <td>{$order->sum_price},-</td>
-            <td>{$order->sum_quantity}</td>
-            <td>{$order->ord_date|date:'j.n.Y, H:i:s'}</td>
-            <td>{$order->ord_status}</td>
+<div class="row-fluid sortable">		
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-shopping-cart"></i> Objednávky</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <table class="table table-striped table-bordered bootstrap-datatable datatable">
+                <thead>
+                    <tr>
+                        <th># Č. obj.</th>
+                        <th>Zákazník</th>
+                        <th>Datum objednávky</th>
+                        <th>Stav</th>
+                        <th>Akce</th>
+                    </tr>
+                </thead>   
+                <tbody>
+                    {foreach $mainOrders as $order}
+                    <tr>
+                        <td class="center"># {$order->ord_id}</td>
+                        <td class="center">{$order->cust_name} {$order->cust_surname}</td>
+                        <td class="center">{$order->ord_date|date:'j.n.Y, H:i:s'}</td>
+                        <td class="center">
+                            {if $order->ord_status == 'Vyřízeno'}
+                            <span class="label label-success">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Nevyřízeno'}
+                            <span class="label label-important">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Expedováno'}
+                            <span class="label label-warning">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Stornováno'}
+                            <span class="label">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Vráceno'}
+                            <span class="label label-inverse">{$order->ord_status}</span>
+                            {/if}
+                        </td>
+                        <td class="center">
+                            <a class="btn btn-success" n:href="Order:detail $order->ord_id">
+                                <i class="icon-zoom-in icon-white"></i>  
+                                Detail                                            
+                            </a>
+                            <a class="btn btn-info" n:href="Order:mainInfo $order->ord_id">
+                                <i class="icon-edit icon-white"></i>  
+                                Upravit                                            
+                            </a>
+                            <a class="btn btn-danger" href="#">
+                                <i class="icon-trash icon-white"></i> 
+                                Smazat
+                            </a>
+                        </td>
+                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>            
+        </div>
+    </div><!--/span-->
 
-            <td><a n:href="Order:mainInfo $order->ord_id"><img src="{$basePath}/images/administration/user_edit.png" alt="" title="" border="0" /></a></td>
-            <td><a href="#" class="ask"><img src="{$basePath}/images/administration/trash.png" alt="" title="" border="0" /></a></td>
-        </tr>
-        {/foreach}
-    </tbody>
-</table>
-
-<a n:href="Product:addProduct" class="bt_green"><span class="bt_green_lft"></span><strong>Přidat nový produkt</strong><span class="bt_green_r"></span></a>
-<a href="#" class="bt_blue"><span class="bt_blue_lft"></span><strong>Zobrazit vybrané produkty</strong><span class="bt_blue_r"></span></a>
-<a href="#" class="bt_red"><span class="bt_red_lft"></span><strong>Smazat vybrané produkty</strong><span class="bt_red_r"></span></a> 
-
-
-<div class="pagination">
-    {control paginator}
-</div> 
-</div><!-- end of right content-->
+                </div><!--/row-->
+                <!-- content ends -->

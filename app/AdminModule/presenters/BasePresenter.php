@@ -23,12 +23,13 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     }
 
     public function beforeRender() {
-            Debugger::barDump($_SESSION);
+        parent::beforeRender();
+        $this->setLayout('layoutAdmin');
+        Debugger::barDump($_SESSION);
     }
 
     public function handleSignOut() {
         $this->getUser()->logout(TRUE); //odhlásí i identitu
         $this->redirect(':Homepage:default');
     }
-
 }

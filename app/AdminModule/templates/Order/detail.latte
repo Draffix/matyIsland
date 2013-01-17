@@ -1,116 +1,393 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="Order:">Objednávky</a> <span class="divider">/</span>
+    <a n:href="Order:detail $order->ord_id">Detail objednávky č. {$order->ord_id}</a> <span class="divider">/</span>
+</li>
+{/block}
 {block content}
-<div class="orderFieldset">
-    <fieldset style="background: whiteSmoke">
-        <legend>Základní údaje</legend> 
-        <table class="order_table">
-            <tbody><tr>
-                    <th class="order_label"><label for="objednavka_stav_id">Stav objednávky:</label></th><td class="form_element"><span id="objednavka_stav_id">{if $order->ord_status == 'Vyřízeno'} Vyřízeno {else} Nevyřízeno {/if}</span></td></tr><tr>
-                    <th class="order_label"><label for="poslat_email">Poslat email při změně stavu:</label></th><td class="form_element"><span id="poslat_email" class="true"><span>Ano</span></span></td></tr><tr>
-                    <th class="order_label"><label for="cislo_objednavky">Číslo objednávky:</label></th><td class="form_element"><span id="cislo_objednavky">{$order->ord_id}</span></td></tr><tr>
-                    <th class="order_label"><label for="datum">Datum:</label></th><td class="form_element"><span id="datum">{$order->ord_date|date:'j.n.Y, H:i:s'}</span></td></tr><tr>
-                    <th class="order_label"><label for="cena_celkem">Cena:</label></th><td class="form_element"><span id="cena_celkem">{$totalPrice},-</span></td></tr><tr>
-                    <th class="order_label"><label for="cena_celkem_dph">Počet položek:</label></th><td class="form_element"><span id="cena_celkem_dph">{$order->sum_quantity}</span></td></tr>
-            </tbody>
-        </table>
+<div id="content" class="content">
+    {foreach $flashes as $flash}
+    <div class="row-fluid">
+        <div class="span12 bgcolor">                                        
+            <div class="alert alert-{$flash->type}">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+            </div>                                       
+        </div><!--/span-->
+    </div><!--/row-->
+    {/foreach}
+    <h2>Objednávka č. {$order->ord_id} &ndash; {$order->cust_name} {$order->cust_surname}</h2>
 
-        <div class="leftColumn">
-            <fieldset style="height: 100px;">
-                <legend>Zákazník</legend>
-                <table class="order_table">
-                    <tbody><tr>
-                            <th class="order_label required"><label for="zakaznik-uzivatel_jmeno">Jméno*:</label></th><td class="form_element"><span id="zakaznik-uzivatel_jmeno">{$order->cust_name}</span></td></tr><tr>
-                            <th class="order_label required"><label for="zakaznik-uzivatel_prijmeni">Příjmení*:</label></th><td class="form_element"><span id="zakaznik-uzivatel_prijmeni">{$order->cust_surname}</span></td></tr><tr>
-                            <th class="order_label required"><label for="zakaznik-uzivatel_email">Email*:</label></th><td class="form_element"><span id="zakaznik-uzivatel_email">{$order->cust_email}</span></td></tr><tr>
-                            <th class="order_label"><label for="zakaznik-uzivatel_telefon">Telefon:</label></th><td class="form_element"><span id="zakaznik-uzivatel_telefon">{$order->cust_telefon}</span></td></tr>
-                    </tbody>
-                </table>
-            </fieldset>
-            <fieldset style="height: 170px;">
-                <legend>Dodací adresa</legend>
-                <table class="order_table">
-                    <tbody><tr>
-                            <th class="order_label required"><label for="dodaci_adresa-jmeno">Jméno*:</label></th><td class="form_element"><span id="dodaci_adresa-jmeno">{$order->cust_name}</span></td></tr><tr>
-                            <th class="order_label required"><label for="dodaci_adresa-prijmeni">Příjmení*:</label></th><td class="form_element"><span id="dodaci_adresa-prijmeni">{$order->cust_surname}</span></td></tr><tr>
-                            <th class="order_label required"><label for="dodaci_adresa-ulice">Ulice*:</label></th><td class="form_element"><span id="dodaci_adresa-ulice">{$order->cust_street}</span></td></tr><tr>
-                            <th class="order_label required"><label for="dodaci_adresa-mesto">Město*:</label></th><td class="form_element"><span id="dodaci_adresa-mesto">{$order->cust_city}</span></td></tr><tr>
-                            <th class="order_label required"><label for="dodaci_adresa-psc">PSČ*:</label></th><td class="form_element"><span id="dodaci_adresa-psc">{$order->cust_psc}</span></td></tr><tr>
-                            <th class="order_label"><label for="dodaci_adresa-firma">Firma:</label></th><td class="form_element"><span id="dodaci_adresa-firma">{$order->cust_firmName}</span></td></tr><tr>
-                            <th class="order_label"><label for="dodaci_adresa-ico">IČO:</label></th><td class="form_element"><span id="dodaci_adresa-ico">{$order->cust_ico}</span></td></tr><tr>
-                            <th class="order_label"><label for="dodaci_adresa-dic">DIČ:</label></th><td class="form_element"><span id="dodaci_adresa-dic">{$order->cust_dic}</span></td></tr>
-                    </tbody>
-                </table>
-            </fieldset>
+<div style="display: inline-block; width: 480px; margin-right: 20px;" class="pull-left">
+    <table class="order-table table table-bordered table-color">
+        <tbody>
+            <tr>
+                <td style="width: 50%" valign="top">
+                    <span style="color: gray;">Fakturační údaje</span>
+                    <br /><br />
+                    <address>
+                        <strong>{$order->cust_name} {$order->cust_surname}</strong><br />
+                        {$order->cust_street}<br />
+                        {$order->cust_psc} {$order->cust_city}<br /><br />
+                        +420 {$order->cust_telefon}<br />
+                        <a href={$order->cust_email}>{$order->cust_email}</a><br />
+                    </address>
+                </td>
+
+                <td valign="top">
+                    <span style="color: gray;">Dodací údaje</span>
+                    <br /><br />
+                    <address>
+                        <strong>{$order->cust_bname} {$order->cust_bsurname}</strong><br />
+                        {$order->cust_bstreet}<br />
+                        {$order->cust_bpsc} {$order->cust_bcity}<br /><br />
+                        +420 {$order->cust_btelefon}<br />
+                        <a href={$order->cust_bemail}>{$order->cust_bemail}</a><br />
+                    </address>
+                </td>
+
+            </tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+
+    <div class="noprint">
+        <i class="icon-pencil"></i> <a href="#customer-form-modal" data-toggle="modal" id="edit-customer">Upravit zákaznické údaje</a>
+
+{form editOrderForm}
+        <div id="customer-form-modal" class="modal hide">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Upravit zákaznické údaje</h3>
+            </div>
+            <div class="modal-body">
+
+                <div class="container-fluid">      
+                    <form>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                {foreach $flashes as $flash}
+                                <div class="row-fluid">
+                                    <div class="span12 bgcolor">                                        
+                                        <div class="alert alert-{$flash->type}">
+                                            <a href="#" class="close" data-dismiss="alert">×</a>
+                                            {$flash->message}
+                                        </div>                                       
+                                    </div><!--/span-->
+                                </div><!--/row-->
+                                 {/foreach}
+
+                                <div class="row-fluid">   
+                                    <div class="span6 lightblue">
+                                        <label>Jméno</label>
+                                        <input n:input="cust_name" type="text" class="span12" value="{$order->cust_name}">    
+                                      </div><!--/span-->
+                                    <div class="span6 lightblue">
+                                        <label>Příjmení</label>
+                                        <input n:input="cust_surname" type="text" class="span12" value="{$order->cust_surname}">    
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span6 bgcolor">
+                                        <label>E-mail</label>
+                                        <div class="input-prepend">
+                                            <span class="add-on">@</span><input n:input="cust_email"  id="prependedInput" type="text" value="{$order->cust_email}">
+                                        </div>
+                                    </div><!--/span-->
+                                    <div class="span6 bgcolor">
+                                        <label>Telefon</label>
+                                        <div class="input-prepend">
+                                            <span class="add-on">+420</span><input n:input="cust_telefon" id="prependedInput" type="text" value="{$order->cust_telefon}">
+                                        </div>  
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span12 bgcolor">
+                                        <label>Adresa</label>
+                                        <input n:input="cust_street" type="text" class="span12 input-mini" placeholder="Ulice" value="{$order->cust_street}">    
+                                    </div><!--/span-->
+                                </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span6 bgcolor">
+                                        <input n:input="cust_city" type="text" class="span12 input-mini" placeholder="Město" value="{$order->cust_city}">   
+                                      </div><!--/span-->
+                                    <div class="span2 bgcolor">
+                                        <input n:input="cust_psc" type="text" class="span12 input-mini" placeholder="PSČ" value="{$order->cust_psc}">    
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span12 bgcolor">
+                                        <label>Firma (nepovinný údaj)</label>
+                                        <input n:input="cust_firmName" type="text" class="span12 input-mini" placeholder="Název firmy" value="{$order->cust_firmName}">    
+                                    </div><!--/span-->
+                                </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span2 bgcolor">
+                                        <input n:input="cust_ico" type="text" class="span12 input-mini" placeholder="IČO" value="{$order->cust_ico}">   
+                                      </div><!--/span-->
+                                    <div class="span2 bgcolor">
+                                        <input n:input="cust_dic" type="text" class="span12 input-mini" placeholder="DIČ" value="{$order->cust_dic}">    
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+
+                                <div class="accordion" id="accordion2">
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+                                                Zobrazit/Upravit dodací údaje
+                                            </a>
+                                        </div>
+                                        <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+                                            <div class="accordion-inner">
+                                                <div class="row-fluid">   
+                                                    <div class="span6 lightblue">
+                                                        <label>Jméno</label>
+                                                        <input n:input="cust_bname" type="text" class="span12" value="{$order->cust_bname}">    
+                                                      </div><!--/span-->
+                                                    <div class="span6 lightblue">
+                                                        <label>Příjmení</label>
+                                                        <input n:input="cust_bsurname" type="text" class="span12" value="{$order->cust_bsurname}">    
+                                                      </div><!--/span-->
+                                                    </div><!--/row-->
+                                                <div class="row-fluid">
+                                                    <div class="span12 bgcolor">
+                                                        <label>Adresa</label>
+                                                        <input n:input="cust_bstreet" type="text" class="span12 input-mini" placeholder="Ulice" value="{$order->cust_bstreet}">    
+                                                    </div><!--/span-->
+                                                </div><!--/row-->
+                                                <div class="row-fluid">
+                                                    <div class="span6 bgcolor">
+                                                        <input n:input="cust_bcity" type="text" class="span12 input-mini" placeholder="Město" value="{$order->cust_bcity}">   
+                                                      </div><!--/span-->
+                                                    <div class="span2 bgcolor">
+                                                        <input n:input="cust_bpsc" type="text" class="span12 input-mini" placeholder="PSČ" value="{$order->cust_bpsc}">    
+                                                      </div><!--/span-->
+                                                    </div><!--/row-->
+                                                <div class="row-fluid">
+                                                    <div class="span12 bgcolor">
+                                                        <label>Firma (nepovinný údaj)</label>
+                                                        <input n:input="cust_bfirmName" type="text" class="span12 input-mini" placeholder="Název firmy" value="{$order->cust_bfirmName}">    
+                                                    </div><!--/span-->
+                                                </div><!--/row-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div><!--/span-->    
+                            </div><!--/row-->
+                    </form>
+                 </div><!--/.fluid-container-->
+            </div>
+
+            <div class="modal-footer">
+                <input n:input="save_change" type="submit" class="btn btn-primary btn-large" value="Uložit">
+                <a href="#" class="btn" data-dismiss="modal">Storno</a>
+            </div>
         </div>
+{/form}
+        <style type="text/css">
+            #customer-form-modal { width: 700px; }
+        </style></div>
 
-        <div class="rightColumn">
-            <fieldset style="height: 100px;">
-                <legend>Doprava/Platba</legend>
-                <table class="order_table">
-                    <tbody><tr>
-                            <th class="order_label"><label for="doprava-doprava_typ">Typ:</label></th><td class="form_element"><span id="doprava-doprava_typ">{if $order->cust_delivery == 'post'}Česká pošta{elseif $order->cust_delivery == 'postWithCashOnDelivery'}Kurýr{else}Osobní odběr{/if}</span></td></tr><tr>
-                            <th class="order_label"><label for="doprava-doprava_cena">Cena dopravy:</label></th><td class="form_element"><span id="doprava-doprava_cena">{$order->deliverySinglePrice},-</span></td></tr><tr>
-                            <th class="order_label"><label for="doprava-doprava_platba">Platba:</label></th><td class="form_element"><span id="doprava-doprava_platba">{if $order->cust_payment == 'directDebit'}Převodem na účet{elseif $order->cust_payment == 'cashOnDelivery'}Dobírkou{else}Hotově{/if}</span></td></tr>
-                            {if $order->cust_payment == 'cashOnDelivery'}<tr><th class="order_label"><label for="doprava-doprava_dobirka">Cena za dobírku:</label></th><td class="form_element"><span id="doprava-doprava_dobirka">30,-</span></td></tr>{/if}
+    <br /><br />
+
+    <table class="table order-table">
+        <thead>
+            <tr>
+                <td style="border-bottom: 1px solid #ddd;" width="25px"><strong>Ks</strong></td>
+                <td style="border-bottom: 1px solid #ddd;"><strong>Název</strong></td>
+                <td style="border-bottom: 1px solid #ddd; text-align: right;"><strong>Cena za kus</strong></td>
+                <td style="border-bottom: 1px solid #ddd; text-align: right;"><strong>Cena celkem</strong></td>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $orderProducts as $o}
+            <tr>
+                <td>{$o->quantity}</td>
+                <td><strong>{$o->prod_name}</strong></td>
+                <td class="single-price" style="text-align: right;">
+                    <strong>{$o->actual_price_of_product},- Kč</strong>
+                </td>
+                <td class="price" style="text-align: right;">
+                    <strong>{$o->actual_price_of_product * $o->quantity},- Kč</strong>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td></td>
+                <td>{if $order->cust_delivery == 'post'}Česká pošta{elseif $order->cust_delivery == 'postWithCashOnDelivery'}Kurýr{else}Osobní odběr{/if}</td>
+                <td></td>
+                <td class="price" style="text-align: right;">
+                    {$order->deliverySinglePrice},- Kč
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{if $order->cust_payment == 'directDebit'}Převodem na účet{elseif $order->cust_payment == 'cashOnDelivery'}Dobírkou{else}Hotově{/if}</td>
+                <td></td>
+                <td class="price" style="text-align: right;">
+                    {if $order->cust_payment == 'cashOnDelivery'}30,- Kč{else} 0,- Kč {/if}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="price" style="text-align: right;">
+                    <strong>{$totalPrice},- Kč</strong>
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+
+    <div class="noprint">
+        <i class="icon-pencil"></i> <a href="#items-form-modal" data-toggle="modal">Upravit položky</a>
+        <i class="icon-plus"></i> <a href="#add-form-modal" data-toggle="modal">Přidat další položku</a>
+        
+        {form editProductIntoOrderForm}
+        <div id="items-form-modal" class="modal hide">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Upravit položky objednávky</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table order-table">
+                    <thead>
+                        <tr>
+                            <td style="border-bottom: 1px solid #ddd;" width="250px"><strong>Název</strong></td>
+                            <td style="border-bottom: 1px solid #ddd;"><strong>Množství</strong></td>
+                            <td style="border-bottom: 1px solid #ddd;"><strong></strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach $orderEditProducts as $o}
+                        <tr>
+                            <td><strong>{$o->prod_name}</strong></td>
+                            <td>{$form['quantity'][$o->prod_id]->getControl()}</td>
+                            <td style="text-align: right;"><a class="btn" n:href="removeProductIntoOrder! $o->prod_id, $order->ord_id"><i class="icon-trash"></i> Odebrat</a></td>
+                        </tr>
+                        {/foreach}
                     </tbody>
                 </table>
-            </fieldset>
-            <fieldset style="height: 170px;">
-                <legend>Fakturační adresa</legend>
-                <table class="order_table">
-                    <tbody><tr>
-                            <th class="order_label required"><label for="fakturacni_adresa-jmeno">Jméno*:</label></th><td class="form_element"><span id="fakturacni_adresa-jmeno">{$order->cust_bname}</span></td></tr><tr>
-                            <th class="order_label required"><label for="fakturacni_adresa-prijmeni">Příjmení*:</label></th><td class="form_element"><span id="fakturacni_adresa-prijmeni">{$order->cust_bsurname}</span></td></tr><tr>
-                            <th class="order_label required"><label for="fakturacni_adresa-ulice">Ulice*:</label></th><td class="form_element"><span id="fakturacni_adresa-ulice">{$order->cust_bstreet}</span></td></tr><tr>
-                            <th class="order_label required"><label for="fakturacni_adresa-mesto">Město*:</label></th><td class="form_element"><span id="fakturacni_adresa-mesto">{$order->cust_bcity}</span></td></tr><tr>
-                            <th class="order_label required"><label for="fakturacni_adresa-psc">PSČ*:</label></th><td class="form_element"><span id="fakturacni_adresa-psc">{$order->cust_bpsc}</span></td></tr><tr>
-                            <th class="order_label"><label for="fakturacni_adresa-firma">Firma:</label></th><td class="form_element"><span id="fakturacni_adresa-firma">{$order->cust_bfirmName}</span></td></tr><tr>
-                    </tbody>
-                </table>
-            </fieldset>
+            </div>
+
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary btn-large" value="Uložit">
+                <a href="#" class="btn" data-dismiss="modal">Storno</a>
+            </div>
         </div>
-        <fieldset>
-            <legend >Poznámky</legend>
-            <table class="order_table">
-                <tbody><tr>
-                        <th class="order_label"><label for="poznamka_uzivatele">Poznámka uživatele:</label></th><td class="form_element"><span id="poznamka_uzivatele">{if $order->cust_note == ''}Žádná{else}{$order->cust_note}{/if}</span></td></tr><tr>
-                        <th class="order_label"><label for="poznamka_prodejce">Poznámka prodejce:</label></th><td class="form_element"><span id="poznamka_prodejce">{if $order->seller_note == ''}Žádná{else}{$order->seller_note}{/if}</span></td></tr>
-                </tbody>
-            </table>
-        </fieldset>
-    </fieldset>
-    <fieldset style="background: whiteSmoke">
-        <legend>Položky</legend>
-        <table class="datagrid" cellspacing="0">
-            <tbody>
-                <tr class="">	
-                    <th class="center">ID</th>
-                    <th style="width: 113px">Náhled</th>
-                    <th>Název</th>
-                    <th>Množství</th>
-                    <th>Cena za kus</th>
-                    <th>Cena celkem</th>
-                </tr>
-                {foreach $orderProducts as $o}
-                <tr {if $iterator->isOdd()} class="odd" {else} class="even"{/if}>
-                    <td>{$o->prod_id}</td>
-                    <td><a href=""><img src="{$basePath}/images/products/{$o->image_name}" alt=""></a></td>
-                    <td>{$o->prod_name}</td>
-                    <td align="right">{$o->quantity}</td>
-                    <td align="right">{$o->actual_price_of_product},- Kč</td>
-                    <td align="right">{$o->actual_price_of_product * $o->quantity},- Kč</td>
-                </tr>
-                {/foreach}
-            </tbody>
-        </table>
-    </fieldset>
-    <fieldset style="background: whiteSmoke">
-        <legend>Fakturace</legend>
-        <p>Zde příjde ještě po domluvě pořešit fakturace objednávky na stažení</p>
-    </fieldset>
+        {/form}
 
-    <center>
-        <a n:href="Order:show"><input type="button" id="submit" value="Zpět na seznam"></a>
-        <a n:href="Order:mainInfo $order->ord_id"><input type="button" id="submit" value="Upravit objednávku"></a>
-        <a n:href="#"><input type="submit" id="submit-delete" value="Smazat objednávku"></a>
-    </center>
-</div>
+        {form addProductIntoOrderForm}
+        <div id="add-form-modal" class="modal hide">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Přidat položku do objednávky</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span12 bgcolor">
+                        <label for="values">Název produktu</label>
+                        <input n:input="prod_name" id="products" type="text" placeholder="Začněte psát název produktu" tabindex="0" class="myinput"/>
+                    </div><!--/span-->
+                </div><!--/row-->
+                <div class="row-fluid">
+                    <div class="span4 bgcolor">
+                        <label for="keys">Cena produktu</label>
+                        <input n:input="prod_price" id="price" type="text" placeholder="Cena" tabindex="1" class="input-mini myinput"/>
+                        <span class="help-inline" style="color: #ffffff">,- Kč s DPH</span>                  
+                      </div><!--/span-->
+                    <div class="span4 bgcolor">
+                        <label for="keys">Množství</label>
+                        <input n:input="quantity" class="input-mini" type="number" value="1">                
+                      </div><!--/span-->
+                </div><!--/row-->
+            </div>
+
+            <div class="modal-footer">
+                <input n:input="save_change" type="submit" class="btn btn-primary btn-large" value="Uložit">
+                <a href="#" class="btn" data-dismiss="modal">Storno</a>
+            </div>
+        </div>
+        {/form}
+    </div>
+
+    <br /><br /></div>
+
+<div style="display: inline-block; width: 480px;">
+    <div class="well">
+        Objednávka byla přijata {$order->ord_date|date:'j.n.Y, H:i:s'}
+    </div>
+
+    <div class="change-status">
+        Nastavit stav na:<br />
+        <i class="icon-chevron-right {if $order->ord_status == 'Vyřízeno'}{else}icon-white{/if}"></i>
+        <a n:href="changeStatus! $order->ord_id, 'Vyřízeno'">
+            <span class="label order-waiting {if $order->ord_status == 'Vyřízeno'}active{else}passive{/if}">vyřízeno</span>
+        </a>
+        <br />
+        <i class="icon-chevron-right {if $order->ord_status == 'Nevyřízeno'}{else}icon-white{/if}"></i>
+        <a n:href="changeStatus! $order->ord_id, 'Nevyřízeno'"><span class="label order-new {if $order->ord_status == 'Nevyřízeno'}active{else}passive{/if}">nevyřízeno</span></a>
+        <br />
+        <i class="icon-chevron-right {if $order->ord_status == 'Expedováno'}{else}icon-white{/if}"></i>
+        <a n:href=""><span class="label order-filled {if $order->ord_status == 'Expedováno'}active{else}passive{/if}">expedováno</span></a>
+        <br />
+        <i class="icon-chevron-right {if $order->ord_status == 'Stornováno'}{else}icon-white{/if}"></i>
+        <a n:href=""><span class="label order-paid {if $order->ord_status == 'Stornováno'}active{else}passive{/if}">stornováno</span></a>
+        <br />
+        <i class="icon-chevron-right {if $order->ord_status == 'Vráceno'}{else}icon-white{/if}"></i>
+        <a n:href=""><span class="label order-canceled {if $order->ord_status == 'Vráceno'}active{else}passive{/if}">vráceno</span></a>
+        <br />
+    </div>
+
+    <br />
+
+    <a href="#" onclick="return window.print()"><i class="icon icon-document"></i>Vytvořit fakturaci objednávky</a>
+</div><!--/right block-->  
+</div><!--/content-->
+{block #otherScripts}
+<script type="text/javascript">
+    var listOfProducts = [{foreach $productList as $p}{"k": {$p->prod_price}, "v" :{$p->prod_name}}{sep},{/sep}{/foreach}];
+$(document).ready(function() {
+    $("#price").typeaheadmap({
+        "source" : listOfProducts,
+        "key" : "k",
+        "value" : "v",
+        "items": 11,
+        "listener" : function(k, v) {
+            $("#products").val(v)
+        },
+        "displayer": function(that, item, highlighted) {
+            if (that.value != "") {
+                    return highlighted;			
+            } else {
+            return highlighted + ' (' + item[that.value] + ' )' 
+            }
+        }
+    })
+    $("#products").typeaheadmap({
+        "source" : function(q, process) { process(listOfProducts)},
+        "key" : "v",
+        "value" : "k",
+        "items": 17,
+        "listener" : function(k, v) {
+            $("#price").val(v)
+        },
+        "displayer": function(that, item, highlighted) {
+            if (that.value != "") {
+                    return highlighted;			
+            } else {
+            return highlighted + ' (' + item[that.value] + ' )' 
+            } 
+           }
+    })
+});
+</script> 
+{/block}

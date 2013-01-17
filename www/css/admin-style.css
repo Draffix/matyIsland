@@ -1,0 +1,56 @@
+/* 
+    Document   : admin-style
+    Created on : 14.1.2013, 14:33:01
+    Author     : Draffix
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/****************************/
+/* Vypis statusu objednávky */
+/****************************/
+.change-status { line-height:28px; }
+.change-status a:hover { text-decoration:none; }
+.change-status .label {
+    text-decoration:none;
+    font-size:13px;
+    font-weight:normal;
+    padding:2px 8px 4px;
+}
+.change-status .label.active { font-weight:bold; background-color:#f89406;}
+
+span.order-waiting:hover{
+    background-color:#46a546;
+    color:white;
+}
+span.order-new:hover {
+    background-color:#46a546;
+    color:white;
+}
+span.order-filled:hover {
+    background-color:#46a546;
+    color:white;
+}
+span.order-paid:hover {
+    background-color:#46a546;
+    color:white;
+}
+span.order-canceled:hover {
+    background-color:#46a546;
+    color:white;
+}
+
+/****************************/
+/* Zarovnání textu na střed */
+/****************************/
+.centered-text {
+    text-align:center
+}
+
+/****************************/
+/* Vyplnění tabulky barvou */
+/****************************/
+.table-color {
+    background-color: #3a3f44;
+}
+

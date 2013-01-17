@@ -56,6 +56,13 @@ class OrderModel extends Table {
                         ->fetch();
     }
 
+    public function updateOrderHasProduct($id_order, $id_product, $quantity) {
+        return $this->connection->table($this->orderHasProduct)
+                        ->where(array('order_ord_id' => $id_order,
+                            'product_prod_id' => $id_product))
+                        ->update(array('quantity' => $quantity));
+    }
+
     /**
      * Zjistíme vše o dané objednávce
      * @param type $id
@@ -86,21 +93,25 @@ class OrderModel extends Table {
                         ->update($values);
     }
 
+    public function updateOrderStatus($ord_id, $status) {
+        return $this->getTable()
+                        ->where('ord_id', $ord_id)
+                        ->update(array('ord_status' => $status));
+    }
+
     /**
-     * Vrací všechny objednávky s omezením limitu a offsetu
+     * Vrací všechny objednávky
      * @param type $limit
      * @param type $offset
      * @return type
      */
-    public function fetchAllOrdersWithOffset($limit, $offset) {
+    public function fetchAllOrders() {
         return $this->connection->query(
                         'SELECT *, SUM(totalPrice) AS sum_price, 
                             sum(op.quantity) AS sum_quantity FROM order_has_product AS op JOIN orders AS o ON o.ord_id = op.order_ord_id 
                  JOIN product AS p ON p.prod_id = op.product_prod_id
                  GROUP BY ord_id
-                 ORDER BY ord_date DESC
-                 LIMIT ?
-                OFFSET ?', $limit, $offset);
+                 ORDER BY ord_date DESC');
     }
 
     /**

@@ -229,11 +229,19 @@ class ProductModel extends Table {
                         ->update(array('image_is_main' => 1));
     }
 
-    public function pokus() {
-        return $this->connection->table($this->image)
-                ->select('image_id')
-                ->select('image_name')
-                ->select('product.prod_name');
+    /**
+     * Vrací všechno z tabulky Products
+     * @return type
+     */
+    public function fetchAllProducts() {
+        return $this->getTable();
+    }
+
+    public function findProductsID($name) {
+        return $this->getTable()
+                        ->where('prod_name', $name)
+                        ->select('prod_id')
+                        ->fetch();
     }
 
 }
