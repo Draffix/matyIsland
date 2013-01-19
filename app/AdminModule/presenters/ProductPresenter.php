@@ -8,13 +8,17 @@ class ProductPresenter extends BasePresenter {
 
     protected $oldCategories;
 
+    public function handlePokus($imageID) {
+        dump($imageID);
+    }
+
     protected function createComponentPaginator() {
         $visualPaginator = new \VisualPaginator();
         return $visualPaginator;
     }
 
     public function renderDefault() {
-//        $this->redirect('Product:show');
+        $this->template->products = $this->product->fetchAllProductsWithImage();
     }
 
     protected function createComponentProductGrid($name) {
@@ -31,19 +35,6 @@ class ProductPresenter extends BasePresenter {
         foreach ($this->category->fetchAllCategoryNames() as $n) {
             $name[] = $n->cat_name;
         }
-    }
-
-    public function renderShow() {
-        $paginator = $this['paginator']->getPaginator();
-        $paginator->itemsPerPage = 30;
-        $paginator->setBase(1);
-        $paginator->itemCount = $this->product->countProducts();
-        $products = $this->product->fetchAllProductsWithOffset($paginator->itemsPerPage, $paginator->offset);
-
-        $this->template->products = $products;
-
-//        \Nette\Diagnostics\Debugger::barDump($this->product->pokus());
-//        $_SESSION['a'] = $this->product->pokus();
     }
 
     public function renderDetail($id) {
@@ -64,10 +55,11 @@ class ProductPresenter extends BasePresenter {
         $this->template->category = $this->category->fetchAllCategoryNamesForProduct($id);
     }
 
+    // odstraníme obrázek
     public function handleRemoveImage($id_image, $id_product, $name) {
         if ($this->product->fetchSingleMainImage($id_image, $id_product)->image_is_main == 1) { //pokud je to hlavní obrázek
             $this->product->deleteImage($id_image);
-            $min = $this->product->findMinimumImageID($id_product)->min; // zjistíme další obrázek produktu (ten s menším id)
+            $min = $this->product->findMinimumImageID($id_product)->min; // zjistíme další obrázek produktu (ten s menším id -> je nejblíže v pořadí)
             $this->product->updateImageWithHisID($min, $id_product);
         } else {
             $this->product->deleteImage($id_image);
@@ -75,6 +67,12 @@ class ProductPresenter extends BasePresenter {
         $targetPath = $this->context->params['wwwDir'] . '/images/products/';
         unlink("$targetPath/$name");
         $this->redirect('Product:edit', $id_product);
+    }
+
+    // nastavíme obrázek jako hlavní
+    public function handleMakeImageMain($id_product, $id_image) {
+        $idMain = $this->product->findMainImageOfProduct($id_product)->image_id;
+        $this->product->updateMainImageOfProduct($idMain, $id_image);
     }
 
     protected function createComponentAddProductForm() {

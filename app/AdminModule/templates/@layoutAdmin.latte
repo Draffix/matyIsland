@@ -179,6 +179,20 @@
     <script src="{$basePath}/js/charisma.js"></script>
     <!-- Extending Twitter Bootstrap Typeahead Plugin - Typeaheadmap -->
     <script src="{$basePath}/js/typeaheadmap.js"></script>
+    <!-- Nette js -->
+    <script src="{$basePath}/js/jquery.nette.js"></script>
+    <!-- javascript TinyMCE -->
+    <script type="text/javascript" src="{$basePath}/js/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript" >
+        tinyMCE.init({
+            language : "cs",
+            mode: "specific_textareas",
+            editor_selector: "mceEditor",
+            theme : "advanced",
+            height : "300",
+            width : "535",
+        });
+    </script>
 
     {block #otherScripts}{/block}  
 

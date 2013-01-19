@@ -170,10 +170,13 @@ class ProductModel extends Table {
                             'image_is_main' => $isMain));
     }
 
-    public function fetchAllProductsWithOffset($limit, $offset) {
+    /**
+     * Vrací všechny produkty a jeho hlavní obrázek
+     * @return type
+     */
+    public function fetchAllProductsWithImage() {
         return $this->connection->table($this->image)
                         ->where('image.image_is_main = 1')
-                        ->limit($limit, $offset)
                         ->group('image.product_prod_id')
                         ->order('product.prod_id');
     }
@@ -214,6 +217,33 @@ class ProductModel extends Table {
                         ->fetch();
     }
 
+    /**
+     * Najdeme si hlavní obrázek produktu
+     * @param type $product_id
+     * @return type
+     */
+    public function findMainImageOfProduct($product_id) {
+        return $this->connection->table($this->image)
+                        ->where(array('product_prod_id' => $product_id,
+                            'image_is_main' => 1))
+                        ->fetch();
+    }
+
+    /**
+     * Změníme obrázek jako hlavní
+     * @param type $oldMainID
+     * @param type $newMainID
+     */
+    public function updateMainImageOfProduct($oldMainID, $newMainID) {
+        $this->connection->table($this->image)
+                ->where(array('image_id' => $oldMainID))
+                ->update(array('image_is_main' => 0));
+
+        $this->connection->table($this->image)
+                ->where(array('image_id' => $newMainID))
+                ->update(array('image_is_main' => 1));
+    }
+
     public function findMinimumImageID($product_id) {
         return $this->connection->table($this->image)
                         ->select('MIN(image_id) AS min')
@@ -230,7 +260,7 @@ class ProductModel extends Table {
     }
 
     /**
-     * Vrací všechno z tabulky Products
+     * Vrací všechno z tabulky products
      * @return type
      */
     public function fetchAllProducts() {

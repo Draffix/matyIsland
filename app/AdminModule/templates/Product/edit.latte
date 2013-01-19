@@ -1,166 +1,87 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="Product:">Produkty</a> <span class="divider">/</span>
+    <a n:href="Product:edit $product->prod_id">{$product->prod_name}</a> <span class="divider">/</span>
+</li>
+{/block}
 {block content}
-<section id="wrapper" class="wrapper">
-    {form editProductForm}
-    <ul class="errors" n:if="$form->hasErrors()">
-        <li n:foreach="$form->errors as $error">{$error}</li>
-    </ul>
-    {foreach $flashes as $flash}
-    <div class="flash {$flash->type}" style="width: 770px; font-weight: bold">{$flash->message}</div>
-    {/foreach}
-    <div id="v-nav">
-        <ul>
-            <li tab="tab1" class="first current">Hlavní údaje</li>
-            <li tab="tab2">Cena, kód</li>
-            <li tab="tab3">Popis</li>
-            <li tab="tab4" class="last">Obrázky</li>
-        </ul>
-        <div class="tab-content">
-            <div class="orderFieldset" style="width: 600px; padding: 0; margin: 0;">
-                <fieldset>
-                    <legend>Název</legend>
-                    <table class="form_table">
-                        <tbody><tr>
-                                <th class="order_label required" style="width: 120px"><label for="nazev_produktu">Název produktu:</label></th><td class="form_element"><span>
-                                        <input type="text" id="nazev_produktu" n:input="prod_name" size="60" value="{$product->prod_name}">    
-                                    </span>
-                                </td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
+<div class="control-group price">
+    <label>Cena</label>
+    <div class="controls">
+        <input type="text" id="product_price_with_tax" name="product[price][with_tax]" class="price-with-tax" value="354" />
+        Kč s
+        DPH
+        <select id="product_price_tax_rate" name="product[price][tax_rate]" class="price-tax-rate" tabindex="990"><option value="0.2" selected="selected">20%</option><option value="0.1">10%</option><option value="0">0%</option></select>
 
-                <fieldset>
-                    <legend>Zařazení</legend>
-                    <table class="order_table">
-                        <tbody><tr>
-                                <th class="order_label required" style="width: 120px"><label for="kategorie">Kategorie:</label></th><td class="form_element"><span>
-                                        {input category id=>kategorie}   
-                                    </span>
-                                </td></tr>
-                            <tr>
-                                <th class="order_label" style="width: 120px"><label for="kategorie">Další kategorie (nepovinná):</label></th><td class="form_element"><span>
-                                        {input category2 id=>kategorie2}   
-                                    </span>
-                                </td></tr>
-                            <tr>
-                                <th class="order_label" style="width: 120px"><label for="kategorie">Další kategorie (nepovinná):</label></th><td class="form_element"><span>
-                                        {input category3 id=>kategorie3}   
-                                    </span>
-                                </td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Množství</legend>
-                    <table class="order_table">
-                        <tbody><tr>
-                                <th class="order_label required" style="width: 120px"><label for="mnozstvi">Množství:</label></th><td class="form_element"><span>
-                                        <input type="text" id="mnozstvi" n:input="prod_on_stock" size="20" value="{$product->prod_on_stock}">    
-                                    </span>
-                                </td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Označení/Zveřejnění</legend>
-                    <table class="order_table">
-                        <tbody><tr>
-                                <th class="order_label required" style="width: 120px"><label for="novinka">Novinka:</label></th><td class="form_element"><span>
-                                        {if $product->prod_isnew == '1'}{input prod_isnew id=>novinka, checked=>checked}{else}{input prod_isnew id=>novinka}{/if}</span></td></tr><tr>
-                                <th class="order_label required" style="width: 120px"><label for="zverejneno">Zveřejněno:</label></th><td class="form_element"><span>
-                                        {input prod_is_active id=>zverejneno}   
-                                    </span></td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
-            </div>
-        </div>
-        <div class="tab-content">
-            <div class="orderFieldset" style="width: 600px; padding: 0; margin: 0;">
-                <div class="warning-box">Cenu zboží zadávejte s DPH</div>
-                <fieldset>
-                    <legend>Cena/Kód</legend>
-                    <table class="order_table">
-                        <tbody><tr>
-                                <th class="order_label required" style="width: 120px"><label for="cena_produktu">Cena produktu:</label></th><td class="form_element"><span>
-                                        <input type="text" id="cena_produktu" n:input="prod_price" size="20" value="{$product->prod_price}">,- Kč</span></td></tr><tr>
-                                <th class="order_label" style="width: 120px"><label for="kod_produktu">Kód produktu:</label></th><td class="form_element"><span>
-                                        <input type="text" id="kod_produktu" n:input="prod_code" size="20" value="{$product->prod_code}"></span></td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
-            </div>
-        </div>
-        <div class="tab-content">
-            <div class="orderFieldset" style="width: 560px; padding: 0; margin: 0;">
-                <fieldset>
-                    <legend>Krátký popis produktu</legend>
-                    <table class="form_table">
-                        <tbody><tr>
-                                <td class="form_element"><span original-title="">
-                                        <textarea id="kratky_popis" n:input="prod_describe">{$product->prod_describe}</textarea></span></td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
-                <fieldset>
-                    <legend>Dlouhý popis produktu</legend>
-                    <table class="form_table">
-                        <tbody><tr>
-                                <td class="form_element"><span original-title="">
-                                        <textarea id="dlouhy_popis" n:input="prod_long_describe">{$product->prod_long_describe}</textarea></span></td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
-            </div>                  
-        </div>
-        <div class="tab-content">
-            <div class="orderFieldset" style="width: 600px; padding: 0; margin: 0;">
-                <div class="warning-box">Obrázky vkládejte ve formátu JPG, PNG nebo GIF</div>
-                <fieldset>
-                    <legend>Přehled obrázků</legend>
-                    <div id="galerie">
-                        <center>
-                            <ul>
-                    {foreach $images as $image}
-                                <li><a href="{$basePath}/images/products/{$image->image_name}" rel="gallery" class="pirobox_gall">
-                                        <img src="{$basePath}/images/products/{$image->image_name}" width="150" height="120" /></a><br>
-                                    <span class="delete-image">
-                                        <a n:href="removeImage! $image->image_id, $product->prod_id, $image->image_name"><img src="{$basePath}/images/administration/error.png" title="Smazat obrázek"/></a>
-                                    </span>
-                                {if $image->image_is_main == 1}
-                                    <span class="delete-image">
-                                        <img src="{$basePath}/images/administration/valid.png" title="Hlavní obrázek"/>
-                                    </span>
-                                {/if}
-                                </li>
-                    {/foreach}
-                            </ul>
-                        </center>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Přidat obrázky</legend>
-                    <table class="order_table">
-                        <tbody><tr>
-                                <th class="order_label" style="width: 120px"><label for="cena_produktu">Další obrázek:</label></th><td class="form_element"><span>
-                                        <input type="file" n:input="image_name2"></span></td></tr><tr>
-                                <th class="order_label" style="width: 120px"><label for="cena_produktu">Další obrázek:</label></th><td class="form_element"><span>
-                                        <input type="file" n:input="image_name3"></span></td></tr><tr>
-                                <th class="order_label" style="width: 120px"><label for="cena_produktu">Další obrázek:</label></th><td class="form_element"><span>
-                                        <input type="file" n:input="image_name4"></span></td></tr>
-                        </tbody>
-                    </table>
-                </fieldset>
-            </div>
-        </div>
-        <center>
-            <div style="width: 500px;">
-                <input type="submit" id="submit" style="margin-right: 50px" n:input="save_change" value="Uložit produkt">
-                <a n:href="Product:show"><input type="button" id="submit" style="margin-right: 0px" value="Zpět na seznam"></a>
-            </div>
-        </center>
+        <input type="text" id="product_price_without_tax" name="product[price][without_tax]" required="required"    class="price-without-tax" tabindex="991" value="295" />
+        Kč bez DPH
     </div>
+</div>
 
-    {/form}
-</section>
+<hr />
+
+<ul class="thumbnails galler">
+    {foreach $images as $image}
+    <li id={$image->image_id} class="thumbnail">
+        <a style="background:url({$basePath}/images/products/{$image->image_name})" title="Sample Image 1" href="{$basePath}/images/products/{$image->image_name}"><img class="grayscale" src="{$basePath}/images/products/{$image->image_name}" alt="Sample Image 1"></a>
+    </li>
+    {/foreach}
+</ul>
+
+        {block #otherScripts} 
+<script type="text/javascript">
+var taxes = new Array();
+taxes[0] = 0.2;
+taxes[1] = 0.1;
+taxes[2] = 0;
+
+$('.price-with-tax, .price-tax-rate').bind('keyup change', function() {
+    var number = parseFloat($('.price-with-tax').first().val().replace(",", ".").replace(" ", ""));
+    if(number) {
+        var tax = parseFloat($('.price-tax-rate').first().val());
+        var newval =  number / (1 + tax);
+        $('.price-without-tax').first().val( Math.round(newval*100)/100 );
+    } else {
+        $('.price-without-tax').first().val('');
+    }
+});
+$('.price-without-tax').keyup(function() {
+    var number = parseFloat($('.price-without-tax').first().val().replace(",", ".").replace(" ", ""));
+    if(number) {
+        var tax = parseFloat($('.price-tax-rate').first().val());
+        var newval = number * (1 + tax);
+        $('.price-with-tax').first().val( (Math.round(newval*100)/100) );
+    } else {
+        $('.price-with-tax').first().val('');
+    }
+});
+
+//gallery controlls container animation
+$('ul.galler li').hover(function(){
+    $('img',this).fadeToggle(1000);
+    $(this).find('.gallery-controls').remove();
+    $(this).append('<div class="well gallery-controls">'+
+        '<p><a href="#" class="gallery-edit btn"><i class="icon-edit"></i></a> <a href="#" class="gallery-delete btn"><i class="icon-remove"></i></a></p>'+
+        '</div>');
+    $(this).find('.gallery-controls').stop().animate({
+        'margin-top':'-1'
+    },400,'easeInQuint');
+},function(){
+    $('img',this).fadeToggle(1000);
+    $(this).find('.gallery-controls').stop().animate({
+        'margin-top':'-30'
+    },200,'easeInQuint',function(){
+        $(this).remove();
+    });
+});
+
+//gallery edit
+$('.thumbnails').on('click','.gallery-edit',function(e){
+    var imageID = $(this).parents('.thumbnail').attr('id');
+    
+    location.href = ({link makeImageMain! $product->prod_id}+"&id_image="+imageID);
+    return false;
+});
+</script>
+        {/block}
