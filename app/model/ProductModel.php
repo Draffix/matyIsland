@@ -210,6 +210,12 @@ class ProductModel extends Table {
                         ->delete();
     }
 
+    /**
+     * Zjistíme vše o daném obrázku
+     * @param type $image_id
+     * @param type $product_id
+     * @return type
+     */
     public function fetchSingleMainImage($image_id, $product_id) {
         return $this->connection->table($this->image)
                         ->where(array('image_id' => $image_id,
@@ -257,6 +263,17 @@ class ProductModel extends Table {
                         ->where(array('image_id' => $image_id,
                             'product_prod_id' => $product_id))
                         ->update(array('image_is_main' => 1));
+    }
+
+    /**
+     * Vrací počet obrázků patřící produktu
+     * @param type $product_id
+     * @return type
+     */
+    public function countImagesOfProduct($product_id) {
+        return $this->connection->table($this->image)
+                        ->where(array('product_prod_id' => $product_id))
+                        ->count();
     }
 
     /**
