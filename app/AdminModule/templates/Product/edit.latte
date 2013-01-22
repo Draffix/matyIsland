@@ -6,30 +6,132 @@
 </li>
 {/block}
 {block content}
-<div class="control-group price">
-    <label>Cena</label>
-    <div class="controls">
-        <input type="text" id="product_price_with_tax" name="product[price][with_tax]" class="price-with-tax" value="354" />
-        Kč s
-        DPH
-        <select id="product_price_tax_rate" name="product[price][tax_rate]" class="price-tax-rate" tabindex="990"><option value="0.2" selected="selected">20%</option><option value="0.1">10%</option><option value="0">0%</option></select>
-
-        <input type="text" id="product_price_without_tax" name="product[price][without_tax]" required="required"    class="price-without-tax" tabindex="991" value="295" />
-        Kč bez DPH
-    </div>
-</div>
-
-<hr />
-
-<ul class="thumbnails galler">
-    {foreach $images as $image}
-    <li id={$image->image_id} class="thumbnail">
-        <a style="background:url({$basePath}/images/products/{$image->image_name})" title="Sample Image 1" href="{$basePath}/images/products/{$image->image_name}"><img class="grayscale" src="{$basePath}/images/products/{$image->image_name}" alt="Sample Image 1"></a>
-    </li>
-    {/foreach}
-</ul>
-
-        {block #otherScripts} 
+{foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+{/foreach}
+{form editProductForm}
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-shopping-cart"></i> {$product->prod_name}</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <div class="control-group">
+                <label class="control-label" for="productName"><strong>Název</strong></label>
+                <div class="controls">
+                    <input n:input="prod_name" class="input-large focused" id="productName" type="text" autofocus="" value="{$product->prod_name}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="categories">Kategorie</label>
+                <div class="controls">
+                    {input category id=>categories, data-rel=>chosen}
+                </div>
+            </div>
+            <hr/>
+            <label>Cena</label>
+            <div class="controls">
+                <input n:input="prod_price" type="text" id="product_price_with_tax" class="price-with-tax input-small" placeholder="0" value="{$product->prod_price}" />
+                Kč s DPH
+                <select id="product_price_tax_rate" class="price-tax-rate input-small" data-rel="chosen">
+                    <option value="0.21" selected="selected">21%</option>
+                    <option value="0.1">10%</option>
+                    <option value="0">0%</option>
+                </select>
+                {var $priceWithDph = ($product->prod_price)-($product->prod_price*0.1736)}
+                <input type="text" id="product_price_without_tax" name="product[price][without_tax]" class="price-without-tax input-small" placeholder="0" value={round($priceWithDph, 2)} />
+                Kč bez DPH
+            </div>
+            <hr/>
+            <div class="row-fluid">
+                <div class="span4 bgcolor">
+                    <label for="quantity">Množství na skladě</label>
+                    <input n:input="prod_on_stock" id="quantity" type="text" tabindex="0" class="myinput" value="{$product->prod_on_stock}"/>
+                </div><!--/span-->
+                <div class="span1 bgcolor">
+                    <div class="control-group">
+                        <label>Novinka</label>
+                        <div class="controls">
+                                {if $product->prod_isnew == '1'}{input prod_isnew checked=>checked}{else}{input prod_isnew}{/if}
+                        </div>
+                    </div>
+                </div>
+                <div class="span1 bgcolor">
+                    <label>Zveřejněno</label>
+                    <div class="controls">
+                                {if $product->prod_is_active == '1'}{input prod_is_active checked=>checked}{else}{input prod_is_active}{/if}
+                    </div>
+                </div><!--/span-->
+        </div><!--/row-->
+            <hr />
+            <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                        <label for="kratky_popis">Krátký popis</label>
+                        <textarea id="kratky_popis" n:input="prod_describe">{$product->prod_describe}</textarea>
+                    </div><!--/span-->
+                    <div class="span6 bgcolor">
+                        <label for="dlouhy_popis">Dlouhý popis</label>
+                        <textarea id="dlouhy_popis" n:input="prod_long_describe">{$product->prod_long_describe}</textarea>
+                    </div><!--/span-->
+                </div><!--/row-->
+                </div><!--/group-->
+            <hr />
+            <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span12 bgcolor">
+                        <label>Obrázky</label>
+                        <ul class="thumbnails gallery">
+                            {foreach $images as $image}
+                            <li id={$image->image_id} class="thumbnail">
+                                <a style="background:url({$basePath}/images/products/thumbnail/{$image->image_name})" title={$image->image_name} href="{$basePath}/images/products/{$image->image_name}"><img class="grayscale" src="{$basePath}/images/products/thumbnail/{$image->image_name}" alt={$image->image_name}></a>
+                            </li>
+                            {/foreach}
+                        </ul>
+                    </div><!--/span-->
+                </div><!--/row-->
+            </div><!--/group-->
+            <hr />
+            <div class="row-fluid">
+                <div class="control-group">
+                    <label class="control-label">Nahrát další obrázky</label>
+                    <div class="alert alert-info">
+                        Obrázky vkládejte ve formátu JPG, PNG nebo GIF
+                    </div>
+                    <div class="span3 bgcolor">
+                        <div class="controls">
+                            <input n:input="image_name2" type="file">
+                        </div>
+                    </div><!--/span-->
+                    <div class="span3 bgcolor">
+                        <input n:input="image_name3" type="file">
+                    </div><!--/span-->
+                    <div class="span3 bgcolor">
+                        <input n:input="image_name4" type="file">
+                    </div><!--/span-->
+                </div><!--/group-->
+            </div><!--/row-->
+            <div class="form-actions">                
+                <input type="submit" class="btn btn-primary" n:input="save_change" value="Uložit změny">
+                <a n:href="Product:"><input type="button" class="btn" value="Zpět na seznam produktů"></a>
+            </div>
+</div><!--/box-content-->
+</div><!--/span-->
+</div><!--/row-->
+{/form}
+{block #otherScripts} 
 <script type="text/javascript">
 var taxes = new Array();
 taxes[0] = 0.2;
@@ -57,24 +159,6 @@ $('.price-without-tax').keyup(function() {
     }
 });
 
-//gallery controlls container animation
-$('ul.galler li').hover(function(){
-    $('img',this).fadeToggle(1000);
-    $(this).find('.gallery-controls').remove();
-    $(this).append('<div class="well gallery-controls">'+
-        '<p><a href="#" class="gallery-edit btn"><i class="icon-edit"></i></a> <a href="#" class="gallery-delete btn"><i class="icon-remove"></i></a></p>'+
-        '</div>');
-    $(this).find('.gallery-controls').stop().animate({
-        'margin-top':'-1'
-    },400,'easeInQuint');
-},function(){
-    $('img',this).fadeToggle(1000);
-    $(this).find('.gallery-controls').stop().animate({
-        'margin-top':'-30'
-    },200,'easeInQuint',function(){
-        $(this).remove();
-    });
-});
 
 //gallery edit
 $('.thumbnails').on('click','.gallery-edit',function(e){
@@ -83,5 +167,14 @@ $('.thumbnails').on('click','.gallery-edit',function(e){
     location.href = ({link makeImageMain! $product->prod_id}+"&id_image="+imageID);
     return false;
 });
+
+//gallery delete
+$('.thumbnails').on('click','.gallery-delete',function(e){
+    var imageID = $(this).parents('.thumbnail').attr('id');
+
+    location.href = ({link removeImage! $product->prod_id}+"&id_image="+imageID);
+    $(this).parents('.thumbnail').fadeOut();
+});
+
 </script>
-        {/block}
+{/block}
