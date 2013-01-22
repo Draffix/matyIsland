@@ -191,7 +191,7 @@ $('ul.gallery li').hover(function(){
     $('img',this).fadeToggle(1000);
     $(this).find('.gallery-controls').remove();
     $(this).append('<div class="well gallery-controls">'+
-        '<p><a href="#" class="gallery-edit btn"><i class="icon-edit"></i></a> <a href="#" class="gallery-delete btn"><i class="icon-remove"></i></a></p>'+
+        '<p><a href="#" class="gallery-edit btn"><i class="icon-check" title="Nastavit jako hlavní obrázek"></i></a> <a href="#" class="gallery-delete btn"><i class="icon-remove" title="Odstranit obrázek"></i></a></p>'+
         '</div>');
     $(this).find('.gallery-controls').stop().animate({
         'margin-top':'-1'
@@ -225,8 +225,8 @@ $('.thumbnails').on('click','.gallery-edit',function(e){
 $('.thumbnail a').colorbox({
     rel:'thumbnail a', 
     transition:"elastic", 
-    maxWidth:"95%", 
-    maxHeight:"95%"
+    maxWidth:"100%", 
+    maxHeight:"100%"
 });
 
 //gallery fullscreen
