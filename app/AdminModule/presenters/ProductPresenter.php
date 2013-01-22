@@ -3,31 +3,14 @@
 namespace AdminModule;
 
 use Nette\Application\UI;
+use Nette\Image;
 
 class ProductPresenter extends BasePresenter {
 
     protected $oldCategories;
 
-    public function handlePokus($imageID) {
-        dump($imageID);
-    }
-
-    protected function createComponentPaginator() {
-        $visualPaginator = new \VisualPaginator();
-        return $visualPaginator;
-    }
-
     public function renderDefault() {
         $this->template->products = $this->product->fetchAllProductsWithImage();
-    }
-
-    protected function createComponentProductGrid($name) {
-        $grid = new \Grido\Grid($this, $name);
-        $grid->setModel($this->product->pokus());
-        $grid->addColumn('image_id', 'ID');
-        $grid->addFilter('image_id', 'Birthday');
-        $grid->addColumn('image_name', 'name');
-        $grid->addColumn('prod_name', 'namee');
     }
 
     public function renderAddProduct() {
@@ -56,16 +39,24 @@ class ProductPresenter extends BasePresenter {
     }
 
     // odstraníme obrázek
-    public function handleRemoveImage($id_image, $id_product, $name) {
+    public function handleRemoveImage($id_product, $id_image) {
+        if ($this->product->countImagesOfProduct($id_product) == 1) {
+            $this->flashMessage('Produkt musí mít alespoň jeden obrázek', 'error');
+            $this->redirect('this');
+        }
+        $name = $this->product->fetchSingleMainImage($id_image, $id_product)->image_name; // zjistíme jméno
         if ($this->product->fetchSingleMainImage($id_image, $id_product)->image_is_main == 1) { //pokud je to hlavní obrázek
             $this->product->deleteImage($id_image);
             $min = $this->product->findMinimumImageID($id_product)->min; // zjistíme další obrázek produktu (ten s menším id -> je nejblíže v pořadí)
-            $this->product->updateImageWithHisID($min, $id_product);
+            $this->product->updateImageWithHisID($min, $id_product); // nastavíme jako hlavní
         } else {
             $this->product->deleteImage($id_image);
         }
         $targetPath = $this->context->params['wwwDir'] . '/images/products/';
         unlink("$targetPath/$name");
+        $thumbnailPath = $this->context->params['wwwDir'] . '/images/products/thumbnail';
+        unlink("$thumbnailPath/$name");
+        $this->flashMessage('Obrázek byl smazán', 'success');
         $this->redirect('Product:edit', $id_product);
     }
 
@@ -73,6 +64,8 @@ class ProductPresenter extends BasePresenter {
     public function handleMakeImageMain($id_product, $id_image) {
         $idMain = $this->product->findMainImageOfProduct($id_product)->image_id;
         $this->product->updateMainImageOfProduct($idMain, $id_image);
+        $this->flashMessage('Obrázek byl zvolen jako hlavní', 'success');
+        $this->redirect('this');
     }
 
     protected function createComponentAddProductForm() {
@@ -140,7 +133,7 @@ class ProductPresenter extends BasePresenter {
             $this->product->insertImage($lastID, $values['image_name4']->getSanitizedName());
         }
 
-        $this->flashMessage('Uložení proběhlo v pořádku', 'valid');
+        $this->flashMessage('Uložení proběhlo v pořádku', 'success');
         $this->redirect('this');
     }
 
@@ -173,49 +166,18 @@ class ProductPresenter extends BasePresenter {
             $this->redirect('this');
         }
 
-        $_SESSION['b'] = $this->oldCategories;
-
         // uložíme do tabulky Product
         $this->product->updateProduct($values, $this->getParameter('id'));
 
         // uložíme do tabulky Category_has_product
-        if ($values['category'] == $values['category2'] || $values['category'] == $values['category3']) {
-            $this->flashMessage('Produkt nemůže být ve dvou nebo více stejných kategoriích', 'error');
-            $this->redirect('this');
-        } else {
-            $this->category->updateProductIntoCategoryHasProduct($this->oldCategories[0], $values['category'], $this->getParameter('id'));
+        if ($values->category != $this->oldCategories) {
+            $this->category->deleteAllProductIntoCategoryHasProduct($this->getParameter('id'));
+            foreach ($values->category as $value) {
+                $this->category->insertProductIntoCategoryHasProduct($value, $this->getParameter('id'));
+            }
         }
 
-        if ($values['category2'] != 0) {
-            if ($values['category2'] == $values['category'] || $values['category2'] == $values['category3']) {
-                $this->flashMessage('Produkt nemůže být ve dvou nebo více stejných kategoriích', 'error');
-                $this->redirect('this');
-            }
-            if (!isset($this->oldCategories[1]) || $this->oldCategories[1] == NULL) {
-                $this->category->insertProductIntoCategoryHasProduct($values['category2'], $this->getParameter('id'));
-            } else {
-                $this->category->updateProductIntoCategoryHasProduct($this->oldCategories[1], $values['category2'], $this->getParameter('id'));
-            }
-        } else {
-            $this->category->deleteProductIntoCategoryHasProduct($this->oldCategories[1], $this->getParameter('id'));
-        }
-
-        if ($values['category3'] != 0) {
-            if ($values['category3'] == $values['category'] || $values['category3'] == $values['category2']) {
-                $this->flashMessage('Produkt nemůže být ve dvou nebo více stejných kategoriích', 'error');
-                $this->redirect('this');
-            }
-            if (!isset($this->oldCategories[2]) || $this->oldCategories[2] == NULL) {
-                $this->category->insertProductIntoCategoryHasProduct($values['category3'], $this->getParameter('id'));
-            } else {
-                $this->category->updateProductIntoCategoryHasProduct($this->oldCategories[2], $values['category3'], $this->getParameter('id'));
-            }
-        } else {
-            $this->category->deleteProductIntoCategoryHasProduct($this->oldCategories[2], $this->getParameter('id'));
-        }
-
-
-
+        // uložíme do tabulky Image
         if ($values['image_name2'] != '') {
             $this->moveImage($values['folder'], $values['image_name2']);
             $this->product->insertImage($this->getParameter('id'), $values['image_name2']->getSanitizedName());
@@ -229,7 +191,7 @@ class ProductPresenter extends BasePresenter {
             $this->product->insertImage($this->getParameter('id'), $values['image_name4']->getSanitizedName());
         }
 
-        $this->flashMessage('Uložení proběhlo v pořádku', 'valid');
+        $this->flashMessage('Uložení proběhlo v pořádku', 'success');
         $this->redirect('this');
     }
 
@@ -241,6 +203,11 @@ class ProductPresenter extends BasePresenter {
         }
         // @TODO vyřešit kolize
         $name->move("$targetPath/$filename");
+
+        $image = Image::fromFile("$targetPath/$filename");
+        $image->resize(135, NULL);
+        $thumbnailPath = $this->context->params['wwwDir'] . '/images/products/thumbnail/';
+        $image->save("$thumbnailPath/$filename");
     }
 
 }
