@@ -48,6 +48,12 @@ class CategoryModel extends Table {
                             'product_prod_id' => $prod_id));
     }
 
+    /**
+     * Smaže kategorii daného produktu
+     * @param type $old_cat_id
+     * @param type $prod_id
+     * @return type
+     */
     public function deleteProductIntoCategoryHasProduct($old_cat_id, $prod_id) {
         return $this->connection->table('category_has_product')
                         ->where(array('category_cat_id' => $old_cat_id,
@@ -55,9 +61,20 @@ class CategoryModel extends Table {
                         ->delete();
     }
 
+    /**
+     * Smaže všechny kategorie daného produktu
+     * @param type $prod_id
+     * @return type
+     */
+    public function deleteAllProductIntoCategoryHasProduct($prod_id) {
+        return $this->connection->table('category_has_product')
+                        ->where(array('product_prod_id' => $prod_id))
+                        ->delete();
+    }
+    
     public function fetchAllCategoryNamesForProduct($id) {
         return $this->connection->query('
-                        SELECT p.prod_id, c.cat_name 
+                        SELECT p.prod_id, c.cat_name, cp.category_cat_id 
                         FROM category_has_product AS cp 
                         JOIN product AS p ON p.prod_id = cp.product_prod_id
                         JOIN category AS c ON c.cat_id = cp.category_cat_id
@@ -68,9 +85,5 @@ class CategoryModel extends Table {
         return $this->getTable()
                         ->select('cat_id')
                         ->where('cat_name', $name);
-    }
-
-    public function pokus() {
-        return $this->getTable();
     }
 }
