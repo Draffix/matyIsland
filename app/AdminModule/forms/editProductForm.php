@@ -15,12 +15,7 @@ class editProductForm extends UI\Form {
      * @var \ProductModel
      */
     protected $product;
-    protected $categorySelect = array();
-    protected $categoryID; //ID zvolené první kategorie
-    protected $selectedCat;
-    protected $selectedID; //ID zvolené druhé kategorie (pokud existuje)
-    protected $selectedCat2;
-    protected $selectedID2; //ID zvolené třetí kategorie (pokud existuje)
+    protected $selectedCategories; //ID zvolené první kategorie
 
     function __construct(\CategoryModel $category, \ProductModel $product, $id = NULL) {
         parent::__construct();
@@ -38,80 +33,19 @@ class editProductForm extends UI\Form {
         array_unshift($name, "toDelete");
         unset($name[0]);
 
-        //výpis všech kategorií pro nepovinný select
-        $name2 = array('Nezvoleno');
-        foreach ($this->category->fetchAllCategoryNames() as $n) {
-            $name2[] = $n->cat_name;
+        foreach ($this->category->fetchAllCategoryNamesForProduct($id) as $val) {
+            $this->selectedCategories[] = $val->category_cat_id; //vložíme zvolené kategorie
         }
 
-        if ($id != NULL) {
-            //vypíšeme všechny kategorie a zjistíme zvolený select
-            foreach ($this->category->fetchAllCategoryNamesForProduct($id) as $f) {
-                for ($i = 0; $i < count($name); $i++) {
-                    if ($i == $f->cat_name) {
-                        $this->categorySelect[] = $f->cat_name;
-                    }
-                }
-            }
-
-            //porovnáme hodnotu selectu se seznamem kategorií
-            if (isset($this->categorySelect[1])) {
-                foreach ($name2 as $n) {
-                    if ($n == $this->categorySelect[1]) {
-                        $this->selectedCat = $n;
-                    }
-                }
-                $this->selectedID = $this->category->findCategoryID($this->selectedCat)->fetch()->cat_id;
-            } else {
-                $this->categorySelect[1] = $name2[0]; //jinak nastavíme jako "nezvoleno"
-            }
-
-            //porovnáme hodnotu selectu se seznamem kategorií
-            if (isset($this->categorySelect[2])) {
-                foreach ($name2 as $n) {
-                    if ($n == $this->categorySelect[2]) {
-                        $this->selectedCat2 = $n;
-                    }
-                }
-                $this->selectedID2 = $this->category->findCategoryID($this->selectedCat2)->fetch()->cat_id;
-            } else {
-                $this->categorySelect[2] = $name2[0]; //jinak nastavíme jako "nezvoleno"
-            }
-        }
-        if (isset($this->categorySelect[0])) {
-            $this->categoryID = $this->category->findCategoryID($this->categorySelect)->fetch()->cat_id;
-        }
-
-        $prod_is_active = array(
-            '1' => 'Ano',
-            '0' => 'Ne'
-        );
-
-        if ($id != NULL) {
-            //zjistíme jestli je produkt aktivní nebo ne a nastavíme mu defaultní hodnotu
-            if ($this->product->fetchProductForDetail($id)->prod_is_active == 1) {
-                $isActive = 1;
-            } else {
-                $isActive = 0;
-            };
-        }
-        
         $this->addText('prod_name');
         if ($id === NULL) {
             $this->addSelect('category', 'kategorie', $name);
-            $this->addSelect('category2', 'kategorie2', $name2);
-            $this->addSelect('category3', 'kategorie3', $name2);
-            $this->addRadioList('prod_is_active', '', $prod_is_active)
+            $this->addRadioList('prod_is_active')
                     ->setDefaultValue('1');
         } else {
-            $this->addSelect('category', 'kategorie', $name)
-                    ->setDefaultValue($this->categoryID);
-            $this->addSelect('category2', 'kategorie2', $name2)
-                    ->setDefaultValue($this->selectedID);
-            $this->addSelect('category3', 'kategorie3', $name2)
-                    ->setDefaultValue($this->selectedID2);
-            $this->addRadioList('prod_is_active', '', $prod_is_active)
-                    ->setDefaultValue($isActive);
+            $this->addMultiSelect('category', 'kategorie', $name)
+                    ->setDefaultValue($this->selectedCategories);
+            $this->addCheckbox('prod_is_active');
         }
         $this->addText('prod_on_stock');
         $this->addCheckbox('prod_isnew');
@@ -129,7 +63,7 @@ class editProductForm extends UI\Form {
     }
 
     public function getOldCategories() {
-        return array($this->categoryID, $this->selectedID, $this->selectedID2);
+        return $this->selectedCategories;
     }
 
 }
