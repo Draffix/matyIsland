@@ -35,6 +35,18 @@ class OrderPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    // odstraní produkt z nově vytvořené objednávky
+    public function handleRemoveProductIntoNewOrder($product_id) {
+        $_SESSION["orderTotal"] -= ($_SESSION["order"][$product_id]["order_quantity"] * $this->product->findPrice($product_id)->price);
+        unset($_SESSION["order"][$product_id]);
+
+        if ($this->isAjax()) {
+            $this->invalidateControl('pokus');
+        } else {
+            $this->redirect('this');
+        }
+    }
+
     // akce pro generování PDF
     public function actionGenerate() {
         include_once(LIBS_DIR . '/MPDF54/mpdf.php');
@@ -65,6 +77,15 @@ class OrderPresenter extends BasePresenter {
         }
         $totalPrice += $this->order->fetchAllOrdersWithID($id)->fetch()->deliveryPrice;
         $this->template->totalPrice = $totalPrice;
+    }
+
+    public function renderAddOrder() {
+        //pro zjištění názvu produktu a jeho ceny v přidání nové položky
+        $this->template->productList = $this->product->fetchAllProducts();
+
+        if (!isset($_SESSION["orderTotal"])) {
+            $_SESSION["orderTotal"] = 0;
+        }
     }
 
     // upraví údaje o zákazníkovi v objednávce
@@ -180,6 +201,63 @@ class OrderPresenter extends BasePresenter {
         $data = $dataBuilder->build();
 
         return new Eciovni($data);
+    }
+
+    // přidá produkt do nově vytvořené objednávky
+    public function createComponentAddProductIntoNewOrderForm() {
+        $form = new addProductIntoOrderForm();
+        $form->getElementPrototype()->class('ajax');
+        $form->onSuccess[] = callback($this, 'addProductIntoNewOrderFormSubmitted');
+        return $form;
+    }
+
+    public function addProductIntoNewOrderFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+        $productID = $this->product->findProductsID($values->prod_name)->prod_id; //podle jména zjistíme ID produktu
+
+        if (!isset($_SESSION["order"][$productID])) {   // pokud neexistuje id produktu v košíku
+            $_SESSION["order"][$productID] = $this->product->fetchAllProductForDetail($productID); //zjisti všechny informace o produktu
+            $_SESSION["order"][$productID]["order_quantity"] = $values->quantity;
+        }
+
+        $_SESSION["orderTotal"] += ($this->product->findPrice($productID)->price * $values->quantity);
+
+        if (!$this->isAjax())
+            $this->redirect('this');
+        else {
+            $this->invalidateControl('pokus');
+            $this->invalidateControl('form');
+            $this->invalidateControl('editProductIntoNewOrder');
+            $form->setValues(array(), TRUE);
+        }
+    }
+
+    // upraví produkt v nově vytvořené objednávce
+    public function createComponentEditProductIntoNewOrderForm() {
+        $form = new UI\Form();
+        $quantity = $form->addContainer('quantity');
+        foreach ($_SESSION['order'] as $val) {
+            $quantity->addText($val->prod_id)
+                    ->setType('number')
+                    ->setAttribute('class', 'input-mini')
+                    ->setValue($val->order_quantity);
+        }
+        $form->onSuccess[] = callback($this, 'editProductIntoNewOrderFormSubmitted');
+        return $form;
+    }
+
+    public function editProductIntoNewOrderFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+        foreach ($values->quantity as $prod_id => $quantity) {
+            $_SESSION['order'][$prod_id]['order_quantity'] = $quantity;
+        }
+        if (!$this->isAjax())
+            $this->redirect('this');
+        else {
+            $this->invalidateControl('pokus');
+            $this->invalidateControl('form');
+            $form->setValues(array(), TRUE);
+        }
     }
 
 }
