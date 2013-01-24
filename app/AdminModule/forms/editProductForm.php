@@ -37,16 +37,14 @@ class editProductForm extends UI\Form {
             $this->selectedCategories[] = $val->category_cat_id; //vložíme zvolené kategorie
         }
 
-        $this->addText('prod_name');
         if ($id === NULL) {
-            $this->addSelect('category', 'kategorie', $name);
-            $this->addRadioList('prod_is_active')
-                    ->setDefaultValue('1');
+            $this->addMultiSelect('category', 'kategorie', $name);
         } else {
             $this->addMultiSelect('category', 'kategorie', $name)
                     ->setDefaultValue($this->selectedCategories);
-            $this->addCheckbox('prod_is_active');
         }
+        $this->addText('prod_name');
+        $this->addCheckbox('prod_is_active');
         $this->addText('prod_on_stock');
         $this->addCheckbox('prod_isnew');
         $this->addText('prod_price');
