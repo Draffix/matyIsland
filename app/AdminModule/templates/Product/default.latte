@@ -7,7 +7,7 @@
 {block content}
 <div class="row-fluid">
     <div class="span12" style="text-align: right">
-        <a class="btn btn-primary" href="#"><i class="icon-plus"></i> Přidat nový produkt</a>
+        <a class="btn btn-primary" n:href="Product:addProduct"><i class="icon-plus"></i> Přidat nový produkt</a>
 
     </div>
 </div>
@@ -36,7 +36,7 @@
                     {foreach $products as $product}
                     <tr>
                         <td class="center">{$product->product->prod_id}</td>
-                        <td class="center"><img src="{$basePath}/images/products/{$product->image_name}" width="50" height="40" /></td>
+                        <td class="center"><img src="{$basePath}/images/products/thumbnail/{$product->image_name}" width="50" height="40" /></td>
                         <td class="center">{$product->product->prod_name}</td>
                         <td class="center">{$product->product->prod_on_stock}</td>
                         <td class="center">
