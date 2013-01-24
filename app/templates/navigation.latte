@@ -24,7 +24,7 @@
                 <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
                     {$randomProduct->product->prod_name}</a>
             </div><br />
-            <p>{$randomProduct->product->prod_describe|truncate:100}</p>
+            <p>{!$randomProduct->product->prod_describe|truncate:100}</p>
             <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
         </div>
     </div>
