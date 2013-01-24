@@ -191,6 +191,17 @@ class ProductModel extends Table {
                         ->fetch();
     }
 
+    /**
+     * Vrací všechno pro uložení do session
+     * @param type $id
+     * @return type
+     */
+    public function fetchAllProductForDetail($id) {
+        return $this->connection->query(
+                        'SELECT * FROM product
+             WHERE product.prod_id = ?', $id)->fetch();
+    }
+
     public function updateProduct($values, $id_product) {
         return $this->getTable()
                         ->where('prod_id', $id_product)
@@ -289,6 +300,18 @@ class ProductModel extends Table {
                         ->where('prod_name', $name)
                         ->select('prod_id')
                         ->fetch();
+    }
+
+    /**
+     * Zjišťuju cenu daného produktu
+     * @param type $id
+     * @return type
+     */
+    public function findPrice($id) {
+        return $this->connection->query(
+                        'SELECT prod_price AS price 
+                        FROM `product` 
+                        WHERE prod_id = ?', $id)->fetch();
     }
 
 }
