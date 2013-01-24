@@ -69,10 +69,10 @@ class ProductPresenter extends BasePresenter {
     }
 
     protected function createComponentAddProductForm() {
-        $form = new editProductForm($this->category, $this->product, $this->getParameter('id'));
+        $form = new editProductForm($this->category, $this->product);
         $folder = $this->getParam('folder');
         $form->addHidden('folder', $folder);
-        $form->onSuccess[] = callback($this, 'editProductFormSubmitted');
+        $form->onSuccess[] = callback($this, 'addProductFormSubmitted');
         return $form;
     }
 
@@ -86,43 +86,31 @@ class ProductPresenter extends BasePresenter {
             return;
         }
 
-
         // provedeme kontrolu obrázků
-        if ($values['image_name']->isImage() == FALSE ||
-                $values['image_name'] == '') {
-            $this->flashMessage('Nebyl zadán hlavní obrázek nebo není obrázek v platném formátu JPG, PNG nebo GIF', 'error');
-            $this->redirect('this');
-        }
-
         if ($values['image_name2'] != '' && $values['image_name2']->isImage() == FALSE ||
                 $values['image_name3'] != '' && $values['image_name3']->isImage() == FALSE ||
                 $values['image_name4'] != '' && $values['image_name4']->isImage() == FALSE) {
             $this->flashMessage('Nebyl zadán obrázek v platném formátu JPG, PNG nebo GIF', 'error');
-            $this->redirect('this');
+            return;
         }
-
-
+        if ($values['image_name2'] == '') {
+            $this->flashMessage('Nebyl zadán alespoň jeden obrázek, nebo jste 
+                pro nahrání obrázku nezvolili první možnost', 'error');
+            return;
+        }
 
         // uložíme do tabulky Product
         $lastID = $this->product->insertProduct($values);
 
         // uložíme do tabulky Category_has_product
-        $this->category->insertProductIntoCategoryHasProduct($values['category'], $lastID);
-
-        if ($values['category2'] != 0) {
-            $this->category->insertProductIntoCategoryHasProduct($values['category2'], $lastID);
-        }
-        if ($values['category3'] != 0) {
-            $this->category->insertProductIntoCategoryHasProduct($values['category3'], $lastID);
+        foreach ($values->category as $value) {
+            $this->category->insertProductIntoCategoryHasProduct($value, $lastID);
         }
 
-        if ($values['image_name'] != '') {
-            $this->moveImage($values['folder'], $values['image_name']);
-            $this->product->insertImage($lastID, $values['image_name']->getSanitizedName(), 1);
-        }
+        // uložíme do tabulky Image
         if ($values['image_name2'] != '') {
             $this->moveImage($values['folder'], $values['image_name2']);
-            $this->product->insertImage($lastID, $values['image_name2']->getSanitizedName());
+            $this->product->insertImage($lastID, $values['image_name2']->getSanitizedName(), 1);
         }
         if ($values['image_name3'] != '') {
             $this->moveImage($values['folder'], $values['image_name3']);
@@ -134,7 +122,7 @@ class ProductPresenter extends BasePresenter {
         }
 
         $this->flashMessage('Uložení proběhlo v pořádku', 'success');
-        $this->redirect('this');
+        $this->redirect('Product:');
     }
 
     protected function createComponentEditProductForm() {
@@ -163,7 +151,7 @@ class ProductPresenter extends BasePresenter {
                 $values['image_name3'] != '' && $values['image_name3']->isImage() == FALSE ||
                 $values['image_name4'] != '' && $values['image_name4']->isImage() == FALSE) {
             $this->flashMessage('Nebyl zadán obrázek v platném formátu JPG, PNG nebo GIF', 'error');
-            $this->redirect('this');
+            return;
         }
 
         // uložíme do tabulky Product
