@@ -1,0 +1,334 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="Order: id => NULL">Objednávky</a> <span class="divider">/</span>
+    <a n:href="Order:addOrder">Vytvořit novou objednávku</a> <span class="divider">/</span>
+</li>
+{/block}
+{block content}
+<div id="content" class="content">
+    {foreach $flashes as $flash}
+    <div class="row-fluid">
+        <div class="span12 bgcolor">                                        
+            <div class="alert alert-{$flash->type}">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+            </div>                                       
+        </div><!--/span-->
+    </div><!--/row-->
+    {/foreach}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-shopping-cart"></i> Nová objednávka</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="container-fluid">     
+                    <h3>Zákaznické údaje</h3>
+                    <form>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">   
+                                    <div class="span6 lightblue">
+                                        <label>Jméno</label>
+                                        <input type="text" class="span12">    
+                                      </div><!--/span-->
+                                    <div class="span6 lightblue">
+                                        <label>Příjmení</label>
+                                        <input type="text" class="span12">    
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span6 bgcolor">
+                                        <label>E-mail</label>
+                                        <div class="input-prepend">
+                                            <span class="add-on">@</span><input id="prependedInput" type="text">
+                                        </div>
+                                    </div><!--/span-->
+                                    <div class="span6 bgcolor">
+                                        <label>Telefon</label>
+                                        <div class="input-prepend">
+                                            <span class="add-on">+420</span><input id="prependedInput" type="text">
+                                        </div>  
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span12 bgcolor">
+                                        <label>Adresa</label>
+                                        <input type="text" class="span12 input-mini" placeholder="Ulice">    
+                                    </div><!--/span-->
+                                </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span6 bgcolor">
+                                        <input type="text" class="span12 input-mini" placeholder="Město">   
+                                      </div><!--/span-->
+                                    <div class="span2 bgcolor">
+                                        <input type="text" class="span12 input-mini" placeholder="PSČ">    
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span12 bgcolor">
+                                        <label>Firma (nepovinný údaj)</label>
+                                        <input type="text" class="span12 input-mini" placeholder="Název firmy">    
+                                    </div><!--/span-->
+                                </div><!--/row-->
+                                <div class="row-fluid">
+                                    <div class="span2 bgcolor">
+                                        <input type="text" class="span12 input-mini" placeholder="IČO">   
+                                      </div><!--/span-->
+                                    <div class="span2 bgcolor">
+                                        <input type="text" class="span12 input-mini" placeholder="DIČ">    
+                                      </div><!--/span-->
+                                    </div><!--/row-->
+
+                                <div class="accordion" id="accordion2">
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+                                                Přidat jiné dodací údaje
+                                            </a>
+                                        </div>
+                                        <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+                                            <div class="accordion-inner">
+                                                <div class="row-fluid">   
+                                                    <div class="span6 lightblue">
+                                                        <label>Jméno</label>
+                                                        <input type="text" class="span12">    
+                                                      </div><!--/span-->
+                                                    <div class="span6 lightblue">
+                                                        <label>Příjmení</label>
+                                                        <input type="text" class="span12">    
+                                                      </div><!--/span-->
+                                                    </div><!--/row-->
+                                                <div class="row-fluid">
+                                                    <div class="span12 bgcolor">
+                                                        <label>Adresa</label>
+                                                        <input type="text" class="span12 input-mini" placeholder="Ulice">    
+                                                    </div><!--/span-->
+                                                </div><!--/row-->
+                                                <div class="row-fluid">
+                                                    <div class="span6 bgcolor">
+                                                        <input type="text" class="span12 input-mini" placeholder="Město">   
+                                                      </div><!--/span-->
+                                                    <div class="span2 bgcolor">
+                                                        <input type="text" class="span12 input-mini" placeholder="PSČ">    
+                                                      </div><!--/span-->
+                                                    </div><!--/row-->
+                                                <div class="row-fluid">
+                                                    <div class="span12 bgcolor">
+                                                        <label>Firma (nepovinný údaj)</label>
+                                                        <input type="text" class="span12 input-mini" placeholder="Název firmy">    
+                                                    </div><!--/span-->
+                                                </div><!--/row-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div><!--/span-->    
+                            </div><!--/row-->
+                    </form>
+                 </div><!--/.fluid-container-->
+                <hr>
+                <div class="container-fluid">     
+                    <h3>Produkty</h3>
+                    <i class="icon-plus"></i> <a href="#add-form-modal" data-toggle="modal">Přidat produkt</a>
+                    <i class="icon-pencil"></i> <a href="#items-form-modal" data-toggle="modal">Upravit produkty</a>
+                    <hr>
+                    <?php if(!isset($_SESSION['order']) || $_SESSION['order']==null) { ?>
+                    <p>Nebyly ještě přidány žádné produkty</p>
+                    <?php } else { ?>
+
+                    {snippet pokus}
+                    <table class="table order-table">
+                        <thead>
+                            <tr>
+                                <td style="border-bottom: 1px solid #ddd;" width="25px"><strong>Ks</strong></td>
+                                <td style="border-bottom: 1px solid #ddd;"><strong>Název</strong></td>
+                                <td style="border-bottom: 1px solid #ddd; text-align: right;"><strong>Cena za kus</strong></td>
+                                <td style="border-bottom: 1px solid #ddd; text-align: right;"><strong>Cena celkem</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $_SESSION['order'] as $product}
+                            <tr>
+                                <td>{$product->order_quantity}</td>
+                                <td><strong>{$product->prod_name}</strong></td>
+                                <td class="single-price" style="text-align: right;">
+                                    <strong>{$product->prod_price},- Kč</strong>
+                                </td>
+                                <td class="price" style="text-align: right;">
+                                    <strong>{$product->prod_price * $product->order_quantity},- Kč</strong>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td>Česká pošta</td>
+                                <td></td>
+                                <td class="price" style="text-align: right;">
+                                    0,- Kč
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Převodem na účet</td>
+                                <td></td>
+                                <td class="price" style="text-align: right;">
+                                    0,- Kč
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="price" style="text-align: right;">
+                                    <strong>{$_SESSION['orderTotal']},- Kč</strong>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    {/snippet}
+                    <?php }?>
+                    <hr>                    
+                    {form addProductIntoNewOrderForm}
+                    <div id="add-form-modal" class="modal hide">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">×</a>
+                            <h3>Přidat položku do objednávky</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span12 bgcolor">
+                                    <label for="values">Název produktu</label>
+                                    <input n:input="prod_name" id="products" type="text" placeholder="Začněte psát název produktu" tabindex="0" class="myinput"/>
+                                </div><!--/span-->
+                            </div><!--/row-->
+                            <div class="row-fluid">
+                                <div class="span4 bgcolor">
+                                    <label for="keys">Cena produktu</label>
+                                    <input n:input="prod_price" id="price" type="text" placeholder="Cena" tabindex="1" class="input-mini myinput"/>
+                                    <span class="help-inline" style="color: #ffffff">,- Kč s DPH</span>                  
+                                  </div><!--/span-->
+                                <div class="span4 bgcolor">
+                                    <label for="keys">Množství</label>
+                                    <input n:input="quantity" class="input-mini" type="number" value="1">                
+                                  </div><!--/span-->
+                            </div><!--/row-->
+                        </div>
+
+                        <div class="modal-footer">
+                            <input n:input="save_change" type="submit" class="btn btn-primary btn-large" value="Přidat produkt">
+                            <a href="#" class="btn" data-dismiss="modal">Storno</a>
+                        </div>
+                    </div>
+                    {/form}
+
+                    {snippet editProductIntoNewOrder}
+                    <?php if(!isset($_SESSION['order']) || $_SESSION['order']==null) { ?>
+                    <?php } else { ?>
+                    {form editProductIntoNewOrderForm}
+                    <div id="items-form-modal" class="modal hide">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">×</a>
+                            <h3>Upravit položky objednávky</h3>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table order-table">
+                                <thead>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #ddd;" width="250px"><strong>Název</strong></td>
+                                        <td style="border-bottom: 1px solid #ddd;"><strong>Množství</strong></td>
+                                        <td style="border-bottom: 1px solid #ddd;"><strong></strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {foreach $_SESSION['order'] as $product}
+                                    <tr>
+                                        <td><strong>{$product->prod_name}</strong></td>
+                                        <td>{$form['quantity'][$product->prod_id]->getControl()}</td>
+                                        <td style="text-align: right;"><a class="btn" n:href="removeProductIntoNewOrder! $product->prod_id"><i class="icon-trash"></i> Odebrat</a></td>
+                                    </tr>
+                                {/foreach}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary btn-large" value="Uložit změny">
+                            <a href="#" class="btn" data-dismiss="modal">Storno</a>
+                        </div>
+                    </div>
+                    {/form}
+                    <?php }?>
+                    {/snippet}
+
+</div><!--/.fluid-container-->
+</div><!--/content-->
+        </div>
+    </div>
+{block #otherScripts}
+    <script type="text/javascript">
+    /* Volání AJAXu u všech odkazů s třídou ajax */
+    $("a.ajax").live("click", function () {
+    $.get(this.href);
+    
+    return false;
+    });
+    
+    /* AJAXové odeslání formulářů */
+$("form.ajax").live("submit", function () {
+    $(this).ajaxSubmit();
+    return false;
+});
+
+$("form.ajax :submit").live("click", function () {
+    $(this).ajaxSubmit();
+    return false;
+});
+    </script>
+
+    <script type="text/javascript">
+       var listOfProducts = [{foreach $productList as $p}{"k": {$p->prod_price}, "v" :{$p->prod_name}}{sep},{/sep}{/foreach}];
+   $(document).ready(function() {
+       $("#price").typeaheadmap({
+           "source" : listOfProducts,
+           "key" : "k",
+           "value" : "v",
+           "items": 11,
+           "listener" : function(k, v) {
+               $("#products").val(v)
+           },
+           "displayer": function(that, item, highlighted) {
+               if (that.value != "") {
+                       return highlighted;			
+               } else {
+               return highlighted + ' (' + item[that.value] + ' )' 
+               }
+           }
+       })
+       $("#products").typeaheadmap({
+           "source" : function(q, process) { process(listOfProducts)},
+           "key" : "v",
+           "value" : "k",
+           "items": 17,
+           "listener" : function(k, v) {
+               $("#price").val(v)
+           },
+           "displayer": function(that, item, highlighted) {
+               if (that.value != "") {
+                       return highlighted;			
+               } else {
+               return highlighted + ' (' + item[that.value] + ' )' 
+               } 
+              }
+       })
+   });
+    </script>
+{/block}
