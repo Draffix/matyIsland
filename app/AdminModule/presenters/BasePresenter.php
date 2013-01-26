@@ -15,19 +15,26 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     /** @var \ProductModel */
     protected $product;
 
+    /** @var \DeliveryPaymentModel */
+    protected $deliveryPayment;
+
     protected function startup() {
         parent::startup();
         $this->order = $this->context->order;
         $this->category = $this->context->category;
         $this->product = $this->context->product;
+        $this->deliveryPayment = $this->context->deliveryPayment;
 
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
         @session_start();
     }
 
     public function beforeRender() {
-        parent::beforeRender();
         $this->setLayout('layoutAdmin');
+
+        if ($this->isAjax()) {
+            $this->presenter->invalidateControl('flashMessages');
+        }
 
         Debugger::barDump($_SESSION);
     }
