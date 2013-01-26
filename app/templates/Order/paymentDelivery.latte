@@ -4,6 +4,7 @@ delivery-0 = post
 delivery-1 = dpd
 delivery-2 = personally
 
+payment-0 = directDebit
 payment-1 = cash
 payment-2 = casOnDelivery
 -->
@@ -20,9 +21,13 @@ payment-2 = casOnDelivery
     } else if ($('#delivery-1').is(':checked')){
         $('#elementsToOperateOn :input').removeAttr('disabled');
         if($('#payment-1').is(':checked')) {
-            $('#payment-2').attr('checked', 'checked');
+            $('#payment-0').attr('checked', 'checked');
+        }
+        else if($('#payment-2').is(':checked')) {
+            $('#payment-0').attr('checked', 'checked');
         }
         $('#payment-1').attr('disabled', true);
+        $('#payment-2').attr('disabled', true);
         
     } else if ($('#delivery-2').is(':checked')){
         $('#elementsToOperateOn :input').removeAttr('disabled');
@@ -54,7 +59,7 @@ payment-2 = casOnDelivery
                 <li>
                     <a n:href="Order:paymentDelivery">
                         <span><b>Způsob dopravy a platby</b></span>
-                    <span class="arrow"></span>
+                        <span class="arrow"></span>
                     </a>
                 </li>
                 <li>
@@ -72,11 +77,11 @@ payment-2 = casOnDelivery
 <div class="shipping-form">
     <fieldset class="paymentAndDelivery">
         <h2>Vyberte způsob dopravy</h2>
-                {input cust_delivery}
+                {input delivery_delivery_id}
         <br/>
         <h2>Vyberte způsob placení</h2>
         <div id="elementsToOperateOn">
-                    {input cust_payment}
+                    {input payment_payment_id}
         </div>
     </fieldset>
     <div class="buttons"><a n:href="Order:"><img src="{$basePath}/images/order/btn-back.png" width="116" height="35" border="0" style="margin-left: 15px"/></a>
