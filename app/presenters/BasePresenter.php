@@ -21,6 +21,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     /** @var UserModel */
     protected $users;
 
+    /** @var DeliveryPaymentModel */
+    protected $deliveryPayment;
+
     /* zaregistruji si všechny potřebné služby společné pro všechny presentery
      * "odstartuji" session
      * Vložení služby do modelu z configu 
@@ -28,13 +31,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
     protected function startup() {
         parent::startup();
-        
+
         AntispamControl::register();
-        
+
         $this->mainProduct = $this->context->product;
         $this->category = $this->context->category;
         $this->basket = $this->context->basket;
         $this->users = $this->context->users;
+        $this->deliveryPayment = $this->context->deliveryPayment;
 
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
         @session_start();
