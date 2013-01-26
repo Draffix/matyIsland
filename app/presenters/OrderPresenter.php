@@ -157,24 +157,24 @@ class OrderPresenter extends BasePresenter {
     }
 
     protected function createComponentPaymentAndDeliveryForm() {
-        $payment = array(
-            'directDebit' => 'Bankovní převod',
-            'cash' => 'Hotově',
-            'cashOnDelivery' => 'Dobírka (+ 30 Kč)'
-        );
+        //výpis všech typů placení
+        $payment = array();
+        foreach ($this->deliveryPayment->fetchAllPayment() as $key => $p) {
+            $payment[$key] = $p->payment_name . ' - ' . $p->payment_describe . ' - ' . $p->payment_price . ' Kč';
+        }
 
-        $delivery = array(
-            'post' => 'Česká pošta - balík do ruky, doručení do 1-2 pracovní dnů - 89 Kč',
-            'postWithCashOnDelivery' => 'Kurýr DPD - dodání do 1-2 pracovních dnů - 89 Kč',
-            'personalCollection' => 'Osobní převzetí - 0 Kč'
-        );
+        //výpis všech typů dopravy
+        $delivery = array();
+        foreach ($this->deliveryPayment->fetchAllDelivery() as $key => $d) {
+            $delivery[$key] = $d->delivery_name . ' - ' . $d->delivery_describe . ' - ' . $d->delivery_price . ' Kč';
+        }
 
         $form = new UI\Form;
-        $form->addRadioList('cust_payment', 'Placení:', $payment)
+        $form->addRadioList('payment_payment_id', 'Placení:', $payment)
                 ->addRule($form::FILLED)
                 ->setHtmlId('payment')
                 ->setAttribute('onchange', 'toggleStatus()');
-        $form->addRadioList('cust_delivery', 'Doprava:', $delivery)
+        $form->addRadioList('delivery_delivery_id', 'Doprava:', $delivery)
                 ->addRule($form::FILLED)
                 ->setHtmlId('delivery')
                 ->setAttribute('onchange', 'toggleStatus()');
@@ -187,24 +187,9 @@ class OrderPresenter extends BasePresenter {
     public function paymentAndDeliveryFormSubmitted(UI\Form $form) {
         $values = $form->getValues(TRUE);
         $_SESSION["order"] = array_merge($_SESSION["order"], $values);
-
-        switch ($_SESSION["order"]["cust_delivery"]) {
-            case "post":
-                $_SESSION["order"]["deliverySinglePrice"] = 89;
-                break;
-            case "postWithCashOnDelivery":
-                $_SESSION["order"]["deliverySinglePrice"] = 89;
-                break;
-            case "personalCollection":
-                $_SESSION["order"]["deliverySinglePrice"] = 0;
-                break;
-            default:
-                break;
-        }
-
-        if ($_SESSION["order"]["cust_payment"] == "cashOnDelivery") {
-            $_SESSION["order"]["deliveryPrice"] = $_SESSION["order"]["deliverySinglePrice"] + 30;
-        }
+        
+        $_SESSION["order"]["deliveryPrice"] = $this->deliveryPayment->fetchPaymentType($values['payment_payment_id'])->payment_price
+                + $this->deliveryPayment->fetchDeliveryType($values['delivery_delivery_id'])->delivery_price;
 
         $this->redirect('Order:summary');
     }
