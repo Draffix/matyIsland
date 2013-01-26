@@ -131,4 +131,11 @@ class OrderModel extends Table {
                 AND ord_id = ?', $id);
     }
 
+    public function updateDeliveryPayment($ord_id, $delivery_id, $payment_id) {
+        return $this->getTable()
+                        ->where(array('ord_id' => $ord_id))
+                        ->update(array('delivery_delivery_id' => $delivery_id,
+                            'payment_payment_id' => $payment_id));
+    }
+
 }
