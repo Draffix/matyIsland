@@ -1,9 +1,10 @@
 /* Volání AJAXu u všech odkazů s třídou ajax */
-$("a.ajax").live("click", function (event) {
-    event.preventDefault();
+$("a.ajax").live("click", function () {
     $.get(this.href);
+    
+    return false;
 });
-
+    
 /* AJAXové odeslání formulářů */
 $("form.ajax").live("submit", function () {
     $(this).ajaxSubmit();
@@ -13,10 +14,4 @@ $("form.ajax").live("submit", function () {
 $("form.ajax :submit").live("click", function () {
     $(this).ajaxSubmit();
     return false;
-});
-
-/* AJAXové volání stránkování */
-$("a.ajax, .paginator a").live("click", function (event) {
-    event.preventDefault();
-    $.get(this.href);
 });
