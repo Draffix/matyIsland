@@ -71,6 +71,14 @@ class OrderPresenter extends BasePresenter {
 
         $this->template->orderAddProducts = $this->order->fetchAllOrdersWithID($id);
 
+        // jméno a cena zvoleného doručení
+        $this->template->deliveryName = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($id)->delivery_name;
+        $this->template->deliveryPrice = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($id)->delivery_price;
+
+        // jméno a cena zvoleného placení
+        $this->template->paymentName = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($id)->payment_name;
+        $this->template->paymentPrice = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($id)->payment_price;
+
         $totalPrice = 0;
         foreach ($this->order->fetchAllOrdersWithID($id) as $o) {
             $totalPrice += ($o->quantity * $o->actual_price_of_product);
@@ -85,6 +93,13 @@ class OrderPresenter extends BasePresenter {
 
         if (!isset($_SESSION["orderTotal"])) {
             $_SESSION["orderTotal"] = 0;
+        }
+
+        if (isset($_SESSION['deliveryName'])) {
+            $this->template->deliveryName = $_SESSION['deliveryName'];
+            $this->template->deliveryPrice = $_SESSION['deliveryPrice'];
+            $this->template->paymentName = $_SESSION['paymentName'];
+            $this->template->paymentPrice = $_SESSION['paymentPrice'];
         }
     }
 
@@ -176,6 +191,48 @@ class OrderPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    // změní typ dopravy nebo placení v objednávce
+    public function createComponentEditDeliveryPaymentForm() {
+        $form = new UI\Form();
+
+        // výpis všech typů doručení
+        $delivery = array();
+        foreach ($this->deliveryPayment->fetchAllDelivery() as $key => $d) {
+            $delivery[$key] = $d->delivery_name . ' - ' . $d->delivery_price . ',-Kč';
+        }
+        // zjistíme zvolenou dopravu
+        $selectedDelivery = $this->order->fetchOrder($this->getParameter('id'))->fetch()->delivery_delivery_id;
+
+        // výpis všech typů placení
+        $payment = array();
+        foreach ($this->deliveryPayment->fetchAllPayment() as $key => $p) {
+            $payment[$key] = $p->payment_name . ' - ' . $p->payment_price . ',-Kč';
+        }
+        // zjistíme zvolené placení
+        $selectedPayment = $this->order->fetchOrder($this->getParameter('id'))->fetch()->payment_payment_id;
+
+        $form->addSelect('delivery_delivery_id', 'Doprava', $delivery)
+                ->setAttribute('data-rel', 'chosen')
+                ->setDefaultValue($selectedDelivery);
+        $form->addSelect('payment_payment_id', 'Placení', $payment)
+                ->setAttribute('data-rel', 'chosen')
+                ->setDefaultValue($selectedPayment);
+        $form->addSubmit('save_change');
+        $form->onSuccess[] = callback($this, 'editDeliveryPaymentFormSubmitted');
+        return $form;
+    }
+
+    public function editDeliveryPaymentFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+        $this->order->updateDeliveryPayment($this->getParameter('id'), $values->delivery_delivery_id, $values->payment_payment_id);
+        $this->flashMessage('Služba byla změněna', 'success');
+        if ($this->isAjax())
+            $this->invalidateControl('products');
+        else {
+            $this->redirect('this');
+        }
+    }
+
     // vygeneruje objednávku do PDF formátu
     public function createComponentGeneratePdf() {
         $order = $this->order->fetchAllOrdersWithID($this->id)->fetch();
@@ -213,7 +270,17 @@ class OrderPresenter extends BasePresenter {
 
     public function addProductIntoNewOrderFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
-        $productID = $this->product->findProductsID($values->prod_name)->prod_id; //podle jména zjistíme ID produktu
+        if ($values->prod_name == '') {
+            $this->flashMessage('Nebyl vybrán žádný produkt', 'error');
+            $this->redirect('this');
+        }
+
+        if (isset($this->product->findProductsID($values->prod_name)->prod_id)) {
+            $productID = $this->product->findProductsID($values->prod_name)->prod_id; //podle jména zjistíme ID produktu
+        } else {
+            $this->flashMessage('Zvolený produkt neexistuje', 'error');
+            return;
+        }
 
         if (!isset($_SESSION["order"][$productID])) {   // pokud neexistuje id produktu v košíku
             $_SESSION["order"][$productID] = $this->product->fetchAllProductForDetail($productID); //zjisti všechny informace o produktu
@@ -225,10 +292,7 @@ class OrderPresenter extends BasePresenter {
         if (!$this->isAjax())
             $this->redirect('this');
         else {
-            $this->invalidateControl('pokus');
-            $this->invalidateControl('form');
-            $this->invalidateControl('editProductIntoNewOrder');
-            $form->setValues(array(), TRUE);
+            $this->invalidateControl('products');
         }
     }
 
@@ -254,10 +318,117 @@ class OrderPresenter extends BasePresenter {
         if (!$this->isAjax())
             $this->redirect('this');
         else {
-            $this->invalidateControl('pokus');
-            $this->invalidateControl('form');
-            $form->setValues(array(), TRUE);
+            $this->invalidateControl('products');
         }
+    }
+
+    // změní typ dopravy nebo placení v nově vytvořené objednávce
+    public function createComponentAddDeliveryPaymentIntoNewForm() {
+        $form = new UI\Form();
+
+        // výpis všech typů doručení
+        $delivery = array();
+        foreach ($this->deliveryPayment->fetchAllDelivery() as $key => $d) {
+            $delivery[$key] = $d->delivery_name . ' - ' . $d->delivery_price . ',-Kč';
+        }
+
+        // výpis všech typů placení
+        $payment = array();
+        foreach ($this->deliveryPayment->fetchAllPayment() as $key => $p) {
+            $payment[$key] = $p->payment_name . ' - ' . $p->payment_price . ',-Kč';
+        }
+
+        $form->addSelect('delivery_delivery_id', 'Doprava', $delivery)
+                ->setAttribute('data-rel', 'chosen');
+        $form->addSelect('payment_payment_id', 'Placení', $payment)
+                ->setAttribute('data-rel', 'chosen');
+        $form->addSubmit('save_change');
+        $form->onSuccess[] = callback($this, 'addDeliveryPaymentIntoNewFormSubmitted');
+        return $form;
+    }
+
+    public function addDeliveryPaymentIntoNewFormSubmitted(UI\Form $form) {
+        $values = $form->getValues(TRUE);
+
+        $paymentName = $this->deliveryPayment->fetchPaymentType($values['payment_payment_id'])->payment_name;
+        $paymentPrice = $this->deliveryPayment->fetchPaymentType($values['payment_payment_id'])->payment_price;
+        $deliveryName = $this->deliveryPayment->fetchDeliveryType($values['delivery_delivery_id'])->delivery_name;
+        $deliveryPrice = $this->deliveryPayment->fetchDeliveryType($values['delivery_delivery_id'])->delivery_price;
+
+        $_SESSION['deliveryName'] = $deliveryName;
+        $_SESSION['deliveryPrice'] = $deliveryPrice;
+        $_SESSION['paymentPrice'] = $paymentPrice;
+        $_SESSION['paymentName'] = $paymentName;
+
+        if ($this->isAjax())
+            $this->invalidateControl('products');
+        else {
+            $this->redirect('this');
+        }
+    }
+
+    // vytvoří novou objednávku
+    public function createComponentCreateNewOrderForm() {
+        $form = new createNewOrder();
+        $form->onSuccess[] = callback($this, 'createNewOrderFormSubmitted');
+        return $form;
+    }
+
+    public function createNewOrderFormSubmitted(UI\Form $form) {
+        $values = $form->getValues(TRUE);
+
+        if ($values['cust_name'] == '' || $values['cust_surname'] == '' || $values['cust_email'] == ''
+                || $values['cust_telefon'] == '' || $values['cust_street'] == ''
+                || $values['cust_city'] == '' || $values['cust_psc'] == '') {
+            $this->flashMessage('Nebyly vyplněny všechny povinné údaje', 'error');
+            return;
+        }
+
+        if ($values['ord_date'] == '') {
+            $this->flashMessage('Nebyl vyplněn datum objednávky', 'error');
+            return;
+        }
+
+        if (!isset($_SESSION['deliveryName'])) {
+            $this->flashMessage('Nebyl zvolen žádný typ dopravy či platby', 'error');
+            return;
+        }
+
+        if (!isset($_SESSION['order'])) {
+            $this->flashMessage('Nebyly vybrány žádné produkty', 'error');
+            return;
+        }
+
+        $dateTime = $values['ord_date'];
+        $newDate = new DateTime($dateTime);
+        $ord_date = $newDate->format('Y-m-d H:i:s'); // datetime objekt pro databázi
+        // zjistíme podle jména ID služby
+        $delivery_delivery_id = $this->deliveryPayment->findDeliveryID($_SESSION['deliveryName'])->delivery_id;
+        $payment_payment_id = $this->deliveryPayment->findPaymentID($_SESSION['paymentName'])->payment_id;
+
+        $otherItems = array(
+            'ord_date' => $ord_date,
+            'delivery_delivery_id' => $delivery_delivery_id,
+            'payment_payment_id' => $payment_payment_id);
+
+        $values = array_merge($values, $otherItems);
+
+        // uložíme do tabulky orders
+        $orderID = $this->order->saveOrder($values);
+
+        // uložíme do tabulky order_has_product
+        foreach ($_SESSION["order"] as $value) {
+            $this->order->saveIntoOrderHasProduct(
+                    $orderID, $value->prod_id, $value->order_quantity, $value->prod_price); //svážeme produkty s objednávkou
+            $this->product->updateProductQuantity($value->prod_id, $this->product->countProductQuantity($value->prod_id)->pocet - ($value->order_quantity)); //snížíme množství produktů na skladě
+        }
+
+        unset(
+                $_SESSION['order'], $_SESSION['deliveryName'], $_SESSION['deliveryPrice'], $_SESSION['paymentName'], $_SESSION['paymentPrice'], $_SESSION['orderTotal']
+        );
+
+        $this->flashMessage('Objednávka byla uložena', 'success');
+        $this->redirect('Order:');
     }
 
 }
