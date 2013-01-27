@@ -23,8 +23,9 @@ class CategoryPresenter extends BasePresenter {
     }
 
     public function renderDefault($id, $titleCategory) {
-        if ($this->category->countCategoryFilter($id)->pocet == 0) {
+        if (!isset($this->category->countCategoryFilter($id)->pocet)) {
             $this->setView('notFound');
+            return;
         }
 
         $paginator = $this['paginator']->getPaginator();
