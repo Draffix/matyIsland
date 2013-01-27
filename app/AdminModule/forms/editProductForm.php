@@ -22,16 +22,10 @@ class editProductForm extends UI\Form {
         $this->category = $category;
         $this->product = $product;
 
-        //výpis všech jmen kategorií
-        $name = array();
-        foreach ($this->category->fetchAllCategoryNames() as $n) {
-            $name[] = $n->cat_name;
+        //výpis všech jmen kategorií a získání ID do tagu option
+        foreach ($this->category->fetchAllCategoryNames() as $key => $n) {
+            $name[$key] = \Nette\Utils\Html::el('option')->value($key)->setText($n->cat_name);
         }
-
-        //vymažeme první záznam aby se počítalo od jedničky. Pro ulehčení
-        //uložení do databáze
-        array_unshift($name, "toDelete");
-        unset($name[0]);
 
         foreach ($this->category->fetchAllCategoryNamesForProduct($id) as $val) {
             $this->selectedCategories[] = $val->category_cat_id; //vložíme zvolené kategorie
