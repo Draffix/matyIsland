@@ -66,12 +66,32 @@
                                 <i class="icon-zoom-in icon-white"></i>  
                                 Detail                                            
                             </a>
-                            <a class="btn btn-danger" href="#">
+                            <a href="#deleteModal_{$order->ord_id}" role="button" class="btn btn-danger" data-toggle="modal">
                                 <i class="icon-trash icon-white"></i> 
                                 Smazat
                             </a>
                         </td>
                     </tr>
+
+                <!-- Modal -->
+                <div id="deleteModal_{$order->ord_id}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Smazání objednávky č. {$order->ord_id}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-block ">
+                            <h4 class="alert-heading">Upozornění!</h4>
+                            <p>Hodláte smazat objednávku, kterou vytvořil zákazník. Po smazání objednávky ji
+                                zákazník již neuvidí ve své historii objednávek. Tato akce je nevratná.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Storno</button>
+                        <a class="btn btn-primary" n:href="deleteOrder! $order->ord_id">Smazat objednávku</a>
+                    </div>
+                </div>
+                <!--/Modal -->
                     {/foreach}
                 </tbody>
             </table>            
