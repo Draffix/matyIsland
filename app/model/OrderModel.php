@@ -131,11 +131,28 @@ class OrderModel extends Table {
                 AND ord_id = ?', $id);
     }
 
+    /**
+     * Změní typ služby
+     * @param type $ord_id
+     * @param type $delivery_id
+     * @param type $payment_id
+     * @return type
+     */
     public function updateDeliveryPayment($ord_id, $delivery_id, $payment_id) {
         return $this->getTable()
                         ->where(array('ord_id' => $ord_id))
                         ->update(array('delivery_delivery_id' => $delivery_id,
                             'payment_payment_id' => $payment_id));
+    }
+
+    public function deleteOrder($ord_id) {
+        $this->getTable()
+                ->where('ord_id', $ord_id)
+                ->delete();
+
+        $this->connection->table($this->orderHasProduct)
+                ->where('order_ord_id', $ord_id)
+                ->delete();
     }
 
 }
