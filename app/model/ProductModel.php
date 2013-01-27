@@ -314,4 +314,16 @@ class ProductModel extends Table {
                         WHERE prod_id = ?', $id)->fetch();
     }
 
+    public function updateProductToInactive($prod_id) {
+        $this->getTable()
+                ->where('prod_id', $prod_id)
+                ->update(array('prod_is_active' => 0));
+    }
+
+    public function updateProductToActive($prod_id) {
+        $this->getTable()
+                ->where('prod_id', $prod_id)
+                ->update(array('prod_is_active' => 1));
+    }
+
 }
