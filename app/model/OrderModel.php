@@ -145,6 +145,10 @@ class OrderModel extends Table {
                             'payment_payment_id' => $payment_id));
     }
 
+    /**
+     * Smaže objednávku
+     * @param type $ord_id
+     */
     public function deleteOrder($ord_id) {
         $this->getTable()
                 ->where('ord_id', $ord_id)
@@ -153,6 +157,40 @@ class OrderModel extends Table {
         $this->connection->table($this->orderHasProduct)
                 ->where('order_ord_id', $ord_id)
                 ->delete();
+    }
+
+    /**
+     * Získáme všechny potřebné údaje pro výpis uživatelových objednávek a podle
+     * ID objednávky je seskupíme
+     * @param type $id
+     * @return type
+     */
+    public function fetchAllUserOrders($id) {
+        return $this->connection->query(
+                'SELECT *, SUM(totalPrice) AS sum_price, 
+                 SUM(op.quantity) AS sum_quantity
+                FROM order_has_product AS op 
+                JOIN orders AS o ON o.ord_id = op.order_ord_id 
+                JOIN product AS p ON p.prod_id = op.product_prod_id
+                JOIN delivery AS d ON o.delivery_delivery_id = d.delivery_id
+                JOIN payment AS pay ON o.payment_payment_id = pay.payment_id
+                WHERE user_user_id = ?
+                GROUP BY ord_id', $id);
+    }
+
+    /**
+     * Pro získání jednotlivých produktů uživatelovy objednávky a výpočet ceny
+     * v prezenteru
+     * @param type $id
+     * @return type
+     */
+    public function fetchAllUserOrdersForPrice($id) {
+        return $this->connection->query(
+                        'SELECT *
+                FROM order_has_product AS op 
+                JOIN orders AS o ON o.ord_id = op.order_ord_id 
+                JOIN product AS p ON p.prod_id = op.product_prod_id
+                WHERE user_user_id = ?', $id);
     }
 
 }
