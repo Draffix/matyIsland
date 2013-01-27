@@ -27,12 +27,7 @@ class RegistrationPresenter extends BasePresenter {
 
     protected function createComponentPersonalForm() {
         $form = new personalForm();
-        $form->addAntispam();
-        
-        $form['user_password']->addRule($this::FILLED);
-        $form['user_confirmPassword']->addRule($this::FILLED);
-        
-        $form['user_name']->setDefaultValue($user->user_name);
+        $form->addAntispam();        
         $form->addSubmit('send', 'Registrovat');
         $form->onSuccess[] = callback($this, 'personalFormSubmitted');
         return $form;
