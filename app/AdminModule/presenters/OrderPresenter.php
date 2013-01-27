@@ -51,6 +51,13 @@ class OrderPresenter extends BasePresenter {
         }
     }
 
+    // odstraní objednávku
+    public function handleDeleteOrder($ord_id) {
+        $this->order->deleteOrder($ord_id);
+        $this->flashMessage('Objednávka byla smazána', 'success');
+        $this->redirect('this');
+    }
+
     // akce pro generování PDF
     public function actionGenerate() {
         include_once(LIBS_DIR . '/MPDF54/mpdf.php');
@@ -506,4 +513,5 @@ class OrderPresenter extends BasePresenter {
         $this->flashMessage('Objednávka byla uložena', 'success');
         $this->redirect('Order:');
     }
+
 }
