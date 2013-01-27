@@ -51,7 +51,7 @@
                     <option value="0">0%</option>
                 </select>
                 {var $priceWithDph = ($product->prod_price)-($product->prod_price*0.1736)}
-                <input type="text" id="product_price_without_tax" name="product[price][without_tax]" class="price-without-tax input-small" placeholder="0" value={round($priceWithDph, 2)} />
+                <input type="text" id="product_price_without_tax" name="product[price][without_tax]" class="price-without-tax input-small uneditable-input" placeholder="0" value={round($priceWithDph, 2)} />
                 Kč bez DPH
             </div>
             <hr/>
