@@ -9,35 +9,6 @@ class ProductPresenter extends BasePresenter {
 
     protected $oldCategories;
 
-    public function renderDefault() {
-        $this->template->products = $this->product->fetchAllProductsWithImage();
-    }
-
-    public function renderAddProduct() {
-        $name = array();
-        foreach ($this->category->fetchAllCategoryNames() as $n) {
-            $name[] = $n->cat_name;
-        }
-    }
-
-    public function renderDetail($id) {
-        //získáme data o produktu
-        $this->template->product = $this->product->fetchProductForDetail($id);
-        //získáme všechny produktové obrázky
-        $this->template->images = $this->product->fetchAllProductsImages($id);
-        //získáme všechny kategorie do kterých produkt spadá
-        $this->template->category = $this->category->fetchAllCategoryNamesForProduct($id);
-    }
-
-    public function renderEdit($id) {
-        //získáme data o produktu
-        $this->template->product = $this->product->fetchProductForDetail($id);
-        //získáme všechny produktové obrázky
-        $this->template->images = $this->product->fetchAllProductsImages($id);
-        //získáme všechny kategorie do kterých produkt spadá
-        $this->template->category = $this->category->fetchAllCategoryNamesForProduct($id);
-    }
-
     // odstraníme obrázek
     public function handleRemoveImage($id_product, $id_image) {
         if ($this->product->countImagesOfProduct($id_product) == 1) {
@@ -66,6 +37,49 @@ class ProductPresenter extends BasePresenter {
         $this->product->updateMainImageOfProduct($idMain, $id_image);
         $this->flashMessage('Obrázek byl zvolen jako hlavní', 'success');
         $this->redirect('this');
+    }
+
+    // udělá produkt neaktivní
+    public function handleInactiveProduct($prod_id) {
+        $this->product->updateProductToInactive($prod_id);
+        $this->flashMessage('Produkt je nyní neaktivní', 'success');
+        $this->redirect('this');
+    }
+
+    // udělá produkt aktivní
+    public function handleActiveProduct($prod_id) {
+        $this->product->updateProductToActive($prod_id);
+        $this->flashMessage('Produkt je nyní aktivní', 'success');
+        $this->redirect('this');
+    }
+
+    public function renderDefault() {
+        $this->template->products = $this->product->fetchAllProductsWithImage();
+    }
+
+    public function renderAddProduct() {
+        $name = array();
+        foreach ($this->category->fetchAllCategoryNames() as $n) {
+            $name[] = $n->cat_name;
+        }
+    }
+
+    public function renderDetail($id) {
+        //získáme data o produktu
+        $this->template->product = $this->product->fetchProductForDetail($id);
+        //získáme všechny produktové obrázky
+        $this->template->images = $this->product->fetchAllProductsImages($id);
+        //získáme všechny kategorie do kterých produkt spadá
+        $this->template->category = $this->category->fetchAllCategoryNamesForProduct($id);
+    }
+
+    public function renderEdit($id) {
+        //získáme data o produktu
+        $this->template->product = $this->product->fetchProductForDetail($id);
+        //získáme všechny produktové obrázky
+        $this->template->images = $this->product->fetchAllProductsImages($id);
+        //získáme všechny kategorie do kterých produkt spadá
+        $this->template->category = $this->category->fetchAllCategoryNamesForProduct($id);
     }
 
     protected function createComponentAddProductForm() {
@@ -139,6 +153,8 @@ class ProductPresenter extends BasePresenter {
     public function editProductFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
 
+//        dump($values->category);
+
         if ($values['prod_name'] == '' || $values['prod_on_stock'] == '' ||
                 $values['prod_price'] == '' || $values['prod_describe'] == '' ||
                 $values['prod_long_describe'] == '') {
@@ -158,13 +174,10 @@ class ProductPresenter extends BasePresenter {
         $this->product->updateProduct($values, $this->getParameter('id'));
 
         // uložíme do tabulky Category_has_product
-        if ($values->category != $this->oldCategories) {
-            $this->category->deleteAllProductIntoCategoryHasProduct($this->getParameter('id'));
-            foreach ($values->category as $value) {
-                $this->category->insertProductIntoCategoryHasProduct($value, $this->getParameter('id'));
-            }
+        $this->category->deleteAllProductIntoCategoryHasProduct($this->getParameter('id'));
+        foreach ($values->category as $value) {
+            $this->category->insertProductIntoCategoryHasProduct($value, $this->getParameter('id'));
         }
-
         // uložíme do tabulky Image
         if ($values['image_name2'] != '') {
             $this->moveImage($values['folder'], $values['image_name2']);
