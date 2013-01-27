@@ -1,0 +1,162 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="User:">Uživatelé</a> <span class="divider">/</span>
+    <a n:href="User:edit">Detail uživatele {$user->user_name} {$user->user_surname}</a> <span class="divider">/</span>
+</li>
+{/block}
+{block content}
+    {foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+    {/foreach}
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-user"></i> Uživatel {$user->user_name} {$user->user_surname}</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+            </div>
+        </div>
+        {form editUserForm}
+        <div class="box-content">
+            <div class="container-fluid">     
+                <h3>Uživatelovy údaje</h3>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">   
+                            <div class="span6 lightblue">
+                                <label>Jméno</label>
+                                <input n:input="user_name" type="text" class="span12" value="{$user->user_name}">    
+                              </div><!--/span-->
+                            <div class="span6 lightblue">
+                                <label>Příjmení</label>
+                                <input n:input="user_surname" type="text" class="span12" value="{$user->user_surname}">    
+                              </div><!--/span-->
+                            </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label>Přihlašovací e-mail</label>
+                                <div class="input-prepend">
+                                    <span class="add-on">@</span>
+                                    <input n:input="user_email" id="prependedInput" type="text" value="{$user->user_email}" data-rel="popover" data-content="Doporučujeme neměnit, jedná se o email, kterým se uživatel přihlašuje do obchodu." title="Přihlašovací email">
+                                </div>
+                            </div><!--/span-->
+                            <div class="span6 bgcolor">
+                                <label>Telefon</label>
+                                <div class="input-prepend">
+                                    <span class="add-on">+420</span><input n:input="user_telefon" id="prependedInput" type="text" value="{$user->user_telefon}">
+                                </div>  
+                              </div><!--/span-->
+                            </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span12 bgcolor">
+                                <label>Adresa</label>
+                                <input n:input="user_street" type="text" class="span12 input-mini" placeholder="Ulice" value="{$user->user_street}">    
+                            </div><!--/span-->
+                        </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <input n:input="user_city" type="text" class="span12 input-mini" placeholder="Město" value="{$user->user_city}">   
+                              </div><!--/span-->
+                            <div class="span2 bgcolor">
+                                <input n:input="user_psc" type="text" class="span12 input-mini" placeholder="PSČ" value="{$user->user_psc}">    
+                              </div><!--/span-->
+                            </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span12 bgcolor">
+                                <label>Firma (nepovinný údaj)</label>
+                                <input n:input="user_firmName" type="text" class="span12 input-mini" placeholder="Název firmy" value="{$user->user_firmName}">    
+                            </div><!--/span-->
+                        </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span2 bgcolor">
+                                <input n:input="user_ico" type="text" class="span12 input-mini" placeholder="IČO" value="{$user->user_ico}">   
+                              </div><!--/span-->
+                            <div class="span2 bgcolor">
+                                <input n:input="user_dic" type="text" class="span12 input-mini" placeholder="DIČ" value="{$user->user_dic}">    
+                              </div><!--/span-->
+                            </div><!--/row--> 
+                    </div><!--/span-->    
+                    </div><!--/row-->
+         </div><!--/.fluid-container-->
+            <div class="form-actions" style="margin-bottom: -10px;">                
+                <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                <a n:href="User:"><input type="button" class="btn" value="Zpět na seznam uživatelů"></a>
+            </div>
+        </div>
+        {/form}
+        <div class="row-fluid sortable">
+            <div class="box span12">
+                <div class="box-header well" data-original-title>
+                    <h2>Uživatelovy objednávky</h2>
+                    <div class="box-icon">
+                        <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                        <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <table id="orders" class="table table-striped bootstrap-datatable datatable">
+                        <thead>
+                            <tr>
+                                <th># Č. obj.</th>
+                                <th>Stav</th>
+                                <th>Datum</th>
+                                <th>Cena s DPH</th>                                          
+                                <th>Doprava</th>                                          
+                                <th>Platba</th>                                          
+                                <th>Akce</th>                                          
+                            </tr>
+                        </thead>   
+                        <tbody>
+                            {foreach $userOrders as $order}
+                            <tr>
+                                <td>{$order->ord_id}</td>
+                                <td class="center">
+                            {if $order->ord_status == 'Vyřízeno'}
+                                    <span class="label label-success">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Nevyřízeno'}
+                                    <span class="label label-important">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Expedováno'}
+                                    <span class="label label-warning">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Stornováno'}
+                                    <span class="label">{$order->ord_status}</span>
+                            {elseif $order->ord_status == 'Vráceno'}
+                                    <span class="label label-inverse">{$order->ord_status}</span>
+                            {/if}
+                                </td>
+                                <td class="center">{$order->ord_date}</td>
+                                <td>{($order->sum_price) + $order->delivery_price + $order->payment_price},- Kč</td>
+                                <td class="center">{$order->delivery_name}</td>
+                                <td>{$order->payment_name}</td>
+                                <td class="center">
+                                    <a class="btn btn-success" n:href="Order:detail $order->ord_id">
+                                        <i class="icon-zoom-in icon-white"></i>  
+                                        Detail / Upravit                                            
+                                    </a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>   
+                </div>
+        </div><!--/span-->
+        </div>
+    </div>
+</div>
+{block #otherScripts}  
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  var oTable = $('#orders').dataTable();
+  // Sort immediately with columns 0 and 1
+  oTable.fnSort( [ [0,'desc'], [1,'asc'] ] );
+} );
+</script>
+{/block}
