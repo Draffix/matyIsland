@@ -5,6 +5,16 @@
 </li>
 {/block}
 {block content}
+    {foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+    {/foreach}
 <div class="row-fluid">
     <div class="span12" style="text-align: right">
         <a class="btn btn-primary" n:href="Product:addProduct"><i class="icon-plus"></i> Přidat nový produkt</a>
@@ -44,12 +54,39 @@
                                 <i class="icon-edit icon-white"></i>  
                                 Upravit                                            
                             </a>
-                            <a class="btn btn-danger" href="#">
-                                <i class="icon-trash icon-white"></i> 
-                                Smazat
+                            {if $product->product->prod_is_active == 1}
+                            <a href="#inActiveModal_{$product->product->prod_id}" role="button" class="btn btn-danger" data-toggle="modal">
+                                <i class="icon-eye-close"></i> 
+                                Zneveřejnit
                             </a>
+                            {else}
+                            <a n:href="activeProduct! $product->product->prod_id" class="btn btn-success">
+                                <i class="icon-eye-open"></i> 
+                                Zveřejnit
+                            </a>
+                            {/if}
                         </td>
                     </tr>
+
+                <!-- Modal -->
+                <div id="inActiveModal_{$product->product->prod_id}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Zneveřejnění {$product->product->prod_name}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-block ">
+                            <h4 class="alert-heading">Upozornění!</h4>
+                            <p>Hodláte zrušit zveřejnění produktu. Zákazníci ho tak budou moci vidět pouze
+                                ve své historii objednávek.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Storno</button>
+                        <a class="btn btn-primary" n:href="inactiveProduct! $product->product->prod_id">Udělat produkt neaktivní</a>
+                    </div>
+                </div>
+                <!--/Modal -->
                     {/foreach}
                 </tbody>
             </table>            
