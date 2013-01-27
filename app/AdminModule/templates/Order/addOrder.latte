@@ -32,7 +32,7 @@
                 <div class="row-fluid">
                     <div class="span6">
                         <h3>Produkty</h3>
-                        <i class="icon-plus"></i> <a href="#add-form-modal" data-toggle="modal">Přidat produkty</a>
+                        <i class="icon-plus"></i> <a href="#add-form-modal" data-toggle="modal" data-rel="popover" data-content="Můžete přidat pouze aktivní (zveřejněné) produkty." title="Přidat produkt" >Přidat produkty</a>
                         <i class="icon-pencil"></i> <a href="#items-form-modal" data-toggle="modal">Upravit produkty</a>
                         <i class="icon-plane"></i> <a href="#deliveryPayment-form-modal" data-toggle="modal">Přidat způsob doručení/platby</a>
                         <hr>
@@ -238,7 +238,7 @@
             {/form}
 
             {form addProductIntoNewOrderForm}
-        <div id="add-form-modal" class="modal hide">
+        <div id="add-form-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">×</a>
                 <h3>Přidat položku do objednávky</h3>
@@ -273,7 +273,7 @@
         <?php if(!isset($_SESSION['order']) || $_SESSION['order']==null) { ?>
         <?php } else { ?>
                     {form editProductIntoNewOrderForm}
-        <div id="items-form-modal" class="modal hide">
+        <div id="items-form-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">×</a>
                 <h3>Upravit položky objednávky</h3>
@@ -308,7 +308,7 @@
         <?php }?>
     </div><!--/.fluid-container-->
                 {form addDeliveryPaymentIntoNewForm}
-    <div id="deliveryPayment-form-modal" class="modal hide">
+    <div id="deliveryPayment-form-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
             <h3>Přidat způsob doručení/placení</h3>
