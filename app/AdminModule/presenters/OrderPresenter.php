@@ -37,11 +37,15 @@ class OrderPresenter extends BasePresenter {
 
     // odstraní produkt z nově vytvořené objednávky
     public function handleRemoveProductIntoNewOrder($product_id) {
-        $_SESSION["orderTotal"] -= ($_SESSION["order"][$product_id]["order_quantity"] * $this->product->findPrice($product_id)->price);
-        unset($_SESSION["order"][$product_id]);
+        if (count($_SESSION['order']) == 1) {
+            unset($_SESSION["orderTotal"], $_SESSION['order']);
+        } else {
+            $_SESSION["orderTotal"] -= ($_SESSION["order"][$product_id]["order_quantity"] * $this->product->findPrice($product_id)->price);
+            unset($_SESSION["order"][$product_id]);
+        }
 
         if ($this->isAjax()) {
-            $this->invalidateControl('pokus');
+            $this->invalidateControl('products');
         } else {
             $this->redirect('this');
         }
@@ -282,12 +286,23 @@ class OrderPresenter extends BasePresenter {
             return;
         }
 
-        if (!isset($_SESSION["order"][$productID])) {   // pokud neexistuje id produktu v košíku
-            $_SESSION["order"][$productID] = $this->product->fetchAllProductForDetail($productID); //zjisti všechny informace o produktu
-            $_SESSION["order"][$productID]["order_quantity"] = $values->quantity;
+        if ($values->quantity <= 0) {
+            $this->flashMessage('Bylo zvoleno špatné množství produktu', 'error');
+            return;
         }
 
-        $_SESSION["orderTotal"] += ($this->product->findPrice($productID)->price * $values->quantity);
+        if (!isset($_SESSION["order"][$productID])) {   // pokud již neexistuje id produktu v objednávce
+            $_SESSION["order"][$productID] = $this->product->fetchAllProductForDetail($productID); //zjisti všechny informace o produktu
+            if ($this->product->countProductQuantity($productID)->pocet < $values->quantity) {
+                $_SESSION['order'][$productID]['order_quantity'] = $this->product->countProductQuantity($productID)->pocet;
+                $this->flashMessage('Bohužel, takové množství na skladě nemáme. 
+                Do košíku bylo přidáno ' . $_SESSION['order'][$productID]['order_quantity'] . ' kusů', 'info');
+            } else {
+                $_SESSION["order"][$productID]["order_quantity"] = $values->quantity;
+            }
+        }
+
+        $_SESSION["orderTotal"] += ($this->product->findPrice($productID)->price * $_SESSION["order"][$productID]["order_quantity"]);
 
         if (!$this->isAjax())
             $this->redirect('this');
@@ -312,13 +327,54 @@ class OrderPresenter extends BasePresenter {
 
     public function editProductIntoNewOrderFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
+
         foreach ($values->quantity as $prod_id => $quantity) {
-            $_SESSION['order'][$prod_id]['order_quantity'] = $quantity;
+
+            // zkotrolujeme, zda máme tolik kusů na skladě. Pokud ne, přidáme do košíku
+            // tolik, kolik na skladě máme
+            if ($this->product->countProductQuantity($prod_id)->pocet < $quantity) {
+                $_SESSION['order'][$prod_id]['order_quantity'] = $this->product->countProductQuantity($prod_id)->pocet;
+                $this->flashMessage('Bohužel, takové množství na skladě nemáme. 
+                Do košíku bylo přidáno ' . $_SESSION['order'][$prod_id]['order_quantity'] . ' kusů', 'info');
+                return;
+            }
+
+            // pokud je zvoleno množství 0:
+            // odečte se v count celkové množství daného produktu
+            // v totalPrice se provede celková suma -= množství daného produktu * cena jednoho produktu
+            // zrušíme v session pole daného produktu
+            if ($quantity <= 0) {
+                $_SESSION["orderTotal"] -= ($_SESSION["order"][$prod_id]["order_quantity"] * $this->product->findPrice($prod_id)->price);
+                unset($_SESSION["order"][$prod_id]);
+                if ($_SESSION['order'] == NULL) {
+                    unset($_SESSION["orderTotal"], $_SESSION['order']);
+                }
+            }
+
+            // pokud je zvolené množství větší než stávající množství produktu:
+            // celkové množství += zadané množství - stávající množství produktu
+            // celková cena += cena jednoho produktu * (zadané množství - stávající množství)
+            // změníme množství produktu podle zadaného množství
+            elseif ($quantity > $_SESSION["order"][$prod_id]["order_quantity"]) {
+                $_SESSION["orderTotal"] += $this->product->findPrice($prod_id)->price * ($quantity - $_SESSION["order"][$prod_id]["order_quantity"]);
+                $_SESSION["order"][$prod_id]["order_quantity"] = $quantity;
+            }
+
+            // pokud je zvolené množství menší než stávající množství produktu:
+            // celkové množství -= stávající množství produktu - zadané množství
+            // celková cena -= cena jednoho produktu * (stávající množství - zadané množství)
+            // změníme množství produktu podle zadaného množství
+            elseif ($quantity < $_SESSION["order"][$prod_id]["order_quantity"]) {
+                $_SESSION["orderTotal"] -= $this->product->findPrice($prod_id)->price * ($_SESSION["order"][$prod_id]["order_quantity"] - $quantity);
+                $_SESSION["order"][$prod_id]["order_quantity"] = $quantity;
+            }
         }
+
         if (!$this->isAjax())
             $this->redirect('this');
         else {
             $this->invalidateControl('products');
+            $this->invalidateControl('form');
         }
     }
 
@@ -399,6 +455,26 @@ class OrderPresenter extends BasePresenter {
             return;
         }
 
+        // check if the billing form was filled
+        if ($values['cust_bname'] == "") {
+            $values['cust_bname'] = $values['cust_name'];
+        }
+        if ($values['cust_bsurname'] == "") {
+            $values['cust_bsurname'] = $values['cust_surname'];
+        }
+        if ($values['cust_bstreet'] == "") {
+            $values['cust_bstreet'] = $values['cust_street'];
+        }
+        if ($values['cust_bcity'] == "") {
+            $values['cust_bcity'] = $values['cust_city'];
+        }
+        if ($values['cust_bpsc'] == "") {
+            $values['cust_bpsc'] = $values['cust_psc'];
+        }
+        if ($values['cust_bfirmName'] == "") {
+            $values['cust_bfirmName'] = $values['cust_firmName'];
+        }
+
         $dateTime = $values['ord_date'];
         $newDate = new DateTime($dateTime);
         $ord_date = $newDate->format('Y-m-d H:i:s'); // datetime objekt pro databázi
@@ -430,5 +506,4 @@ class OrderPresenter extends BasePresenter {
         $this->flashMessage('Objednávka byla uložena', 'success');
         $this->redirect('Order:');
     }
-
 }

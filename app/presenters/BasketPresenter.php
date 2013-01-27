@@ -63,7 +63,7 @@ class BasketPresenter extends BasePresenter {
 // odečte se v count celkové množství daného produktu
 // v totalPrice se provede celková suma -= množství daného produktu * cena jednoho produktu
 // zrušíme v session pole daného produktu
-        if ($values->quantity == 0) {
+        if ($values->quantity <= 0) {
             $_SESSION["count"] -= $_SESSION["cart"][$values->product_id]["basket_quantity"];
             $_SESSION["totalPrice"] -= ($_SESSION["cart"][$values->product_id]["basket_quantity"] * $this->basket->findPrice($values->product_id)->price);
             unset($_SESSION["cart"][$values->product_id]);
