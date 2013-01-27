@@ -18,12 +18,16 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     /** @var \DeliveryPaymentModel */
     protected $deliveryPayment;
 
+    /** @var \UserModel */
+    protected $users;
+
     protected function startup() {
         parent::startup();
         $this->order = $this->context->order;
         $this->category = $this->context->category;
         $this->product = $this->context->product;
         $this->deliveryPayment = $this->context->deliveryPayment;
+        $this->users = $this->context->users;
 
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
         @session_start();
