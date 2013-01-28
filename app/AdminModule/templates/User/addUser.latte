@@ -1,0 +1,97 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="User: id => NULL">Uživatelé</a> <span class="divider">/</span>
+    <a n:href="User:addUser">Nový uživatel</a> <span class="divider">/</span>
+</li>
+{/block}
+{block content}
+    {foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+    {/foreach}
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="icon-user"></i> Vytvoření nového uživatele</h2>
+            <div class="box-icon">
+                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+            </div>
+        </div>
+        {form addUserForm}
+        <div class="box-content">
+            <div class="container-fluid">     
+                <h3>Uživatelovy údaje</h3>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">   
+                            <div class="span6 lightblue">
+                                <label>Jméno</label>
+                                <input n:input="user_name" type="text" class="span12">    
+                              </div><!--/span-->
+                            <div class="span6 lightblue">
+                                <label>Příjmení</label>
+                                <input n:input="user_surname" type="text" class="span12">    
+                              </div><!--/span-->
+                            </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label>Přihlašovací e-mail</label>
+                                <div class="input-prepend">
+                                    <span class="add-on">@</span>
+                                    <input n:input="user_email" id="prependedInput" type="text" data-rel="popover" data-content="Na tento email přijde aktivační odkaz pro dokončení registrace. Tímto emailem se uživatel přihlašuje do obchodu." title="Přihlašovací email">
+                                </div>
+                            </div><!--/span-->
+                            <div class="span6 bgcolor">
+                                <label>Telefon</label>
+                                <div class="input-prepend">
+                                    <span class="add-on">+420</span><input n:input="user_telefon" id="prependedInput" type="text">
+                                </div>  
+                              </div><!--/span-->
+                            </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span12 bgcolor">
+                                <label>Adresa</label>
+                                <input n:input="user_street" type="text" class="span12 input-mini" placeholder="Ulice">    
+                            </div><!--/span-->
+                        </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <input n:input="user_city" type="text" class="span12 input-mini" placeholder="Město">   
+                              </div><!--/span-->
+                            <div class="span2 bgcolor">
+                                <input n:input="user_psc" type="text" class="span12 input-mini" placeholder="PSČ">    
+                              </div><!--/span-->
+                            </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span12 bgcolor">
+                                <label>Firma (nepovinný údaj)</label>
+                                <input n:input="user_firmName" type="text" class="span12 input-mini" placeholder="Název firmy">    
+                            </div><!--/span-->
+                        </div><!--/row-->
+                        <div class="row-fluid">
+                            <div class="span2 bgcolor">
+                                <input n:input="user_ico" type="text" class="span12 input-mini" placeholder="IČO">   
+                              </div><!--/span-->
+                            <div class="span2 bgcolor">
+                                <input n:input="user_dic" type="text" class="span12 input-mini" placeholder="DIČ">    
+                              </div><!--/span-->
+                            </div><!--/row--> 
+                    </div><!--/span-->    
+                    </div><!--/row-->
+         </div><!--/.fluid-container-->
+            <div class="form-actions" style="margin-bottom: -10px;">                
+                <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                <a n:href="User:"><input type="button" class="btn" value="Zpět na seznam uživatelů"></a>
+            </div>
+        </div>
+        {/form}
+    </div>
+</div>
