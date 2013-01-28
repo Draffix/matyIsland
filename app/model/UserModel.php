@@ -49,7 +49,7 @@ class UserModel extends Table {
     }
 
     /**
-     * Po úspěšné registraci vymažeme hash
+     * Po úspěšné registraci vymaže hash
      * @param type $hash
      * @return type
      */
@@ -90,6 +90,54 @@ class UserModel extends Table {
         return $this->getTable()
                         ->where('user_id', $user_id)
                         ->fetch();
+    }
+
+    /**
+     * Zablokuje uživatele
+     * @param type $user_id
+     * @return type
+     */
+    public function blockUser($user_id) {
+        return $this->getTable()
+                        ->where('user_id', $user_id)
+                        ->update(array('user_is_active' => 0));
+    }
+
+    /**
+     * Odblokuje uživatele
+     * @param type $user_id
+     * @return type
+     */
+    public function unblockUser($user_id) {
+        return $this->getTable()
+                        ->where('user_id', $user_id)
+                        ->update(array('user_is_active' => 1));
+    }
+
+    /**
+     * Smaže uživatele
+     * @param type $user_id
+     * @return type
+     */
+    public function deleteUser($user_id) {
+        return $this->getTable()
+                        ->where('user_id', $user_id)
+                        ->delete();
+    }
+
+    /**
+     * Celkový počet uživatelů
+     * @return type
+     */
+    public function countUsers() {
+        return $this->getTable()
+                        ->count();
+    }
+
+    public function countBlockedUsers() {
+        return $this->getTable()
+                        ->where('user_is_active', 0)
+                        ->count();
     }
 
 }
