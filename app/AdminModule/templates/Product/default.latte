@@ -55,12 +55,14 @@
                                 Upravit                                            
                             </a>
                             {if $product->product->prod_is_active == 1}
-                            <a href="#inActiveModal_{$product->product->prod_id}" role="button" class="btn btn-danger" data-toggle="modal">
+                            <a n:href="inactiveProduct! $product->product->prod_id" class="btn btn-danger" data-rel="popover" data-placement="left" 
+                               data-content="Jste si opravdu jisti, že chcete produkt zneveřejnit? Zákazníci ho tak budou moci vidět pouze
+                                ve své historii objednávek." title="Zneveřejnění {$product->product->prod_name}">
                                 <i class="icon-eye-close"></i> 
                                 Zneveřejnit
                             </a>
                             {else}
-                            <a n:href="activeProduct! $product->product->prod_id" class="btn btn-success">
+                            <a n:href="activeProduct! $product->product->prod_id" class="btn btn-success" title="Udělá z produktu opět aktivní." data-rel="tooltip">
                                 <i class="icon-eye-open"></i> 
                                 Zveřejnit
                             </a>
