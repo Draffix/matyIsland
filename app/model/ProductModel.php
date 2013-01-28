@@ -181,6 +181,10 @@ class ProductModel extends Table {
                         ->order('product.prod_id');
     }
 
+    /**
+     * Celkový počet produktů
+     * @return type
+     */
     public function countProducts() {
         return $this->getTable()->count();
     }
@@ -324,6 +328,12 @@ class ProductModel extends Table {
         $this->getTable()
                 ->where('prod_id', $prod_id)
                 ->update(array('prod_is_active' => 1));
+    }
+
+    public function countInactiveProducts() {
+        return $this->getTable()
+                        ->where('prod_is_active', 0)
+                        ->count();
     }
 
 }
