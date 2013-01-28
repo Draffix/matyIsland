@@ -139,4 +139,13 @@ class CategoryModel extends Table {
                         ->insert($values);
     }
 
+    /**
+     * Celkový počet kategorií
+     * @return type
+     */
+    public function countCategories() {
+        return $this->getTable()
+                        ->count();
+    }
+
 }

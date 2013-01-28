@@ -41,6 +41,12 @@ class OrderModel extends Table {
                 ->delete();
     }
 
+    /**
+     * Zjištuje kolik má objednávka produktů
+     * @param type $id_order
+     * @param type $id_product
+     * @return type
+     */
     public function countOfOrderHasProduct($id_order, $id_product) {
         return $this->connection->table($this->orderHasProduct)
                         ->select('COUNT(*) AS pocet')
@@ -167,7 +173,7 @@ class OrderModel extends Table {
      */
     public function fetchAllUserOrders($id) {
         return $this->connection->query(
-                'SELECT *, SUM(totalPrice) AS sum_price, 
+                        'SELECT *, SUM(totalPrice) AS sum_price, 
                  SUM(op.quantity) AS sum_quantity
                 FROM order_has_product AS op 
                 JOIN orders AS o ON o.ord_id = op.order_ord_id 
@@ -191,6 +197,16 @@ class OrderModel extends Table {
                 JOIN orders AS o ON o.ord_id = op.order_ord_id 
                 JOIN product AS p ON p.prod_id = op.product_prod_id
                 WHERE user_user_id = ?', $id);
+    }
+
+    /**
+     * Počet nevyžízených objednávek
+     * @return type
+     */
+    public function countUnfinishedOrders() {
+        return $this->getTable()
+                        ->where('ord_status', 'Nevyřízeno')
+                        ->count();
     }
 
 }
