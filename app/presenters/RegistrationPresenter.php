@@ -74,7 +74,7 @@ class RegistrationPresenter extends BasePresenter {
         }
 
         if (!Validators::is($values->user_psc, 'string:5')) {
-            $this->flashMessage('Litujeme, ale uvedené telefonní číslo neobsahuje pět čísel.', 'wrong');
+            $this->flashMessage('Litujeme, ale uvedený telefonní číslo neobsahuje pět čísel.', 'wrong');
             return;
         }
 
@@ -93,7 +93,7 @@ class RegistrationPresenter extends BasePresenter {
 
         $mail = new Message;
         $mail->setFrom('MatyLand.cz <info@matyland.com>')
-                ->addTo('jerry.klimcik@gmail.com')
+                ->addTo($values->user_email)
                 ->setSubject('Potvrzení objednávky')
                 ->setHtmlBody($template)
                 ->send();
