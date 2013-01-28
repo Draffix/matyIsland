@@ -4,33 +4,43 @@
 </li>
 {/block}
 {block content}
+{foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+{/foreach}
 <div class="sortable row-fluid">
-    <a data-rel="tooltip" title="6 nevyřízených objednávek." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="{$unfinishedOrders} nevyřízených objednávek." class="well span3 top-block" n:href="Order:">
         <span class="icon32 icon-red icon-cart"></span>
         <div>Celkem objednávek</div>
-        <div>507</div>
-        <span class="notification">6</span>
+        <div>{$countOrders}</div>
+        <span class="notification">{$unfinishedOrders}</span>
     </a>
 
-    <a data-rel="tooltip" title="4 noví uživatelé." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="{$blockedUsers} zablokovaných nebo neaktivovaných uživatelů." class="well span3 top-block" n:href="User:">
         <span class="icon32 icon-color icon-users"></span>
         <div>Uživatelů</div>
-        <div>228</div>
-        <span class="notification green">4</span>
+        <div>{$countUsers}</div>
+        <span class="notification green">{$blockedUsers}</span>
     </a>
 
-    <a data-rel="tooltip" title="$34 new sales." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="{$inactiveProducts} neaktivních produktů." class="well span3 top-block" n:href="Product:">
         <span class="icon32 icon-color icon-basket"></span>
         <div>Produktů</div>
-        <div>156</div>
-        <span class="notification yellow">44</span>
+        <div>{$countProducts}</div>
+        <span class="notification yellow">{$inactiveProducts}</span>
     </a>
 
-    <a data-rel="tooltip" title="12 new messages." class="well span3 top-block" href="#">
+    <a data-rel="tooltip" title="Obchod má {$countCategories} kategorií" class="well span3 top-block" n:href="Category:">
         <span class="icon32 icon-color icon-folder-open"></span>
         <div>Kategorií</div>
-        <div>5</div>
-        <span class="notification red">5</span>
+        <div>{$countCategories}</div>
+        <span class="notification red">{$countCategories}</span>
     </a>
 </div>
 
@@ -77,9 +87,11 @@
                         <td class="center">
                             <a class="btn btn-success" n:href="Order:detail $order->ord_id">
                                 <i class="icon-zoom-in icon-white"></i>  
-                                Detail                                            
+                                Detail / Upravit                                           
                             </a>
-                            <a class="btn btn-danger" href="#">
+                            <a n:href="deleteOrder! $order->ord_id" class="btn btn-danger" data-rel="popover" data-placement="left" 
+                               data-content="Jste si opravdu jisti, že chcete objednávku smazat? Po smazání objednávky ji
+                                zákazník již neuvidí ve své historii objednávek. Tato akce je nevratná." title="Smazání objednávky č. {$order->ord_id}">
                                 <i class="icon-trash icon-white"></i> 
                                 Smazat
                             </a>
