@@ -17,7 +17,7 @@
     {/foreach}
 <div class="row-fluid">
     <div class="span12" style="text-align: right">
-        <a class="btn btn-primary" n:href=""><i class="icon-plus"></i> Vytvořit nového uživatele</a>
+        <a class="btn btn-primary" n:href="User:addUser"><i class="icon-plus"></i> Vytvořit nového uživatele</a>
 
     </div>
 </div>
@@ -48,7 +48,9 @@
                         <td class="center">{$user->user_name} {$user->user_surname}</td>
                         <td class="center">{$user->user_email}</td>
                         <td class="center">
-                            {if $user->user_is_active == 1}
+                            {if $user->user_hash != NULL}
+                            <span class="label label-inverse">Neaktivován účet</span>
+                            {elseif $user->user_is_active == 1}
                             <span class="label label-success">Aktivní</span>
                             {else}
                             <span class="label label-important">Zablokován</span>
@@ -60,17 +62,17 @@
                                 Detail / Upravit                                            
                             </a>
                             {if $user->user_is_active == 1}
-                            <a class="btn btn-warning" n:href="">
+                            <a class="btn btn-warning" n:href="blockUser! $user->user_id" title="Zablokuje uživateli možnost přihlásit se." data-rel="tooltip">
                                 <i class="icon-thumbs-down icon-white"></i>  
                                 Zablokovat                                            
                             </a>
                             {else}
-                            <a class="btn btn-info" n:href="">
+                            <a class="btn btn-info" n:href="unblockUser! $user->user_id" title="Odblokuje uživateli možnost přihlásit se." data-rel="tooltip">
                                 <i class="icon-thumbs-up icon-white"></i>  
                                 Odblokovat                                            
                             </a>
                             {/if}
-                            <a n:href="" class="btn btn-danger">
+                            <a n:href="deleteUser! $user->user_id" class="btn btn-danger" data-rel="popover" data-placement="left" data-content="Jste si opravdu jisti, že chcete uživatele smazat?" title="Smazat uživatele">
                                 <i class="icon-trash icon-white"></i> 
                                 Smazat
                             </a>
