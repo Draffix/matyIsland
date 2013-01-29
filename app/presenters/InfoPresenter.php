@@ -27,7 +27,7 @@ class InfoPresenter extends BasePresenter {
 
         $mail = new Message;
         $mail->setFrom('MatyLand.cz <info@matyland.com>')
-                ->addTo('jerry.klimcik@gmail.com')
+                ->addTo($values->email)
                 ->setSubject('Kontaktujte nás')
                 ->setHtmlBody($values->message)
                 ->send();
