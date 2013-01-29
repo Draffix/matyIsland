@@ -19,14 +19,9 @@ class CategoryModel extends Table {
 
     public function countCategoryFilter($id) {
         return $this->connection->query(
-                        'SELECT COUNT(*) AS pocet 
-                FROM category, product, `category_has_product`, image 
-                WHERE category.cat_id = category_has_product.category_cat_id 
-                AND product.prod_id = category_has_product.product_prod_id
-                AND product.prod_id = image.product_prod_id
-                AND cat_id = ?
-                AND product.prod_is_active = ?
-                GROUP BY product.prod_id', $id, 1)->fetch();
+                        'SELECT COUNT(*) AS pocet
+                        FROM category_has_product
+                        WHERE `category_cat_id` = ?', $id)->fetch();
     }
 
     public function fetchAllCategoryNames() {
@@ -146,6 +141,13 @@ class CategoryModel extends Table {
     public function countCategories() {
         return $this->getTable()
                         ->count();
+    }
+
+    public function findCategoryName($cat_id) {
+        return $this->getTable()
+                        ->where('cat_id', $cat_id)
+                        ->select('cat_name')
+                        ->fetch();
     }
 
 }
