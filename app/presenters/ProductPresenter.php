@@ -50,6 +50,9 @@ class ProductPresenter extends BasePresenter {
         //komentáře z databáze vložíme do šablony
         $this->template->comments = $this->comments->fetchAllComments($id);
         $this->template->countComments = $this->comments->countAllComments($id);
+
+        // kategorie produktu
+        $this->template->category = $this->products->categoryOfProduct($id);
     }
 
     public function renderNews() {
@@ -65,8 +68,8 @@ class ProductPresenter extends BasePresenter {
 
     protected function createComponentCommentForm() {
         $user = $this->users->find($this->getUser()->getId());
-        $name = ''.$user->user_name.' '.$user->user_surname; // jméno a příjmení pro defaultní hodnotu
-        
+        $name = '' . $user->user_name . ' ' . $user->user_surname; // jméno a příjmení pro defaultní hodnotu
+
         $commentForm = new UI\Form();
         $commentForm->addAntispam();
         $commentForm->addText('name', 'Jméno: ')
