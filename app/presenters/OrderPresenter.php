@@ -4,6 +4,7 @@ use Nette\Application\UI;
 use Nette\DateTime;
 use Nette\Mail\Message;
 use Nette\Utils\Html;
+use Nette\Utils\Validators;
 
 /**
  * Description of OrderPresenter
@@ -96,37 +97,25 @@ class OrderPresenter extends BasePresenter {
     }
 
     protected function createComponentShippingForm() {
-        $form = new UI\Form;
-        $form->addText('cust_name', 'Jméno: *')
-                ->addRule($form::FILLED);
-        $form->addText('cust_surname', 'Příjmení: *')
-                ->addRule($form::FILLED);
-        $form->addText('cust_telefon', 'Telefon: *');
-        $form->addText('cust_email', 'E-mail: *');
-        $form->addText('cust_street', 'Ulice a č. popisné: *');
-        $form->addText('cust_city', 'Město: *');
-        $form->addText('cust_psc', 'PSČ: *');
-        $form->addText('cust_firmName', 'Název firmy:');
-        $form->addText('cust_ico', 'IČO:');
-        $form->addText('cust_dic', 'DIČ:');
-
-        // billing formulář pro fakturaci
-        $form->addText('cust_bName', 'Jméno:');
-        $form->addText('cust_bSurname', 'Příjmení:');
-        $form->addText('cust_bStreet', 'Ulice a č. popisné:');
-        $form->addText('cust_bCity', 'Město:');
-        $form->addText('cust_bPsc', 'PSČ:');
-
-        $form->addCheckbox('isGift');
-
-        $form->addSubmit('continue');
+        $form = new shippingForm();
         $form->onSuccess[] = $this->ShippingFormSubmitted;
         return $form;
     }
 
     // volá se po úspěšném odeslání registrace
     public function ShippingFormSubmitted(UI\Form $form) {
-        $values = $form->getValues(TRUE); // array      
+        $values = $form->getValues(TRUE); // array 
+
+        if ($values['cust_firmName'] != '' && $values['cust_ico'] == '') {
+            $this->flashMessage('Protože byla vyplněna i firma, musí být vyplněno i firemní IČO', 'wrong');
+            return;
+        }
+
+        if ($values['cust_ico'] != '' && !Validators::is($values['cust_ico'], 'string:8')) {
+            $this->flashMessage('Litujeme, ale IČO musí obsahovat osm znaků.', 'wrong');
+            return;
+        }
+
         $_SESSION["order"] = $values;
 
         // check if the billing form was filled
@@ -187,7 +176,7 @@ class OrderPresenter extends BasePresenter {
     public function paymentAndDeliveryFormSubmitted(UI\Form $form) {
         $values = $form->getValues(TRUE);
         $_SESSION["order"] = array_merge($_SESSION["order"], $values);
-        
+
         $_SESSION["order"]["deliveryPrice"] = $this->deliveryPayment->fetchPaymentType($values['payment_payment_id'])->payment_price
                 + $this->deliveryPayment->fetchDeliveryType($values['delivery_delivery_id'])->delivery_price;
 
