@@ -224,6 +224,68 @@ body{
     float:left;
 }
 
+#outside-box {
+    float: left;
+    width: auto;
+    max-width: 700px;
+    margin: 5px 0px 0px 17px;
+    background-color: #ececec;
+    -moz-border-radius:20px;
+    -webkit-border-radius:20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    font-family: Tahoma, sans-serif;
+    padding:10px 0px 0px 0px;
+}
+
+#inside-box {
+    float: left;
+    width: auto;
+    margin: 5px 0px 0px 0px;
+    background-color: #ececec;
+    border:1px solid #BBBBBB;
+    border-color: #D4D4D4;
+    border-style: solid;
+    border-width: 1px 1px 1px;
+    -moz-border-radius:20px;
+    border-radius: 20px 20px 5px 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding:0px 0px 10px 0px;
+}
+
+#inside-box h2 {
+    font-weight:200;
+    color: #888888;
+    font-size:16pt;
+    background: transparent url(../img/h1.png) no-repeat center left;
+    margin:20px 5px 8px 25px;
+}
+
+#inside-box h4 {
+    padding:1px; 
+    font-size:10pt;
+    font-weight: bold;
+    text-transform:uppercase;
+    padding-top: 10px;
+    margin: 0 0 0 10px;
+}
+
+/* LIST */
+#inside-box #list {
+}
+#inside-box #list ul { 
+    list-style-image: url("../images/arrow.png");
+    font-size:16px;
+    padding-left: 40px;
+}
+#inside-box #list ul li { 
+    line-height:20px;
+    padding-top: 5px;
+}
+/* END OF LIST */
+
 /* informace o stránce (momentálně vypnuté) */
 .info{
     font-family:Tahoma, sans-serif;
@@ -421,6 +483,25 @@ body{
     cursor: pointer;
 }
 /* END OF BUTTON SEND */
+
+/* DROBEČKOVÁ NAVIGACE */
+#breadcrumbs p {
+    color: #666666;
+    padding: 0 0 0px 20px; 
+    font-family:Tahoma, sans-serif;
+    padding-right: 10px;
+}
+
+#breadcrumbs a{
+    color:#0D0D0D;
+    text-decoration:none;
+    color: #666666;
+}
+#breadcrumbs a:visited{text-decoration:none}
+#breadcrumbs a:hover{
+    text-decoration:underline;
+    color: #000;
+}
 
 /****************/
 /* PRETTY FORM */
@@ -1146,4 +1227,51 @@ div.flash.wrong {
     position: relative;
     top: 60px;
     color: #999;
+}
+
+/**************/
+/** INFO BOX **/
+/**************/
+.well {
+    min-height: 20px;
+    height: auto;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    font-size: larger;
+    font-weight: bold;
+}
+
+.pokus img {
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-top: -10px;
+    padding-right: 20px;
+}
+
+.well blockquote {
+    border-color: #ddd;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.well-large {
+    padding: 24px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.well-small {
+    padding: 9px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
