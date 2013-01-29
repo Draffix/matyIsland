@@ -1,19 +1,28 @@
 {block content}
-<div class="inside-content" style="padding: 0 0 0 0; width: 465px">
     {foreach $flashes as $flash}
-    <div class="flash {$flash->type}" style="float: left">{$flash->message}</div>
+<div class="flash {$flash->type}" style="float: left">{$flash->message}</div>
 {/foreach}
-    <div class="loginForm">
+<div id="outside-box">
+    <div id="breadcrumbs">
+        <p>
+            <a n:href="Homepage:">Hračky MatyLand</a>
+            >
+            <a n:href="Login:"><b>Přihlášení</b></a>
+        </p>
+    </div>
+    <div id="inside-box">
+        <div class="loginForm">
     {form signInForm id=>'login'}
-        <h1>Přihlásit se</h1>
-        <fieldset id="inputs">
+            <h1>Přihlásit se</h1>
+            <fieldset id="inputs">
         {input user_email id => username}
         {input user_password id => password}
-        </fieldset>
-        <fieldset id="actions">
-            <input type="submit" id="submit" value="Přihlásit se">
-            <a n:href="Login:passwordRecovery">Zapomněli jste heslo?</a><a n:href="Registration:">Registrovat se</a>
-        </fieldset>
+            </fieldset>
+            <fieldset id="actions">
+                <input type="submit" id="submit" value="Přihlásit se">
+                <a n:href="Login:passwordRecovery">Zapomněli jste heslo?</a><a n:href="Registration:">Registrovat se</a>
+            </fieldset>
     {/form}
+        </div>
     </div>
 </div>

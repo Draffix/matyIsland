@@ -1,17 +1,4 @@
 {block content}
-<script type="text/javascript">
-$(document).ready(function(){
-        $("#hide").css("display","none");
-            
-    $(".isFacture").click(function(){
-        if ($('input[name=facture]:checked').val() == "checked" ) {
-                $("#hide").slideDown("slow"); //Slide Down Effect   
-        } else {
-            $("#hide").slideUp("slow");	//Slide Up Effect
-        }
-     });            
-});
-</script>
 {form shippingForm}
 <div class="shipping-header">
     <ul id="breadcrumbs-freebie">
@@ -45,6 +32,9 @@ $(document).ready(function(){
         </li>
     </ul>
 </div>
+    {foreach $flashes as $flash}
+<div class="flash {$flash->type}" style="width: auto;">{$flash->message}</div>
+    {/foreach}
 <div class="shipping-form">    
     <h2>Osobní údaje a fakturační adresa</h2>
 <fieldset class="row1">

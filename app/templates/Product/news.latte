@@ -1,24 +1,36 @@
 {block content}
-<div id="inside" style="width: 700px">
+<div id="outside-box">
+    <div id="breadcrumbs">
+        <p>
+            <a n:href="Homepage:">Hračky MatyLand</a>
+            >
+            <a n:href="Product:news"><b>Novinky</b></a>
+        </p>
+    </div>
+    <div id="inside-box">
 {snippet list}
-    <div id="items">
+        <div id="items" style="margin-left: 10px">
             {foreach $mainProducts as $mainProduct}
-        <div id="item">        
-            <p><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">{$mainProduct->product->prod_name}</a></p>
-            <br />
-            <div id="image"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">
-                    <img src="{$basePath}/images/products/{$mainProduct->image_name}" /></a></div>
-            <br />
-            <span class="describe">{$mainProduct->product->prod_describe|truncate:60}</span>
-            <span class="store">Skladem</span><br>
-            <span class="price">{$mainProduct->product->prod_price},- Kč</span>
-            <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"><input type="button" name="addCart"/></span></a>
-        </div>
+            <div class="productItem">        
+                <span class="title"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">{$mainProduct->product->prod_name}</a></span>
+                <br />
+                <div class="image"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">
+                        <img src="{$basePath}/images/products/{$mainProduct->image_name}" alt="{$mainProduct->image_name}" /></a></div>
+                <br />
+                <span class="describe"><p>{!$mainProduct->product->prod_describe|truncate:60}</p></span>
+                {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
+                <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+                <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
+                {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 11px">Nedostupné</span><br>
+                <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+                {/if}
+            </div>
             {/foreach}
+        </div>
     </div>
 </div>
+{/snippet}
 <div class="paginator" style="width: 500px">
     {control paginator}
 </div>
-{/snippet}
 {/block}

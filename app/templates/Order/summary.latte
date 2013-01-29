@@ -40,9 +40,9 @@ $(document).ready(function(){
     </ul>
 </div>
 
-<div class="shipping-form" style="width:635px"> 
+<div class="shipping-form" style="width:635px;"> 
     <fieldset class="paymentAndDelivery">
-        <div id="order_adress">
+        <div id="order_adress" style="min-height: 160px">
             <h2>Adresa dodání</h2>
             <table width="300" border="0">
                 <tr>
@@ -69,11 +69,17 @@ $(document).ready(function(){
                     <td>E-mail:</td>
                     <td><b><?php echo $_SESSION["order"]["cust_email"] ?></b></td>
                 </tr>
+                {if $_SESSION["order"]["cust_firmName"] != ''}
+                <tr>
+                    <td>Firma:</td>
+                    <td><b>{$_SESSION["order"]["cust_firmName"]}</b></td>
+                </tr>
+                {/if}
             </table>
     </div><!-- #order_adress end -->
 
 
-        <div id="order_facture">
+        <div id="order_facture" style="min-height: 160px">
             <h2>Fakturační údaje</h2>
             <table width="300" border="0">
                 <tr>

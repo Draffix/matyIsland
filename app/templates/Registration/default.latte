@@ -2,77 +2,86 @@
     {foreach $flashes as $flash}
 <div class="flash {$flash->type}" style="width: auto;">{$flash->message}</div>
     {/foreach}
-<div class="inside-content" style="width: 660px" >
-    <div id="loginForm">
-        <h2 n:block=title>Registrace</h2>
-        <div id="pretty-form" style="border: 0;">
+<div id="outside-box" style="width: 660px">
+    <div id="breadcrumbs">
+        <p>
+            <a n:href="Homepage:">Hračky MatyLand</a>
+            >
+            <a n:href="Registration:"><b>Registrace</b></a>
+        </p>
+    </div>
+    <div id="inside-box">
+        <div id="loginForm">
+            <h2 n:block=title>Registrace nového zákazníka</h2>
+            <div id="pretty-form" style="border: 0;">
         {form personalForm name=>registration}
-            <div style="width: 300px; float: left;">
-                <p class="nick">
-                    <b>{label user_name/}</b>
+                <div style="width: 300px; float: left;">
+                    <p class="nick">
+                        <b>{label user_name/}</b>
                     {input user_name} <b style="font-size: large">*</b>
-                </p>
-                <p class="user_surname">
-                    <b>{label user_surname/}</b>
+                    </p>
+                    <p class="user_surname">
+                        <b>{label user_surname/}</b>
                     {input user_surname} <b style="font-size: large">*</b>
-                </p>
-                <p class="user_firmName">
+                    </p>
+                    <p class="user_firmName">
                     {label user_firmName/}
                     {input user_firmName}
-                </p>
-                <p class="user_email">
-                    <b>{label user_email/}</b>
+                    </p>
+                    <p class="user_email">
+                        <b>{label user_email/}</b>
                     {input user_email} <b style="font-size: large">*</b>
-                </p>
-                <p class="user_password">
-                    <b>{label user_password/}</b>
+                    </p>
+                    <p class="user_password">
+                        <b>{label user_password/}</b>
                     {input user_password} <b style="font-size: large">*</b>
-                </p>
-                <p class="user_confirmPassword">
-                    <b>{label user_confirmPassword/}</b>
+                    </p>
+                    <p class="user_confirmPassword">
+                        <b>{label user_confirmPassword/}</b>
                     {input user_confirmPassword} <b style="font-size: large">*</b>
-                </p>
-            </div>
-            <div style="width: 300px; float: right;">
-                <p class="user_street">
-                    <b>{label user_street /}</b>
+                    </p>
+                </div>
+                <div style="width: 300px; float: right;">
+                    <p class="user_street">
+                        <b>{label user_street /}</b>
                     {input user_street} <b style="font-size: large;">*</b>
-                </p>
-                <p class="user_city">
-                    <b>{label user_city /}</b>
+                    </p>
+                    <p class="user_city">
+                        <b>{label user_city /}</b>
                     {input user_city} <b style="font-size: large;">*</b>
-                </p>
-                <p class="user_psc">
-                    <b>{label user_psc /}</b>
+                    </p>
+                    <p class="user_psc">
+                        <b>{label user_psc /}</b>
                     {input user_psc} <b style="font-size: large;">*</b>
-                </p>
-                <p class="user_telefon">
-                    <b>{label user_telefon/}</b>
+                    </p>
+                    <p class="user_telefon">
+                        <b>{label user_telefon/}</b>
                     {input user_telefon} <b style="font-size: large">*</b>
-                </p>
-                <p class="user_ico">
+                    </p>
+                    <p class="user_ico">
                     {label user_ico/}
                     {input user_ico}
-                </p>
-                <p class="user_dic">
+                    </p>
+                    <p class="user_dic">
                     {label user_dic/}
                     {input user_dic}
-                </p>
-            </div>
-            <div style="float: left; padding-top: 30px; padding-bottom: 20px">
-                <p style="line-height: 20px; display: inline">
-                    Veškeré osobní údaje, které jsou nám svěřené, nebudou bez Vašeho souhlasu 
-                    poskytnuty třetím osobám ani jiným subjektům. 
-                    Kdykoliv můžete požádat o jejich změnu či vymazání zasláním emailu na 
-                    <a href="mailto:info@hracky-matyland.cz">info@hracky-matyland.cz</a>. 
-                    Své údaje můžete také měnit po přihlášení v sekci Můj účet.
-                </p>
-            </div>
-            <p class="submit">
+                    </p>
+                </div>
+                <div style="float: left; padding-top: 30px; padding-bottom: 20px">
+                    <p style="line-height: 20px; display: inline">
+                        Veškeré osobní údaje, které jsou nám svěřené, nebudou bez Vašeho souhlasu 
+                        poskytnuty třetím osobám ani jiným subjektům. 
+                        Kdykoliv můžete požádat o jejich změnu či vymazání zasláním emailu na 
+                        <a href="mailto:info@hracky-matyland.cz">info@hracky-matyland.cz</a>. 
+                        Své údaje můžete také měnit po přihlášení v sekci Můj účet.
+                    </p>
+                </div>
+                <p class="submit">
         {input send}
-            </p>
+                </p>
         {/form}
 
+            </div>
         </div>
     </div>
 </div>
