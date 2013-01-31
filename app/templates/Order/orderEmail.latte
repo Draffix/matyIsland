@@ -4,8 +4,74 @@
         <title>Potvrzení objednávky</title>
     </head>
     <body>
-        <p>Dobrý den,</p>
-
-        <p>Vaše objednávka číslo {$orderId} byla přijata.</p>
-    </body>
+        <div style="font-size:12px;font-family:Arial,sans-serif">
+            <h1 style="color:#b20006;font-size:17px;padding:0px;margin:10px 0 5px;font-weight:bold;font-family:Arial,sans-serif;border-bottom:1px solid #b20006">
+                    Objednávka zboží na webu <a href="http://{$website}" target="_blank">{$website}</a></h1>
+        <p>Děkujeme Vám za Vaší objednávku.
+            <br>Objednávka je vedena pod číslem <strong>{$orderId}</strong> a bude vyřízena v co možná nejkratším termínu.</p>
+        <h2 style="color:#b20006;font-size:15px;padding:0px;margin:5px 0;font-weight:bold;font-family:Arial,sans-serif">Rekapitulace objednávky</h2>
+    <table style="border-collapse:collapse;font-size:12px;border:1px solid #b20006">
+        <tbody>
+            <tr>
+                <th align="left"> Název zboží </th>
+                <th align="right"> Cena/ks </th>
+                <th align="right"> Množství </th>
+                <th align="right"> Cena celkem </th>
+            </tr>
+            {foreach $orderProducts as $product}
+            <tr style="font-size:12px">
+                <td width="250"><strong style="color:#b20006;font-size:12px">{$product->prod_name}</strong></td>
+                <td width="70" align="right"><u></u>{$product->actual_price_of_product},- Kč<u></u></td>
+        <td align="right">{$product->quantity}</td>
+        <td align="right"><u></u>{$product->actual_price_of_product * $product->quantity},- Kč<u></u></td>
+        </tr>
+            {/foreach}
+        <tr style="font-size:12px">
+            <td style="font-size:12px;border:1px solid #b20006">Doprava</td>
+            <td align="right">{$deliveryPrice},- Kč</td>
+            <td align="right">1</td>
+            <td align="right">{$deliveryPrice},- Kč</td>
+        </tr>
+        <tr style="font-size:12px">
+            <td style="font-size:12px;border:1px solid #b20006">Platba</td>
+            <td align="right">{$paymentPrice},- Kč</td>
+            <td align="right">1</td>
+            <td align="right">{$paymentPrice},- Kč</td>
+        </tr>
+        <tr style="font-size:12px">
+            <td colspan="3"><strong>Cena celkem s DPH včetně poštovného a poplatku za platbu:</strong></td>
+            <td align="right"><strong><u></u>{$totalPrice},- Kč<u></u></strong></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <strong>Způsob dodání:</strong> {$deliveryName} - {$deliveryPrice},-Kč<br>
+    <strong>Způsob platby:</strong> {$paymentName} - {$paymentPrice},- Kč
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2 style="color:#b20006;font-size:15px;padding:0px;margin:5px 0;font-weight:bold;font-family:Arial,sans-serif">Objednavatel:</h2>
+<table style="border-collapse:collapse;font-size:12px;border:1px solid #b20006">
+    <tbody>
+        <tr style="font-size:12px"><td style="font-size:12px;border:1px solid #b20006"><strong>Jméno a příjmení: &nbsp;  &nbsp;  </strong></td><td style="font-size:12px;border:1px solid #b20006">{$order->cust_name} {$order->cust_surname}</td></tr>
+        <tr style="font-size:12px"><td style="font-size:12px;border:1px solid #b20006"><strong>Adresa:</strong></td><td style="font-size:12px;border:1px solid #b20006">{$order->cust_street}, {$order->cust_city}, {$order->cust_psc}</td></tr>
+        <tr style="font-size:12px"><td style="font-size:12px;border:1px solid #b20006"><strong>Tel.:</strong></td><td style="font-size:12px;border:1px solid #b20006">{$order->cust_telefon}</td></tr>
+        <tr style="font-size:12px"><td style="font-size:12px;border:1px solid #b20006"><strong>E-mail.:</strong></td><td style="font-size:12px;border:1px solid #b20006"><a style="color:#b20006;font-size:12px" href="mailto:{$order->cust_email}" title="{$order->cust_email}" target="_blank">{$order->cust_email}</a></td></tr>
+    </tbody>
+</table>
+<br>
+<br>
+<strong>Poznámka k objednávce: </strong>
+<p>{$order->cust_note}</p>
+<br>
+<br>
+<strong>Datum a čas objednání: </strong>
+<p>{$order->ord_date|date:'j.n.Y, H:i'}</p>
+<br>
+<br>
+<br>
+<strong>www:</strong> <a style="color:#b20006;font-size:12px" href="http://{$website}" target="_blank">{$website}</a>
+</div>
+</body>
 </html>
