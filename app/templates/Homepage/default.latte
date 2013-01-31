@@ -3,12 +3,6 @@
     <img src="{$basePath}/images/photo4.jpg" alt="" width="682" height="334" style="margin-top: -1px;"/>
     <br />
     <div id="inside">
-<!--        <img src="images/title3.gif" alt="" width="159" height="15" /><br />
-        <div class="info">
-            <img src="images/pic2.jpg" alt="" width="159" height="132" />
-            <p>Dolor sit amet, consetetur sadipscing elitr, seddiam nonumy eirmod tempor. invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadip- scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur. </p>
-            <a href="#" class="more"><img src="images/more.gif" alt="" width="106" height="28" /></a>					
-        </div>-->
         <div class="well">
             <img src="{$basePath}/images/info/warning.png"/>
                 <p>Všichni registrovaní zákazníci mají nyní 3% slevu na všechny hračky!</p>
@@ -24,6 +18,7 @@
                         <img src="{$basePath}/images/products/{$mainProduct->image_name}" alt="{$mainProduct->image_name}" /></a></div>
                 <br />
                 <span class="describe"><p>{!$mainProduct->product->prod_describe|truncate:60}</p></span>
+                <span class="oldprice">{($mainProduct->product->prod_price * 0.03) + $mainProduct->product->prod_price|number},- Kč</span>
                 {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
                 <span class="price">{$mainProduct->product->prod_price},- Kč</span>
                 <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
