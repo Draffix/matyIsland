@@ -1,4 +1,7 @@
 {block content}
+    {foreach $flashes as $flash}
+<div class="flash {$flash->type}">{$flash->message}</div>
+    {/foreach}
 <div id="outside-box" style="width: 643px">
     <div id="breadcrumbs">
         <p>
@@ -8,12 +11,9 @@
         </p>
     </div>
     <div id="inside-box" style="padding: 0 10px 10px 10px">
-    {foreach $flashes as $flash}
-        <div class="flash {$flash->type}">{$flash->message}</div>
-    {/foreach}
         <h2>Napište nám</h2>
         <p style="padding-bottom: 20px">V případě, že potřebujete poradit, chcete se dozvědět podrobnější informace 
-            či chcete nahlásit nějakou chybu, neváhejte a klidně nám napište. Rádi Vám odpovíme</p>
+            či chcete nahlásit nějakou chybu, neváhejte a klidně nám napište. Rádi Vám odpovíme.</p>
 
         <div id="pretty-form">
         {form contactForm}
@@ -31,9 +31,9 @@
             </p>
             <p class="text">
         {label message/}
-        {input message} <b style="font-size: large; float: right; padding-right: 50px;">*</b>
+        {input message} <b style="font-size: large; float: right; padding-right: 65px;">*</b>
             </p>
-            <p class="submit">
+            <p class="submit" style="margin-bottom: 50px; margin-top: 10px">
         {input send}
             </p>
         {/form}
