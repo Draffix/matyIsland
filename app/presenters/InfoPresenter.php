@@ -2,10 +2,9 @@
 
 use Nette\Application\UI;
 use Nette\Mail\Message;
+use Nette\Utils\Validators;
 
 class InfoPresenter extends BasePresenter {
-
-
 
     protected function createComponentContactForm() {
         $form = new UI\Form;
@@ -13,7 +12,8 @@ class InfoPresenter extends BasePresenter {
                 ->addRule($form::FILLED);
         $form->addText('telefon', 'Telefon:');
         $form->addText('email', 'Email:')
-                ->addRule($form::FILLED);
+                ->addRule($form::FILLED)
+                ->setType('email');
         $form->addTextArea('message', 'Zpráva:')
                 ->addRule($form::FILLED);
         $form->addSubmit('send', 'Odeslat');
@@ -25,6 +25,11 @@ class InfoPresenter extends BasePresenter {
     public function ContactFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
 
+        if (!Validators::isEmail($values->email)) {
+            $this->flashMessage('Litujeme, ale není platná e-mailová adresa', 'wrong');
+            return;
+        }
+
         $mail = new Message;
         $mail->setFrom('MatyLand.cz <info@matyland.com>')
                 ->addTo($values->email)
@@ -32,8 +37,7 @@ class InfoPresenter extends BasePresenter {
                 ->setHtmlBody($values->message)
                 ->send();
 
-        $this->flashMessage('Děkujeme, Vaše zpráva byla odeslána');
-
+        $this->flashMessage('Děkujeme, Vaše zpráva byla odeslána', 'success');
         $this->redirect('this');
     }
 
