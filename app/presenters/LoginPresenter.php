@@ -109,11 +109,12 @@ class LoginPresenter extends BasePresenter {
         $template->registerFilter(new Nette\Latte\Engine);
         $template->newPass = $newPass;
         $template->userName = $userData->user_email;
+        $template->website = $_SERVER['SERVER_NAME'];
 
         $mail = new Message;
         $mail->setFrom('MatyLand.cz <info@matyland.com>')
-                ->addTo('jerry.klimcik@gmail.com')
-                ->setSubject('Potvrzení objednávky')
+                ->addTo($values->user_email)
+                ->setSubject('Obnovení hesla')
                 ->setHtmlBody($template)
                 ->send();
 
