@@ -48,6 +48,14 @@ class UserModel extends Table {
                         ->count();
     }
 
+    // zjišťuje, zda se zadaný email neshoduje s tím starým (Admin\OrderPresenter)
+    public function findExistsEmail($user_id) {
+        return $this->findAll()
+                        ->where('user_id', $user_id)
+                        ->select('user_email')
+                        ->fetch();
+    }
+
     /**
      * Po úspěšné registraci vymaže hash
      * @param type $hash
