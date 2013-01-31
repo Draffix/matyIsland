@@ -115,11 +115,12 @@ class UserPresenter extends BasePresenter {
         $template->registerFilter(new \Nette\Latte\Engine);
         $template->hash = $activation;
         $template->pass = $pass;
+        $template->email = $values->user_email;
 
         $mail = new Message;
         $mail->setFrom('MatyLand.cz <info@matyland.com>')
                 ->addTo($values->user_email)
-                ->setSubject('Potvrzení objednávky')
+                ->setSubject('Aktivace registrace')
                 ->setHtmlBody($template)
                 ->send();
 
