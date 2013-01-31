@@ -97,7 +97,11 @@ class OrderPresenter extends BasePresenter {
     }
 
     protected function createComponentShippingForm() {
-        $form = new shippingForm();
+        if ($this->getUser()->isLoggedIn()) {
+            $form = new shippingForm($this->users, $this->getUser()->getId());
+        } else {
+            $form = new shippingForm($this->users);
+        }
         $form->onSuccess[] = $this->ShippingFormSubmitted;
         return $form;
     }
