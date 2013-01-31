@@ -217,14 +217,36 @@ class OrderPresenter extends BasePresenter {
             $this->products->updateProductQuantity($value->prod_id, $this->products->countProductQuantity($value->prod_id)->pocet - $value->basket_quantity); //snížíme množství produktů na skladě
         }
 
+        // vytvoření emailové šablony
         $template = $this->createTemplate();
         $template->setFile(__DIR__ . '/../templates/Order/orderEmail.latte');
         $template->registerFilter(new Nette\Latte\Engine);
+
+        //vložení proměnných do šablony
         $template->orderId = $orderID;
+        $template->website = $_SERVER['SERVER_NAME'];
+        $template->order = $this->order->fetchOrder($orderID)->fetch();
+        $template->orderProducts = $this->order->fetchAllOrdersWithID($orderID);
+
+        // jméno a cena zvoleného doručení
+        $template->deliveryName = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($orderID)->delivery_name;
+        $template->deliveryPrice = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($orderID)->delivery_price;
+
+        // jméno a cena zvoleného placení
+        $template->paymentName = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($orderID)->payment_name;
+        $template->paymentPrice = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($orderID)->payment_price;
+
+        $totalPrice = 0;
+        foreach ($this->order->fetchAllOrdersWithID($orderID) as $o) {
+            $totalPrice += ($o->quantity * $o->actual_price_of_product);
+        }
+        $totalPrice += $this->order->fetchAllOrdersWithID($orderID)->fetch()->deliveryPrice;
+        $template->totalPrice = $totalPrice;
+
 
         $mail = new Message;
         $mail->setFrom('MatyLand.cz <info@matyland.com>')
-                ->addTo('jerry.klimcik@gmail.com')
+                ->addTo($_SESSION["order"]["cust_email"])
                 ->setSubject('Potvrzení objednávky')
                 ->setHtmlBody($template)
                 ->send();
