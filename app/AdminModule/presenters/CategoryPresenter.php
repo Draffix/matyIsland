@@ -19,7 +19,8 @@ class CategoryPresenter extends BasePresenter {
     // upraví jméno kategorie
     public function createComponentUpdateCategoryForm() {
         $form = new UI\Form;
-        $form->addText('cat_name');
+        $form->addText('cat_name')
+                ->addRule(UI\Form::FILLED);
         $form->addHidden('cat_id');
         $form->addSubmit('save_change');
         $form->onSuccess[] = callback($this, 'updateCategoryFormSubmitted');
@@ -35,7 +36,8 @@ class CategoryPresenter extends BasePresenter {
 
     public function createComponentAddCategoryForm() {
         $form = new UI\Form;
-        $form->addText('cat_name');
+        $form->addText('cat_name')
+                ->addRule(UI\Form::FILLED);
         $form->addSubmit('save_change');
         $form->onSuccess[] = callback($this, 'addCategoryFormSubmitted');
         return $form;

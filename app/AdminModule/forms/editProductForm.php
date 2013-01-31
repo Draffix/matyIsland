@@ -37,11 +37,14 @@ class editProductForm extends UI\Form {
             $this->addMultiSelect('category', 'kategorie', $name)
                     ->setDefaultValue($this->selectedCategories);
         }
-        $this->addText('prod_name');
+        $this->addText('prod_name')
+                ->addRule($this::FILLED);
         $this->addCheckbox('prod_is_active');
-        $this->addText('prod_on_stock');
+        $this->addText('prod_on_stock')
+                ->addRule($this::FILLED);
         $this->addCheckbox('prod_isnew');
-        $this->addText('prod_price');
+        $this->addText('prod_price')
+                ->addRule($this::FILLED);
         $this->addText('prod_code');
         $this->addTextArea('prod_describe')
                 ->getControlPrototype()->class('mceEditor');
