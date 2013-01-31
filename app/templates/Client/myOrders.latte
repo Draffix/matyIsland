@@ -2,7 +2,21 @@
     {foreach $flashes as $flash}
 <div class="flash {$flash->type}" style="width: auto;">{$flash->message}</div>
     {/foreach}
-<div class="inside-content" style="width: 660px" >
-    <p>Zde budou mé objednávky</p>
-    <a n:href="Client:">Vrátit se zpět</a>
+<div id="outside-box">
+    <div id="breadcrumbs">
+        <p>
+            <a n:href="Homepage:">Hračky MatyLand</a>
+            >
+            <a n:href="Client:">Klientské centrum</a>
+            >
+            <a n:href="Client:myOrders"><b>Přehled objednávek</b></a>
+        </p>
+    </div>
+    <div id="inside-box" style="padding: 0 10px 10px 10px; width: 600px">
+        <h2>Objednávky</h2>
+        <p>Zde bude historie objednávek. Na službě se pracuje.</p>
+        <a n:href="Client:" style="">
+            <input type="button" name="back" style="margin-top: 50px; width: 100px" value="Zpět">
+        </a>
+    </div>
 </div>

@@ -1,7 +1,20 @@
 {block content}
-<div class="inside-content">
-    <h2>Klientské centrum</h2>
-<p><a n:href="Client:MyAccount">Můj účet</a></p>
-<p><a n:href="Client:Orders">Moje objednávky</a></p>
-
+<div id="outside-box" style="width: 602px">
+    <div id="breadcrumbs">
+        <p>
+            <a n:href="Homepage:">Hračky MatyLand</a>
+            >
+            <a n:href="Client:"><b>Klientské centrum</b></a>
+        </p>
+    </div>
+    <div id="inside-box" style="padding: 0 10px 10px 10px; width: 580px">
+        <h2>Klientské centrum</h2>
+        <ul style="padding: 10px 0 10px 50px;">
+            <li style="padding-bottom: 10px"><a n:href="Client:myAccount">Můj účet</a></li>
+            <li style="padding-bottom: 20px"><a n:href="Client:myOrders">Moje objednávky</a></li>
+        </ul>
+        <div>
+            <a n:href="Homepage:"><input type="button" name="back" value="Zpět nakupovat"></a>
+        </div>
+    </div>
 </div>
