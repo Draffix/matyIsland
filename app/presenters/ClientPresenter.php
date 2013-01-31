@@ -45,7 +45,7 @@ class ClientPresenter extends BasePresenter {
     }
 
     public function personalFormSubmitted(UI\Form $form) {
-        $values = $form->getValues();      
+        $values = $form->getValues();
 
         if ($this->user->countFindByEmail($values->user_email) != 0 &&
                 $this->users->find($this->getUser()->getId())->user_email != $values->user_email) {
@@ -100,6 +100,7 @@ class ClientPresenter extends BasePresenter {
         $this->user->updateUser($values, $this->getUser()->getId());
 
         $this->flashMessage('Vaše údaje byly úspěšně změněny a uloženy.', 'success');
+        $this->redirect('this');
     }
 
 }
