@@ -10,12 +10,15 @@ class personalForm extends UI\Form {
                 ->addRule($this::FILLED);
         $this->addText('user_surname', 'Příjmení:')
                 ->addRule($this::FILLED);
-        $this->addPassword('user_password', 'Heslo:');
-        $this->addPassword('user_confirmPassword', 'Ověření hesla:');
+        $this->addPassword('user_password', 'Heslo:')
+                ->addRule($this::FILLED);
+        $this->addPassword('user_confirmPassword', 'Ověření hesla:')
+                ->addRule($this::FILLED);
         $this->addText('user_telefon', 'Telefon:')
                 ->addRule($this::FILLED);
         $this->addText('user_email', 'E-mail:')
-                ->addRule($this::FILLED);
+                ->addRule($this::FILLED)
+                ->setType('email');
         $this->addText('user_street', 'Ulice a číslo:')
                 ->addRule($this::FILLED);
         $this->addText('user_city', 'Město:')
