@@ -111,6 +111,7 @@ $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<pagina
                     'prihlaseni' => 'Login',
                     'registrace' => 'Registration',
                     'vyhledavani' => 'Search',
+                    'klient' => 'Client',
                 ),
             ),
             'action' => array(
@@ -125,6 +126,8 @@ $container->router[] = new Route('[<presenter>[/<action>[/<id>]]]?strana=<pagina
                     'kontakt' => 'contact',
                     'novinky' => 'news',
                     'obnoveni-hesla' => 'passwordRecovery',
+                    'muj-ucet' => 'myAccount',
+                    'me-objednavky' => 'myOrders',
                 ),
             ),
             'id' => NULL,
