@@ -56,6 +56,13 @@ class UserPresenter extends BasePresenter {
 
     public function editUserFormSubmitted(Form $form) {
         $values = $form->getValues();
+
+        if ($this->users->findExistsEmail($this->getParameter('id'))->user_email != $values->user_email
+                && $this->users->countFindByEmail($values->user_email) != 0) {
+            $this->flashMessage('Litujeme, ale zadaný email již existuje.', 'error');
+            return;
+        }
+
         $this->users->updateUser($values, $this->id);
         $this->flashMessage('Údaje byly změněny', 'success');
         $this->redirect('this');
