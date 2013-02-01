@@ -32,6 +32,7 @@ class LoginPresenter extends BasePresenter {
         $form->addPassword('user_password', 'Heslo')
                 ->addRule($form::FILLED, 'Je nutné zadat heslo.')
                 ->setAttribute('placeholder', 'Heslo');
+        $form->addCheckbox('permanentLogin', 'Zapamatovat si mě');
         $form->addSubmit('login', 'Přihlásit se');
         $form->addCheckbox('zapamatovat', 'Zapamatovat si mě');
         $form->onSuccess[] = callback($this, 'signInFormSubmitted');
@@ -42,9 +43,12 @@ class LoginPresenter extends BasePresenter {
         try {
             $user = $this->getUser();
             $values = $form->getValues();
-            if ($values->zapamatovat) {
-                $user->setExpiration('+30 days', FALSE);
+            if ($values->permanentLogin) {
+                $user->setExpiration('+14 days', FALSE);
+            } else {
+                $user->setExpiration('+1 hour', TRUE, TRUE);
             }
+                       
             $user->login($values->user_email, $values->user_password);
             $this->flashMessage('Přihlášení bylo úspěšné.', 'success');
         } catch (NS\AuthenticationException $e) {
