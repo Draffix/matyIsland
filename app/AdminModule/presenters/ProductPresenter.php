@@ -112,6 +112,30 @@ class ProductPresenter extends BasePresenter {
                 pro nahrání obrázku nezvolili první možnost', 'error');
             return;
         }
+        if ($values['image_name2'] != '') {
+            $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name2']);
+            if ($exists == TRUE) {
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
+                return;
+            }
+        }
+        if ($values['image_name3'] != '') {
+            $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name3']);
+            if ($exists == TRUE) {
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
+                return;
+            }
+        }
+        if ($values['image_name4'] != '') {
+            $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name4']);
+            if ($exists == TRUE) {
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
+                return;
+            }
+        }
 
         // uložíme do tabulky Product
         $lastID = $this->product->insertProduct($values);
@@ -153,8 +177,6 @@ class ProductPresenter extends BasePresenter {
     public function editProductFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
 
-//        dump($values->category);
-
         if ($values['prod_name'] == '' || $values['prod_on_stock'] == '' ||
                 $values['prod_price'] == '' || $values['prod_describe'] == '' ||
                 $values['prod_long_describe'] == '') {
@@ -168,6 +190,30 @@ class ProductPresenter extends BasePresenter {
                 $values['image_name4'] != '' && $values['image_name4']->isImage() == FALSE) {
             $this->flashMessage('Nebyl zadán obrázek v platném formátu JPG, PNG nebo GIF', 'error');
             return;
+        }
+        if ($values['image_name2'] != '') {
+            $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name2']);
+            if ($exists == TRUE) {
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
+                return;
+            }
+        }
+        if ($values['image_name3'] != '') {
+            $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name3']);
+            if ($exists == TRUE) {
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
+                return;
+            }
+        }
+        if ($values['image_name4'] != '') {
+            $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name4']);
+            if ($exists == TRUE) {
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
+                return;
+            }
         }
 
         // uložíme do tabulky Product
@@ -202,13 +248,27 @@ class ProductPresenter extends BasePresenter {
         if ($folder !== '') {
             $targetPath .= "/$folder";
         }
-        // @TODO vyřešit kolize
+
         $name->move("$targetPath/$filename");
 
         $image = Image::fromFile("$targetPath/$filename");
         $image->resize(135, NULL);
         $thumbnailPath = $this->context->params['wwwDir'] . '/images/products/thumbnail/';
         $image->save("$thumbnailPath/$filename");
+    }
+
+    private function checkIfImageAlredyExists($folder, $name) {
+        $exists = FALSE;
+        $filename = $name->getSanitizedName();
+        $targetPath = $this->context->params['wwwDir'] . '/images/products/';
+        if ($folder !== '') {
+            $targetPath .= "/$folder";
+        }
+
+        if (file_exists("$targetPath/$filename")) {
+            $exists = TRUE;
+        }
+        return $exists;
     }
 
 }
