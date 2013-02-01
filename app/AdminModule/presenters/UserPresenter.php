@@ -113,8 +113,9 @@ class UserPresenter extends BasePresenter {
         // Create a unique login password
         $pass = $this->randomPassword();
         $values['user_password'] = \Authenticator::calculateHash($pass);
-
         $values->user_hash = $activation;
+        $values->user_role = 'member';
+        
         $this->users->saveUser($values);
 
         $template = $this->createTemplate();

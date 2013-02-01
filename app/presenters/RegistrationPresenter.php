@@ -84,6 +84,7 @@ class RegistrationPresenter extends BasePresenter {
         unset($values['spam'], $values['form_created'], $values['user_confirmPassword']);
         $values->user_hash = $activation;
         $values['user_password'] = Authenticator::calculateHash($values['user_password']);
+        $values['user_role'] = 'member';
         $this->user->saveUser($values);
 
         $template = $this->createTemplate();
