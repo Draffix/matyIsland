@@ -406,6 +406,12 @@
                     <div class="well">
                         Objednávka byla přijata {$order->ord_date|date:'j.n.Y, H:i:s'}
                     </div>
+                    <div class="well">
+                        Jedná se o dárek: {if $order->isGift == 0} <b>Ne</b> {else} <b>Ano</b> - zákazník si nepřeje fakturu do balíku {/if}
+                        <br>
+                        <br>
+                        Zpráva zákazníka: {if $order->cust_note == ''} Žádná {else} {$order->cust_note} {/if} 
+                    </div>
 
                     <div class="change-status">
                         Nastavit stav na:<br />
