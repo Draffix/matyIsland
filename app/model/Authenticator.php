@@ -6,8 +6,8 @@ use Nette\Security as NS;
  * Users authenticator.
  */
 class Authenticator extends Nette\Object implements NS\IAuthenticator {
-    
-        /**
+
+    /**
      * @var UserModel
      */
     private $users;
@@ -18,8 +18,8 @@ class Authenticator extends Nette\Object implements NS\IAuthenticator {
     public function __construct(UserModel $users) {
         $this->users = $users;
     }
-    
-      /**
+
+    /**
      * Performs an authentication
      * @param  array
      * @return Nette\Security\Identity
@@ -33,12 +33,13 @@ class Authenticator extends Nette\Object implements NS\IAuthenticator {
             throw new NS\AuthenticationException("User '$useremail' not found.", self::IDENTITY_NOT_FOUND);
         }
 
-        if ($row->user_password !== self::calculateHash($password, $row->user_password)) {
+        $bcrypt = new Bcrypt();
+        if ($row->user_password != $bcrypt->verify($password, $row->user_password)) {
             throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
         }
 
         unset($row->password);
-        return new NS\Identity($row->user_id, NULL, $row->toArray());
+        return new NS\Identity($row->user_id, $row->user_role);
     }
 
     /**
@@ -46,11 +47,9 @@ class Authenticator extends Nette\Object implements NS\IAuthenticator {
      * @param  string
      * @return string
      */
-    public static function calculateHash($password, $salt = null) {
-        if ($salt === null) {
-            $salt = '$2a$07$' . Nette\Utils\Strings::random(32) . '$';
-        }
-        return crypt($password, $salt);
+    public static function calculateHash($password) {
+        $bcrypt = new Bcrypt();
+        return $bcrypt->hash($password);
     }
 
 }
