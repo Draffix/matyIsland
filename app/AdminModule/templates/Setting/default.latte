@@ -1,0 +1,213 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="Setting:">Nastavení</a> <span class="divider">/</span>
+</li>
+{/block}
+{block content}
+    {foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+    {/foreach}
+<div class="row-fluid">
+    <div class="span12 bgcolor">  
+<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab">Nastavení e-shopu</a></li>
+                <li><a href="#tab2" data-toggle="tab">Prodejce</a></li>
+                <li><a href="#tab3" data-toggle="tab">Platba</a></li>
+                <li><a href="#tab4" data-toggle="tab">Doprava</a></li>
+                <li><a href="#tab5" data-toggle="tab">Slevy</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    <div class="well">
+                        <h3>Nastavení e-shopu</h3>
+                        {form settingForm}
+                        <div class="control-group">
+                            <label class="control-label"><strong>Název eshopu</strong></label>
+                            <div class="controls">
+                                <input n:input="eshop_name" class="input-xlarge focused" type="text" autofocus="" value="{$setting->eshop_name}" required="">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Popis eshopu</strong></label>
+                            <div class="controls">
+                                <input n:input="eshop_describe" class="input-xxlarge" type="text" value="{$setting->eshop_describe}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Klíčová slova</strong></label>
+                            <div class="controls">
+                                <input n:input="eshop_key_words" class="input-xxlarge" type="text" value="{$setting->eshop_key_words}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Ikona favicon.ico</strong></label>
+                            <div class="controls">
+                                <input n:input="eshop_favicon" type="file">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Počet produktů na hlavní stránce</strong></label>
+                            <div class="controls">
+                                <input n:input="eshop_product_on_homepage" class="input-mini" type="number" value="{$setting->eshop_product_on_homepage}">
+                            </div>
+                        </div>
+                        <div class="form-actions">                
+                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                        </div>
+                        {/form}
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <div class="well">
+                        <h3>Prodejce</h3>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Jméno / Firma</strong></label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" type="text" autofocus="" value="{$owner->owner_name}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Email</strong></label>
+                            <div class="controls">
+                                <input class="input-xlarge" type="text" value="{$owner->owner_email}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Ulice</strong></label>
+                            <div class="controls">
+                                <input class="input-xlarge" type="text" value="{$owner->owner_street}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Město</strong></label>
+                            <div class="controls">
+                                <input class="input-xlarge" type="text" value="{$owner->owner_city}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>PSČ</strong></label>
+                            <div class="controls">
+                                <input class="input-small" type="text" value="{$owner->owner_psc}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>IČO</strong></label>
+                            <div class="controls">
+                                <input class="input-small" type="text" value="{$owner->owner_ico}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>DIČ</strong></label>
+                            <div class="controls">
+                                <input class="input-small" type="text" value="{$owner->owner_dic}">
+                            </div>
+                        </div>
+                        <div class="form-actions">                
+                            <input type="submit" class="btn btn-primary" value="Uložit změny">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab3">
+                    <div class="well">
+                        <h2>Nastavení plateb</h2>
+                        <p>Eshop podporuje tyto platební metody. Které z nich povolíte je jen na vás. 
+                            U každé z nich můžete nastavit navíc její název a případnou cenu (příplatek) za 
+                            tuto možnost platby.</p>
+                        {foreach $payment as $p}
+                        <fieldset style="margin-bottom: 40px">
+                            <legend style="margin-bottom: 0px">{$p->payment_name}</legend>
+                            <div class="control-group">
+                                <label class="control-label"><strong>Popis</strong></label>
+                                <div class="controls">
+                                    <input class="input-xlarge" type="text" value="{$p->payment_describe}">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"><strong>Příplatek</strong></label>
+                                <div class="controls">
+                                    <input class="input-small" type="text" value="{$p->payment_price}">,- Kč s DPH
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="submit" class="btn btn-primary" value="Uložit změny">
+                                    <a class="btn" n:href="">
+                                        <i class="icon-off"></i>  
+                                        Deaktivovat                                            
+                                    </a>
+                                </div>
+                            </div>
+                        </fieldset>
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab4">
+                    <div class="well">
+                        <h2>Doprava</h2>
+                        <p>Eshop podporuje tři možnosti dopravců. Je to Česká pošta, 
+                            kurýrní služba (typicky PPL) a osobní odběr. Můžete si zvolit, které způsoby 
+                            doručení povolíte a které ne, navíc u nich nastavit název a cenu za doručení.</p>
+                       {foreach $delivery as $d}
+                        <fieldset style="margin-bottom: 40px">
+                            <legend style="margin-bottom: 0px">{$d->delivery_name}</legend>
+                            <div class="control-group">
+                                <label class="control-label"><strong>Popis</strong></label>
+                                <div class="controls">
+                                    <input class="input-xlarge" type="text" value="{$d->delivery_describe}">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"><strong>Příplatek</strong></label>
+                                <div class="controls">
+                                    <input class="input-small" type="text" value="{$d->delivery_price}">,- Kč s DPH
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="submit" class="btn btn-primary" value="Uložit změny">
+                                    <a class="btn" n:href="">
+                                        <i class="icon-off"></i>  
+                                        Deaktivovat                                            
+                                    </a>
+                                </div>
+                            </div>
+                        </fieldset>
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab5">
+                    <div class="well">
+                        <h3>Slevy</h3>
+                        <p>Eshop umožňuje zvolit si procentní slevu na všechny produkty. Je na Vás, jestli
+                            si zvolíte slevu pouze pro registrované. Nula znamená žádnou slevu.</p>
+                        <fieldset>
+                            <legend style="margin-bottom: 0px">Možnosti slevy</legend>
+                            <div class="control-group">
+                                <label class="control-label"><strong>Sleva ceny (v %)</strong></label>
+                                <div class="controls">
+                                    <input class="input-xlarge" type="text" value="{$setting->eshop_discount}">
+                                </div>
+                                <div class="controls">
+                                    <input type="checkbox">Jen pro registrované uživatele
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-actions">                
+                            <input type="submit" class="btn btn-primary" value="Uložit změny">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
