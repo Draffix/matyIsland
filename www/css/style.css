@@ -843,6 +843,30 @@ div.flash.wrong {
     -webkit-border-radius:20px;
 }
 
+.itemDetail .oldpriceDetail {
+    position: relative;
+    float:right;
+    font-family:Arial, Helvetica, sans-serif;
+    margin: -10px 30px 0 0;
+}
+
+.itemDetail .oldpriceDetail:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    right: 0;
+    border-top: 1px solid;
+    border-color: inherit;
+    padding-left: 20px;
+
+    -webkit-transform:rotate(-5deg);
+    -moz-transform:rotate(-5deg);
+    -ms-transform:rotate(-5deg);
+    -o-transform:rotate(-5deg);
+    transform:rotate(-5deg);
+}
+
 .itemDetail .center{
     margin:10px 10px 0 10px;
 }
