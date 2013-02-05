@@ -28,7 +28,7 @@ class BasketPresenter extends BasePresenter {
     }
 
     public function handleRemoveFromCart($id) {
-        $_SESSION["totalPrice"] -= ($_SESSION["cart"][$id]["basket_quantity"] * $this->basket->findPrice($id)->price);
+        $_SESSION["totalPrice"] -= ($_SESSION["cart"][$id]["basket_quantity"] * $_SESSION["cart"][$id]["prod_price"]);
         $_SESSION["count"] -= $_SESSION["cart"][$id]["basket_quantity"];
         unset($_SESSION["cart"][$id]);
 
@@ -65,7 +65,7 @@ class BasketPresenter extends BasePresenter {
 // zrušíme v session pole daného produktu
         if ($values->quantity <= 0) {
             $_SESSION["count"] -= $_SESSION["cart"][$values->product_id]["basket_quantity"];
-            $_SESSION["totalPrice"] -= ($_SESSION["cart"][$values->product_id]["basket_quantity"] * $this->basket->findPrice($values->product_id)->price);
+            $_SESSION["totalPrice"] -= ($_SESSION["cart"][$values->product_id]["basket_quantity"] * $_SESSION["cart"][$values->product_id]["prod_price"]);
             unset($_SESSION["cart"][$values->product_id]);
             if ($this->getUser()->isLoggedIn()) {
                 $this->basket->dropItemFromBasket($values->product_id, $this->getUser()->getId());
@@ -79,7 +79,7 @@ class BasketPresenter extends BasePresenter {
         elseif ($values->quantity > $_SESSION["cart"][$values->product_id]["basket_quantity"]) {
 // přičítám položky do košíku přes globální session
             $_SESSION["count"] += ($values->quantity - $_SESSION["cart"][$values->product_id]["basket_quantity"]);
-            $_SESSION["totalPrice"] += $this->basket->findPrice($values->product_id)->price * ($values->quantity - $_SESSION["cart"][$values->product_id]["basket_quantity"]);
+            $_SESSION["totalPrice"] += $_SESSION["cart"][$values->product_id]["prod_price"] * ($values->quantity - $_SESSION["cart"][$values->product_id]["basket_quantity"]);
             $_SESSION["cart"][$values->product_id]["basket_quantity"] = $values->quantity;
         }
 
@@ -89,7 +89,7 @@ class BasketPresenter extends BasePresenter {
 // změníme množství produktu podle zadaného množství
         elseif ($values->quantity < $_SESSION["cart"][$values->product_id]["basket_quantity"]) {
             $_SESSION["count"] -= ($_SESSION["cart"][$values->product_id]["basket_quantity"] - $values->quantity);
-            $_SESSION["totalPrice"] -= $this->basket->findPrice($values->product_id)->price * ($_SESSION["cart"][$values->product_id]["basket_quantity"] - $values->quantity);
+            $_SESSION["totalPrice"] -= $_SESSION["cart"][$values->product_id]["prod_price"] * ($_SESSION["cart"][$values->product_id]["basket_quantity"] - $values->quantity);
             $_SESSION["cart"][$values->product_id]["basket_quantity"] = $values->quantity;
         }
 
