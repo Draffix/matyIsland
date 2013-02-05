@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label"><strong>Ikona favicon.ico</strong></label>
+                            <label class="control-label"><strong>Ikona <abbr title="Obrázek o rozměrech 16x16px, který se zobrazuje vedle adresy stránky v prohlížečích.">favicon.ico</abbr></strong></label>
                             <div class="controls">
                                 <input n:input="eshop_favicon" type="file">
                             </div>
@@ -69,51 +69,77 @@
                 <div class="tab-pane" id="tab2">
                     <div class="well">
                         <h3>Prodejce</h3>
+                        {form ownerForm}
                         <div class="control-group">
                             <label class="control-label"><strong>Jméno / Firma</strong></label>
                             <div class="controls">
-                                <input class="input-xlarge focused" type="text" autofocus="" value="{$owner->owner_name}">
+                                <input n:input="owner_name" class="input-xlarge focused" type="text" autofocus="" value="{$owner->owner_name}" required="">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Jméno dalšího vlastníka (nepovinné)</strong></label>
+                            <div class="controls">
+                                <input n:input="owner_name2" class="input-xlarge focused" type="text" value="{$owner->owner_name2}">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label"><strong>Email</strong></label>
                             <div class="controls">
-                                <input class="input-xlarge" type="text" value="{$owner->owner_email}">
+                                <div class="input-prepend">
+                                    <span class="add-on">@</span><input n:input="owner_email" id="prependedInput" class="input-xlarge" type="email" value="{$owner->owner_email}" required="">
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Telefon</strong></label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">+ 420</span><input n:input="owner_telefon" id="prependedInput" class="input-xlarge" type="text" value="{$owner->owner_telefon}">
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><strong>Telefon na dalšího vlastníka (nepovinné)</strong></label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">+ 420</span><input n:input="owner_telefon2" id="prependedInput" class="input-xlarge" type="text" value="{$owner->owner_telefon2}">
+                                </div> 
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label"><strong>Ulice</strong></label>
                             <div class="controls">
-                                <input class="input-xlarge" type="text" value="{$owner->owner_street}">
+                                <input n:input="owner_street" class="input-xlarge" type="text" value="{$owner->owner_street}" required="">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label"><strong>Město</strong></label>
                             <div class="controls">
-                                <input class="input-xlarge" type="text" value="{$owner->owner_city}">
+                                <input n:input="owner_city" class="input-xlarge" type="text" value="{$owner->owner_city}" required="">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label"><strong>PSČ</strong></label>
                             <div class="controls">
-                                <input class="input-small" type="text" value="{$owner->owner_psc}">
+                                <input n:input="owner_psc" class="input-small" type="text" value="{$owner->owner_psc}" required="">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label"><strong>IČO</strong></label>
                             <div class="controls">
-                                <input class="input-small" type="text" value="{$owner->owner_ico}">
+                                <input n:input="owner_ico" class="input-small" type="text" value="{$owner->owner_ico}">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label"><strong>DIČ</strong></label>
                             <div class="controls">
-                                <input class="input-small" type="text" value="{$owner->owner_dic}">
+                                <input n:input="owner_dic" class="input-small" type="text" value="{$owner->owner_dic}">
                             </div>
                         </div>
                         <div class="form-actions">                
-                            <input type="submit" class="btn btn-primary" value="Uložit změny">
+                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
                         </div>
+                        {/form}
                     </div>
                 </div>
                 <div class="tab-pane" id="tab3">
@@ -123,30 +149,34 @@
                             U každé z nich můžete nastavit navíc její název a případnou cenu (příplatek) za 
                             tuto možnost platby.</p>
                         {foreach $payment as $p}
+                        {form paymentForm-$p->payment_id}
                         <fieldset style="margin-bottom: 40px">
+                            {input payment_id value => $p->payment_id}
                             <legend style="margin-bottom: 0px">{$p->payment_name}</legend>
                             <div class="control-group">
                                 <label class="control-label"><strong>Popis</strong></label>
                                 <div class="controls">
-                                    <input class="input-xlarge" type="text" value="{$p->payment_describe}">
+                                    <input n:input="payment_describe" class="input-xlarge" type="text" value="{$p->payment_describe}">
                                 </div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label"><strong>Příplatek</strong></label>
                                 <div class="controls">
-                                    <input class="input-small" type="text" value="{$p->payment_price}">,- Kč s DPH
+                                    <input n:input="payment_price" class="input-small" type="text" value="{$p->payment_price}">,- Kč s DPH
                                 </div>
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="submit" class="btn btn-primary" value="Uložit změny">
-                                    <a class="btn" n:href="">
-                                        <i class="icon-off"></i>  
-                                        Deaktivovat                                            
-                                    </a>
+                                    <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                                    {if $p->payment_enabled == 1}
+                                    <a class="btn" n:href="deactivatePayment! $p->payment_id"><i class="icon-off"></i> Deaktivovat</a>
+                                    {else}
+                                    <a class="btn" n:href="activatePayment! $p->payment_id"><i class="icon-ok"></i> Aktivovat</a>
+                                    {/if}
                                 </div>
                             </div>
                         </fieldset>
+                        {/form}
                         {/foreach}
                     </div>
                 </div>
@@ -157,30 +187,34 @@
                             kurýrní služba (typicky PPL) a osobní odběr. Můžete si zvolit, které způsoby 
                             doručení povolíte a které ne, navíc u nich nastavit název a cenu za doručení.</p>
                        {foreach $delivery as $d}
+                        {form deliveryForm-$d->delivery_id}
                         <fieldset style="margin-bottom: 40px">
+                            {input delivery_id value => $d->delivery_id}
                             <legend style="margin-bottom: 0px">{$d->delivery_name}</legend>
                             <div class="control-group">
                                 <label class="control-label"><strong>Popis</strong></label>
                                 <div class="controls">
-                                    <input class="input-xlarge" type="text" value="{$d->delivery_describe}">
+                                    <input n:input="delivery_describe" class="input-xlarge" type="text" value="{$d->delivery_describe}">
                                 </div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label"><strong>Příplatek</strong></label>
                                 <div class="controls">
-                                    <input class="input-small" type="text" value="{$d->delivery_price}">,- Kč s DPH
+                                    <input n:input="delivery_price" class="input-small" type="text" value="{$d->delivery_price}">,- Kč s DPH
                                 </div>
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="submit" class="btn btn-primary" value="Uložit změny">
-                                    <a class="btn" n:href="">
-                                        <i class="icon-off"></i>  
-                                        Deaktivovat                                            
-                                    </a>
+                                    <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                                    {if $d->delivery_enabled == 1}
+                                    <a class="btn" n:href="deactivateDelivery! $d->delivery_id"><i class="icon-off"></i> Deaktivovat</a>
+                                    {else}
+                                    <a class="btn" n:href="activateDelivery! $d->delivery_id"><i class="icon-ok"></i> Aktivovat</a>
+                                    {/if}
                                 </div>
                             </div>
                         </fieldset>
+                        {/form}
                         {/foreach}
                     </div>
                 </div>
@@ -189,21 +223,20 @@
                         <h3>Slevy</h3>
                         <p>Eshop umožňuje zvolit si procentní slevu na všechny produkty. Je na Vás, jestli
                             si zvolíte slevu pouze pro registrované. Nula znamená žádnou slevu.</p>
+                        {form discountForm}
                         <fieldset>
                             <legend style="margin-bottom: 0px">Možnosti slevy</legend>
                             <div class="control-group">
                                 <label class="control-label"><strong>Sleva ceny (v %)</strong></label>
                                 <div class="controls">
-                                    <input class="input-xlarge" type="text" value="{$setting->eshop_discount}">
-                                </div>
-                                <div class="controls">
-                                    <input type="checkbox">Jen pro registrované uživatele
+                                    <input n:input="eshop_discount" class="input-mini" type="number" value="{$setting->eshop_discount}">
                                 </div>
                             </div>
                         </fieldset>
                         <div class="form-actions">                
-                            <input type="submit" class="btn btn-primary" value="Uložit změny">
+                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
                         </div>
+                        {/form}
                     </div>
                 </div>
             </div>
