@@ -4,10 +4,12 @@
     <img src="{$basePath}/images/photo4.jpg" alt="" width="682" height="334" style="margin-top: -1px;"/>
     <br />
     <div id="inside">
+        {if $setting->warning_enabled == 1}
         <div class="well">
             <img src="{$basePath}/images/info/warning.png"/>
-                <p>Všichni registrovaní zákazníci mají nyní 3% slevu na všechny hračky!</p>
+            {!$setting->warning_description}
         </div>
+        {/if}
         <div id="news"><img src="{$basePath}/images/novinky.jpg" alt="" width="159" height="17" /></div>
         {snippet list}
         <div id="items">
@@ -19,13 +21,24 @@
                         <img src="{$basePath}/images/products/{$mainProduct->image_name}" alt="{$mainProduct->image_name}" /></a></div>
                 <br />
                 <span class="describe"><p>{!$mainProduct->product->prod_describe|truncate:60}</p></span>
-                <span class="oldprice">{($mainProduct->product->prod_price * 0.03) + $mainProduct->product->prod_price|number},- Kč</span>
-                {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
-                <span class="price">{$mainProduct->product->prod_price},- Kč</span>
-                <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
-                {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
-                <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+
+                {if $setting->eshop_discount > 0}
+                <span class="oldprice">{$mainProduct->product->prod_price},- Kč</span>
+                    {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
+                        <span class="price">{$mainProduct->product->prod_price - ($mainProduct->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                        <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
+                    {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
+                        <span class="price">{$mainProduct->product->prod_price - ($mainProduct->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                    {/if}
+                {else}
+                    {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
+                        <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+                        <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
+                    {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
+                        <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+                    {/if}    
                 {/if}
+
             </div>
             {/foreach}
         </div>
