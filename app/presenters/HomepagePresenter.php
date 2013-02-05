@@ -29,7 +29,7 @@ class HomepagePresenter extends BasePresenter {
 
         $model = $this->products;
         $paginator = $this['paginator']->getPaginator();
-        $paginator->itemsPerPage = 6;
+        $paginator->itemsPerPage = $this->setting->fetchAllSettings()->eshop_product_on_homepage;
         $paginator->setBase(1);
         $paginator->itemCount = $model->countNews()->pocet;
         $mainProducts = $model->fetchImagesAndNews($paginator->itemsPerPage, $paginator->offset);
