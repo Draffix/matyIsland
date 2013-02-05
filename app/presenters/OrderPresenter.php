@@ -152,13 +152,13 @@ class OrderPresenter extends BasePresenter {
     protected function createComponentPaymentAndDeliveryForm() {
         //výpis všech typů placení
         $payment = array();
-        foreach ($this->deliveryPayment->fetchAllPayment() as $key => $p) {
+        foreach ($this->deliveryPayment->fetchAllEnabledPayment() as $key => $p) {
             $payment[$key] = $p->payment_name . ' - ' . $p->payment_describe . ' - ' . $p->payment_price . ' Kč';
         }
 
         //výpis všech typů dopravy
         $delivery = array();
-        foreach ($this->deliveryPayment->fetchAllDelivery() as $key => $d) {
+        foreach ($this->deliveryPayment->fetchAllEnabledDelivery() as $key => $d) {
             $delivery[$key] = $d->delivery_name . ' - ' . $d->delivery_describe . ' - ' . $d->delivery_price . ' Kč';
         }
 
@@ -179,6 +179,15 @@ class OrderPresenter extends BasePresenter {
 
     public function paymentAndDeliveryFormSubmitted(UI\Form $form) {
         $values = $form->getValues(TRUE);
+
+        if ($values['delivery_delivery_id'] == 1 && $values['payment_payment_id'] == 2 ||
+                $values['delivery_delivery_id'] == 2 && $values['payment_payment_id'] == 2 ||
+                $values['delivery_delivery_id'] == 2 && $values['payment_payment_id'] == 3 ||
+                $values['delivery_delivery_id'] == 3 && $values['payment_payment_id'] == 3) {
+            $this->flashMessage('Tuto kombinaci bohužel nejde zvolit ', 'wrong');
+            return;
+        }
+
         $_SESSION["order"] = array_merge($_SESSION["order"], $values);
 
         $_SESSION["order"]["deliveryPrice"] = $this->deliveryPayment->fetchPaymentType($values['payment_payment_id'])->payment_price
