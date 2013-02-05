@@ -39,6 +39,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
 
     public function beforeRender() {
         $this->setLayout('layoutAdmin');
+        $this->template->favicon = $this->setting->fetchAllSettings()->eshop_favicon;
 
         if ($this->isAjax()) {
             $this->presenter->invalidateControl('flashMessages');
