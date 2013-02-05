@@ -83,6 +83,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public function handleAddCart($id, $quantity) {
         if (!isset($_SESSION["cart"][$id])) {   // pokud neexistuje id produktu v košíku
             $_SESSION["cart"][$id] = $this->basket->fetchImagesAndAll($id); //zjisti všechny informace o produktu
+            // pokud je zvolena sleva tak vypočítám cenu z formule pro slevu
+            if ($this->setting->fetchAllSettings()->eshop_discount > 0) {
+                $_SESSION["cart"][$id]["prod_price"] = round($_SESSION["cart"][$id]["prod_price"] -
+                        ($_SESSION["cart"][$id]["prod_price"] * ($this->setting->fetchAllSettings()->eshop_discount / 100)));
+            }
             $_SESSION["cart"][$id]["basket_quantity"] = $quantity; // do množství připiš jedničku
             $_SESSION["cart"][$id]["totalPrice"] = $_SESSION["cart"][$id]["prod_price"]; // celková cena produktu jakožto jeden produkt
         } else {
@@ -94,7 +99,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $_SESSION["count"] += 1;
 
         // přičítám cenu jednoho výrobku ke globální session
-        $_SESSION["totalPrice"] += $this->basket->findPrice($id)->price;
+        $_SESSION["totalPrice"] += $_SESSION["cart"][$id]["prod_price"];
 
         // získání informací o uživateli a produktu (pouze pokud je přihlášen)
         if ($this->getUser()->isLoggedIn()) {
