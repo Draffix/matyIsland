@@ -13,7 +13,11 @@
     </div>
     <div class="itemDetail">        
         <span class="title"><a n:href="Product: $product->product->prod_id, $product->product->prod_name">{$product->product->prod_name}</a>
+            {if $setting->eshop_discount > 0}
+            <span class="price">{$product->product->prod_price - ($product->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+            {else}
             <span class="price">{$product->product->prod_price},- Kč</span>
+            {/if}
             <span class="priceText">Naše cena s DPH:</span>
         </span>
         <br />
@@ -21,7 +25,11 @@
                 <img src="{$basePath}/images/products/{$product->image_name}"/></a></span>
         <br />
         <span class="describe">{!$product->product->prod_describe}</span><br>
-        <div style="width: 200px; float: right;">
+        <div style="width: 200px; float: right; margin-top: -50px">
+            {if $setting->eshop_discount > 0}
+            <span class="oldpriceDetail">Původní cena: {$product->product->prod_price},- Kč</span>
+            {/if}
+           <br>
                 {control rating}
             <br>
             <br>
