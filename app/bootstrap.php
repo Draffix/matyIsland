@@ -57,7 +57,9 @@ $container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]?strana=<
                     'produkt' => 'Product',
                     'objednavka' => 'Order',
                     'kategorie' => 'Category',
-                    'uzivatel' => 'User'
+                    'uzivatel' => 'User',
+                    'nastaveni' => 'Setting',
+                    'vzhled' => 'Image',
                 ),
             ),
             'action' => array(
@@ -65,6 +67,7 @@ $container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]?strana=<
                 Route::FILTER_TABLE => array(
                     // řetězec v URL => akce
                     'ukaz' => 'show',
+                    'upravit' => 'edit'
                 ),
             ),
             'id' => NULL,
