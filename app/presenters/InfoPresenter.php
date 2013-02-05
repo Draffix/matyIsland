@@ -6,6 +6,10 @@ use Nette\Utils\Validators;
 
 class InfoPresenter extends BasePresenter {
 
+    public function renderContact() {
+        $this->template->owner = $this->setting->fetchAllOwner();
+    }
+
     protected function createComponentContactForm() {
         $form = new UI\Form;
         $form->addText('name', 'Jméno:')
