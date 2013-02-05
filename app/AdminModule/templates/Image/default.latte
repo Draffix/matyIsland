@@ -1,0 +1,61 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="Image:">Vzhled</a> <span class="divider">/</span>
+</li>
+{/block}
+{block content}
+    {foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+    {/foreach}
+<div class="row-fluid">
+    <div class="span12 bgcolor">  
+<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab">Oznámení na hlavní stránce</a></li>
+                <li><a href="#tab2" data-toggle="tab">Šablony emailů</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    <div class="well">
+                        {form warningDescription}
+                        <div class="control-group">
+                            <label class="control-label"><strong>Text upozornění</strong></label>
+                            <div class="controls">
+                                <textarea n:input="warning_description">{$description}</textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <input n:input="warning_enabled" type="checkbox"> Zapnout / Vypnout upozornění
+                            </div>
+                        </div>
+                        <div class="form-actions">                
+                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                        </div>
+                        {/form}
+                    </div>
+                </div>
+                <div class="tab-pane active" id="tab2">
+                    <legend>Přehled šablon emailů</legend>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Muhammad Usman</td>
+                                <td class="center">2012/01/01</td>
+                                <td class="center">Member</td>                                     
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
