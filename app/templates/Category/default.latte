@@ -18,12 +18,24 @@
                         <img src="{$basePath}/images/products/{$cat->image_name}" alt="{$cat->image_name}" /></a></div>
                 <br />
                 <span class="describe"><p>{!$cat->prod_describe|truncate:60}</p></span>
-                {if $cat->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
-                <span class="price">{$cat->prod_price},- Kč</span>
-                <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
-                {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 11px">Nedostupné</span><br>
-                <span class="price">{$cat->prod_price},- Kč</span>
+
+                {if $setting->eshop_discount > 0}
+                <span class="oldprice">{$cat->prod_price},- Kč</span>
+                    {if $cat->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
+                        <span class="price">{$cat->prod_price - ($cat->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                        <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
+                    {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
+                        <span class="price">{$cat->prod_price - ($cat->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                    {/if}
+                {else}
+                    {if $cat->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
+                        <span class="price">{$cat->prod_price},- Kč</span>
+                        <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
+                    {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
+                        <span class="price">{$cat->prod_price},- Kč</span>
+                    {/if}    
                 {/if}
+                
             </div>
             {/foreach}
         </div>
