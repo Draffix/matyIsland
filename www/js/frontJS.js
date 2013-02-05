@@ -19,33 +19,33 @@ $(document).ready(function(){
 //payment-0 = directDebit
 //payment-1 = cash
 //payment-2 = casOnDelivery
-function toggleStatus() {
-    if ($('#delivery-0').is(':checked')) {
-        $('#elementsToOperateOn :input').removeAttr('disabled');
-        if($('#payment-1').is(':checked')) {
-            $('#payment-2').attr('checked', 'checked');
-        }
-        $('#payment-1').attr('disabled', true);
-        
-    } else if ($('#delivery-1').is(':checked')){
-        $('#elementsToOperateOn :input').removeAttr('disabled');
-        if($('#payment-1').is(':checked')) {
-            $('#payment-0').attr('checked', 'checked');
-        }
-        else if($('#payment-2').is(':checked')) {
-            $('#payment-0').attr('checked', 'checked');
-        }
-        $('#payment-1').attr('disabled', true);
-        $('#payment-2').attr('disabled', true);
-        
-    } else if ($('#delivery-2').is(':checked')){
-        $('#elementsToOperateOn :input').removeAttr('disabled');
-        if($('#payment-2').is(':checked')) {
-            $('#payment-1').attr('checked', 'checked');
-        }
-        $('#payment-2').attr('disabled', true);
-    }
-}
+//function toggleStatus() {
+//    if ($('#delivery-0').is(':checked')) {
+//        $('#elementsToOperateOn :input').removeAttr('disabled');
+//        if($('#payment-1').is(':checked')) {
+//            $('#payment-2').attr('checked', 'checked');
+//        }
+//        $('#payment-1').attr('disabled', true);
+//        
+//    } else if ($('#delivery-1').is(':checked')){
+//        $('#elementsToOperateOn :input').removeAttr('disabled');
+//        if($('#payment-1').is(':checked')) {
+//            $('#payment-0').attr('checked', 'checked');
+//        }
+//        else if($('#payment-2').is(':checked')) {
+//            $('#payment-0').attr('checked', 'checked');
+//        }
+//        $('#payment-1').attr('disabled', true);
+//        $('#payment-2').attr('disabled', true);
+//        
+//    } else if ($('#delivery-2').is(':checked')){
+//        $('#elementsToOperateOn :input').removeAttr('disabled');
+//        if($('#payment-2').is(':checked')) {
+//            $('#payment-1').attr('checked', 'checked');
+//        }
+//        $('#payment-2').attr('disabled', true);
+//    }
+//}
 
 $(document).ready(function(){
     //  When user clicks on tab, this code will be executed
