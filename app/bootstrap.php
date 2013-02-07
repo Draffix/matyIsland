@@ -54,6 +54,7 @@ $container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]?strana=<
                 Route::VALUE => 'Homepage',
                 Route::FILTER_TABLE => array(
                     // řetězec v URL => presenter
+                    'uvod' => 'Homepage',
                     'produkt' => 'Product',
                     'objednavka' => 'Order',
                     'kategorie' => 'Category',
