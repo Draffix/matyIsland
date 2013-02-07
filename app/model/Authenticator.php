@@ -52,4 +52,13 @@ class Authenticator extends Nette\Object implements NS\IAuthenticator {
         return $bcrypt->hash($password);
     }
 
+    public static function verifyPassword($userPass, $databasePass) {
+        $bcrypt = new Bcrypt();
+        if ($databasePass == $bcrypt->verify($userPass, $databasePass)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 }
