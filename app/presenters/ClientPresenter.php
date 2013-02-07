@@ -59,8 +59,13 @@ class ClientPresenter extends BasePresenter {
             return;
         }
 
-        if ($values->old_password != '' && $this->users->find($this->getUser()->getId())->user_password
-                !== Authenticator::calculateHash($values->old_password, $this->users->find($this->getUser()->getId())->user_password)) {
+        if ($values->old_password != '' && $values->user_password == '' ||
+                $values->user_password != '' && $values->old_password == '') {
+            $this->flashMessage('Litujeme, ale nebyly vyplněny všechny položky.', 'wrong');
+            return;
+        }
+
+        if ($values->user_password != '' && !Authenticator::verifyPassword($values->old_password, $this->users->find($this->getUser()->getId())->user_password)) {
             $this->flashMessage('Litujeme, ale nebylo zadáno správné stávající heslo.', 'wrong');
             return;
         }
