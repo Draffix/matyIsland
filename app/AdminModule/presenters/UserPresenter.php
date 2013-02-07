@@ -36,7 +36,7 @@ class UserPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-        $this->template->users = $this->users->fetchAllUsers();
+        $this->template->users = $this->users->fetchAllMembers();
     }
 
     public function renderEdit($id) {
@@ -115,7 +115,7 @@ class UserPresenter extends BasePresenter {
         $values['user_password'] = \Authenticator::calculateHash($pass);
         $values->user_hash = $activation;
         $values->user_role = 'member';
-        
+
         $this->users->saveUser($values);
 
         $template = $this->createTemplate();
