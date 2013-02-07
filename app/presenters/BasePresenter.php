@@ -27,6 +27,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     /** @var SettingModel */
     protected $setting;
 
+    /** @var EmailTemplateModel */
+    protected $emailTemplate;
+
     /* zaregistruji si všechny potřebné služby společné pro všechny presentery
      * "odstartuji" session
      * Vložení služby do modelu z configu 
@@ -43,6 +46,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->users = $this->context->users;
         $this->deliveryPayment = $this->context->deliveryPayment;
         $this->setting = $this->context->setting;
+        $this->emailTemplate = $this->context->emailTemplate;
 
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
         @session_start();
