@@ -89,6 +89,23 @@ class UserModel extends Table {
         return $this->findAll();
     }
 
+    public function fetchAllMembers() {
+        return $this->findAll()
+                        ->where('user_role', 'member');
+    }
+
+    public function fetchAdmin() {
+        return $this->getTable()
+                        ->where('user_role', 'admin')
+                        ->fetch();
+    }
+
+    public function updateAdmin($values) {
+        return $this->getTable()
+                        ->where('user_role', 'admin')
+                        ->update($values);
+    }
+
     /**
      * Pro získání všech údajů jednoho uživatele
      * @param type $user_id
