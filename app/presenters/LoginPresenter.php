@@ -43,12 +43,6 @@ class LoginPresenter extends BasePresenter {
         try {
             $user = $this->getUser();
             $values = $form->getValues();
-            if ($values->permanentLogin) {
-                $user->setExpiration('+14 days', FALSE);
-            } else {
-                $user->setExpiration('+1 hour', TRUE, TRUE);
-            }
-                       
             $user->login($values->user_email, $values->user_password);
             $this->flashMessage('Přihlášení bylo úspěšné.', 'success');
         } catch (NS\AuthenticationException $e) {
@@ -104,21 +98,28 @@ class LoginPresenter extends BasePresenter {
         $values = $form->getValues();
         $newPass = $this->randomPassword();
 
-        $userData = $this->user->findByName($values->user_email);
+        if ($this->user->countFindByEmail($values->user_email) > 0) {
+            $userData = $this->user->findByName($values->user_email);
+        } else {
+            $this->flashMessage('Litujeme, ale nebyl zadán správný email.', 'wrong');
+            return;
+        }
 
         $this->user->setPassword($userData->user_id, $newPass);
 
-        $template = $this->createTemplate();
-        $template->setFile(__DIR__ . '/../templates/Login/passwordRecoveryEmail.latte');
+        $template = new Nette\Templating\Template();
+        $source = $this->emailTemplate->fetchTemplate(2)->template_content;
+        $template->setSource($source);
         $template->registerFilter(new Nette\Latte\Engine);
+
         $template->newPass = $newPass;
         $template->userName = $userData->user_email;
         $template->website = $_SERVER['SERVER_NAME'];
 
         $mail = new Message;
-        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+        $mail->setFrom($this->setting->fetchAllOwner()->owner_email)
                 ->addTo($values->user_email)
-                ->setSubject('Obnovení hesla')
+                ->setSubject($this->emailTemplate->fetchTemplate(2)->template_subject)
                 ->setHtmlBody($template)
                 ->send();
 

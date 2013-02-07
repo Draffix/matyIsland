@@ -27,7 +27,7 @@ class RegistrationPresenter extends BasePresenter {
 
     protected function createComponentPersonalForm() {
         $form = new personalForm();
-        $form->addAntispam();        
+        $form->addAntispam();
         $form->addSubmit('send', 'Registrovat');
         $form->onSuccess[] = callback($this, 'personalFormSubmitted');
         return $form;
@@ -87,16 +87,18 @@ class RegistrationPresenter extends BasePresenter {
         $values['user_role'] = 'member';
         $this->user->saveUser($values);
 
-        $template = $this->createTemplate();
-        $template->setFile(__DIR__ . '/../templates/Registration/regEmaill.latte');
+        $template = new Nette\Templating\Template();
+        $source = $this->emailTemplate->fetchTemplate(1)->template_content;
+        $template->setSource($source);
         $template->registerFilter(new Nette\Latte\Engine);
+        
         $template->hash = $activation;
-        $template->website = $_SERVER['SERVER_NAME'];
+        $template->url = $_SERVER['SERVER_NAME'] . $this->link("active!", $activation);
 
         $mail = new Message;
-        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+        $mail->setFrom($this->setting->fetchAllOwner()->owner_email)
                 ->addTo($values->user_email)
-                ->setSubject('Aktivace registrace')
+                ->setSubject($this->emailTemplate->fetchTemplate(1)->template_subject)
                 ->setHtmlBody($template)
                 ->send();
 

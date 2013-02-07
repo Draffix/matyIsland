@@ -221,6 +221,11 @@ class OrderPresenter extends BasePresenter {
         unset($values["agree"]); // odstraníme z pole zbytečný prvek checkbox
         $dateTime = array("ord_date" => new DateTime); // zjistíme aktuální čas a datum
         $_SESSION["order"] = array_merge($_SESSION["order"], $dateTime, $values); // doplníme o nové údaje
+
+        if ($this->user->isLoggedIn()) {
+            $_SESSION["order"]["user_user_id"] = $this->user->getId();
+        }
+
         $orderID = $this->order->saveOrder($_SESSION["order"]); //uloží a vrací ID vložené objednávky
 
         $_SESSION["order_id"] = $orderID;
@@ -231,8 +236,9 @@ class OrderPresenter extends BasePresenter {
         }
 
         // vytvoření emailové šablony
-        $template = $this->createTemplate();
-        $template->setFile(__DIR__ . '/../templates/Order/orderEmail.latte');
+        $template = new Nette\Templating\Template();
+        $source = $this->emailTemplate->fetchTemplate(3)->template_content;
+        $template->setSource($source);
         $template->registerFilter(new Nette\Latte\Engine);
 
         //vložení proměnných do šablony
@@ -240,6 +246,10 @@ class OrderPresenter extends BasePresenter {
         $template->website = $_SERVER['SERVER_NAME'];
         $template->order = $this->order->fetchOrder($orderID)->fetch();
         $template->orderProducts = $this->order->fetchAllOrdersWithID($orderID);
+
+        // protože filtr nepodporuje makra
+        $newDate = new DateTime($this->order->fetchOrder($orderID)->fetch()->ord_date);
+        $template->date = $newDate->format('j.n.Y, H:i');
 
         // jméno a cena zvoleného doručení
         $template->deliveryName = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($orderID)->delivery_name;
@@ -258,9 +268,9 @@ class OrderPresenter extends BasePresenter {
 
 
         $mail = new Message;
-        $mail->setFrom('MatyLand.cz <info@matyland.com>')
+        $mail->setFrom($this->setting->fetchAllOwner()->owner_email)
                 ->addTo($_SESSION["order"]["cust_email"])
-                ->setSubject('Potvrzení objednávky')
+                ->setSubject($this->emailTemplate->fetchTemplate(3)->template_subject)
                 ->setHtmlBody($template)
                 ->send();
 
