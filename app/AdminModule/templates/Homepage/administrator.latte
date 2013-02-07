@@ -1,0 +1,52 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="Homepage:administrator">Nastavení administratorského účtu</a> <span class="divider">/</span>
+</li>
+{/block}
+{block content}
+    {foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+    {/foreach}
+<div class="row-fluid">
+    <div class="span12 bgcolor">
+        <legend>Změna přihlašovacích údajů</legend>
+        {form editAdministratorForm}
+        <div class="control-group ">
+            <label>Přihlašovací email</label>
+            <div class="controls">
+                <input n:input="user_email" type="email" required="required" autofocus="autofocus" />
+            </div>
+        </div>
+        <div class="control-group ">
+            <label>Staré heslo do administrace</label>
+            <div class="controls">
+                <input n:input="old_password" type="password"/>
+            </div>
+        </div>
+        <div class="control-group ">
+            <label>Nové heslo</label>
+            <div class="controls">
+                <input n:input="user_password" type="password"/>
+            </div>
+        </div>
+        <div class="control-group ">
+            <label>Nové heslo (kontrola)</label>
+            <div class="controls">
+                <input n:input="user_confirmPassword" type="password"/>
+            </div>
+        </div>
+        <div class="form-actions" style="margin-bottom: -10px;">                
+            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+            <a n:href="Homepage:"><input type="button" class="btn" value="Zpět na úvodní stránku"></a>
+        </div>
+        {/form}
+    </div>
+</div>

@@ -1,0 +1,43 @@
+{block #breadcrumbs}
+<li>
+    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+    <a n:href="Image:">Vzhled</a> <span class="divider">/</span>
+    <a n:href="Image:">Změna šablony {$templat->template_name}</a> <span class="divider">/</span>
+</li>
+{/block}
+{block content}
+    {foreach $flashes as $flash}
+<div class="row-fluid">
+    <div class="span12 bgcolor">                                        
+        <div class="alert alert-{$flash->type}">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+                {$flash->message}
+        </div>                                       
+    </div><!--/span-->
+</div><!--/row-->
+    {/foreach}
+<div class="row-fluid">
+    <div class="span12 bgcolor"> 
+        <legend>Upravit šablonu</legend>
+        {form editTemplateForm}
+        {input template_id value => $templat->template_id}
+        <div id="email_template">
+            <div class="control-group ">
+                <label for="email_template_subject" class="required">Předmět</label>
+                <div class="controls">
+                    <input n:input="template_subject" type="text" id="email_template_subject" required="required" autofocus="autofocus" value="{$templat->template_subject}" />
+                </div>
+            </div>
+            <div class="control-group ">
+                <label>Obsah</label>
+                <div class="controls">
+                    <textarea n:input="template_content" rows="10" class="field span8" id="email_template_content" required="required">{$templat->template_content}</textarea>
+                </div>
+            </div>
+            <div class="form-actions" style="margin-bottom: -10px;">                
+                <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                <a n:href="Image:"><input type="button" class="btn" value="Zpět"></a>
+            </div>
+        </div>
+        {/form}
+    </div>
