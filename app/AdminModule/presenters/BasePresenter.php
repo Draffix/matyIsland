@@ -24,6 +24,9 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     /** @var \SettingModel */
     protected $setting;
 
+    /** @var \EmailTemplateModel */
+    protected $emailTemplate;
+
     protected function startup() {
         parent::startup();
         $this->order = $this->context->order;
@@ -32,12 +35,17 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $this->deliveryPayment = $this->context->deliveryPayment;
         $this->users = $this->context->users;
         $this->setting = $this->context->setting;
+        $this->emailTemplate = $this->context->emailTemplate;
 
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
         @session_start();
     }
 
     public function beforeRender() {
+        if (!$this->user->isInRole('admin')) {
+            $this->redirect(':Homepage:');
+        }
+
         $this->setLayout('layoutAdmin');
         $this->template->favicon = $this->setting->fetchAllSettings()->eshop_favicon;
 
