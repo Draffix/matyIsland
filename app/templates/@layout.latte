@@ -24,12 +24,69 @@
         <script type="text/javascript" src="{$basePath}/js/jquery.min.js"></script>
         <script type="text/javascript" src="{$basePath}/js/jquery-ui-1.8.2.custom.min.js"></script>
         <script type="text/javascript" src="{$basePath}/js/pirobox_extended.js"></script>
+
+        <!-- navigation -->
+        <link href="{$basePath}/css/skins/grey.css" rel="stylesheet" type="text/css" />
+        <link href="{$basePath}/css/dcaccordion.css" rel="stylesheet" type="text/css" />
+        <script type='text/javascript' src='{$basePath}/js/jquery.cookie.js'></script>
+        <script type='text/javascript' src='{$basePath}/js/jquery.dcjqaccordion.2.7.js'></script>
     </head>
 
     <body>
         {include header.latte}
         <div id="content">
-            {include navigation.latte}
+            <div id="sidebar">
+                <div id="navigation">
+                    <ul>
+                        <li><a n:href="Homepage:">Úvodní stránka</a></li>
+                        <li><a n:href="Product:news">Novinky</a></li>                        
+                        <li><a n:href="Info:paymentDelivery">Doprava a platba</a></li>
+                        <li><a n:href="Info:tradeTerms">Obchodní podmínky</a></li>
+                        <li><a n:href="Info:tellUs">Napište nám</a></li>
+                        <li><a n:href="Info:contact">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <script type="text/javascript">
+$(document).ready(function($){
+        $('#accordion').dcAccordion({
+                eventType: 'click',
+                autoClose: true,
+                saveState: true,
+                disableLink: false,
+                speed: 'fast',
+                classActive: 'active',
+                showCount: false
+        });
+});
+                    </script>
+                    <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
+                    <div class="grey">
+                        <ul class="accordion" id="accordion">
+                            {block #categories}
+                            {foreach $categories as $node}
+                            <li><a n:href="Category: $node['cat_id'], $node['cat_name']">{$node["cat_name"]}</a>
+                                <ul n:if="count($node['children'])">
+                                    <li>{include #categories, 'categories' => $node["children"]}</li>
+                                </ul>
+                            </li>
+                            {/foreach}
+                            {/block}
+                        </ul>
+                    </div>
+                    <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
+                    <div class="review">
+                        <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
+                            <img src="{$basePath}/images/products/{$randomProduct->image_name}" alt="" width="181" height="161" /></a><br />
+                        <div style="padding-top: 10px">
+                            <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
+                    {$randomProduct->product->prod_name}</a>
+                        </div><br />
+                        <p>{!$randomProduct->product->prod_describe|truncate:100}</p>
+                        <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
+                    </div>
+                </div>
+            </div>
             {include #content}
         </div>
         {include footer.latte}
