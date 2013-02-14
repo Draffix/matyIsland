@@ -339,7 +339,7 @@ class ProductModel extends Table {
 
     public function categoryOfProduct($prod_id) {
         return $this->connection->query('
-                        SELECT c.cat_id
+                        SELECT c.cat_id, c.cat_name
                         FROM category_has_product AS cp
                         JOIN category AS c ON cp.category_cat_id = c.cat_id
                         JOIN product AS p ON cp.product_prod_id = p.prod_id
