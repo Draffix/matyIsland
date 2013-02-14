@@ -13,7 +13,38 @@ class CategoryPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-        $this->template->categories = $this->category->fetchAllCategoriesAndCountProducts();
+        foreach ($this->category->fetchAllRoots() as $value) {
+            $pocet[$value->cat_id] = $value;
+
+            foreach ($this->category->countOfSubcategory($value->cat_id) as $value) {
+                if (is_bool($value->pocet)) {
+                    $countOfSubcategory = 0;
+                } else {
+                    $countOfSubcategory = $value->pocet;
+                }
+                $pocet[$value->cat_id]['countOfSubcategory'] = $countOfSubcategory;
+            }
+        }
+        $this->template->categories = $pocet;
+    }
+
+    public function renderSubcategory($id, $categoryName) {
+        $this->template->name = $categoryName;
+//        $this->template->categories = $this->category->fetchAllAcestors($id);
+
+        foreach ($this->category->fetchAllAcestors($id) as $value) {
+            $pocet[$value->cat_id] = $value;
+
+            foreach ($this->category->countOfSubcategory($value->cat_id) as $value) {
+                if (is_bool($value->pocet)) {
+                    $countOfSubcategory = 0;
+                } else {
+                    $countOfSubcategory = $value->pocet;
+                }
+                $pocet[$value->cat_id]['countOfSubcategory'] = $countOfSubcategory;
+            }
+        }
+        $this->template->categories = $pocet;
     }
 
     // upraví jméno kategorie
@@ -45,7 +76,7 @@ class CategoryPresenter extends BasePresenter {
 
     public function addCategoryFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
-        $this->category->addCategory($values);
+        $this->category->addCategory($values, 1);
         $this->flashMessage('Kategorie byla přidána', 'success');
         $this->redirect('this');
     }
