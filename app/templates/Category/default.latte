@@ -3,9 +3,11 @@
 <div id="outside-box">
     <div id="breadcrumbs">
         <p>
-            <a n:href="Homepage:">Hračky MatyLand</a>
-            >
-            <a n:href="Category: $categoryId, $categoryName"><b>{$categoryName}</b></a>
+            {foreach $toRoot as $element}
+            <a n:href="Category: $categoryId, $categoryName">
+                {$element->cat_name}
+            </a> {sep} > {/sep}
+            {/foreach}
         </p>
     </div>
     <div id="inside-box">
@@ -22,20 +24,20 @@
                 {if $setting->eshop_discount > 0}
                 <span class="oldprice">{$cat->prod_price},- Kč</span>
                     {if $cat->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
-                        <span class="price">{$cat->prod_price - ($cat->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
-                        <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
+                <span class="price">{$cat->prod_price - ($cat->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
                     {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
-                        <span class="price">{$cat->prod_price - ($cat->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                <span class="price">{$cat->prod_price - ($cat->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
                     {/if}
                 {else}
                     {if $cat->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
-                        <span class="price">{$cat->prod_price},- Kč</span>
-                        <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
+                <span class="price">{$cat->prod_price},- Kč</span>
+                <a n:href="addCart! $cat->prod_id, 1"><span class="btn-into-basket"></span></a>
                     {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
-                        <span class="price">{$cat->prod_price},- Kč</span>
+                <span class="price">{$cat->prod_price},- Kč</span>
                     {/if}    
                 {/if}
-                
+
             </div>
             {/foreach}
         </div>
