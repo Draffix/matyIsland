@@ -39,7 +39,8 @@
                 <thead>
                     <tr>
                         <th>Jméno kategorie</th>
-                        <th>Počet položek</th>
+                        <th>Počet produktů</th>
+                        <th>Počet podkategorií</th>
                         <th>Akce</th>
                     </tr>
                 </thead>   
@@ -48,8 +49,9 @@
                     <tr>
                         <td class="center">{$category->cat_name}</td>
                         <td class="center">{$category->pocetPolozek}</td>
+                        <td class="center">{ifset $category->countOfSubcategory}{$category->countOfSubcategory}{else}0{/ifset}</td>
                         <td class="center">
-                            <a href="#change_{$category->cat_id}" role="button" class="btn btn-info" data-toggle="modal">
+                            <a n:href="Category:subcategory $category->cat_id, $category->cat_name" class="btn btn-info">
                                 <i class="icon-edit icon-white"></i>  
                                 Upravit                                            
                             </a>
@@ -94,7 +96,7 @@
                     <div class="modal-body">
                         <div class="alert alert-block ">
                             <h4 class="alert-heading">Upozornění!</h4>
-                            <p>Hodláte smazat kategorii, která může obsahovat produkty.
+                            <p>Hodláte smazat kategorii, která může obsahovat produkty či další podkategorie.
                                 V případě smazání budou tyto produkty bez kategorie a nebudou
                                 návštěvníkům zobrazeny. Proto před smazání zajistěte, že produkty
                                 spadají pod jinou kategorii, než je tato. Tato akce je nevratná.</p>
