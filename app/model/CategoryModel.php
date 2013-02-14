@@ -150,4 +150,85 @@ class CategoryModel extends Table {
                         ->fetch();
     }
 
+    public function categoryRoot() {
+        return $this->connection->query('
+                    SELECT c.*, cc.depth FROM category c
+                      JOIN category_closure cc
+                        ON (c.cat_id = cc.descendant)
+                      WHERE (SELECT COUNT(*) FROM category_closure WHERE descendant = c.cat_id)=1;                    
+                    ');
+    }
+
+    public function toRootSubtree($id) {
+        return $this->connection->query('
+                    SELECT c.*, depth
+                    FROM category c
+                    JOIN category_closure cc
+                      ON (c.cat_id = cc.ancestor)
+                    WHERE cc.descendant = ?;', $id);
+    }
+
+//    public function allSubtree($id) {
+//        return $this->connection->query('
+//                    SELECT c.*, cc.depth FROM category c
+//                    JOIN category_closure cc
+//                      ON (c.cat_id = cc.descendant)
+//                    WHERE cc.ancestor = ?', $id);
+//    }
+
+    public function getSubtree($node) {
+        $tree = $this->connection->query("
+        SELECT c.*, cc2.ancestor, cc2.descendant, cc.depth
+        FROM
+            category c
+            JOIN category_closure cc
+            ON (c.cat_id = cc.descendant)
+                JOIN category_closure cc2
+                USING (descendant)
+        WHERE cc.ancestor = $node AND cc2.depth = 1
+        ORDER BY cc.depth, c.cat_name
+    ");
+        return $this->parseSubTree($node, $tree);
+    }
+
+    private function parseSubTree($rootID, $nodes) {
+        // to allow direct access by node ID
+        $byID = array();
+
+        // an array of parrents and their children
+        $byParent = array();
+
+
+        foreach ($nodes as $node) {
+            if ($node["cat_id"] != $rootID) {
+                if (!isset($byParent[$node["ancestor"]])) {
+                    $byParent[$node["ancestor"]] = array();
+                }
+                $byParent[$node["ancestor"]][] = $node["cat_id"];
+            }
+            $byID[$node["cat_id"]] = (array) $node;
+        }
+
+        // tree reconstruction
+        $tree = array();
+        foreach ($byParent[$rootID] as $nodeID) { // root direct children
+            $tree[] = $this->parseChildren($nodeID, $byID, $byParent);
+        }
+
+        return $tree;
+    }
+
+    private function parseChildren($id, $nodes, $parents) {
+        $tree = $nodes[$id];
+
+        $tree["children"] = array();
+        if (isset($parents[$id])) {
+            foreach ($parents[$id] as $nodeID) {
+                $tree["children"][] = $this->parseChildren($nodeID, $nodes, $parents);
+            }
+        }
+
+        return $tree;
+    }
+
 }
