@@ -56,7 +56,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->template->setting = $this->setting->fetchAllSettings();
 
         $this->template->usersData = $this->users->find($this->getUser()->getId()); //v templatech mám k dispozici všechny údaje z přihlášeného ID
-        $this->template->categories = $this->category->findAll();
+         $this->template->categories = $this->category->getSubtree(1);
         $this->template->randomProduct = $this->mainProduct->randomProduct();
 
         if (!isset($_SESSION["totalPrice"])) {
