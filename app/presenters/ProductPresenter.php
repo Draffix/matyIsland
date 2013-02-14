@@ -52,7 +52,11 @@ class ProductPresenter extends BasePresenter {
         $this->template->countComments = $this->comments->countAllComments($id);
 
         // kategorie produktu
-        $this->template->category = $this->products->categoryOfProduct($id);
+        foreach ($this->products->categoryOfProduct($id) as $element) {
+            $catID = $element->cat_id;
+            $categories[] = $this->products->toRootSubtree($catID)->fetch();
+        }
+        $this->template->category = $categories;
     }
 
     public function renderNews() {
