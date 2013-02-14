@@ -53,8 +53,7 @@ class ProductPresenter extends BasePresenter {
 
         // kategorie produktu
         foreach ($this->products->categoryOfProduct($id) as $element) {
-            $catID = $element->cat_id;
-            $categories[] = $this->products->toRootSubtree($catID)->fetch();
+            $categories[] = $element;
         }
         $this->template->category = $categories;
     }
