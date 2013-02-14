@@ -1,0 +1,8 @@
+/* Page */
+ul, ul li{list-style: none;}
+.text-center {text-align: center;}
+.wrap {width: 960px; margin: 0 auto;}
+.demo-container {padding: 0px; float: left; width: 233px;}
+.demo-container h4 {font-size: 14px; margin: 0 0 5px 0;}
+.clear {clear: both;}
+
