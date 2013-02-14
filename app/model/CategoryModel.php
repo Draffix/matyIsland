@@ -129,9 +129,14 @@ class CategoryModel extends Table {
      * @param type $values
      * @return type
      */
-    public function addCategory($values) {
-        return $this->getTable()
-                        ->insert($values);
+    public function addCategory($values, $descendant) {
+        $rowID = $this->getTable()->insert($values);
+        $this->connection->query('
+                    INSERT INTO category_closure (ancestor, descendant, depth) VALUES (?,?,0);', $rowID, $rowID);
+        $this->connection->query('
+            INSERT INTO category_closure (ancestor,descendant, depth)
+            SELECT ancestor, ?, depth+1 FROM category_closure
+            WHERE descendant = ?;', $rowID, $descendant);
     }
 
     /**
@@ -150,15 +155,11 @@ class CategoryModel extends Table {
                         ->fetch();
     }
 
-    public function categoryRoot() {
-        return $this->connection->query('
-                    SELECT c.*, cc.depth FROM category c
-                      JOIN category_closure cc
-                        ON (c.cat_id = cc.descendant)
-                      WHERE (SELECT COUNT(*) FROM category_closure WHERE descendant = c.cat_id)=1;                    
-                    ');
-    }
-
+    /**
+     * Výpis stromu kategorie pro drobečkovou navigaci jednotlivé kategorie
+     * @param type $id
+     * @return type
+     */
     public function toRootSubtree($id) {
         return $this->connection->query('
                     SELECT c.*, depth
@@ -168,14 +169,61 @@ class CategoryModel extends Table {
                     WHERE cc.descendant = ?;', $id);
     }
 
-//    public function allSubtree($id) {
-//        return $this->connection->query('
-//                    SELECT c.*, cc.depth FROM category c
-//                    JOIN category_closure cc
-//                      ON (c.cat_id = cc.descendant)
-//                    WHERE cc.ancestor = ?', $id);
-//    }
+    /**
+     * Získáme všechny podkategorie daného předka a počet produktů podkategorie
+     * @param type $ancestor
+     * @return type
+     */
+    public function fetchAllAcestors($ancestor) {
+        return $this->connection->query('
+            SELECT c.*, cc.depth, COUNT(cp.product_prod_id) AS pocetPolozek
+            FROM category c
+            JOIN category_closure cc
+            ON c.cat_id = cc.descendant
+            LEFT JOIN category_has_product AS cp ON cp.category_cat_id = c.cat_id
+            WHERE cc.ancestor = ?
+            AND depth >0
+            GROUP BY `cat_id`', $ancestor);
+    }
 
+    /**
+     * Vrací všechny "kořeny" (nad nimi je pouze jeden hlavní kořen)
+     * a kolik má položek - pro výpis kategorií
+     * @return type
+     */
+    public function fetchAllRoots() {
+        return $this->connection->query('
+            SELECT c.*, cc.depth, COUNT(cp.product_prod_id) AS pocetPolozek
+            FROM category c
+            JOIN category_closure cc
+            ON c.cat_id = cc.descendant
+            LEFT JOIN category_has_product AS cp ON cp.category_cat_id = c.cat_id
+            WHERE cc.ancestor = 1
+            AND depth = 1
+            GROUP BY `cat_id`');
+    }
+
+    /**
+     * Získáme počet podkategorií předka
+     * @param type $ancestor
+     * @return type
+     */
+    public function countOfSubcategory($ancestor) {
+        return $this->connection->query('
+                    SELECT cc.*, c.*, COUNT(cat_id) AS pocet
+                    FROM `category_closure` AS cc
+                    JOIN category AS c ON cc.ancestor = c.cat_id
+                    WHERE depth > 0
+                    AND cat_id > 1
+                    AND cc.ancestor = ?
+                    GROUP BY cat_id', $ancestor);
+    }
+
+    /**
+     * Slouží pro výpis a řazení kategorií
+     * @param type $node
+     * @return type
+     */
     public function getSubtree($node) {
         $tree = $this->connection->query("
         SELECT c.*, cc2.ancestor, cc2.descendant, cc.depth
