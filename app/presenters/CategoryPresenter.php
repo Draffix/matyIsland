@@ -36,6 +36,7 @@ class CategoryPresenter extends BasePresenter {
 
         // jméno aktuální kategorie
         $this->template->categoryName = $this->category->findCategoryName($id)->cat_name;
+        $this->template->toRoot = $this->category->toRootSubtree($id);
 
         // id aktuální kategorie
         $this->template->categoryId = $id;
