@@ -130,7 +130,7 @@ class CategoryModel extends Table {
      * @return type
      */
     public function addCategory($values, $descendant) {
-        $rowID = $this->getTable()->insert($values);
+        $rowID = $this->getTable()->insert(array('cat_name' => $values->cat_name));
         $this->connection->query('
                     INSERT INTO category_closure (ancestor, descendant, depth) VALUES (?,?,0);', $rowID, $rowID);
         $this->connection->query('
@@ -166,7 +166,8 @@ class CategoryModel extends Table {
                     FROM category c
                     JOIN category_closure cc
                       ON (c.cat_id = cc.ancestor)
-                    WHERE cc.descendant = ?;', $id);
+                    WHERE cc.descendant = ?
+                    ORDER BY depth DESC;', $id);
     }
 
     /**
