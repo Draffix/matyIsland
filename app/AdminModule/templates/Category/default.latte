@@ -63,31 +63,6 @@
                     </tr>
 
                 <!-- Modal -->
-                <div id="change_{$category->cat_id}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel">Upravit kategorii</h3>
-                    </div>
-                    {form updateCategoryForm}
-                    <div class="modal-body">
-                        <div class="row-fluid">
-                            <div class="span12 bgcolor">         
-                                <label>Název kategorie</label>
-                                <input n:input="cat_name" id="subject" type="text" tabindex="0" class="myinput" value="{$category->cat_name}" autofocus=""/>                                      
-                                {input cat_id value => $category->cat_id}
-                            </div><!--/span-->
-                        </div><!--/row-->
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Storno</button>
-                        <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
-                    </div>
-                    {/form}
-                </div>
-                <!--/Modal -->
-
-                <!-- Modal -->
                 <div id="delete_{$category->cat_id}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
