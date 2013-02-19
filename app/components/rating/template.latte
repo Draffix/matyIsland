@@ -5,7 +5,7 @@
             <li class="current-rating" style="width:{($rating_unitwidth) * $rating1}px;"></li>
             {for $ncount = 1; $ncount <= $units; $ncount++}
             {if !$voted}
-            <li><a n:href="rate! $ncount, $id, $ip, $units" title="{$ncount} z {$units}" class="r{$ncount}-unit rater" rel="nofollow">{$ncount}</a></li>
+                {if $user->isLoggedIn()}<li><a n:href="rate! $ncount, $id, $ip, $units" title="{$ncount} z {$units}" class="r{$ncount}-unit rater" rel="nofollow">{$ncount}</a></li>{/if}
             {/if}
             {/for}
             <?php $ncount = 0 ?>
