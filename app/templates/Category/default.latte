@@ -19,7 +19,7 @@
                 <div class="image"><a n:href="Product: $cat->prod_id, $cat->prod_name">
                         <img src="{$basePath}/images/products/{$cat->image_name}" alt="{$cat->image_name}" /></a></div>
                 <br />
-                <span class="describe"><p>{!$cat->prod_describe|truncate:60}</p></span>
+                <div class="describe">{!$cat->prod_describe|truncate:60}</p></div>
 
                 {if $setting->eshop_discount > 0}
                 <span class="oldprice">{$cat->prod_price},- Kč</span>

@@ -67,7 +67,7 @@ $(document).ready(function($){
                             {foreach $categories as $node}
                             <li><a n:href="Category: $node['cat_id'], $node['cat_name']">{$node["cat_name"]}</a>
                                 <ul n:if="count($node['children'])">
-                                    <li>{include #categories, 'categories' => $node["children"]}</li>
+                                    {include #categories, 'categories' => $node["children"]}
                                 </ul>
                             </li>
                             {/foreach}
@@ -82,7 +82,7 @@ $(document).ready(function($){
                             <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
                     {$randomProduct->product->prod_name}</a>
                         </div><br />
-                        <p>{!$randomProduct->product->prod_describe|truncate:100}</p>
+                        <div class="describe">{!$randomProduct->product->prod_describe|truncate:100}</div>
                         <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
                     </div>
                 </div>

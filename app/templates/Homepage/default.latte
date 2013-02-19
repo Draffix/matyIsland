@@ -20,22 +20,22 @@
                 <div class="image"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">
                         <img src="{$basePath}/images/products/{$mainProduct->image_name}" alt="{$mainProduct->image_name}" /></a></div>
                 <br />
-                <span class="describe"><p>{!$mainProduct->product->prod_describe|truncate:60}</p></span>
+                <div class="describe">{!$mainProduct->product->prod_describe|truncate:60}</p></div>
 
                 {if $setting->eshop_discount > 0}
                 <span class="oldprice">{$mainProduct->product->prod_price},- Kč</span>
                     {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
-                        <span class="price">{$mainProduct->product->prod_price - ($mainProduct->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
-                        <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
+                <span class="price">{$mainProduct->product->prod_price - ($mainProduct->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
                     {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
-                        <span class="price">{$mainProduct->product->prod_price - ($mainProduct->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
+                <span class="price">{$mainProduct->product->prod_price - ($mainProduct->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
                     {/if}
                 {else}
                     {if $mainProduct->product->prod_on_stock != 0}<span class="store">Skladem</span><br>                   
-                        <span class="price">{$mainProduct->product->prod_price},- Kč</span>
-                        <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
+                <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+                <a n:href="addCart! $mainProduct->product->prod_id, 1"><span class="btn-into-basket"></span></a>
                     {else}<span class="store" style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span><br>
-                        <span class="price">{$mainProduct->product->prod_price},- Kč</span>
+                <span class="price">{$mainProduct->product->prod_price},- Kč</span>
                     {/if}    
                 {/if}
 
@@ -50,4 +50,3 @@
         {/snippet}
 </div>
 {/block}
-
