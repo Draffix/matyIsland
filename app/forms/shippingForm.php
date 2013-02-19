@@ -109,34 +109,41 @@ class shippingForm extends UI\Form {
         $this->addText('cust_name', 'Jméno: *')
                 ->setDefaultValue($cust_name)
                 ->addRule($this::FILLED)
-                ->setAttribute('tabindex', '1');
+                ->setAttribute('tabindex', '1')
+                ->setAttribute('title', 'Položka musí být vyplněna');
         $this->addText('cust_surname', 'Příjmení: *')
                 ->setDefaultValue($cust_surname)
                 ->addRule($this::FILLED)
-                ->setAttribute('tabindex', '2');
+                ->setAttribute('tabindex', '2')
+                ->setAttribute('title', 'Položka musí být vyplněna');
         $this->addText('cust_firmName', 'Název firmy:')
                 ->setDefaultValue($cust_firmName)
                 ->setAttribute('tabindex', '3');
         $this->addText('cust_email', 'E-mail: *')
                 ->setDefaultValue($cust_email)
                 ->addRule($this::FILLED)
-                ->setAttribute('tabindex', '4');
+                ->setAttribute('tabindex', '4')
+                ->setAttribute('title', 'Položka musí být vyplněna');
         $this->addText('cust_telefon', 'Telefon: *')
                 ->setDefaultValue($cust_telefon)
                 ->addRule($this::FILLED)
-                ->setAttribute('tabindex', '5');
+                ->setAttribute('tabindex', '5')
+                ->setAttribute('title', 'Položka musí být vyplněna');
         $this->addText('cust_street', 'Ulice a č. popisné: *')
                 ->setDefaultValue($cust_street)
                 ->addRule($this::FILLED)
-                ->setAttribute('tabindex', '6');
+                ->setAttribute('tabindex', '6')
+                ->setAttribute('title', 'Položka musí být vyplněna');
         $this->addText('cust_city', 'Město: *')
                 ->setDefaultValue($cust_city)
                 ->addRule($this::FILLED)
-                ->setAttribute('tabindex', '7');
+                ->setAttribute('tabindex', '7')
+                ->setAttribute('title', 'Položka musí být vyplněna');
         $this->addText('cust_psc', 'PSČ: *')
                 ->setDefaultValue($cust_psc)
                 ->addRule($this::FILLED)
-                ->setAttribute('tabindex', '8');
+                ->setAttribute('tabindex', '8')
+                ->setAttribute('title', 'Položka musí být vyplněna');
         $this->addText('cust_ico', 'IČO:')
                 ->setDefaultValue($cust_ico)
                 ->setAttribute('tabindex', '9');
