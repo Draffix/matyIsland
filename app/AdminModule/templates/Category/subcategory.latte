@@ -18,11 +18,20 @@
     {/foreach}
 <div class="row-fluid">
     <div class="span12" style="text-align: right">
-        <a class="btn btn-primary" href="#addCategory" data-toggle="modal">
+        <a class="btn btn-primary" href="#addSubcategory" data-toggle="modal">
             <i class="icon-plus"></i> 
             Vytvořit novou podkategorii
         </a>
-
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        {form updateCategoryForm class=>form-inline}
+        <label>Přejmenovat kategorii: </label>
+            {input cat_id value=>$cat_id}
+        <input n:input="cat_name" type="text" class="input-large" value="{$name}">
+        <button n:input="save_change" type="submit" class="btn">Uložit</button>
+        {/form}
     </div>
 </div>
 <div class="row-fluid sortable">		
@@ -65,3 +74,33 @@
                     {/foreach}
                 </tbody>
             </table>
+
+                <!-- Modal -->
+            <div id="addSubcategory" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Vytvořit kategorii</h3>
+                </div>
+                    {form addSubcategoryForm}
+                <div class="modal-body">
+                    <div class="row-fluid">
+                        <div class="span12 bgcolor">     
+                            {input cat_id value=>$cat_id}
+                            <label>Název kategorie</label>
+                            <input n:input="cat_name" id="subject" type="text" tabindex="0" class="myinput" autofocus=""/>                                      
+                        </div><!--/span-->
+                    </div><!--/row-->
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Storno</button>
+                    <input n:input="save_change" type="submit" class="btn btn-primary" value="Přidat kategorii">
+                </div>
+                    {/form}
+            </div>
+            <!--/Modal -->
+
+            <div class="form-actions" style="margin-bottom: -10px;">                
+                <a n:href="Category:"><input type="button" class="btn" value="Zpět na základní kategorie"></a>
+            </div>
+        </div>
