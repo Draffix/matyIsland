@@ -30,18 +30,13 @@ class CategoryPresenter extends BasePresenter {
 
     public function renderSubcategory($id, $categoryName) {
         $this->template->name = $categoryName;
-//        $this->template->categories = $this->category->fetchAllAcestors($id);
-
+        $this->template->cat_id = $id;
+        $pocet = array();
         foreach ($this->category->fetchAllAcestors($id) as $value) {
             $pocet[$value->cat_id] = $value;
 
             foreach ($this->category->countOfSubcategory($value->cat_id) as $value) {
-                if (is_bool($value->pocet)) {
-                    $countOfSubcategory = 0;
-                } else {
-                    $countOfSubcategory = $value->pocet;
-                }
-                $pocet[$value->cat_id]['countOfSubcategory'] = $countOfSubcategory;
+                $pocet[$value->cat_id]['countOfSubcategory'] = $value->pocet;
             }
         }
         $this->template->categories = $pocet;
@@ -62,7 +57,7 @@ class CategoryPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->category->updateCategoryName($values->cat_id, $values->cat_name);
         $this->flashMessage('Kategorie byla změněna', 'success');
-        $this->redirect('this');
+        $this->redirect('Category:');
     }
 
     public function createComponentAddCategoryForm() {
@@ -77,6 +72,23 @@ class CategoryPresenter extends BasePresenter {
     public function addCategoryFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
         $this->category->addCategory($values, 1);
+        $this->flashMessage('Kategorie byla přidána', 'success');
+        $this->redirect('this');
+    }
+
+    public function createComponentAddSubcategoryForm() {
+        $form = new UI\Form;
+        $form->addText('cat_name')
+                ->addRule(UI\Form::FILLED);
+        $form->addHidden('cat_id');
+        $form->addSubmit('save_change');
+        $form->onSuccess[] = callback($this, 'addSubcategoryFormSubmitted');
+        return $form;
+    }
+
+    public function addSubcategoryFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+        $this->category->addCategory($values, $values->cat_id);
         $this->flashMessage('Kategorie byla přidána', 'success');
         $this->redirect('this');
     }
