@@ -11,6 +11,7 @@
                 <li><a n:href="Info:tradeTerms">Obchodní podmínky</a> |</li>
                 <li><a n:href="Info:tellUs">Napište nám</a> |</li>
                 <li><a n:href="Info:contact">Kontakt</a></li>
+                {if $user->isInRole('admin')} |<li><a n:href=":Admin:Homepage:">Administrace</a></li>{/if}
             </ul>
             <p>©2013 Created by <a href="http://jerryklimcik.cz" target="_blank">Jaroslav Klimčík</a> | <a href="http://www.bestfreetemplates.info" title="Free CSS Templates" target="_blank" class="bft">BFT</a></p>																																																																				
         </div>
