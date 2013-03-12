@@ -17,33 +17,58 @@ common:
 			errorPresenter: Error
 
 		session:
-			expiration: +30 days
+			autoStart: smart
+			expiration: "+ 30 minutes"
 
-		database:
-			default:
-				dsn: 'mysql:host=127.0.0.1;dbname=matyisland2'
-				user:
-				password:
+		debugger:
+			strictMode: true
+			bar:
+				- @sessionPanel
+
 
 
 	services:
-		authenticator: MatyIsland\Authenticator
+		database: @Nette\Database\Connection
+		authenticator: Authenticator
 
-		category: MatyIsland\CategoryModel
-		order: MatyIsland\OrderModel
-		product: MatyIsland\ProductModel
-		users: MatyIsland\UserModel
-		basket: MatyIsland\BasketModel
+		category: CategoryModel
+		order: OrderModel
+		product: ProductModel
+		users: UserModel
+		basket: BasketModel
+		comments: CommentModel
+		deliveryPayment: DeliveryPaymentModel
+		setting: SettingModel
+		emailTemplate: EmailTemplateModel
+
+		sessionPanel:
+			class: SessionPanel
+			arguments:
+				- @application
+				- @session
+
+
+
 
 
 	factories:
 
-
 production < common:
+	nette:
+		database:
+			default:
+				dsn: 'mysql:host=wm28.wedos.net;dbname=d38550_matylan'
+				socket: /tmp/mysql50.sock
+				user: a38550_matylan
+				password: 5PWf2awr
+				profiler: TRUE
+				charset: utf8
+
 
 development < common:
 	nette:
 		database:
 			default:
+				dsn: 'mysql:host=127.0.0.1;dbname=matyIsland'
 				user: root
 				password: jarda
