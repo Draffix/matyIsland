@@ -1,0 +1,100 @@
+/*!
+ * jQuery UI Slider 1.10.1
+ * http://jqueryui.com
+ *
+ * Copyright 2013 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Slider#theming
+*/
+.ui-slider {
+    position: relative;
+    text-align: left;
+    width: 190px;
+    margin: 10px 0 10px 5px;
+    background-image: linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -o-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -moz-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -webkit-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -ms-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.58, rgb(159,178,34)),
+        color-stop(0.31, rgb(148,162,25))
+        );
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+}
+.ui-slider .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 1.2em;
+    height: 1.2em;
+    cursor: default;
+    background: white;
+    border:1px solid #777777;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+}
+.ui-slider .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    font-size: .7em;
+    display: block;
+    border: 0;
+    background-position: 0 0;
+}
+
+/* For IE8 - See #6727 */
+.ui-slider.ui-state-disabled .ui-slider-handle,
+.ui-slider.ui-state-disabled .ui-slider-range {
+    filter: inherit;
+}
+
+.ui-slider-horizontal {
+    height: .8em;
+}
+.ui-slider-horizontal .ui-slider-handle {
+    top: -.3em;
+    margin-left: -.6em;
+}
+.ui-slider-horizontal .ui-slider-range {
+    top: 0;
+    height: 100%;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+    left: 0;
+}
+.ui-slider-horizontal .ui-slider-range-max {
+    right: 0;
+}
+
+.ui-slider-vertical {
+    width: .8em;
+    height: 100px;
+}
+.ui-slider-vertical .ui-slider-handle {
+    left: -.3em;
+    margin-left: 0;
+    margin-bottom: -.6em;
+}
+.ui-slider-vertical .ui-slider-range {
+    left: 0;
+    width: 100%;
+}
+.ui-slider-vertical .ui-slider-range-min {
+    bottom: 0;
+}
+.ui-slider-vertical .ui-slider-range-max {
+    top: 0;
+}
