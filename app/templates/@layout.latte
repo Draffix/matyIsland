@@ -18,6 +18,8 @@
         <link rel="stylesheet" href="{$basePath}/css/themes/light/light.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="{$basePath}/css/nivo-slider.css" type="text/css" media="screen" />
 
+        <link rel="stylesheet" href="{$basePath}/css/jquery.ui.slider.css" type="text/css" media="screen" />
+
         <script type="text/javascript" src="{$basePath}/js/jquery.nette.js"></script>
         <script type="text/javascript" src="{$basePath}/js/jquery.ajaxform.js"></script>
         <script type="text/javascript" src="{$basePath}/js/ajax.js"></script>
@@ -36,6 +38,28 @@
         <link href="{$basePath}/css/dcaccordion.css" rel="stylesheet" type="text/css" />
         <script type='text/javascript' src='{$basePath}/js/jquery.cookie.js'></script>
         <script type='text/javascript' src='{$basePath}/js/jquery.dcjqaccordion.2.7.js'></script>
+
+<!-- slider -->
+        <script type='text/javascript' src='{$basePath}/js/jquery-ui-1.10.1.custom.js'></script>
+        <script type='text/javascript' src='{$basePath}/js/jquery.ui.core.js'></script>
+        <script type='text/javascript' src='{$basePath}/js/jquery.ui.widget.js'></script>
+        <script type='text/javascript' src='{$basePath}/js/jquery.ui.mouse.js'></script>
+        <script type='text/javascript' src='{$basePath}/js/jquery.ui.slider.js'></script>
+        <script>
+$(function() {
+        $( "#slider-range" ).slider({
+                range: true,
+                min: 0,
+                max: 5000,
+                values: [ 0, 5000 ],
+                slide: function( event, ui ) {
+                        $( "#amount" ).val(ui.values[ 0 ] + " Kč - " + ui.values[ 1 ] + " Kč");
+                }
+        });
+        $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+                " Kč - " + $( "#slider-range" ).slider( "values", 1 ) + " Kč");
+});
+        </script>
     </head>
 
     <body>
@@ -66,6 +90,33 @@ $(document).ready(function($){
         });
 });
                     </script>
+                    {ifCurrent Homepage:default}
+                    <div id="nabidka">
+                        <span id="nabidka-title">Potřebujete poradit s výběrem dárku?</span>
+                        <select>
+                            <option value="volvo">- Pohlaví -</option>
+                            <option value="saab">Holka</option>
+                            <option value="mercedes">Kluk</option>
+                            <option value="audi">Kojenec</option>
+                        </select>
+                        <select>
+                            <option value="volvo">- Věk -</option>
+                            <option value="saab">0 - 6 měsíců</option>
+                            <option value="mercedes">6 - 12 měsíců</option>
+                            <option value="audi">1 - 3 let</option>
+                            <option value="audi">3 - 6 let</option>
+                            <option value="audi">6 - 12 let</option>
+                            <option value="audi">12 a více let</option>
+                        </select>
+                        <p>
+                            <label for="amount" style="margin-left: 0px; color: #000; font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Cena:</label>
+                            <input type="text" id="amount" style="border:0; color: #000; font-weight:bold;" />
+                        </p>
+
+                        <div id="slider-range"></div>
+                        <input type="submit" name="btnSearchToy" value="Vyhledat hračku"/>
+                    </div>
+                    {else}
                     <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
                     <div class="grey">
                         <ul class="accordion" id="accordion">
@@ -80,6 +131,7 @@ $(document).ready(function($){
                             {/block}
                         </ul>
                     </div>
+                    {/ifCurrent}
                     <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
                     <div class="review">
                         <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
