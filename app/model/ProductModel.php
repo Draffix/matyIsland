@@ -91,6 +91,33 @@ class ProductModel extends Table {
                     OR product.prod_producer LIKE ?)', array(1, $text, $text, $text))->fetch();
     }
 
+    /**
+     * Vrací záznamy podle zadaného výběru a podle limitu a offsetu
+     * daného v paginatoru
+     * @param type $text
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
+    public function searchProductBySelect($min, $max, $limit, $offset) {
+        return $this->connection->table($this->image)
+                        ->where('product.prod_is_active = ?
+                    AND prod_price BETWEEN ? AND ?', array(1, $min, $max))
+                        ->limit($limit, $offset);
+    }
+
+    /**
+     * Vrací počet nalezených záznamů podle zadaného výběru
+     * @param type $text
+     * @return type
+     */
+    public function countSearchProductBySelect($min, $max) {
+        return $this->getTable()
+                        ->select('COUNT(*) AS pocet')
+                        ->where('product.prod_is_active = ?
+                    AND prod_price BETWEEN ? AND ?', array(1, $min, $max))->fetch();
+    }
+
     public function fetchRankValues($productID) {
         return $this->getTable()
                         ->where('product.prod_id', $productID)
@@ -335,7 +362,6 @@ class ProductModel extends Table {
                         ->where('prod_is_active', 0)
                         ->count();
     }
-
 
     public function categoryOfProduct($prod_id) {
         return $this->connection->query('

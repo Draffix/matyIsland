@@ -422,7 +422,7 @@ body{
 #sidebar{
     width:233px;
     float:left;
-    padding:15px 0 0 4px
+    padding:15px 0 0 4px;
 }
 
 #nabidka {
@@ -565,6 +565,12 @@ body{
     font-family:Tahoma, sans-serif;
     font-size:11px;
     color:#565656;
+
+    /* Rounded Corners */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 0px 0px 5px 5px;
 }
 .review a {
     font-family:Arial, Helvetica, sans-serif;
@@ -1069,7 +1075,7 @@ div.flash.wrong {
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
     color:#0D0D0D;
-    padding:0 0 25px 0
+    padding:0 0 25px 0;
 }
 #footer ul{
     padding:27px 0 13px 0

@@ -56,7 +56,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->template->setting = $this->setting->fetchAllSettings();
 
         $this->template->usersData = $this->users->find($this->getUser()->getId()); //v templatech mám k dispozici všechny údaje z přihlášeného ID
-         $this->template->categories = $this->category->getSubtree(1);
+        $this->template->categories = $this->category->getSubtree(1);
         $this->template->randomProduct = $this->mainProduct->randomProduct();
 
         if (!isset($_SESSION["totalPrice"])) {
@@ -145,6 +145,22 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $values = $form->getValues();
         unset($values['btnSearch']);
         $this->redirect('Search:s', $values->search);
+    }
+
+    public function createComponentNabidkaForm() {
+        $form = new Nette\Application\UI\Form;
+        $form->addText('price');
+        $form->addSubmit('send');
+        $form->onSuccess[] = callback($this, 'nabidkaFormSubmitted');
+        return $form;
+    }
+
+    public function nabidkaFormSubmitted(Nette\Application\UI\Form $form) {
+        $values = $form->getValues();
+        preg_match('/(?P<min_price>.*)\s*Kč\s*-\s*(?P<max_price>.*)\s*Kč/', $values["price"], $matches); //získáme min a max cenu
+        $matches['min_price'] = preg_replace('/\s+/', '', $matches['min_price']); // odstraníme whitespace
+        $matches['max_price'] = preg_replace('/\s+/', '', $matches['max_price']); // odstraníme whitespace
+        $this->redirect('Search:filtr', $matches['min_price'], $matches['max_price']);
     }
 
 }
