@@ -1,22 +1,22 @@
-<div>
-    <a href="{link Homepage:default}"><img src="{$basePath}/images/logo.jpg" width="237" height="123" class="float" alt="setalpm" /></a>																																																																	
-    <div class="topnav">
+<div id="header">
+    <div id="logo"><a href="{link Homepage:default}"><img src="{$basePath}/images/logo.jpg" width="237" height="123" class="float" alt="setalpm" /></a></div>
+    <div id="header-mid">
         <span>
-            {if $user->isLoggedIn()}
+                        {if $user->isLoggedIn()}
             <strong>Vítejte {$usersData->user_name}</strong> &nbsp; | &nbsp;            
             <a n:href="signOut!">Odhlásit se</a></span>
-            {else}
+                        {else}
         <a n:href="Login:">Přihlásit<img id="userIcon" alt="userIcon" src="{$basePath}/images/info/user.png"></a>&nbsp; | &nbsp; <a n:href="Registration:"><img id="regIcon" alt="pencilIcon" src="{$basePath}/images/info/pencil.png">Registrovat se</a></span> 
-            {/if}
+                        {/if}
 
-        {form hledej class => 'form-wrapper cf'}
-            {input search placeholder => 'Hledaný výraz...'}
+                    {form hledej class => 'form-wrapper cf'}
+                        {input search placeholder => 'Hledaný výraz...'}
         <button type="submit" n:input="btnSearch">Hledat</button>
-
-        {/form}
-
+                    {/form}
+    </div>
+    <div id="cart">
         <a n:href="Basket:">
-            <div class="cart">
+            <div id="cart-design">
                 <strong>Váš nákupní košík:</strong>
                 <img src="{$basePath}/images/info/mini-cart.png" alt="miniCart"/>
                 <span class="priceCount">
@@ -25,160 +25,145 @@
                 </span>
             </div>
         </a>
-    <!--<span>Language:</span> <a href="#"><img src="{$basePath}/images/flag1.jpg" alt="" width="21" height="13" /></a> <a href="#"><img src="{$basePath}/images/flag2.jpg" alt="" width="21" height="13" /></a> <a href="#"><img src="{$basePath}/images/flag3.jpg" alt="" width="21" height="13" /></a>-->
     </div>
+</div>
+<ul id="menu">
+<li style="margin-left: 20px"><a href="#" class="drop"><img src="{$basePath}/images/baby.png"> <br> Kojenci</a><!-- Begin Home Item -->
+<div class="dropdown_3columns"><!-- Begin 3 columns container -->
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Hrací deky a hrazdičky</a></li>
+                    <li><a href="#">Hračky do kočárku</a></li>
+                    <li><a href="#">Hračky do vody</a></li>
+                    <li><a href="#">Chodítka a odrážedla</a></li>                       
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Chrastítka a kousátka</a></li>
+                    <li><a href="#">Interaktivní</a></li>
+                    <li><a href="#">Rozvoj motoriky</a></li>
 
-<!--    <ul id="menu">
-        <li><a n:href="Homepage:"><img src="{$basePath}/images/btn1.png" alt="" width="110" height="32" /></a></li>
-        <li><a n:href="Basket:"><img src="{$basePath}/images/btn4.png" alt="" width="110" height="32" /></a></li>
-        {if $user->isLoggedIn()}
-        <li><a n:href="Client:"><img src="{$basePath}/images/btn5.png" alt="" width="110" height="32" /></a></li>
-        {else}
-        <li><a n:href="Login:"><img src="{$basePath}/images/btn2.png" alt="" width="110" height="32" /></a></li>
-        <li><a n:href="Registration:"><img src="{$basePath}/images/btn3.png" alt="" width="110" height="32" /></a></li>
-        {/if}
-        {if $user->isInRole('admin')}<li><a n:href=":Admin:Homepage:"><img src="{$basePath}/images/btn6.png" alt="" width="110" height="32" /></a></li>{/if}
-    </ul>-->
-
-    <ul id="menu">
-    <li style="margin-left: 20px"><a href="#" class="drop"><img src="{$basePath}/images/baby.png"> <br> Kojenci</a><!-- Begin Home Item -->
-            <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Hrací deky a hrazdičky</a></li>
-                        <li><a href="#">Hračky do kočárku</a></li>
-                        <li><a href="#">Hračky do vody</a></li>
-                        <li><a href="#">Chodítka a odrážedla</a></li>                       
-                    </ul>   
-                </div>
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Chrastítka a kousátka</a></li>
-                        <li><a href="#">Interaktivní</a></li>
-                        <li><a href="#">Rozvoj motoriky</a></li>
-
-                    </ul>   
-                </div>
+                </ul>   
+            </div>
 
 </div><!-- End 3 columns container -->
 </li><!-- End Home Item -->
 
     <li><a href="#" class="drop"><img src="{$basePath}/images/girl.png"> <br> Holky</a><!-- Begin 5 columns Item -->
             <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Domečky a nábytek</a></li>
-                        <li><a href="#">Figurky</a></li>
-                        <li><a href="#">Kočárky</a></li>
-                        <li><a href="#">Kuchyňky</a></li>
-                    </ul>   
-                </div>
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Panenky</a></li>
-                        <li><a href="#">Plyšáci</a></li>
-                        <li><a href="#">Profese</a></li>
-                    </ul>   
-                </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Domečky a nábytek</a></li>
+                    <li><a href="#">Figurky</a></li>
+                    <li><a href="#">Kočárky</a></li>
+                    <li><a href="#">Kuchyňky</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Panenky</a></li>
+                    <li><a href="#">Plyšáci</a></li>
+                    <li><a href="#">Profese</a></li>
+                </ul>   
+            </div>
 </div><!-- End 3 columns container -->
-     </li><!-- End 5 columns Item -->
+ </li><!-- End 5 columns Item -->
 
     <li><a href="#" class="drop"><img src="{$basePath}/images/boy.png"> <br> Kluci</a><!-- Begin 4 columns Item -->
             <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Akční</a></li>
-                        <li><a href="#">Auta</a></li>
-                        <li><a href="#">Autodráhy</a></li>
-                        <li><a href="#">Dřevěné hračky</a></li>
-                        <li><a href="#">Figurky</a></li>
-                    </ul>   
-                </div>
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Letadla a vrtulníky</a></li>
-                        <li><a href="#">Modelář</a></li>
-                        <li><a href="#">Profese</a></li>
-                        <li><a href="#">RC modely</a></li>
-                        <li><a href="#">Zbraně</a></li>
-                    </ul>   
-                </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Akční</a></li>
+                    <li><a href="#">Auta</a></li>
+                    <li><a href="#">Autodráhy</a></li>
+                    <li><a href="#">Dřevěné hračky</a></li>
+                    <li><a href="#">Figurky</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Letadla a vrtulníky</a></li>
+                    <li><a href="#">Modelář</a></li>
+                    <li><a href="#">Profese</a></li>
+                    <li><a href="#">RC modely</a></li>
+                    <li><a href="#">Zbraně</a></li>
+                </ul>   
+            </div>
 </div><!-- End 3 columns container -->
 </li><!-- End 4 columns Item -->
 
-        <li><a href="#" class="drop"><img src="{$basePath}/images/games.png"> <br> Hry</a>
-            <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Cestovní</a></li>
-                        <li><a href="#">Deskové a stolní</a></li>
-                        <li><a href="#">Hlavolamy</a></li>
-                    </ul>   
-                </div>
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Karetní</a></li>
-                        <li><a href="#">PC hry</a></li>
-                        <li><a href="#">Puzzle</a></li>
-                    </ul>   
-                </div>
+    <li><a href="#" class="drop"><img src="{$basePath}/images/games.png"> <br> Hry</a>
+        <div class="dropdown_3columns"><!-- Begin 3 columns container -->
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Cestovní</a></li>
+                    <li><a href="#">Deskové a stolní</a></li>
+                    <li><a href="#">Hlavolamy</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Karetní</a></li>
+                    <li><a href="#">PC hry</a></li>
+                    <li><a href="#">Puzzle</a></li>
+                </ul>   
+            </div>
 </div><!-- End 3 columns container -->
-        </li>
+    </li>
 
-        <li><a href="#" class="drop"><img src="{$basePath}/images/art.png"> <br> Kreativita</a>
-            <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Hudební a taneční</a></li>
-                        <li><a href="#">Korálky</a></li>
-                        <li><a href="#">Naučné a vzdělávací</a></li>
-                    </ul>   
-                </div>
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Škola</a></li>
-                        <li><a href="#">Tvořivé</a></li>
-                    </ul>   
-                </div>
+    <li><a href="#" class="drop"><img src="{$basePath}/images/art.png"> <br> Kreativita</a>
+        <div class="dropdown_3columns"><!-- Begin 3 columns container -->
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Hudební a taneční</a></li>
+                    <li><a href="#">Korálky</a></li>
+                    <li><a href="#">Naučné a vzdělávací</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Škola</a></li>
+                    <li><a href="#">Tvořivé</a></li>
+                </ul>   
+            </div>
 </div><!-- End 3 columns container -->
-        </li>
+    </li>
 
-        <li><a href="#" class="drop"><img src="{$basePath}/images/stavebnice.png"> <br> Stavebnice</a>
-            <div class="dropdown_3columns align_right"><!-- Begin 3 columns container -->
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Kovové</a></li>
-                        <li><a href="#">Lego</a></li>
-                        <li><a href="#">Magnetické</a></li>
-                    </ul>   
-                </div>
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Plastové</a></li>
-                        <li><a href="#">Playmobil</a></li>
-                    </ul>   
-                </div>
+    <li><a href="#" class="drop"><img src="{$basePath}/images/stavebnice.png"> <br> Stavebnice</a>
+        <div class="dropdown_3columns align_right"><!-- Begin 3 columns container -->
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Kovové</a></li>
+                    <li><a href="#">Lego</a></li>
+                    <li><a href="#">Magnetické</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Plastové</a></li>
+                    <li><a href="#">Playmobil</a></li>
+                </ul>   
+            </div>
 </div><!-- End 3 columns container -->
-        </li>
+    </li>
 
-        <li style="border-right: none;"><a href="#" class="drop"><img src="{$basePath}/images/wood-toy.png"> <br> Dřevěné hračky</a>
-            <div class="dropdown_3columns align_right"><!-- Begin 3 columns container -->
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Motorické</a></li>
-                        <li><a href="#">Puzzle a skládačky</a></li>
-                        <li><a href="#">Kostky, tvary</a></li>
-                    </ul>   
-                </div>
-                <div class="col_1">
-                    <ul class="greybox">
-                        <li><a href="#">Stavebnice, montáže</a></li>
-                        <li><a href="#">Vláčky</a></li>
-                        <li><a href="#">Tahací</a></li>
-                    </ul>   
-                </div>
+    <li style="border-right: none;"><a href="#" class="drop"><img src="{$basePath}/images/wood-toy.png"> <br> Dřevěné hračky</a>
+        <div class="dropdown_3columns align_right"><!-- Begin 3 columns container -->
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Motorické</a></li>
+                    <li><a href="#">Puzzle a skládačky</a></li>
+                    <li><a href="#">Kostky, tvary</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul class="greybox">
+                    <li><a href="#">Stavebnice, montáže</a></li>
+                    <li><a href="#">Vláčky</a></li>
+                    <li><a href="#">Tahací</a></li>
+                </ul>   
+            </div>
 </div><!-- End 3 columns container -->
-        </li>
-
-    </ul>
-</div>
+    </li>
+</ul>

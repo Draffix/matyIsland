@@ -62,82 +62,88 @@ $(function() {
         </script>
     </head>
 
-    <body>
-        {include header.latte}
-        <div id="content">
-            <div id="sidebar">
-                    <script type="text/javascript">
-$(document).ready(function($){
-        $('#accordion').dcAccordion({
-                eventType: 'click',
-                autoClose: true,
-                saveState: true,
-                disableLink: false,
-                speed: 'fast',
-                classActive: 'active',
-                showCount: false
-        });
-});
-                    </script>   
+    <body> 
+        <div id="wrap">
+            {include header.latte}
+            <div id="inner-wrap">
+                <div id="container">
+                    <div id="sidebar">
+                        <script type="text/javascript">
+                            $(document).ready(function($){
+                                    $('#accordion').dcAccordion({
+                                            eventType: 'click',
+                                            autoClose: true,
+                                            saveState: true,
+                                            disableLink: false,
+                                            speed: 'fast',
+                                            classActive: 'active',
+                                            showCount: false
+                                    });
+                            });
+                        </script>   
                     {ifCurrent Product:*}
-                    <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
-                    <div class="grey">
-                        <ul class="accordion" id="accordion">
+                        <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
+                        <div class="grey">
+                            <ul class="accordion" id="accordion">
                             {block #categories}
                             {foreach $categories as $node}
-                            <li><a n:href="Category: $node['cat_id'], $node['cat_name']">{$node["cat_name"]}</a>
-                                <ul n:if="count($node['children'])">
+                                <li><a n:href="Category: $node['cat_id'], $node['cat_name']">{$node["cat_name"]}</a>
+                                    <ul n:if="count($node['children'])">
                                     {include #categories, 'categories' => $node["children"]}
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
                             {/foreach}
                             {/block}
-                        </ul>
-                    </div>
+                            </ul>
+                        </div>
                     {else}
-                                        {form nabidkaForm}
-                    <div id="nabidka">
-                        <span id="nabidka-title">Potřebujete poradit s výběrem dárku?</span>
-                        <select>
-                            <option value="volvo">- Pohlaví -</option>
-                            <option value="saab">Holka</option>
-                            <option value="mercedes">Kluk</option>
-                            <option value="audi">Kojenec</option>
-                            <option value="audi">Neutral</option>
-                        </select>
-                        <select>
-                            <option value="volvo">- Věk -</option>
-                            <option value="saab">0 - 6 měsíců</option>
-                            <option value="mercedes">6 - 12 měsíců</option>
-                            <option value="audi">1 - 3 let</option>
-                            <option value="audi">3 - 6 let</option>
-                            <option value="audi">6 - 12 let</option>
-                            <option value="audi">12 a více let</option>
-                        </select>
-                        <p>
-                            <label for="amount" style="margin-left: 0px; color: #000; font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Cena:</label>
-                            <input n:input="price" type="text" id="amount" style="border:0; color: #000; font-weight:bold;" />
-                        </p>
+                       {form nabidkaForm}
+                        <div id="nabidka">
+                            <span id="nabidka-title">Potřebujete poradit s výběrem dárku?</span>
+                            <select>
+                                <option value="volvo">- Pohlaví -</option>
+                                <option value="saab">Holka</option>
+                                <option value="mercedes">Kluk</option>
+                                <option value="audi">Kojenec</option>
+                                <option value="audi">Neutral</option>
+                            </select>
+                            <select>
+                                <option value="volvo">- Věk -</option>
+                                <option value="saab">0 - 6 měsíců</option>
+                                <option value="mercedes">6 - 12 měsíců</option>
+                                <option value="audi">1 - 3 let</option>
+                                <option value="audi">3 - 6 let</option>
+                                <option value="audi">6 - 12 let</option>
+                                <option value="audi">12 a více let</option>
+                            </select>
+                            <p>
+                                <label for="amount" style="margin-left: 0px; color: #000; font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Cena:</label>
+                                <input n:input="price" type="text" id="amount" style="border:0; color: #000; font-weight:bold;" />
+                            </p>
 
-                        <div id="slider-range"></div>
-                        <input n:input="send" type="submit" name="btnSearchToy" value="Vyhledat hračku"/>
-                    </div>
-                    {/form}
-                    {/ifCurrent}
-                    <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
-                    <div class="review">
-                        <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
-                            <img src="{$basePath}/images/products/{$randomProduct->image_name}" alt="" width="181" height="161" /></a><br />
-                        <div style="padding-top: 10px">
+                            <div id="slider-range"></div>
+                            <input n:input="send" type="submit" name="btnSearchToy" value="Vyhledat hračku"/>
+                        </div>
+                        {/form}
+                        {/ifCurrent}
+                        <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
+                        <div id="review">
                             <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
+                                <img src="{$basePath}/images/products/{$randomProduct->image_name}" alt="" width="181" height="161" /></a><br />
+                            <div style="padding-top: 10px">
+                                <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
                     {$randomProduct->product->prod_name}</a>
-                        </div><br />
-                        <div class="describe">{!$randomProduct->product->prod_describe|truncate:100}</div>
-                        <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
+                            </div><br />
+                            <div class="describe">{!$randomProduct->product->prod_describe|truncate:100}</div>
+                            <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
+                        </div>
+                    </div>
+                    <div id="content">
+                        {include #content}
                     </div>
                 </div>
-            {include #content}
-        </div>
+            </div>
         {include footer.latte}
+        </div> 
     </body>
 </html>
