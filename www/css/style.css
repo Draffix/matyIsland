@@ -1,45 +1,59 @@
-*{
-    margin:0px;
-    padding:0px;
-}
-img{
-    border:0;
-}
-html{
-    width:100%;
-    height:100%
-}
-body{
-    width:919px;
-    margin:0 auto;
-}
-.float{float:left}
-#header{
-    display:block;
-    float:left;
+*{  
+    margin:0;  
+    padding:0;  
+}  
+
+#wrap {
+    width: 930px;
+    margin: 0 auto;
+    text-align: left;
+    /*    padding: 10px;*/
 }
 
-/* přihlásit se, registrovat se */
-.topnav{
-    width:600px;
-    float:left;
-    padding:0px 0 0 80px;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:11px;
-    color:#0D0D0D;
+
+#inner-wrap {
+    padding-bottom:50px;
 }
-.topnav a{
+#inner-wrap:after {
+    content:" ";
+    display:block;
+    clear:both;
+
+}
+
+#header
+{
+    width: 930px;
+    height: 123px;
+    position: relative;
+    top:0px;
+}
+
+#logo
+{
+    float: left;
+    width: 315px;
+    height: 123px;
+}
+#header-mid
+{
+    width: 390px;
+    height: 123px;
+    float: left;
+}
+
+#header-mid a{
     color:#0D0D0D;
     text-decoration:none;
 }
-.topnav a:visited{text-decoration:none}
-.topnav a:hover{text-decoration:underline}
+#header-mid a:visited{text-decoration:none}
+#header-mid a:hover{text-decoration:underline}
 
-.topnav img{
+#header-mid img{
     float:left;
     margin:0 2px;
 }
-.topnav span{
+#header-mid span{
     display:block;
     float:left;
     margin:17px 10px 0 60px;
@@ -47,27 +61,27 @@ body{
     font-size:14px;
 }
 
-.topnav img[id=userIcon] {
+#header-mid img[id=userIcon] {
     height: 12px;
     width: 12px;
     padding: 2px 5px 0 0;
 }
 
-.topnav img[id=regIcon] {
+#header-mid img[id=regIcon] {
     height: 12px;
     width: 12px;
     float: right;
     padding: 2px 0px 0 2px;
 }
 
-.topnav .cart {
-    margin-top: -105px;
+#cart-design {
     height:90px;
     float: right;
     width: 210px;
     padding:5px 0 0 10px;
     font-family:Arial, Helvetica, sans-serif;
     font-size:15px;
+    color: #000;
     background-image: linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
     background-image: -o-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
     background-image: -moz-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
@@ -90,19 +104,19 @@ body{
 
 }
 
-.topnav .cart img {
+#cart-design img {
     float: left;
     margin-right: -20px;
     padding-top: 20px;
 }
 
-.topnav .cart strong {
+#cart-design strong {
     display: inline;
     font-size:17px;
     margin: 5px 5px 3px 15px;
 }
 
-.topnav .cart .priceCount {
+#cart-design .priceCount {
     padding:0px 0px 5px 2px;
     font-family:Arial, Helvetica, sans-serif;
     font-size:14px;
@@ -110,28 +124,13 @@ body{
     margin: 10px 5px 0 0;
 }
 
-/* katalog, přihlásit se, registrovat se, nákupní košík */
-/*#menu{
-    display:block;
-    float:left;
-    margin:0px 0 0px 16px;
-}
-#menu li{
-    display:inline;
-    list-style-type:none;
-}
-#menu img{
-    float:left;
-    margin:0 0 0 1px;
-}*/
-
 #menu {
     list-style:none;
     width:930px;
     height: 70px;
     display:block;
     float:left;
-    margin:0px 0 0px 0px;
+    margin:0 0 10px 0;
 
     /* Rounded Corners */
 
@@ -409,22 +408,90 @@ body{
     padding:4px 6px 4px 6px;
     margin:0px 0px 4px 0px;
 }
+#container
+{
+    width: 930px;
+    height: 100%;
+    margin: 0 auto 0 auto;
+    float: left;
+}
+#content {
+    width: 686px;
+    min-height: 600px;
+    float: left;
+}
+#footer
+{
+    width: 930px;
+    height: 123px;
+    position:relative;
+    bottom: 0;
+    text-align:center;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#0D0D0D;
+    padding:0 0 25px 0;
 
-/* navigace a obsah */
-#content{
-    width:1000px;
-    overflow:hidden;
-    float:left;
-    padding:0 0 7px 0;
+    background-image: linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -o-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -moz-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -webkit-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+    background-image: -ms-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.58, rgb(159,178,34)),
+        color-stop(0.31, rgb(148,162,25))
+        );
+    border:1px solid #BBBBBB;
+    border-color: #D4D4D4;
+    border-style: solid;
+    border-width: 0px 1px 1px;
+    -moz-border-radius:20px;
+    border-radius: 10px 10px 0px 0px;
 }
 
-/* navigace */
-#sidebar{
-    width:233px;
-    float:left;
-    padding:15px 0 0 4px;
+#footer ul{
+    padding:27px 0 13px 0
 }
+#footer li{
+    display:inline;
+    list-style-type:none;
+}
+#footer ul a{
+    color:#0D0D0D;
+    text-decoration:none;
+    margin:0 12px;
+}
+#footer ul a:visited{text-decoration:none}
+#footer ul a:hover{text-decoration:underline}
 
+#cart
+{
+    float: left;
+    width: 225px;
+    height: 96px;
+}
+#sidebar
+{
+    width: 233px; 
+    float: left;
+    margin-right: 10px;
+}
+#banner
+{
+    width: 689px;
+    height: 300px;
+    float: left;
+}
+#items
+{
+    width: 689px;
+    height: 100%;
+    float: left;
+}
 #nabidka {
     border:1px solid #777777;
     margin-top: -4px;
@@ -486,79 +553,8 @@ body{
         );
 }
 
-#navigation{
-    background-image: linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
-    background-image: -o-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
-    background-image: -moz-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
-    background-image: -webkit-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
-    background-image: -ms-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
-
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.58, rgb(159,178,34)),
-        color-stop(0.31, rgb(148,162,25))
-        );
-    background-position:top left;
-    background-repeat:no-repeat;
-    width:220px;
-    padding:12px 0 14px 13px;
-    font-family:Tahoma, sans-serif;
-    font-size:11px;
-    color:#0D0D0D;
-    border-bottom:1px solid #fff;
-}
-#navigation li{
-    list-style-type:none;
-
-    line-height:28px;
-    color:#0D0D0D;
-    text-transform:uppercase;
-    text-decoration:none;
-    font-weight:bold;
-    display:block;
-    width:179px;
-    line-height:28px;
-    background-image:url(../images/li_bg.png);
-    background-position:top left;
-    background-repeat:no-repeat;
-    padding:0 0 2px 30px;
-
-}
-#navigation a{
-    text-decoration: none;
-    color: #000;
-}
-
-/* kategorie v navigaci */
-.categories{
-    border:1px solid #BBBBBB;
-    border-top:0px;
-    padding:25px 0 25px 18px;
-    margin:0 0 1px 0
-}
-.categories li{
-    list-style-type:none;
-    background-image:url(../images/bullet.gif);
-    background-position:top left;
-    background-repeat:no-repeat;
-    padding:0 0 7px 25px;
-    line-height:17px;
-    height:18px;
-    display:block;
-}
-.categories a{
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:12px;
-    color:#4B4B4B;
-    text-decoration:none;
-}
-.categories a:visited{text-decoration:none}
-.categories a:hover{text-decoration:underline}
-
 /* recenze v navigaci */
-.review{
+#review {
     border:1px solid #BBBBBB;
     border-top:0px;
     padding:28px 0 15px 18px;
@@ -572,26 +568,20 @@ body{
     -khtml-border-radius: 5px;
     border-radius: 0px 0px 5px 5px;
 }
-.review a {
+#review a {
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
     color:#4B4B4B;
     text-decoration:underline;
     font-weight:bold;
 }
-.review a:visited, .item a:visited{text-decoration:underline}
-.review a:hover, .item a:hover{text-decoration:none}
-.review p{
+#review a:visited, .item a:visited{text-decoration:underline}
+#review a:hover, .item a:hover{text-decoration:none}
+#review p{
     padding:0px 32px 13px 0;
 }
 .stars{
     margin:0 0 0 30px;
-}
-
-/* samotný obsah */
-#main{
-    width:686px;
-    float:left;
 }
 
 /* nové zboží na úvodní straně včetně nadpisu novinky*/
@@ -604,7 +594,7 @@ body{
     float: left;
     width: auto;
     max-width: 700px;
-    margin: 5px 0px 0px 17px;
+    margin: 5px 0px 0px 0px;
     background-color: #ececec;
     -moz-border-radius:20px;
     -webkit-border-radius:20px;
@@ -856,7 +846,7 @@ body{
 .inside-content {
     float: left;
     width:618px;
-    margin: 20px 0px 0px 17px;
+    margin: 20px 0px 0px 0px;
     background-color: #ececec;
     -moz-border-radius:20px;
     -webkit-border-radius:20px;
@@ -1064,33 +1054,7 @@ div.flash.wrong {
     font-weight: bold;
 }
 
-/**********/
-/* FOOTER */
-/**********/
-#footer{
-    background-image:url(../images/footer.jpg);
-    background-position:bottom center;
-    background-repeat:no-repeat;
-    text-align:center;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:12px;
-    color:#0D0D0D;
-    padding:0 0 25px 0;
-}
-#footer ul{
-    padding:27px 0 13px 0
-}
-#footer li{
-    display:inline;
-    list-style-type:none;
-}
-#footer ul a{
-    color:#0D0D0D;
-    text-decoration:none;
-    margin:0 12px;
-}
-#footer ul a:visited{text-decoration:none}
-#footer ul a:hover{text-decoration:underline}
+
 
 /* table properties */
 .div-table
@@ -1122,7 +1086,7 @@ div.flash.wrong {
 /* PRODUCT DETAIL */
 /******************/
 .itemDetail{
-    width:648px;
+    width:688px;
     border:1px solid #BBBBBB;
     margin:0px 0px 10px 0px;
     float:left;
