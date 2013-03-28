@@ -34,19 +34,19 @@ $(document).ready(function(){
         <!-- End Freebie -->
     </li>
 </ul>
-    {foreach $flashes as $flash}
+{foreach $flashes as $flash}
 <div class="flash {$flash->type}" style="float: left; width: 622px">{$flash->message}</div>
 {/foreach}
 <div class="basket">
     <div id="basket-box">
         <table width="635" border="0" cellpadding="6" cellspacing="0">
-            <?php 
-            if(!isset($_SESSION["cart"]) || $_SESSION["cart"]==null) { ?>
+        {if !isset($_SESSION["cart"]) || $_SESSION["cart"]==null}
             <div id="notice" style="margin-top: 10px; margin-left: 25px; width: 595px">Momentálně nemáte v košíku vloženo žádné zboží.</div>
             <div id="complete" style="margin-top: 20px">
                 <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
             </div>
-            <?php } else { ?>
+                    </table>
+        {else}
             <tr class="header-wrapper">
                 <th colspan="2" scope="col">Název produktu</th>
                 <th width="200" scope="col">Cena za kus</th>
@@ -55,7 +55,7 @@ $(document).ready(function(){
                 <th width="100" scope="col">Celkem</th>
                 <th width="75" scope="col"></th>
             </tr>
-    {foreach $_SESSION["cart"] as $product}
+        {foreach $_SESSION["cart"] as $product}
     {form updateForm}
             <tr>
         {input product_id value => $product->prod_id}
@@ -88,6 +88,7 @@ $(document).ready(function(){
     </div>
     <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
     <a n:href="Order:"><input type="button" name="continue"/></a>
+        {/if}
+    </div>
 </div>
-<?php } ?>
-</div>
+{/block}
