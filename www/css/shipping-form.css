@@ -32,7 +32,8 @@
 
 #basket-box{
     width: 670px;
-    margin-left: 228px;
+    margin: 0 auto 0 auto;
+    float: left;
 }
 
 .basket-price {
