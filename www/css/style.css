@@ -480,6 +480,28 @@
     float: left;
     margin-right: 10px;
 }
+
+/**************/
+/* CATEGORIES */
+/**************/
+.categories ul, ul li{list-style: none;}
+
+.categories{font: bold 14px Arial, sans-serif; border-top: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc;}
+.categories,  .categories li {margin: 0; padding: 0; border: none;}
+.categories li > ul {margin: 0; padding-left: 10px; border: none; background: #b1abab}
+.categories a {padding: 10px 10px 10px 50px; background: #ececec; text-decoration:none; display: block; color: #333; border-bottom: 1px solid #ccc; border-top: 1px solid #fff; position: relative; }
+.categories a:hover {background: #fff; color: #990000;}
+.categories a.dcjq-parent, .categories a.dcjq-parent:hover {background: #D7D4D4 url("../images/categories/bg_grey.png") repeat-x 0 -1px;}
+.categories a.dcjq-parent.active, a.dcjq-parent.active:hover {color: yellow; background: #003263;}
+.categories a.active, a.active:hover {color: white; background-color: #003263;}
+.categories a .dcjq-icon {position: absolute; top: 50%; left: 14px; width: 34px; margin-top: -17px; height: 34px; background: url("../images/categories/plus_grey.png") no-repeat 0 center;}
+.categories a.dcjq-parent.active.dcjq-icon {background: url("../images/categories/minus_grey.png") no-repeat 0 center;}
+
+.categories ul li {display: none;}
+.categories li.parent ul li {display: block;}
+.categories li.parent {display: block;}
+.categories li.parent.active {color: yellow;}
+
 #banner
 {
     width: 689px;
