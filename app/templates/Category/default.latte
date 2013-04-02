@@ -1,4 +1,32 @@
 {block title}{$categoryName} | {$setting->eshop_name}{/block}
+{block categories}
+<ul class="categories">
+    {foreach $categories as $node}
+    <li {ifCurrent Category: $node['cat_id'], $template->webalize($node['cat_name'])}class="parent active"{/ifCurrent}>
+        <a n:href="Category: $node['cat_id'], $template->webalize($node['cat_name'])" {if count($node['children'])} class="dcjq-parent {ifCurrent Category: $node['cat_id'], $template->webalize($node['cat_name'])}active{/ifCurrent}"{/if}>{$node["cat_name"]}</a>
+        <ul n:if="count($node['children'])">
+            {foreach $node["children"] as $child}
+                {ifCurrent Category: $child['cat_id'], $template->webalize($child['cat_name'])}
+                    {var $idParent = $child['ancestor']}
+                {/ifCurrent}
+            {/foreach}
+            {foreach $node["children"] as $child}
+                {ifset $idParent}
+                    {if $child["ancestor"] == $idParent}
+                        <li class="parent">
+                    {else} 
+                        <li>
+                    {/if}
+                {else}
+                <li>
+                {/ifset}
+                <a n:href="Category: $child['cat_id'], $template->webalize($child['cat_name'])" {ifCurrent Category: $child['cat_id'], $template->webalize($child['cat_name'])}class="active"{/ifCurrent}>{$child["cat_name"]}</a></li>
+            {/foreach}
+        </ul>
+    </li>
+    {/foreach}
+</ul>
+{/block}
 {block content}
 <div id="outside-box">
     <div id="breadcrumbs">
@@ -12,6 +40,9 @@
     </div>
     <div id="inside-box">
         <div id="items" style="margin-left: 10px">
+            {if $itemCount == 0}
+            <div id="notice" style="margin-top: 10px; margin-left: 25px; width: 595px">Litujeme, ale do kategorie nebyl dosud přidán žádný produkt.</div>
+            {else}
             {foreach $category as $cat}
             <div class="productItem">        
                 <span class="title"><a n:href="Product: $cat->prod_id, $cat->prod_name">{$cat->prod_name}</a></span>
@@ -40,6 +71,7 @@
 
             </div>
             {/foreach}
+            {/if}
         </div>
     </div>
 </div>
