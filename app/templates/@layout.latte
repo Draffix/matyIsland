@@ -33,11 +33,6 @@
         <script type="text/javascript" src="{$basePath}/js/jquery-1.9.0.min.js"></script>
         <script type="text/javascript" src="{$basePath}/js/jquery.nivo.slider.js"></script>
 
-        <!-- navigation -->
-        <link href="{$basePath}/css/skins/grey.css" rel="stylesheet" type="text/css" />
-        <link href="{$basePath}/css/dcaccordion.css" rel="stylesheet" type="text/css" />
-        <script type='text/javascript' src='{$basePath}/js/jquery.cookie.js'></script>
-        <script type='text/javascript' src='{$basePath}/js/jquery.dcjqaccordion.2.7.js'></script>
 
 <!-- slider -->
         <script type='text/javascript' src='{$basePath}/js/jquery-ui-1.10.1.custom.js'></script>
@@ -81,22 +76,7 @@ $(function() {
                                     });
                             });
                         </script>   
-                    {ifCurrent Product:*}
-                        <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" /><br />
-                        <div class="grey">
-                            <ul class="accordion" id="accordion">
-                            {block #categories}
-                            {foreach $categories as $node}
-                                <li><a n:href="Category: $node['cat_id'], $node['cat_name']">{$node["cat_name"]}</a>
-                                    <ul n:if="count($node['children'])">
-                                    {include #categories, 'categories' => $node["children"]}
-                                    </ul>
-                                </li>
-                            {/foreach}
-                            {/block}
-                            </ul>
-                        </div>
-                    {else}
+                        {block #categories}{/block}
                        {form nabidkaForm}
                         <div id="nabidka">
                             <span id="nabidka-title">Potřebujete poradit s výběrem dárku?</span>
@@ -125,14 +105,13 @@ $(function() {
                             <input n:input="send" type="submit" name="btnSearchToy" value="Vyhledat hračku"/>
                         </div>
                         {/form}
-                        {/ifCurrent}
                         <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
                         <div id="review">
                             <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
                                 <img src="{$basePath}/images/products/{$randomProduct->image_name}" alt="" width="181" height="161" /></a><br />
                             <div style="padding-top: 10px">
                                 <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
-                    {$randomProduct->product->prod_name}</a>
+                                {$randomProduct->product->prod_name}</a>
                             </div><br />
                             <div class="describe">{!$randomProduct->product->prod_describe|truncate:100}</div>
                             <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
