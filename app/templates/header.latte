@@ -28,142 +28,27 @@
     </div>
 </div>
 <ul id="menu">
-<li style="margin-left: 20px"><a href="#" class="drop"><img src="{$basePath}/images/baby.png"> <br> Kojenci</a><!-- Begin Home Item -->
-<div class="dropdown_3columns"><!-- Begin 3 columns container -->
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Hrací deky a hrazdičky</a></li>
-                    <li><a href="#">Hračky do kočárku</a></li>
-                    <li><a href="#">Hračky do vody</a></li>
-                    <li><a href="#">Chodítka a odrážedla</a></li>                       
-                </ul>   
-            </div>
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Chrastítka a kousátka</a></li>
-                    <li><a href="#">Interaktivní</a></li>
-                    <li><a href="#">Rozvoj motoriky</a></li>
-
-                </ul>   
-            </div>
-
-</div><!-- End 3 columns container -->
-</li><!-- End Home Item -->
-
-    <li><a href="#" class="drop"><img src="{$basePath}/images/girl.png"> <br> Holky</a><!-- Begin 5 columns Item -->
-            <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Domečky a nábytek</a></li>
-                    <li><a href="#">Figurky</a></li>
-                    <li><a href="#">Kočárky</a></li>
-                    <li><a href="#">Kuchyňky</a></li>
-                </ul>   
-            </div>
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Panenky</a></li>
-                    <li><a href="#">Plyšáci</a></li>
-                    <li><a href="#">Profese</a></li>
-                </ul>   
-            </div>
-</div><!-- End 3 columns container -->
- </li><!-- End 5 columns Item -->
-
-    <li><a href="#" class="drop"><img src="{$basePath}/images/boy.png"> <br> Kluci</a><!-- Begin 4 columns Item -->
-            <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Akční</a></li>
-                    <li><a href="#">Auta</a></li>
-                    <li><a href="#">Autodráhy</a></li>
-                    <li><a href="#">Dřevěné hračky</a></li>
-                    <li><a href="#">Figurky</a></li>
-                </ul>   
-            </div>
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Letadla a vrtulníky</a></li>
-                    <li><a href="#">Modelář</a></li>
-                    <li><a href="#">Profese</a></li>
-                    <li><a href="#">RC modely</a></li>
-                    <li><a href="#">Zbraně</a></li>
-                </ul>   
-            </div>
-</div><!-- End 3 columns container -->
-</li><!-- End 4 columns Item -->
-
-    <li><a href="#" class="drop"><img src="{$basePath}/images/games.png"> <br> Hry</a>
-        <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Cestovní</a></li>
-                    <li><a href="#">Deskové a stolní</a></li>
-                    <li><a href="#">Hlavolamy</a></li>
-                </ul>   
-            </div>
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Karetní</a></li>
-                    <li><a href="#">PC hry</a></li>
-                    <li><a href="#">Puzzle</a></li>
-                </ul>   
-            </div>
-</div><!-- End 3 columns container -->
+    {foreach $categories as $node}
+    <li style="border-right: none;"><a n:href="Category: $node['cat_id'], $node['cat_name']" class="drop">
+        {if $node["cat_id"] == 2}<img src="{$basePath}/images/baby.png"> <br>
+        {elseif $node["cat_id"] == 3}<img src="{$basePath}/images/girl.png"> <br>
+        {elseif $node["cat_id"] == 4}<img src="{$basePath}/images/boy.png"> <br>
+        {elseif $node["cat_id"] == 5}<img src="{$basePath}/images/games.png"> <br>
+        {elseif $node["cat_id"] == 6}<img src="{$basePath}/images/art.png"> <br>
+        {elseif $node["cat_id"] == 7}<img src="{$basePath}/images/stavebnice.png"> <br>
+        {elseif $node["cat_id"] == 8}<img src="{$basePath}/images/wood-toy.png"> <br>
+        {/if}
+        {$node["cat_name"]}</a>
+        <div class="dropdown_3columns {if $iterator->last} align_right {else} align_left {/if}">
+            {if count($node['children'])}               
+            <ul class="greybox">
+                {foreach $node["children"] as $child}
+                    {if $iterator->isOdd()}<div class="col_1"><li><a n:href="Category: $child['cat_id'], $child['cat_name']">{$child["cat_name"]}</a></li></div>
+                    {else}<div class="col_1"><li><a n:href="Category: $child['cat_id'], $child['cat_name']">{$child["cat_name"]}</a></li></div>{/if}
+                {/foreach}
+            </ul>
+            {/if}
+        </div>
     </li>
-
-    <li><a href="#" class="drop"><img src="{$basePath}/images/art.png"> <br> Kreativita</a>
-        <div class="dropdown_3columns"><!-- Begin 3 columns container -->
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Hudební a taneční</a></li>
-                    <li><a href="#">Korálky</a></li>
-                    <li><a href="#">Naučné a vzdělávací</a></li>
-                </ul>   
-            </div>
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Škola</a></li>
-                    <li><a href="#">Tvořivé</a></li>
-                </ul>   
-            </div>
-</div><!-- End 3 columns container -->
-    </li>
-
-    <li><a href="#" class="drop"><img src="{$basePath}/images/stavebnice.png"> <br> Stavebnice</a>
-        <div class="dropdown_3columns align_right"><!-- Begin 3 columns container -->
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Kovové</a></li>
-                    <li><a href="#">Lego</a></li>
-                    <li><a href="#">Magnetické</a></li>
-                </ul>   
-            </div>
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Plastové</a></li>
-                    <li><a href="#">Playmobil</a></li>
-                </ul>   
-            </div>
-</div><!-- End 3 columns container -->
-    </li>
-
-    <li style="border-right: none;"><a href="#" class="drop"><img src="{$basePath}/images/wood-toy.png"> <br> Dřevěné hračky</a>
-        <div class="dropdown_3columns align_right"><!-- Begin 3 columns container -->
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Motorické</a></li>
-                    <li><a href="#">Puzzle a skládačky</a></li>
-                    <li><a href="#">Kostky, tvary</a></li>
-                </ul>   
-            </div>
-            <div class="col_1">
-                <ul class="greybox">
-                    <li><a href="#">Stavebnice, montáže</a></li>
-                    <li><a href="#">Vláčky</a></li>
-                    <li><a href="#">Tahací</a></li>
-                </ul>   
-            </div>
-</div><!-- End 3 columns container -->
-    </li>
+    {/foreach}
 </ul>
