@@ -27,6 +27,8 @@ class editProductForm extends UI\Form {
             $name[$key] = \Nette\Utils\Html::el('option')->value($key)->setText($n->cat_name);
         }
 
+        unset($name[1]); // odstraníme kořenovou kategorii - "Hračky Matyland"
+
         foreach ($this->category->fetchAllCategoryNamesForProduct($id) as $val) {
             $this->selectedCategories[] = $val->category_cat_id; //vložíme zvolené kategorie
         }
