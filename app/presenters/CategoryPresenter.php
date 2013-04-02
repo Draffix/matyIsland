@@ -33,7 +33,8 @@ class CategoryPresenter extends BasePresenter {
         $paginator->setBase(1);
         $paginator->itemCount = $this->category->countCategoryFilter($id)->pocet;
         $this->template->category = $this->category->categoryFilter($id, $paginator->itemsPerPage, $paginator->offset);
-
+        $this->template->itemCount = $paginator->itemCount;
+        
         // jméno aktuální kategorie
         $this->template->categoryName = $this->category->findCategoryName($id)->cat_name;
         $this->template->toRoot = $this->category->toRootSubtree($id);
