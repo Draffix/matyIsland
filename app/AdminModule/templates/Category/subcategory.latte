@@ -65,12 +65,34 @@
                                 <i class="icon-edit icon-white"></i>  
                                 Upravit                                            
                             </a>
-                            <a href="" role="button" class="btn btn-danger" data-toggle="modal">
+                            <a href="#delete_{$category->cat_id}" role="button" class="btn btn-danger" data-toggle="modal">
                                 <i class="icon-trash icon-white"></i> 
                                 Smazat
                             </a>
                         </td>
                     </tr>
+
+                <!-- Modal -->
+                <div id="delete_{$category->cat_id}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Smazání kategorie {$category->cat_name}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-block ">
+                            <h4 class="alert-heading">Upozornění!</h4>
+                            <p>Hodláte smazat kategorii, která může obsahovat produkty či další podkategorie.
+                                V případě smazání budou tyto produkty bez kategorie a nebudou
+                                návštěvníkům zobrazeny. Proto před smazání zajistěte, že produkty
+                                spadají pod jinou kategorii, než je tato. Tato akce je nevratná.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Storno</button>
+                        <a class="btn btn-primary" n:href="deleteCategory! $category->cat_id">Smazat kategorii</a>
+                    </div>
+                </div>
+                <!--/Modal -->
                     {/foreach}
                 </tbody>
             </table>
