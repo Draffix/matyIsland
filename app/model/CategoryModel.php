@@ -235,7 +235,7 @@ class CategoryModel extends Table {
                 JOIN category_closure cc2
                 USING (descendant)
         WHERE cc.ancestor = $node AND cc2.depth = 1
-        ORDER BY cc.depth, c.cat_name
+        ORDER BY cc.depth, c.cat_id
     ");
         return $this->parseSubTree($node, $tree);
     }
