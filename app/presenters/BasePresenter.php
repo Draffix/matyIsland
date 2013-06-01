@@ -162,5 +162,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $matches['max_price'] = preg_replace('/\s+/', '', $matches['max_price']); // odstraníme whitespace
         $this->redirect('Search:filtr', $matches['min_price'], $matches['max_price']);
     }
+    
+        public function templatePrepareFilters($template) {
+        $template->registerFilter($latte = $this->context->nette->createLatte());
+
+        $set = Nette\Latte\Macros\MacroSet::install($latte->getCompiler());
+        $set->addMacro('ifCurrentIn', function($node, $writer) {
+                    return $writer->write('foreach (%node.array as $l) { if ($_presenter->isLinkCurrent($l)) { $_c = true; break; }} if (isset($_c)): ');
+                }, 'endif; unset($_c);');
+    }
 
 }
