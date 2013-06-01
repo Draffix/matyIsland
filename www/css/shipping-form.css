@@ -32,7 +32,7 @@
 
 #basket-box{
     width: 670px;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 0 -22px;
     float: left;
 }
 
@@ -81,7 +81,7 @@
     width: 168px;
     height: 35px;
     float: left;
-    margin-left: 15px; 
+    margin-left: 0px; 
     cursor: pointer;
 }
 
@@ -92,7 +92,7 @@
     width: 116px;
     height: 35px;
     float: right;
-    margin-right: 113px; 
+    margin-right: 45px; 
     cursor: pointer;
 }
 
