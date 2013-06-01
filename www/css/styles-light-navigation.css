@@ -145,7 +145,7 @@ ul#breadcrumbs li:active .arrow
  *	Not important styles
 */
 
-ul#breadcrumbs-freebie { display: table; padding-left: 16px; margin: 2px; list-style: none; }
+ul#breadcrumbs-freebie { display: table; padding-left: 0px; margin: 2px; list-style: none; }
 ul#breadcrumbs-freebie:last-child { padding-right: 0; }
 ul#breadcrumbs-freebie > li { float: left; margin-right: 12px; }
 ul#breadcrumbs-freebie > li:last-child { margin-right: 0; }
