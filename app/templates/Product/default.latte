@@ -1,4 +1,28 @@
 {block title}{$product->product->prod_name} | {$setting->eshop_name}{/block}
+{block categories}
+<img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41" />
+<ul class="categories">
+    {var $productCategory = ""}
+    {foreach $categories as $node}
+        {foreach $category as $cat}
+            {if $node['cat_name'] == $cat['cat_name']}
+                {var $productCategory = $node['cat_name']}
+            {/if}
+        {/foreach}
+        {if $productCategory == $node['cat_name']}
+            <li class="parent active"><a n:href="Category: $node['cat_id'], $template->webalize($node['cat_name'])" {if count($node['children'])} class="dcjq-parent active"{/if}>{$node['cat_name']}</a>
+        {else}
+            <li><a n:href="Category: $node['cat_id'], $template->webalize($node['cat_name'])" {if count($node['children'])} class="dcjq-parent"{/if}>{$node['cat_name']}</a>
+        {/if}
+        <ul n:if="count($node['children'])">
+            {foreach $node["children"] as $child}
+            <li><a n:href="Category: $child['cat_id'], $template->webalize($child['cat_name'])">{$child['cat_name']}</a></li>
+            {/foreach}
+        </ul>
+        </li>
+    {/foreach}
+</ul>
+{/block}
 {block content}
 <div class="inside-content" style="padding-top: 10px; padding-left: 0px; padding-right: 0px; width: 690px; margin-top: 5px;">
     <div id="breadcrumbs">
