@@ -15,8 +15,8 @@ require LIBS_DIR . '/autoload.php';
 $configurator = new Nette\Config\Configurator;
 
 // Enable Nette Debugger for error visualisation & logging
-$configurator->setDebugMode(TRUE); 
-//$configurator->setDebugMode($configurator::AUTO);
+//$configurator->setDebugMode(TRUE); 
+$configurator->setDebugMode($configurator::AUTO);
 $configurator->enableDebugger(__DIR__ . '/../log');
 
 // Enable RobotLoader - this will load all classes automatically
@@ -39,21 +39,14 @@ Route::setStyleProperty('titleProduct', Route::FILTER_IN, function($url) {
             return Strings::webalize($url);
         });
 
-Route::addStyle('titleCategory');
-Route::setStyleProperty('titleCategory', Route::FILTER_OUT, function($url) {
-            return Strings::webalize($url);
-        });
-
-Route::setStyleProperty('titleCategory', Route::FILTER_IN, function($url) {
-            return Strings::webalize($url);
-        });
+Route::addStyle('titleCategory', 'titleProduct'); // dědí masku titleProduct
 
 if (
     function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules()) // pro Apache
     || isset($_SERVER["NETTE_HTACCESS"]) // pro FastCGI nebo okoliv jineho kde mame flag
 ) {
 // Admin base router
-    $container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]?strana=<paginator-page> ', array(
+    $container->router[] = new Route('admin[/<presenter>[/<action>[/<id>]]]?strana=<paginator-page>', array(
                 'module' => "admin",
                 'presenter' => array(
                     Route::VALUE => 'Homepage',
