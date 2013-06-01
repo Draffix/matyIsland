@@ -12,7 +12,7 @@
 
 
 #inner-wrap {
-    padding-bottom:50px;
+    padding-bottom:0px;
 }
 #inner-wrap:after {
     content:" ";
@@ -423,14 +423,14 @@
 #footer
 {
     width: 930px;
-    height: 123px;
+    height: 100px;
     position:relative;
     bottom: 0;
     text-align:center;
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
     color:#0D0D0D;
-    padding:0 0 25px 0;
+    padding:0px;
 
     background-image: linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
     background-image: -o-linear-gradient(bottom, rgb(159,178,34) 58%, rgb(148,162,25) 31%);
@@ -493,7 +493,7 @@
 .categories a:hover {background: #fff; color: #990000;}
 .categories a.dcjq-parent, .categories a.dcjq-parent:hover {background: #D7D4D4 url("../images/categories/bg_grey.png") repeat-x 0 -1px;}
 .categories a.dcjq-parent.active, a.dcjq-parent.active:hover {color: yellow; background: #003263;}
-.categories a.active, a.active:hover {color: white; background-color: #003263;}
+.categories a.active, a.active:hover {color: yellow; background-color: #003263;}
 .categories a .dcjq-icon {position: absolute; top: 50%; left: 14px; width: 34px; margin-top: -17px; height: 34px; background: url("../images/categories/plus_grey.png") no-repeat 0 center;}
 .categories a.dcjq-parent.active.dcjq-icon {background: url("../images/categories/minus_grey.png") no-repeat 0 center;}
 
