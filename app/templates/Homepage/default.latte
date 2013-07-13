@@ -33,7 +33,7 @@ $(window).load(function() {
                 <div class="image"><a n:href="Product: $mainProduct->product->prod_id, $mainProduct->product->prod_name">
                         <img src="{$basePath}/images/products/{$mainProduct->image_name}" alt="{$mainProduct->image_name}" /></a></div>
                 <br />
-                <div class="describe">{!$mainProduct->product->prod_describe|truncate:60}</p></div>
+                <div class="describe">{!$mainProduct->product->prod_describe}</p></div>
 
                 {if $setting->eshop_discount > 0}
                 <span class="oldprice">{$mainProduct->product->prod_price},- Kč</span>

@@ -25,8 +25,8 @@ class UserModel extends Table {
      */
     public function updateUser($values, $userID) {
         return $this->getTable()
-                        ->where('user_id', $userID)
-                        ->update($values);
+            ->where('user_id', $userID)
+            ->update($values);
     }
 
     /**
@@ -36,24 +36,24 @@ class UserModel extends Table {
      */
     public function findByName($useremail) {
         return $this->findAll()
-                        ->where('user_email', $useremail)
-                        ->where('user_is_active', 1)
-                        ->fetch();
+            ->where('user_email', $useremail)
+            ->where('user_is_active', 1)
+            ->fetch();
     }
 
     //zjišťujeme jestli již existuje zadaný email (pokud 0 tak neexistuje)
     public function countFindByEmail($useremail) {
         return $this->findAll()
-                        ->where('user_email', $useremail)
-                        ->count();
+            ->where('user_email', $useremail)
+            ->count();
     }
 
     // zjišťuje, zda se zadaný email neshoduje s tím starým (Admin\OrderPresenter)
     public function findExistsEmail($user_id) {
         return $this->findAll()
-                        ->where('user_id', $user_id)
-                        ->select('user_email')
-                        ->fetch();
+            ->where('user_id', $user_id)
+            ->select('user_email')
+            ->fetch();
     }
 
     /**
@@ -63,9 +63,9 @@ class UserModel extends Table {
      */
     public function updateHash($hash) {
         return $this->getTable()
-                        ->where('user_hash', $hash)
-                        ->update(array('user_hash' => NULL,
-                            'user_is_active' => 1));
+            ->where('user_hash', $hash)
+            ->update(array('user_hash' => NULL,
+                'user_is_active' => 1));
     }
 
     /**
@@ -75,10 +75,10 @@ class UserModel extends Table {
      */
     public function setPassword($id, $password) {
         $this->getTable()->
-                where(array('user_id' => $id))
-                ->update(array(
-                    'user_password' => Authenticator::calculateHash($password)
-                ));
+            where(array('user_id' => $id))
+            ->update(array(
+                'user_password' => Authenticator::calculateHash($password)
+            ));
     }
 
     /**
@@ -91,19 +91,19 @@ class UserModel extends Table {
 
     public function fetchAllMembers() {
         return $this->findAll()
-                        ->where('user_role', 'member');
+            ->where('user_role', 'member');
     }
 
     public function fetchAdmin() {
         return $this->getTable()
-                        ->where('user_role', 'admin')
-                        ->fetch();
+            ->where('user_role', 'admin')
+            ->fetch();
     }
 
     public function updateAdmin($values) {
         return $this->getTable()
-                        ->where('user_role', 'admin')
-                        ->update($values);
+            ->where('user_role', 'admin')
+            ->update($values);
     }
 
     /**
@@ -113,8 +113,8 @@ class UserModel extends Table {
      */
     public function fetchUser($user_id) {
         return $this->getTable()
-                        ->where('user_id', $user_id)
-                        ->fetch();
+            ->where('user_id', $user_id)
+            ->fetch();
     }
 
     /**
@@ -124,8 +124,8 @@ class UserModel extends Table {
      */
     public function blockUser($user_id) {
         return $this->getTable()
-                        ->where('user_id', $user_id)
-                        ->update(array('user_is_active' => 0));
+            ->where('user_id', $user_id)
+            ->update(array('user_is_active' => 0));
     }
 
     /**
@@ -135,8 +135,8 @@ class UserModel extends Table {
      */
     public function unblockUser($user_id) {
         return $this->getTable()
-                        ->where('user_id', $user_id)
-                        ->update(array('user_is_active' => 1));
+            ->where('user_id', $user_id)
+            ->update(array('user_is_active' => 1));
     }
 
     /**
@@ -146,8 +146,8 @@ class UserModel extends Table {
      */
     public function deleteUser($user_id) {
         return $this->getTable()
-                        ->where('user_id', $user_id)
-                        ->delete();
+            ->where('user_id', $user_id)
+            ->delete();
     }
 
     /**
@@ -156,13 +156,14 @@ class UserModel extends Table {
      */
     public function countUsers() {
         return $this->getTable()
-                        ->count();
+            ->where(array('user_role' => 'member'))
+            ->count();
     }
 
     public function countBlockedUsers() {
         return $this->getTable()
-                        ->where('user_is_active', 0)
-                        ->count();
+            ->where('user_is_active', 0)
+            ->count();
     }
 
 }

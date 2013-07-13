@@ -71,4 +71,4 @@ development < common:
 			default:
 				dsn: 'mysql:host=127.0.0.1;dbname=matyIsland'
 				user: root
-				password: jarda
+				password:

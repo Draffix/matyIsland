@@ -1,52 +1,54 @@
 {block title}Nákupní koš | {$setting->eshop_name}{/block}
 {block content}
-<script>
-$(document).ready(function(){
-   $("tr:even").addClass("even");
-   $("tr:odd").addClass("odd");
-});
-</script>
-<ul id="breadcrumbs-freebie">
-    <li>
+    <script>
+        $(document).ready(function () {
+            $("tr:even").addClass("even");
+            $("tr:odd").addClass("odd");
+        });
+    </script>
+    <ul id="breadcrumbs-freebie">
+        <li>
             <!-- Start Freebie -->
-        <ul id="breadcrumbs">
-            <li>
-                <a n:href="Basket:">
-                    <span><b>Košík</b></span>
+            <ul id="breadcrumbs">
+                <li>
+                    <a n:href="Basket:">
+                        <span><b>Košík</b></span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a n:href="Order:">
+                        <span>Fakturační a dodací údaje</span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <span>Způsob dopravy a platby</span>
                     <span class="arrow"></span>
-                </a>
-            </li>
-            <li>
-                <a n:href="Order:">
-                    <span>Fakturační a dodací údaje</span>
+                </li>
+                <li>
+                    <span>Souhrn objednávky</span>
                     <span class="arrow"></span>
-                </a>
-            </li>
-            <li>
-                <span>Způsob dopravy a platby</span>
-                <span class="arrow"></span>
-            </li>
-            <li>
-                <span>Souhrn objednávky</span>
-                <span class="arrow"></span>
-            </li>
-        </ul>
-        <!-- End Freebie -->
-    </li>
-</ul>
-{foreach $flashes as $flash}
-<div class="flash {$flash->type}" style="float: left; width: 622px">{$flash->message}</div>
-{/foreach}
-<div class="basket">
-    <div id="basket-box">
-        <table width="635" border="0" cellpadding="6" cellspacing="0">
-        {if !isset($_SESSION["cart"]) || $_SESSION["cart"]==null}
-            <div id="notice" style="margin-top: 10px; margin-left: 25px; width: 595px">Momentálně nemáte v košíku vloženo žádné zboží.</div>
-            <div id="complete" style="margin-top: 20px">
-                <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
-            </div>
-                    </table>
-        {else}
+                </li>
+            </ul>
+            <!-- End Freebie -->
+        </li>
+    </ul>
+    {foreach $flashes as $flash}
+        <div class="flash {$flash->type}" style="float: left; width: 622px">{$flash->message}</div>
+    {/foreach}
+    <div class="basket">
+        <div id="basket-box">
+            <table width="635" border="0" cellpadding="6" cellspacing="0">
+                {if !isset($_SESSION["cart"]) || $_SESSION["cart"]==null}
+                <div id="notice" style="margin-top: 10px; margin-left: 25px; width: 595px">Momentálně nemáte v košíku
+                    vloženo žádné zboží.
+                </div>
+                <div id="complete" style="margin-top: 20px">
+                    <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
+                </div>
+            </table>
+            {else}
             <tr class="header-wrapper">
                 <th colspan="2" scope="col">Název produktu</th>
                 <th width="200" scope="col">Cena za kus</th>
@@ -55,27 +57,34 @@ $(document).ready(function(){
                 <th width="100" scope="col">Celkem</th>
                 <th width="75" scope="col"></th>
             </tr>
-        {foreach $_SESSION["cart"] as $product}
-    {form updateForm}
-            <tr>
-        {input product_id value => $product->prod_id}
-                <td width="113"><img src="{$basePath}/images/products/{$product->image_name}" width="113" height="92" /></td>
-                <td width="207"><a n:href="Product: $product->prod_id, $product->prod_name">{$product->prod_name}</a></td>
-                <td>{$product->prod_price},- Kč</td>
-                <td>
-            {input quantity size => 1, value => $product->basket_quantity}
+            {foreach $_SESSION["cart"] as $product}
+                {form updateForm}
+                    <tr>
+                        {input product_id value => $product->prod_id}
+                        <td width="113"><img src="{$basePath}/images/products/{$product->image_name}" width="113"
+                                             height="92"/></td>
+                        <td width="207"><a
+                                    n:href="Product: $product->prod_id, $product->prod_name">{$product->prod_name}</a>
+                        </td>
+                        <td>{$product->prod_price},- Kč</td>
+                        <td>
+                            {input quantity size => 1, value => $product->basket_quantity}
 
-            {input update name => "update", title => "Přepočítat"}
-                </td>
-                {if $product->prod_on_stock != 0}<td> Skladem </td> {else}
-                <td><span style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span></td>
-                {/if}
-                <td>{$product->totalPrice},- Kč</td>
-                <td><a n:href="removeFromCart! $product->prod_id"><input type="button" name="remove" title="Smazat položku"></a></td>
-            </tr>
-
-    {/form}
-    {/foreach}
+                            {input update name => "update", title => "Přepočítat"}
+                        </td>
+                        {if $product->prod_on_stock != 0}
+                            <td> Skladem</td>
+                        {else}
+                            <td>
+                                <span style="color: #ff6600; font-weight: bold; padding-top: 25px; padding-bottom: 14px">Nedostupné</span>
+                            </td>
+                        {/if}
+                        <td>{$product->totalPrice},- Kč</td>
+                        <td><a n:href="removeFromCart! $product->prod_id"><input type="button" name="remove"
+                                                                                 title="Smazat položku"></a></td>
+                    </tr>
+                {/form}
+            {/foreach}
             <tr class="basket-price">
                 <td colspan="5" style="text-align: right">
                     <span>Mezisoučet včetně DPH:</span>
@@ -84,11 +93,13 @@ $(document).ready(function(){
                     <span><?php echo $_SESSION["totalPrice"] ?> Kč</span>
                 </td>
             </tr>
-        </table>
-    </div>
-    <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
-    <a n:href="Order:"><input type="button" name="continue"/></a>
+            </table>
+        </div>
+        <a n:href="Homepage:"><input type="button" name="backToShopping"/></a>
+        <a n:href="Order:"><input type="button" name="continue"/></a>
         {/if}
     </div>
-</div>
+    {if !isset($_SESSION["cart"]) || $_SESSION["cart"]==null}
+    </div>
+    {/if}
 {/block}

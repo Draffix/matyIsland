@@ -38,7 +38,8 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $this->emailTemplate = $this->context->emailTemplate;
 
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
-        @session_start();
+//        @session_start();
+//        $container->session->start();
     }
 
     public function beforeRender() {

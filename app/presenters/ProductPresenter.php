@@ -52,6 +52,7 @@ class ProductPresenter extends BasePresenter {
         $this->template->countComments = $this->comments->countAllComments($id);
 
         // kategorie produktu
+        $categories = array();
         foreach ($this->products->categoryOfProduct($id) as $element) {
             $categories[] = $element;
         }

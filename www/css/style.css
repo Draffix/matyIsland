@@ -739,7 +739,7 @@
 /* to samé jako #items ale rozšířené */
 .productItem{
     width:217px;
-    min-height: 300px;
+    min-height: 325px;
     border:1px solid #BBBBBB;
     margin:10px 6px 0px 0px;
     padding-bottom: 10px;

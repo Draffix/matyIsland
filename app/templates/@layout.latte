@@ -98,7 +98,8 @@ $(function() {
                         </div>
                         {/form}
                         {/ifCurrentIn}
-                        <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />																																																																																																																																																															
+                        {if $randomProduct}
+                            <img src="{$basePath}/images/recenze.jpg" alt="" width="233" height="41" /><br />
                         <div id="review">
                             <a n:href="Product: $randomProduct->product->prod_id, $randomProduct->product->prod_name">
                                 <img src="{$basePath}/images/products/{$randomProduct->image_name}" alt="" width="181" height="161" /></a><br />
@@ -109,6 +110,7 @@ $(function() {
                             <div class="describe">{!$randomProduct->product->prod_describe|truncate:100}</div>
                             <img src="{$basePath}/images/stars.jpg" alt="" width="118" height="20" class="stars" />
                         </div>
+                        {/if}
                     </div>
                     <div id="content">
                         {include #content}
