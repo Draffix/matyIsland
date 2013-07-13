@@ -1,9 +1,10 @@
-<div id="header">
+    <div id="header">
     <div id="logo"><a href="{link Homepage:default}"><img src="{$basePath}/images/logo.jpg" width="237" height="123" border="0" class="float" alt="setalpm" /></a></div>
     <div id="header-mid">
         <span>
                         {if $user->isLoggedIn()}
-            <strong>Vítejte {$usersData->user_name}</strong> &nbsp; | &nbsp;            
+            Vítejte {$usersData->user_name} &nbsp; | &nbsp;
+            <strong><a n:href="Client:">Mé klientské centrum</a></strong> &nbsp; | &nbsp;
             <a n:href="signOut!">Odhlásit se</a></span>
                         {else}
         <a n:href="Login:">Přihlásit<img id="userIcon" alt="userIcon" src="{$basePath}/images/info/user.png" border="0"></a>&nbsp; | &nbsp; <a n:href="Registration:"><img id="regIcon" alt="pencilIcon" src="{$basePath}/images/info/pencil.png" border="0">Registrovat se</a></span> 
