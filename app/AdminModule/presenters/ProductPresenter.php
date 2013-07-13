@@ -108,14 +108,14 @@ class ProductPresenter extends BasePresenter {
             return;
         }
         if ($values['image_name2'] == '') {
-            $this->flashMessage('Nebyl zadán alespoň jeden obrázek, nebo jste 
+            $this->flashMessage('Nebyl zadán alespoň jeden obrázek, nebo jste
                 pro nahrání obrázku nezvolili první možnost', 'error');
             return;
         }
         if ($values['image_name2'] != '') {
             $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name2']);
             if ($exists == TRUE) {
-                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje.
                 Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
                 return;
             }
@@ -123,7 +123,7 @@ class ProductPresenter extends BasePresenter {
         if ($values['image_name3'] != '') {
             $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name3']);
             if ($exists == TRUE) {
-                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje.
                 Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
                 return;
             }
@@ -131,7 +131,7 @@ class ProductPresenter extends BasePresenter {
         if ($values['image_name4'] != '') {
             $exists = $this->checkIfImageAlredyExists($values['folder'], $values['image_name4']);
             if ($exists == TRUE) {
-                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje. 
+                $this->flashMessage('Chyba při nahrávání. Jméno obrázku již v databázi existuje.
                 Přejmenujte proto nahráváný obrázek a zkuste to znovu.', 'error');
                 return;
             }

@@ -1,180 +1,254 @@
 {block #breadcrumbs}
-<li>
-    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
-    <a n:href="Product:">Produkty</a> <span class="divider">/</span>
-    <a n:href="Product:edit $product->prod_id">{$product->prod_name}</a> <span class="divider">/</span>
-</li>
+    <li>
+        <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+        <a n:href="Product:">Produkty</a> <span class="divider">/</span>
+        <a n:href="Product:edit $product->prod_id">{$product->prod_name}</a> <span class="divider">/</span>
+    </li>
 {/block}
 {block content}
 {foreach $flashes as $flash}
-<div class="row-fluid">
-    <div class="span12 bgcolor">                                        
-        <div class="alert alert-{$flash->type}">
-            <a href="#" class="close" data-dismiss="alert">×</a>
+    <div class="row-fluid">
+        <div class="span12 bgcolor">
+            <div class="alert alert-{$flash->type}">
+                <a href="#" class="close" data-dismiss="alert">×</a>
                 {$flash->message}
-        </div>                                       
-    </div><!--/span-->
-</div><!--/row-->
-{/foreach}
-{form editProductForm}
-<div class="row-fluid sortable">
-    <div class="box span12">
-        <div class="box-header well" data-original-title>
-            <h2><i class="icon-shopping-cart"></i> {$product->prod_name}</h2>
-            <div class="box-icon">
-                <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
-                <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
             </div>
         </div>
-        <div class="box-content">
-            <div class="control-group">
-                <label class="control-label" for="productName"><strong>Název</strong></label>
-                <div class="controls">
-                    <input n:input="prod_name" class="input-large focused" id="productName" type="text" autofocus="" value="{$product->prod_name}">
+        <!--/span-->
+    </div>
+    <!--/row-->
+{/foreach}
+{form editProductForm}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-shopping-cart"></i> {$product->prod_name}</h2>
+
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="categories">Kategorie</label>
-                <div class="controls">
-                    {input category id=>categories, data-rel=>chosen}
-                </div>
-            </div>
-            <hr/>
-            <label>Cena</label>
-            <div class="controls">
-                <input n:input="prod_price" type="text" id="product_price_with_tax" class="price-with-tax input-small" placeholder="0" value="{$product->prod_price}" />
-                Kč s DPH
-                <select id="product_price_tax_rate" class="price-tax-rate input-small" data-rel="chosen">
-                    <option value="0.21" selected="selected">21%</option>
-                    <option value="0.1">10%</option>
-                    <option value="0">0%</option>
-                </select>
-                {var $priceWithDph = ($product->prod_price)-($product->prod_price*0.1736)}
-                <input type="text" id="product_price_without_tax" name="product[price][without_tax]" class="price-without-tax input-small uneditable-input" placeholder="0" value={round($priceWithDph, 2)} />
-                Kč bez DPH
-            </div>
-            <hr/>
-            <div class="row-fluid">
-                <div class="span4 bgcolor">
-                    <label for="quantity">Množství na skladě</label>
-                    <input n:input="prod_on_stock" id="quantity" type="text" tabindex="0" class="myinput" value="{$product->prod_on_stock}"/>
-                </div><!--/span-->
-                <div class="span1 bgcolor">
-                    <div class="control-group">
-                        <label>Novinka</label>
-                        <div class="controls">
-                                {if $product->prod_isnew == '1'}{input prod_isnew checked=>checked}{else}{input prod_isnew}{/if}
-                        </div>
-                    </div>
-                </div>
-                <div class="span1 bgcolor">
-                    <label>Zveřejněno</label>
-                    <div class="controls">
-                                {if $product->prod_is_active == '1'}{input prod_is_active checked=>checked}{else}{input prod_is_active}{/if}
-                    </div>
-                </div><!--/span-->
-        </div><!--/row-->
-            <hr />
-            <div class="control-group">
-                <div class="row-fluid">
-                    <div class="span6 bgcolor">
-                        <label for="kratky_popis">Krátký popis</label>
-                        <textarea id="kratky_popis" n:input="prod_describe">{$product->prod_describe}</textarea>
-                    </div><!--/span-->
-                    <div class="span6 bgcolor">
-                        <label for="dlouhy_popis">Dlouhý popis</label>
-                        <textarea id="dlouhy_popis" n:input="prod_long_describe">{$product->prod_long_describe}</textarea>
-                    </div><!--/span-->
-                </div><!--/row-->
-                </div><!--/group-->
-            <hr />
-            <div class="control-group">
-                <div class="row-fluid">
-                    <div class="span12 bgcolor">
-                        <label>Obrázky</label>
-                        <ul class="thumbnails gallery">
-                            {foreach $images as $image}
-                            <li id={$image->image_id} class="thumbnail">
-                                <a style="background:url({$basePath}/images/products/thumbnail/{$image->image_name})" title={$image->image_name} href="{$basePath}/images/products/{$image->image_name}"><img class="grayscale" src="{$basePath}/images/products/thumbnail/{$image->image_name}" alt={$image->image_name}></a>
-                            </li>
-                            {/foreach}
-                        </ul>
-                    </div><!--/span-->
-                </div><!--/row-->
-            </div><!--/group-->
-            <hr />
-            <div class="row-fluid">
+            <div class="box-content">
                 <div class="control-group">
-                    <label class="control-label">Nahrát další obrázky</label>
-                    <div class="alert alert-info">
-                        Obrázky vkládejte ve formátu JPG, PNG nebo GIF
+                    <label class="control-label" for="productName"><strong>Název</strong></label>
+
+                    <div class="controls">
+                        <input n:input="prod_name" class="input-large focused" id="productName" type="text" autofocus=""
+                               value="{$product->prod_name}">
                     </div>
-                    <div class="span3 bgcolor">
-                        <div class="controls">
-                            <input n:input="image_name2" type="file">
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="categories">Kategorie</label>
+
+                    <div class="controls">
+                        {input category id=>categories, data-rel=>chosen}
+                    </div>
+                </div>
+                <hr/>
+                <label>Nákupní cena</label>
+
+                <div class="controls">
+                    <input n:input="prod_purchase_price" type="text" class="purchase-price-with-tax input-small"
+                           placeholder="0" value="{$product->prod_purchase_price}"/>
+                    Kč s DPH
+                    <select class="purchase-price-tax-rate input-small" data-rel="chosen">
+                        <option value="0.21" selected="selected">21%</option>
+                        <option value="0.15">15%</option>
+                        <option value="0">0%</option>
+                    </select>
+                    {var $priceWithDph = ($product->prod_purchase_price)-($product->prod_purchase_price*0.1736)}
+                    <input type="text" class="purchase-price-without-tax input-small uneditable-input" placeholder="0"
+                           value={round($priceWithDph, 2)}/>
+                    Kč bez DPH
+                </div>
+                <hr/>
+
+                <label>Cena</label>
+
+                <div class="controls">
+                    <input n:input="prod_price" type="text" id="product_price_with_tax"
+                           class="price-with-tax input-small" placeholder="0" value="{$product->prod_price}"/>
+                    Kč s DPH
+                    <select id="product_price_tax_rate" class="price-tax-rate input-small" data-rel="chosen">
+                        <option value="0.21" selected="selected">21%</option>
+                        <option value="0.1">10%</option>
+                        <option value="0">0%</option>
+                    </select>
+                    {var $priceWithDph = ($product->prod_price)-($product->prod_price*0.1736)}
+                    <input type="text" id="product_price_without_tax" name="product[price][without_tax]"
+                           class="price-without-tax input-small uneditable-input" placeholder="0"
+                           value={round($priceWithDph, 2)}/>
+                    Kč bez DPH
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    Absolutní marže <input type="text"
+                                           class="gross-margin input-small uneditable-input"
+                                           placeholder="0" value={$product->prod_price - $product->prod_purchase_price}/> Kč
+                </div>
+                <hr/>
+                <div class="row-fluid">
+                    <div class="span4 bgcolor">
+                        <label for="quantity">Množství na skladě</label>
+                        <input n:input="prod_on_stock" id="quantity" type="text" tabindex="0" class="myinput"
+                               value="{$product->prod_on_stock}"/>
+                    </div>
+                    <!--/span-->
+                    <div class="span1 bgcolor">
+                        <div class="control-group">
+                            <label>Novinka</label>
+
+                            <div class="controls">
+                                {if $product->prod_isnew == '1'}{input prod_isnew checked=>checked}{else}{input prod_isnew}{/if}
+                            </div>
                         </div>
-                    </div><!--/span-->
-                    <div class="span3 bgcolor">
-                        <input n:input="image_name3" type="file">
-                    </div><!--/span-->
-                    <div class="span3 bgcolor">
-                        <input n:input="image_name4" type="file">
-                    </div><!--/span-->
-                </div><!--/group-->
-            </div><!--/row-->
-            <div class="form-actions">                
-                <input type="submit" class="btn btn-primary" n:input="save_change" value="Uložit změny">
-                <a n:href="Product:"><input type="button" class="btn" value="Zpět na seznam produktů"></a>
+                    </div>
+                    <div class="span1 bgcolor">
+                        <label>Zveřejněno</label>
+
+                        <div class="controls">
+                            {if $product->prod_is_active == '1'}{input prod_is_active checked=>checked}{else}{input prod_is_active}{/if}
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <hr/>
+                <div class="control-group">
+                    <div class="row-fluid">
+                        <div class="span6 bgcolor">
+                            <label for="kratky_popis">Krátký popis</label>
+                            <textarea id="kratky_popis" n:input="prod_describe">{$product->prod_describe}</textarea>
+                        </div>
+                        <!--/span-->
+                        <div class="span6 bgcolor">
+                            <label for="dlouhy_popis">Dlouhý popis</label>
+                            <textarea id="dlouhy_popis"
+                                      n:input="prod_long_describe">{$product->prod_long_describe}</textarea>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/group-->
+                <hr/>
+                <div class="control-group">
+                    <div class="row-fluid">
+                        <div class="span12 bgcolor">
+                            <label>Obrázky</label>
+                            <ul class="thumbnails gallery">
+                                {foreach $images as $image}
+                                    <li id={$image->image_id} class=
+                                    "thumbnail">
+                                    <a style="background:url({$basePath}/images/products/thumbnail/{$image->image_name})"
+                                       title={$image->image_name} href=
+                                    "{$basePath}/images/products/{$image->image_name}">
+                                    <img class="grayscale"
+                                         src="{$basePath}/images/products/thumbnail/{$image->image_name}"
+                                         alt={$image->image_name}>
+                                    </a>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/group-->
+                <hr/>
+                <div class="row-fluid">
+                    <div class="control-group">
+                        <label class="control-label">Nahrát další obrázky</label>
+
+                        <div class="alert alert-info">
+                            Obrázky vkládejte ve formátu JPG, PNG nebo GIF
+                        </div>
+                        <div class="span3 bgcolor">
+                            <div class="controls">
+                                <input n:input="image_name2" type="file">
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="span3 bgcolor">
+                            <input n:input="image_name3" type="file">
+                        </div>
+                        <!--/span-->
+                        <div class="span3 bgcolor">
+                            <input n:input="image_name4" type="file">
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/group-->
+                </div>
+                <!--/row-->
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" n:input="save_change" value="Uložit změny">
+                    <a n:href="Product:"><input type="button" class="btn" value="Zpět na seznam produktů"></a>
+                </div>
             </div>
-</div><!--/box-content-->
-</div><!--/span-->
-</div><!--/row-->
+            <!--/box-content-->
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
 {/form}
-{block #otherScripts} 
-<script type="text/javascript">
-var taxes = new Array();
-taxes[0] = 0.2;
-taxes[1] = 0.1;
-taxes[2] = 0;
+{block #otherScripts}
+    <script type="text/javascript">
+        var taxes = new Array();
+        taxes[0] = 0.2;
+        taxes[1] = 0.1;
+        taxes[2] = 0;
 
-$('.price-with-tax, .price-tax-rate').bind('keyup change', function() {
-    var number = parseFloat($('.price-with-tax').first().val().replace(",", ".").replace(" ", ""));
-    if(number) {
-        var tax = parseFloat($('.price-tax-rate').first().val());
-        var newval =  number / (1 + tax);
-        $('.price-without-tax').first().val( Math.round(newval*100)/100 );
-    } else {
-        $('.price-without-tax').first().val('');
-    }
-});
-$('.price-without-tax').keyup(function() {
-    var number = parseFloat($('.price-without-tax').first().val().replace(",", ".").replace(" ", ""));
-    if(number) {
-        var tax = parseFloat($('.price-tax-rate').first().val());
-        var newval = number * (1 + tax);
-        $('.price-with-tax').first().val( (Math.round(newval*100)/100) );
-    } else {
-        $('.price-with-tax').first().val('');
-    }
-});
+        $('.price-with-tax, .price-tax-rate').bind('keyup change', function () {
+            var number = parseFloat($('.price-with-tax').first().val().replace(",", ".").replace(" ", ""));
+            if (number) {
+                var tax = parseFloat($('.price-tax-rate').first().val());
+                var newval = number / (1 + tax);
+                $('.price-without-tax').first().val(Math.round(newval * 100) / 100);
+                $('.gross-margin').first().val(number - parseFloat($('.purchase-price-with-tax').first().val()));
+            } else {
+                $('.price-without-tax').first().val('');
+            }
+        });
+        $('.price-without-tax').keyup(function () {
+            var number = parseFloat($('.price-without-tax').first().val().replace(",", ".").replace(" ", ""));
+            if (number) {
+                var tax = parseFloat($('.price-tax-rate').first().val());
+                var newval = number * (1 + tax);
+                $('.price-with-tax').first().val((Math.round(newval * 100) / 100));
+            } else {
+                $('.price-with-tax').first().val('');
+            }
+        });
+        $('.purchase-price-with-tax, .purchase-price-tax-rate').bind('keyup change', function () {
+            var number = parseFloat($('.purchase-price-with-tax').first().val().replace(",", ".").replace(" ", ""));
+            if (number) {
+                var tax = parseFloat($('.purchase-price-tax-rate').first().val());
+                var newval = number / (1 + tax);
+                $('.purchase-price-without-tax').first().val(Math.round(newval * 100) / 100);
+                $('.gross-margin').first().val(parseFloat($('.price-with-tax').first().val()) - number);
+            } else {
+                $('.purchase-price-without-tax').first().val('');
+            }
+        });
 
 
-//gallery edit
-$('.thumbnails').on('click','.gallery-edit',function(e){
-    var imageID = $(this).parents('.thumbnail').attr('id');
-    
-    location.href = ({link makeImageMain! $product->prod_id}+"&id_image="+imageID);
-    return false;
-});
+        //gallery edit
+        $('.thumbnails').on('click', '.gallery-edit', function (e) {
+            var imageID = $(this).parents('.thumbnail').attr('id');
 
-//gallery delete
-$('.thumbnails').on('click','.gallery-delete',function(e){
-    var imageID = $(this).parents('.thumbnail').attr('id');
+            location.href = ({link makeImageMain! $product->prod_id}+"&id_image=" + imageID);
+            return false;
+        });
 
-    location.href = ({link removeImage! $product->prod_id}+"&id_image="+imageID);
-    $(this).parents('.thumbnail').fadeOut();
-});
+        //gallery delete
+        $('.thumbnails').on('click', '.gallery-delete', function (e) {
+            var imageID = $(this).parents('.thumbnail').attr('id');
 
-</script>
+            location.href = ({link removeImage! $product->prod_id}+"&id_image=" + imageID);
+            $(this).parents('.thumbnail').fadeOut();
+        });
+
+    </script>
 {/block}

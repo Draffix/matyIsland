@@ -175,6 +175,7 @@ class ProductModel extends Table {
         return $this->getTable()
                         ->insert(array('prod_name' => $values['prod_name'],
                             'prod_price' => $values['prod_price'],
+                            'prod_purchase_price' => $values['prod_purchase_price'],
                             'prod_code' => $values['prod_code'],
                             'prod_describe' => $values['prod_describe'],
                             'prod_long_describe' => $values['prod_long_describe'],
@@ -238,6 +239,7 @@ class ProductModel extends Table {
                         ->where('prod_id', $id_product)
                         ->update(array('prod_name' => $values['prod_name'],
                             'prod_price' => $values['prod_price'],
+                            'prod_purchase_price' => $values['prod_purchase_price'],
                             'prod_code' => $values['prod_code'],
                             'prod_describe' => $values['prod_describe'],
                             'prod_long_describe' => $values['prod_long_describe'],

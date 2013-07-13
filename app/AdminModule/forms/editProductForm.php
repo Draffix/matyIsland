@@ -45,6 +45,7 @@ class editProductForm extends UI\Form {
         $this->addText('prod_on_stock')
                 ->addRule($this::FILLED);
         $this->addCheckbox('prod_isnew');
+        $this->addText('prod_purchase_price');
         $this->addText('prod_price')
                 ->addRule($this::FILLED);
         $this->addText('prod_code');
