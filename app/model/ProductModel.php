@@ -56,7 +56,7 @@ class ProductModel extends Table {
      */
     public function fetchAllProductsImages($id) {
         return $this->connection->table($this->image)
-                        ->where('product_prod_id', $id);
+                        ->where('product_prod_id = ?', array($id));
     }
 
     /**
