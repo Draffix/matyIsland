@@ -1,19 +1,27 @@
-    <div id="header">
-    <div id="logo"><a href="{link Homepage:default}"><img src="{$basePath}/images/logo.jpg" width="237" height="123" border="0" class="float" alt="setalpm" /></a></div>
+<div id="header">
+    <div id="logo"><a href="{link Homepage:default}"><img src="{$basePath}/images/logo.jpg" width="237" height="123"
+                                                          border="0" class="float" alt="setalpm"/></a></div>
     <div id="header-mid">
-        <span>
-                        {if $user->isLoggedIn()}
+        {if $user->isLoggedIn()}
+            <span style="margin:17px 10px 0 -15px;">
             Vítejte {$usersData->user_name} &nbsp; | &nbsp;
             <strong><a n:href="Client:">Mé klientské centrum</a></strong> &nbsp; | &nbsp;
-            <a n:href="signOut!">Odhlásit se</a></span>
-                        {else}
-        <a n:href="Login:">Přihlásit<img id="userIcon" alt="userIcon" src="{$basePath}/images/info/user.png" border="0"></a>&nbsp; | &nbsp; <a n:href="Registration:"><img id="regIcon" alt="pencilIcon" src="{$basePath}/images/info/pencil.png" border="0">Registrovat se</a></span> 
-                        {/if}
+            <a n:href="signOut!">Odhlásit se</a>
+            </span>
+        {else}
+            <span>
+            <a n:href="Login:">Přihlásit<img id="userIcon" alt="userIcon" src="{$basePath}/images/info/user.png"
+                                             border="0"></a>
+            &nbsp; | &nbsp;
+            <a n:href="Registration:"><img id="regIcon" alt="pencilIcon" src="{$basePath}/images/info/pencil.png"
+                                           border="0">Registrovat se</a>
+            </span>
+        {/if}
 
-                    {form hledej class => 'form-wrapper cf'}
-                        {input search placeholder => 'Hledaný výraz...'}
-        <button type="submit" n:input="btnSearch">Hledat</button>
-                    {/form}
+        {form hledej class => 'form-wrapper cf'}
+        {input search placeholder => 'Hledaný výraz...'}
+            <button type="submit" n:input="btnSearch">Hledat</button>
+        {/form}
     </div>
     <div id="cart">
         <a n:href="Basket:">
@@ -21,8 +29,8 @@
                 <strong>Váš nákupní košík:</strong>
                 <img src="{$basePath}/images/info/mini-cart.png" alt="miniCart" border="0"/>
                 <span class="priceCount">
-                    Cena nákupu: {$_SESSION["totalPrice"]} Kč <br /> 
-                    Počet položek: {$_SESSION["count"]} <br />
+                    Cena nákupu: {$_SESSION["totalPrice"]} Kč <br/>
+                    Počet položek: {$_SESSION["count"]} <br/>
                 </span>
             </div>
         </a>
@@ -30,26 +38,42 @@
 </div>
 <ul id="menu">
     {foreach $categories as $node}
-    <li style="border-right: none;"><a n:href="Category: $node['cat_id'], $node['cat_name']" class="drop">
-        {if $node["cat_id"] == 2}<img src="{$basePath}/images/baby.png" border="0"> <br>
-        {elseif $node["cat_id"] == 3}<img src="{$basePath}/images/girl.png" border="0"> <br>
-        {elseif $node["cat_id"] == 4}<img src="{$basePath}/images/boy.png" border="0"> <br>
-        {elseif $node["cat_id"] == 5}<img src="{$basePath}/images/games.png" border="0"> <br>
-        {elseif $node["cat_id"] == 6}<img src="{$basePath}/images/art.png" border="0"> <br>
-        {elseif $node["cat_id"] == 7}<img src="{$basePath}/images/stavebnice.png" border="0"> <br>
-        {elseif $node["cat_id"] == 8}<img src="{$basePath}/images/wood-toy.png" border="0"> <br>
-        {/if}
-        {$node["cat_name"]}</a>
-        <div class="dropdown_3columns {if $iterator->last} align_right {else} align_left {/if}">
-            {if count($node['children'])}               
-            <ul class="greybox">
-                {foreach $node["children"] as $child}
-                    {if $iterator->isOdd()}<div class="col_1"><li><a n:href="Category: $child['cat_id'], $child['cat_name']">{$child["cat_name"]}</a></li></div>
-                    {else}<div class="col_1"><li><a n:href="Category: $child['cat_id'], $child['cat_name']">{$child["cat_name"]}</a></li></div>{/if}
-                {/foreach}
-            </ul>
-            {/if}
-        </div>
-    </li>
+        <li style="border-right: none;"><a n:href="Category: $node['cat_id'], $node['cat_name']" class="drop">
+                {if $node["cat_id"] == 2}<img src="{$basePath}/images/baby.png" border="0">
+                    <br>
+                {elseif $node["cat_id"] == 3}<img src="{$basePath}/images/girl.png" border="0">
+                    <br>
+                {elseif $node["cat_id"] == 4}<img src="{$basePath}/images/boy.png" border="0">
+                    <br>
+                {elseif $node["cat_id"] == 5}<img src="{$basePath}/images/games.png" border="0">
+                    <br>
+                {elseif $node["cat_id"] == 6}<img src="{$basePath}/images/art.png" border="0">
+                    <br>
+                {elseif $node["cat_id"] == 7}<img src="{$basePath}/images/stavebnice.png" border="0">
+                    <br>
+                {elseif $node["cat_id"] == 8}<img src="{$basePath}/images/wood-toy.png" border="0">
+                    <br>
+                {/if}
+                {$node["cat_name"]}</a>
+
+            <div class="dropdown_3columns {if $iterator->last} align_right {else} align_left {/if}">
+                {if count($node['children'])}
+                    <ul class="greybox">
+                        {foreach $node["children"] as $child}
+                            {if $iterator->isOdd()}
+                                <div class="col_1">
+                                    <li>
+                                        <a n:href="Category: $child['cat_id'], $child['cat_name']">{$child["cat_name"]}</a>
+                                    </li>
+                                </div>
+                            {else}
+                                <div class="col_1">
+                                <li><a n:href="Category: $child['cat_id'], $child['cat_name']">{$child["cat_name"]}</a>
+                                </li></div>{/if}
+                        {/foreach}
+                    </ul>
+                {/if}
+            </div>
+        </li>
     {/foreach}
 </ul>
