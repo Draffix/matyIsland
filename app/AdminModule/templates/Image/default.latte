@@ -1,45 +1,49 @@
 {block #breadcrumbs}
-<li>
-    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
-    <a n:href="Image:">Vzhled</a> <span class="divider">/</span>
-</li>
+    <li>
+        <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+        <a n:href="Image:">Vzhled</a> <span class="divider">/</span>
+    </li>
 {/block}
 {block content}
-    {foreach $flashes as $flash}
-<div class="row-fluid">
-    <div class="span12 bgcolor">                                        
-        <div class="alert alert-{$flash->type}">
-            <a href="#" class="close" data-dismiss="alert">×</a>
+{foreach $flashes as $flash}
+    <div class="row-fluid">
+        <div class="span12 bgcolor">
+            <div class="alert alert-{$flash->type}">
+                <a href="#" class="close" data-dismiss="alert">×</a>
                 {$flash->message}
-        </div>                                       
-    </div><!--/span-->
-</div><!--/row-->
-    {/foreach}
+            </div>
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+{/foreach}
 <div class="row-fluid">
-    <div class="span12 bgcolor">  
-<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+    <div class="span12 bgcolor">
+        <div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab1" data-toggle="tab">Oznámení na hlavní stránce</a></li>
                 <li><a href="#tab2" data-toggle="tab">Šablony emailů</a></li>
+                <li><a href="#tab3" data-toggle="tab">Úprava slideru</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab1">
                     <div class="well">
                         {form warningDescription}
-                        <div class="control-group">
-                            <label class="control-label"><strong>Text upozornění</strong></label>
-                            <div class="controls">
-                                <textarea n:input="warning_description">{$description}</textarea>
+                            <div class="control-group">
+                                <label class="control-label"><strong>Text upozornění</strong></label>
+
+                                <div class="controls">
+                                    <textarea n:input="warning_description">{$description}</textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <input n:input="warning_enabled" type="checkbox"> Zapnout / Vypnout upozornění
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input n:input="warning_enabled" type="checkbox"> Zapnout / Vypnout upozornění
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-actions">                
-                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
-                        </div>
+                            <div class="form-actions">
+                                <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                            </div>
                         {/form}
                     </div>
                 </div>
@@ -47,30 +51,90 @@
                     <legend>Přehled šablon emailů</legend>
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Název šablony</th>
-                                <th>Předmět emailu</th>
-                                <th>Akce</th>
-                            </tr>
-                        </thead>   
+                        <tr>
+                            <th>ID</th>
+                            <th>Název šablony</th>
+                            <th>Předmět emailu</th>
+                            <th>Akce</th>
+                        </tr>
+                        </thead>
                         <tbody>
-                            {foreach $templates as $template}
+                        {foreach $templates as $template}
                             <tr>
                                 <td>{$template->template_id}</td>
                                 <td>{$template->template_name}</td>
                                 <td>{$template->template_subject}</td>
                                 <td>
                                     <a class="btn btn-success" n:href="Image:edit $template->template_id">
-                                        <i class="icon-pencil icon-white"></i>  
-                                        Upravit                                           
+                                        <i class="icon-pencil icon-white"></i>
+                                        Upravit
                                     </a>
-                                </td>                                     
+                                </td>
                             </tr>
-                            {/foreach}
+                        {/foreach}
                         </tbody>
                     </table>
                 </div>
+
+                <div class="tab-pane" id="tab3">
+                    <a class="btn btn-primary" href="#addImage" data-toggle="modal" style="float: right">
+                        <i class="icon-plus"></i>
+                        Přidat nový obrázek
+                    </a>
+                    <legend>Přehled obrázků použitých ve slideru na úvodní stránce</legend>
+                    <table id="slider" class="table table-striped table-bordered bootstrap-datatable datatable">
+                        <thead>
+                        <tr>
+                            <th>Obrázek</th>
+                            <th>Název</th>
+                            <th style="width: 137px"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $slider as $image}
+                            <tr>
+                                <td style="text-align: center">
+                                    <a href="{$basePath}/images/info/slideshow/{$image->slider_name}" rel="lightbox">
+                                        <img src="{$basePath}/images/info/slideshow/{$image->slider_name}"
+                                             alt={$image->slider_name} width="344" height="123"></a>
+                                </td>
+                                <td class="center">{$image->slider_name}</td>
+                                <td>
+                                    <a n:href="deleteSlider! $image->slider_id, $image->slider_name" class="btn btn-danger" style="float: right">
+                                        <i class="icon-trash icon-white"></i>
+                                        Smazat obrázek
+                                    </a>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Modal -->
+                <div id="addImage" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Přidat obrázek do slideru</h3>
+                    </div>
+                    {form addImageForm}
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span6 bgcolor">
+                                    <label><strong>Vyberte obrázek</strong></label><br>
+                                    nejlépe ve velikosti <br> výška: 247px <br> šířka: 689px <br><br>
+                                    {input image_name}
+                                </div>
+                                <!--/span-->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Storno</button>
+                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Přidat obrázek">
+                        </div>
+                    {/form}
+                </div>
+                <!--/Modal -->
             </div>
         </div>
     </div>

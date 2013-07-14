@@ -41,6 +41,7 @@ common:
 		setting: SettingModel
 		emailTemplate: EmailTemplateModel
 		supplier: SupplierModel
+		slider: SliderModel
 
 		sessionPanel:
 			class: SessionPanel

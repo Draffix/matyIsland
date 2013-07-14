@@ -35,6 +35,7 @@ class HomepagePresenter extends BasePresenter {
         $mainProducts = $model->fetchImagesAndNews($paginator->itemsPerPage, $paginator->offset);
 
         $this->template->mainProducts = $mainProducts;
+        $this->template->slider = $this->slider->fetchAllSliderImages();
 
 
         if ($this->isAjax()) {

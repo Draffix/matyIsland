@@ -4,10 +4,9 @@
 <!--    <img src="{$basePath}/images/photo4.jpg" alt="" width="682" height="334" style="margin-top: -1px;"/>-->
     <div class="slider-wrapper theme-light">
         <div id="slider" class="nivoSlider">
-            <img src="{$basePath}/images/info/slideshow/sparkys_banner_jaro12_1-411.jpg" data-thumb="{$basePath}/images/info/slideshow/sparkys_banner_jaro12_1-411.jpg" alt="" />
-            <img src="{$basePath}/images/info/slideshow/269.jpg" data-thumb="{$basePath}/images/info/slideshow/269.jpg" alt="" />
-            <img src="{$basePath}/images/info/slideshow/splash_lego_CHIMA1.jpg" data-thumb="{$basePath}/images/info/slideshow/splash_lego_CHIMA1.jpg" alt="" data-transition="slideInLeft" />
-            <img src="{$basePath}/images/info/slideshow/splash_motorka1.jpg" data-thumb="{$basePath}/images/info/slideshow/splash_motorka1.jpg" alt="" />
+            {foreach $slider as $image}
+                <img src="{$basePath}/images/info/slideshow/{$image->slider_name}" data-thumb="{$basePath}/images/info/slideshow/{$image->slider_name}" alt="" width="689" height="247"/>
+            {/foreach}
         </div>
     </div>
     <script type="text/javascript">
