@@ -83,7 +83,7 @@ class ProductPresenter extends BasePresenter {
     }
 
     protected function createComponentAddProductForm() {
-        $form = new editProductForm($this->category, $this->product);
+        $form = new editProductForm($this->category, $this->product, $this->supplier);
         $folder = $this->getParam('folder');
         $form->addHidden('folder', $folder);
         $form->onSuccess[] = callback($this, 'addProductFormSubmitted');
@@ -164,7 +164,7 @@ class ProductPresenter extends BasePresenter {
     }
 
     protected function createComponentEditProductForm() {
-        $form = new editProductForm($this->category, $this->product, $this->getParameter('id'));
+        $form = new editProductForm($this->category, $this->product, $this->supplier, $this->getParameter('id'));
         $folder = $this->getParam('folder');
         $form->addHidden('folder', $folder);
 

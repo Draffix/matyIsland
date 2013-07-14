@@ -40,6 +40,7 @@ common:
 		deliveryPayment: DeliveryPaymentModel
 		setting: SettingModel
 		emailTemplate: EmailTemplateModel
+		supplier: SupplierModel
 
 		sessionPanel:
 			class: SessionPanel

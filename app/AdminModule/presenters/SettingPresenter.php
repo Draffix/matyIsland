@@ -8,24 +8,28 @@ use Nette\Utils\Validators;
 
 class SettingPresenter extends BasePresenter {
 
+    // deaktivujeme způsob platby
     public function handleDeactivatePayment($payment_id) {
         $this->deliveryPayment->deactivatePayment($payment_id);
         $this->flashMessage('Nastavení bylo změněno', 'success');
         $this->redirect('this');
     }
 
+    // aktivujeme způsob platby
     public function handleActivatePayment($payment_id) {
         $this->deliveryPayment->activatePayment($payment_id);
         $this->flashMessage('Nastavení bylo změněno', 'success');
         $this->redirect('this');
     }
 
+    // deaktivujeme způsob dopravy
     public function handleDeactivateDelivery($delivery_id) {
         $this->deliveryPayment->deactivateDelivery($delivery_id);
         $this->flashMessage('Nastavení bylo změněno', 'success');
         $this->redirect('this');
     }
 
+    // aktivujeme způsob dopravy
     public function handleActivateDelivery($delivery_id) {
         $this->deliveryPayment->activateDelivery($delivery_id);
         $this->flashMessage('Nastavení bylo změněno', 'success');
@@ -37,8 +41,14 @@ class SettingPresenter extends BasePresenter {
         $this->template->owner = $this->setting->fetchAllOwner();
         $this->template->payment = $this->deliveryPayment->fetchAllPayment();
         $this->template->delivery = $this->deliveryPayment->fetchAllDelivery();
+        $this->template->supplier = $this->supplier->fetchAllSuppliers();
     }
 
+    public function renderEditSupplier($sup_id) {
+        $this->template->sup = $this->supplier->fetchSingleSupplier($sup_id);
+    }
+
+    // formulář pro základní nastavení
     public function createComponentSettingForm() {
         $form = new UI\Form;
         $form->addText('eshop_name');
@@ -86,6 +96,7 @@ class SettingPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    // formulář pro nastavení majitele
     public function createComponentOwnerForm() {
         $form = new UI\Form();
         $form->addText('owner_name');
@@ -110,17 +121,18 @@ class SettingPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    // formulář pro nastavení placení
     public function createComponentPaymentForm() {
         $callback = callback($this, 'paymentFormSubmitted');
         return new UI\Multiplier(function ($payment_id) use ($callback) {
-                            $form = new UI\Form();
-                            $form->addHidden('payment_id', $payment_id);
-                            $form->addText('payment_describe');
-                            $form->addText('payment_price');
-                            $form->addSubmit('save_change');
-                            $form->onSuccess[] = $callback;
-                            return $form;
-                        });
+            $form = new UI\Form();
+            $form->addHidden('payment_id', $payment_id);
+            $form->addText('payment_describe');
+            $form->addText('payment_price');
+            $form->addSubmit('save_change');
+            $form->onSuccess[] = $callback;
+            return $form;
+        });
     }
 
     public function paymentFormSubmitted(UI\Form $form) {
@@ -130,17 +142,18 @@ class SettingPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    // formulář pro nastavení dopravy
     public function createComponentDeliveryForm() {
         $callback = callback($this, 'deliveryFormSubmitted');
         return new UI\Multiplier(function ($delivery_id) use ($callback) {
-                            $form = new UI\Form();
-                            $form->addHidden('delivery_id', $delivery_id);
-                            $form->addText('delivery_describe');
-                            $form->addText('delivery_price');
-                            $form->addSubmit('save_change');
-                            $form->onSuccess[] = $callback;
-                            return $form;
-                        });
+            $form = new UI\Form();
+            $form->addHidden('delivery_id', $delivery_id);
+            $form->addText('delivery_describe');
+            $form->addText('delivery_price');
+            $form->addSubmit('save_change');
+            $form->onSuccess[] = $callback;
+            return $form;
+        });
     }
 
     public function deliveryFormSubmitted(UI\Form $form) {
@@ -150,11 +163,12 @@ class SettingPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    // formulář pro nastavení slevy
     public function createComponentDiscountForm() {
         $form = new UI\Form();
         $form->addText('eshop_discount');
         $form->addCheckbox('eshop_discount_for_registered', 'Jen pro registrované uživatele')
-                ->setDefaultValue($this->setting->fetchAllSettings()->eshop_discount_for_registered);
+            ->setDefaultValue($this->setting->fetchAllSettings()->eshop_discount_for_registered);
         $form->addSubmit('save_change');
         $form->onSuccess[] = callback($this, 'discountFormSubmitted');
         return $form;
@@ -173,6 +187,7 @@ class SettingPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    // kontrola favicon
     private function checkIfImageAlredyExists($folder, $name) {
         $exists = FALSE;
         $filename = $name->getSanitizedName();
@@ -187,6 +202,7 @@ class SettingPresenter extends BasePresenter {
         return $exists;
     }
 
+    // uložení favicon do souboru
     private function moveImage($folder, $name) {
         $filename = $name->getSanitizedName();
         $targetPath = $this->context->params['wwwDir'] . '/images/info/favicon/';
@@ -197,6 +213,46 @@ class SettingPresenter extends BasePresenter {
 
         $ico_lib = new \PHP_ICO("$targetPath/$filename", array(array(16, 16)));
         $ico_lib->save_ico("$targetPath/$filename");
+    }
+
+    // uložení dodavatele
+    public function createComponentAddSupplierForm() {
+        $form = new editSupplierForm();
+        $form->onSuccess[] = callback($this, 'addSupplierFormSubmitted');
+        return $form;
+    }
+
+    public function addSupplierFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+
+        if ($values->sup_name != '') {
+            $this->supplier->saveSupplier($values);
+            $this->flashMessage('Dodavatel byl přidán', 'success');
+            $this->redirect('this');
+        } else {
+            $this->flashMessage('Nevyplnili jste název dodavatele', 'error');
+            return;
+        }
+    }
+
+    // uložení dodavatele
+    public function createComponentEditSupplierForm() {
+        $form = new editSupplierForm();
+        $form->onSuccess[] = callback($this, 'editSupplierFormSubmitted');
+        return $form;
+    }
+
+    public function editSupplierFormSubmitted(UI\Form $form) {
+        $values = $form->getValues();
+
+        if ($values->sup_name != '') {
+            $this->supplier->updateSupplier($this->getParameter('sup_id'), $values);
+            $this->flashMessage('Dodavatel byl aktualizován', 'success');
+            $this->redirect('this');
+        } else {
+            $this->flashMessage('Nevyplnili jste název dodavatele', 'error');
+            return;
+        }
     }
 
 }

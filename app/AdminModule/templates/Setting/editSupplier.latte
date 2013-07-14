@@ -1,0 +1,147 @@
+{block #breadcrumbs}
+    <li>
+        <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+        <a n:href="Setting:">Nastavení</a> <span class="divider">/</span>
+    </li>
+{/block}
+{block content}
+    {foreach $flashes as $flash}
+        <div class="row-fluid">
+            <div class="span12 bgcolor">
+                <div class="alert alert-{$flash->type}">
+                    <a href="#" class="close" data-dismiss="alert">×</a>
+                    {$flash->message}
+                </div>
+            </div>
+            <!--/span-->
+        </div>
+        <!--/row-->
+    {/foreach}
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-user"></i> Dodavatel</h2>
+
+                <div class="box-icon">
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            {form editSupplierForm}
+                <div class="box-content">
+                    <div class="container-fluid">
+                        <h3 style="margin-bottom: 15px">Dodavatelovy údaje</h3>
+
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label><strong>Název dodavatele (*povinné)</strong></label>
+                                <input n:input="sup_name" type="text" tabindex="0" class="myinput" autofocus=""
+                                       value="{$sup->sup_name}"/>
+                            </div>
+                            <!--/span-->
+                        </div>
+
+                        <!--/row-->
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label>Ulice</label>
+                                <input n:input="sup_address" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_address}"/>
+                            </div>
+                            <!--/span-->
+                            <div class="span6 bgcolor">
+                                <label>Město</label>
+                                <input n:input="sup_city" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_city}"/>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label>PSČ</label>
+                                <input n:input="sup_psc" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_psc}"/>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label>Telefon</label>
+                                <input n:input="sup_telefon" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_telefon}" />
+                            </div>
+                            <!--/span-->
+                            <div class="span6 bgcolor">
+                                <label>Mobil</label>
+                                <input n:input="sup_mobil" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_mobil}"/>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label>Email</label>
+                                <input n:input="sup_email" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_email}"/>
+                            </div>
+                            <!--/span-->
+                            <div class="span6 bgcolor">
+                                <label>Webové stránky</label>
+                                <input n:input="sup_website" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_website}"/>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+
+                        <div class="row-fluid">
+                            <div class="span6 bgcolor">
+                                <label>IČO</label>
+                                <input n:input="sup_ico" type="text" tabindex="0" class="myinput"
+                                       value={$sup->sup_ico}/>
+                            </div>
+                            <!--/span-->
+                            <div class="span6 bgcolor">
+                                <label>DIČ</label>
+                                <input n:input="sup_dic" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_dic}"/>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+
+                        <div class="row-fluid">
+                            <div class="span12 bgcolor">
+                                <label>Kontaktní osoba</label>
+                                <input n:input="sup_contact_person" type="text" tabindex="0" class="myinput"
+                                       value="{$sup->sup_contact_person}"/>
+                            </div>
+                        </div>
+                        <!--/row-->
+
+                        <div class="row-fluid">
+                            <div class="span12 bgcolor">
+                                <label>Popis</label>
+                                <textarea n:input="sup_describe" rows="2"
+                                          class="input-block-level">{$sup->sup_describe}</textarea>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                    </div>
+                    <!--/.fluid-container-->
+                    <div class="form-actions" style="margin-bottom: -10px;">
+                        <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                        <a n:href="Setting:"><input type="button" class="btn" value="Zpět na nastavení"></a>
+                    </div>
+                </div>
+            {/form}
+        </div>
+    </div>
+{/block}

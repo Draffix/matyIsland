@@ -181,7 +181,8 @@ class ProductModel extends Table {
                             'prod_long_describe' => $values['prod_long_describe'],
                             'prod_isnew' => $values['prod_isnew'],
                             'prod_on_stock' => $values['prod_on_stock'],
-                            'prod_is_active' => $values['prod_is_active']));
+                            'prod_is_active' => $values['prod_is_active'],
+                            'supplier_sup_id' => $values['supplier']));
     }
 
     public function insertImage($productID, $name, $isMain = 0) {
@@ -206,7 +207,7 @@ class ProductModel extends Table {
         return $this->connection->table($this->image)
                         ->where('image.image_is_main = 1')
                         ->group('image.product_prod_id')
-                        ->order('product.prod_id');
+                        ->order('product.prod_id DESC');
     }
 
     /**
@@ -245,7 +246,8 @@ class ProductModel extends Table {
                             'prod_long_describe' => $values['prod_long_describe'],
                             'prod_isnew' => $values['prod_isnew'],
                             'prod_on_stock' => $values['prod_on_stock'],
-                            'prod_is_active' => $values['prod_is_active']));
+                            'prod_is_active' => $values['prod_is_active'],
+                            'supplier_sup_id' => $values['supplier']));
     }
 
     public function deleteImage($id) {

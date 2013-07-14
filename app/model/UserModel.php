@@ -94,15 +94,17 @@ class UserModel extends Table {
             ->where('user_role', 'member');
     }
 
-    public function fetchAdmin() {
+    public function fetchAdmin($id) {
         return $this->getTable()
             ->where('user_role', 'admin')
+            ->where('user_id', $id)
             ->fetch();
     }
 
-    public function updateAdmin($values) {
+    public function updateAdmin($values, $id) {
         return $this->getTable()
             ->where('user_role', 'admin')
+            ->where('user_id', $id)
             ->update($values);
     }
 

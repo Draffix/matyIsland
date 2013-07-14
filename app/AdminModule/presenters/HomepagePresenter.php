@@ -36,7 +36,7 @@ class HomepagePresenter extends BasePresenter {
     public function createComponentEditAdministratorForm() {
         $form = new UI\Form;
         $form->addText('user_email')
-                ->setDefaultValue($this->users->fetchAdmin()->user_email);
+                ->setDefaultValue($this->users->fetchAdmin($this->getUser()->getId())->user_email);
         $form->addPassword('old_password');
         $form->addPassword('user_password');
         $form->addPassword('user_confirmPassword');
@@ -83,7 +83,7 @@ class HomepagePresenter extends BasePresenter {
 
         unset($values['user_confirmPassword'], $values['old_password']);
         $values['user_password'] = \Authenticator::calculateHash($values['user_password']);
-        $this->users->updateAdmin($values);
+        $this->users->updateAdmin($values, $this->getUser()->getId());
 
         $this->flashMessage('Vaše údaje byly úspěšně změněny a uloženy.', 'success');
         $this->redirect('this');

@@ -39,13 +39,36 @@
                                autofocus="">
                     </div>
                 </div>
-                <div class="control-group">
-                    <label class="control-label" for="categories">Kategorie</label>
 
-                    <div class="controls">
-                        {input category id=>categories, data-rel=>chosen}
+                <div class="row-fluid">
+                    <div class="span4 bgcolor">
+                        <label class="control-label" for="categories">Kategorie</label>
+
+                        <div class="controls">
+                            {input category id=>categories, data-rel=>chosen}
+                        </div>
                     </div>
+                    <!--/span-->
+                    <div class="span1 bgcolor">
+                        <div class="control-group">
+                            <label>Dodavatel</label>
+
+                            <div class="controls">
+                                {input supplier data-rel=>chosen}
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
                 </div>
+                <!--/row-->
+
+                {*<div class="control-group">*}
+                    {*<label class="control-label" for="categories">Kategorie</label>*}
+
+                    {*<div class="controls">*}
+                        {*{input category id=>categories, data-rel=>chosen}*}
+                    {*</div>*}
+                {*</div>*}
                 <hr/>
                 <label>Nákupní cena</label>
 

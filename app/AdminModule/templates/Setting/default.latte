@@ -1,246 +1,447 @@
 {block #breadcrumbs}
-<li>
-    <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
-    <a n:href="Setting:">Nastavení</a> <span class="divider">/</span>
-</li>
+    <li>
+        <a n:href="Homepage:">Úvod</a> <span class="divider">/</span>
+        <a n:href="Setting:">Nastavení</a> <span class="divider">/</span>
+    </li>
 {/block}
 {block content}
-    {foreach $flashes as $flash}
-<div class="row-fluid">
-    <div class="span12 bgcolor">                                        
-        <div class="alert alert-{$flash->type}">
-            <a href="#" class="close" data-dismiss="alert">×</a>
+{foreach $flashes as $flash}
+    <div class="row-fluid">
+        <div class="span12 bgcolor">
+            <div class="alert alert-{$flash->type}">
+                <a href="#" class="close" data-dismiss="alert">×</a>
                 {$flash->message}
-        </div>                                       
-    </div><!--/span-->
-</div><!--/row-->
-    {/foreach}
+            </div>
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+{/foreach}
 <div class="row-fluid">
-    <div class="span12 bgcolor">  
+<div class="span12 bgcolor">
 <div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1" data-toggle="tab">Nastavení e-shopu</a></li>
-                <li><a href="#tab2" data-toggle="tab">Prodejce</a></li>
-                <li><a href="#tab3" data-toggle="tab">Platba</a></li>
-                <li><a href="#tab4" data-toggle="tab">Doprava</a></li>
-                <li><a href="#tab5" data-toggle="tab">Slevy</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab1">
-                    <div class="well">
-                        <h3>Nastavení e-shopu</h3>
-                        {form settingForm}
-                        <div class="control-group">
-                            <label class="control-label"><strong>Název eshopu</strong></label>
-                            <div class="controls">
-                                <input n:input="eshop_name" class="input-xlarge focused" type="text" autofocus="" value="{$setting->eshop_name}" required="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Popis eshopu</strong></label>
-                            <div class="controls">
-                                <input n:input="eshop_describe" class="input-xxlarge" type="text" value="{$setting->eshop_describe}">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Klíčová slova</strong></label>
-                            <div class="controls">
-                                <input n:input="eshop_key_words" class="input-xxlarge" type="text" value="{$setting->eshop_key_words}">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Ikona <abbr title="Obrázek o rozměrech 16x16px, který se zobrazuje vedle adresy stránky v prohlížečích.">favicon.ico</abbr></strong></label>
-                            <div class="controls">
-                                <input n:input="eshop_favicon" type="file">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Počet produktů na hlavní stránce</strong></label>
-                            <div class="controls">
-                                <input n:input="eshop_product_on_homepage" class="input-mini" type="number" value="{$setting->eshop_product_on_homepage}">
-                            </div>
-                        </div>
-                        <div class="form-actions">                
-                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
-                        </div>
-                        {/form}
-                    </div>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Nastavení e-shopu</a></li>
+    <li><a href="#tab2" data-toggle="tab">Prodejce</a></li>
+    <li><a href="#tab3" data-toggle="tab">Platba</a></li>
+    <li><a href="#tab4" data-toggle="tab">Doprava</a></li>
+    <li><a href="#tab5" data-toggle="tab">Dodavatelé</a></li>
+    <li><a href="#tab6" data-toggle="tab">Slevy</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active" id="tab1">
+    <div class="well">
+        <h3>Nastavení e-shopu</h3>
+        {form settingForm}
+            <div class="control-group">
+                <label class="control-label"><strong>Název eshopu</strong></label>
+
+                <div class="controls">
+                    <input n:input="eshop_name" class="input-xlarge focused" type="text" autofocus=""
+                           value="{$setting->eshop_name}" required="">
                 </div>
-                <div class="tab-pane" id="tab2">
-                    <div class="well">
-                        <h3>Prodejce</h3>
-                        {form ownerForm}
-                        <div class="control-group">
-                            <label class="control-label"><strong>Jméno / Firma</strong></label>
-                            <div class="controls">
-                                <input n:input="owner_name" class="input-xlarge focused" type="text" autofocus="" value="{$owner->owner_name}" required="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Jméno dalšího vlastníka (nepovinné)</strong></label>
-                            <div class="controls">
-                                <input n:input="owner_name2" class="input-xlarge focused" type="text" value="{$owner->owner_name2}">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Email</strong></label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on">@</span><input n:input="owner_email" id="prependedInput" class="input-xlarge" type="email" value="{$owner->owner_email}" required="">
-                                </div> 
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Telefon</strong></label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on">+ 420</span><input n:input="owner_telefon" id="prependedInput" class="input-xlarge" type="text" value="{$owner->owner_telefon}">
-                                </div>                                
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Telefon na dalšího vlastníka (nepovinné)</strong></label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on">+ 420</span><input n:input="owner_telefon2" id="prependedInput" class="input-xlarge" type="text" value="{$owner->owner_telefon2}">
-                                </div> 
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Ulice</strong></label>
-                            <div class="controls">
-                                <input n:input="owner_street" class="input-xlarge" type="text" value="{$owner->owner_street}" required="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>Město</strong></label>
-                            <div class="controls">
-                                <input n:input="owner_city" class="input-xlarge" type="text" value="{$owner->owner_city}" required="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>PSČ</strong></label>
-                            <div class="controls">
-                                <input n:input="owner_psc" class="input-small" type="text" value="{$owner->owner_psc}" required="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>IČO</strong></label>
-                            <div class="controls">
-                                <input n:input="owner_ico" class="input-small" type="text" value="{$owner->owner_ico}">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"><strong>DIČ</strong></label>
-                            <div class="controls">
-                                <input n:input="owner_dic" class="input-small" type="text" value="{$owner->owner_dic}">
-                            </div>
-                        </div>
-                        <div class="form-actions">                
-                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
-                        </div>
-                        {/form}
-                    </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Popis eshopu</strong></label>
+
+                <div class="controls">
+                    <input n:input="eshop_describe" class="input-xxlarge" type="text"
+                           value="{$setting->eshop_describe}">
                 </div>
-                <div class="tab-pane" id="tab3">
-                    <div class="well">
-                        <h2>Nastavení plateb</h2>
-                        <p>Eshop podporuje tyto platební metody. Které z nich povolíte je jen na vás. 
-                            U každé z nich můžete nastavit navíc její název a případnou cenu (příplatek) za 
-                            tuto možnost platby.</p>
-                        {foreach $payment as $p}
-                        {form paymentForm-$p->payment_id}
-                        <fieldset style="margin-bottom: 40px">
-                            {input payment_id value => $p->payment_id}
-                            <legend style="margin-bottom: 0px">{$p->payment_name}</legend>
-                            <div class="control-group">
-                                <label class="control-label"><strong>Popis</strong></label>
-                                <div class="controls">
-                                    <input n:input="payment_describe" class="input-xlarge" type="text" value="{$p->payment_describe}">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label"><strong>Příplatek</strong></label>
-                                <div class="controls">
-                                    <input n:input="payment_price" class="input-small" type="text" value="{$p->payment_price}">,- Kč s DPH
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
-                                    {if $p->payment_enabled == 1}
-                                    <a class="btn" n:href="deactivatePayment! $p->payment_id"><i class="icon-off"></i> Deaktivovat</a>
-                                    {else}
-                                    <a class="btn" n:href="activatePayment! $p->payment_id"><i class="icon-ok"></i> Aktivovat</a>
-                                    {/if}
-                                </div>
-                            </div>
-                        </fieldset>
-                        {/form}
-                        {/foreach}
-                    </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Klíčová slova</strong></label>
+
+                <div class="controls">
+                    <input n:input="eshop_key_words" class="input-xxlarge" type="text"
+                           value="{$setting->eshop_key_words}">
                 </div>
-                <div class="tab-pane" id="tab4">
-                    <div class="well">
-                        <h2>Doprava</h2>
-                        <p>Eshop podporuje tři možnosti dopravců. Je to Česká pošta, 
-                            kurýrní služba (typicky PPL) a osobní odběr. Můžete si zvolit, které způsoby 
-                            doručení povolíte a které ne, navíc u nich nastavit název a cenu za doručení.</p>
-                       {foreach $delivery as $d}
-                        {form deliveryForm-$d->delivery_id}
-                        <fieldset style="margin-bottom: 40px">
-                            {input delivery_id value => $d->delivery_id}
-                            <legend style="margin-bottom: 0px">{$d->delivery_name}</legend>
-                            <div class="control-group">
-                                <label class="control-label"><strong>Popis</strong></label>
-                                <div class="controls">
-                                    <input n:input="delivery_describe" class="input-xlarge" type="text" value="{$d->delivery_describe}">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label"><strong>Příplatek</strong></label>
-                                <div class="controls">
-                                    <input n:input="delivery_price" class="input-small" type="text" value="{$d->delivery_price}">,- Kč s DPH
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
-                                    {if $d->delivery_enabled == 1}
-                                    <a class="btn" n:href="deactivateDelivery! $d->delivery_id"><i class="icon-off"></i> Deaktivovat</a>
-                                    {else}
-                                    <a class="btn" n:href="activateDelivery! $d->delivery_id"><i class="icon-ok"></i> Aktivovat</a>
-                                    {/if}
-                                </div>
-                            </div>
-                        </fieldset>
-                        {/form}
-                        {/foreach}
-                    </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Ikona <abbr
+                                title="Obrázek o rozměrech 16x16px, který se zobrazuje vedle adresy stránky v prohlížečích.">favicon.ico</abbr></strong></label>
+
+                <div class="controls">
+                    <input n:input="eshop_favicon" type="file">
                 </div>
-                <div class="tab-pane" id="tab5">
-                    <div class="well">
-                        <h3>Slevy</h3>
-                        <p>Eshop umožňuje zvolit si procentní slevu na všechny produkty. Je na Vás, jestli
-                            si zvolíte slevu pouze pro registrované. Nula znamená žádnou slevu.</p>
-                        {form discountForm}
-                        <fieldset>
-                            <legend style="margin-bottom: 0px">Možnosti slevy</legend>
-                            <div class="control-group">
-                                <label class="control-label"><strong>Sleva ceny (v %)</strong></label>
-                                <div class="controls">
-                                    <input n:input="eshop_discount" class="input-mini" type="number" value="{$setting->eshop_discount}">
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="form-actions">                
-                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
-                        </div>
-                        {/form}
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Počet produktů na hlavní stránce</strong></label>
+
+                <div class="controls">
+                    <input n:input="eshop_product_on_homepage" class="input-mini" type="number"
+                           value="{$setting->eshop_product_on_homepage}">
+                </div>
+            </div>
+            <div class="form-actions">
+                <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+            </div>
+        {/form}
+    </div>
+</div>
+<div class="tab-pane" id="tab2">
+    <div class="well">
+        <h3>Prodejce</h3>
+        {form ownerForm}
+            <div class="control-group">
+                <label class="control-label"><strong>Jméno / Firma</strong></label>
+
+                <div class="controls">
+                    <input n:input="owner_name" class="input-xlarge focused" type="text" autofocus=""
+                           value="{$owner->owner_name}" required="">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Jméno dalšího vlastníka (nepovinné)</strong></label>
+
+                <div class="controls">
+                    <input n:input="owner_name2" class="input-xlarge focused" type="text" value="{$owner->owner_name2}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Email</strong></label>
+
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">@</span><input n:input="owner_email" id="prependedInput"
+                                                            class="input-xlarge" type="email"
+                                                            value="{$owner->owner_email}" required="">
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Telefon</strong></label>
+
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">+ 420</span><input n:input="owner_telefon" id="prependedInput"
+                                                                class="input-xlarge" type="text"
+                                                                value="{$owner->owner_telefon}">
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Telefon na dalšího vlastníka (nepovinné)</strong></label>
+
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">+ 420</span><input n:input="owner_telefon2" id="prependedInput"
+                                                                class="input-xlarge" type="text"
+                                                                value="{$owner->owner_telefon2}">
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Ulice</strong></label>
+
+                <div class="controls">
+                    <input n:input="owner_street" class="input-xlarge" type="text" value="{$owner->owner_street}"
+                           required="">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>Město</strong></label>
+
+                <div class="controls">
+                    <input n:input="owner_city" class="input-xlarge" type="text" value="{$owner->owner_city}"
+                           required="">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>PSČ</strong></label>
+
+                <div class="controls">
+                    <input n:input="owner_psc" class="input-small" type="text" value="{$owner->owner_psc}" required="">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>IČO</strong></label>
+
+                <div class="controls">
+                    <input n:input="owner_ico" class="input-small" type="text" value="{$owner->owner_ico}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>DIČ</strong></label>
+
+                <div class="controls">
+                    <input n:input="owner_dic" class="input-small" type="text" value="{$owner->owner_dic}">
+                </div>
+            </div>
+            <div class="form-actions">
+                <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+            </div>
+        {/form}
     </div>
+</div>
+<div class="tab-pane" id="tab3">
+    <div class="well">
+        <h2>Nastavení plateb</h2>
+
+        <p>Eshop podporuje tyto platební metody. Které z nich povolíte je jen na vás.
+            U každé z nich můžete nastavit navíc její název a případnou cenu (příplatek) za
+            tuto možnost platby.</p>
+        {foreach $payment as $p}
+            {form paymentForm-$p->payment_id}
+                <fieldset style="margin-bottom: 40px">
+                    {input payment_id value => $p->payment_id}
+                    <legend style="margin-bottom: 0px">{$p->payment_name}</legend>
+                    <div class="control-group">
+                        <label class="control-label"><strong>Popis</strong></label>
+
+                        <div class="controls">
+                            <input n:input="payment_describe" class="input-xlarge" type="text"
+                                   value="{$p->payment_describe}">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"><strong>Příplatek</strong></label>
+
+                        <div class="controls">
+                            <input n:input="payment_price" class="input-small" type="text" value="{$p->payment_price}">,-
+                            Kč s DPH
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                            {if $p->payment_enabled == 1}
+                                <a class="btn" n:href="deactivatePayment! $p->payment_id"><i class="icon-off"></i>
+                                    Deaktivovat</a>
+                            {else}
+                                <a class="btn" n:href="activatePayment! $p->payment_id"><i class="icon-ok"></i>
+                                    Aktivovat</a>
+                            {/if}
+                        </div>
+                    </div>
+                </fieldset>
+            {/form}
+        {/foreach}
+    </div>
+</div>
+<div class="tab-pane" id="tab4">
+    <div class="well">
+        <h2>Doprava</h2>
+
+        <p>Eshop podporuje tři možnosti dopravců. Je to Česká pošta,
+            kurýrní služba (typicky PPL) a osobní odběr. Můžete si zvolit, které způsoby
+            doručení povolíte a které ne, navíc u nich nastavit název a cenu za doručení.</p>
+        {foreach $delivery as $d}
+            {form deliveryForm-$d->delivery_id}
+                <fieldset style="margin-bottom: 40px">
+                    {input delivery_id value => $d->delivery_id}
+                    <legend style="margin-bottom: 0px">{$d->delivery_name}</legend>
+                    <div class="control-group">
+                        <label class="control-label"><strong>Popis</strong></label>
+
+                        <div class="controls">
+                            <input n:input="delivery_describe" class="input-xlarge" type="text"
+                                   value="{$d->delivery_describe}">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"><strong>Příplatek</strong></label>
+
+                        <div class="controls">
+                            <input n:input="delivery_price" class="input-small" type="text"
+                                   value="{$d->delivery_price}">,- Kč s DPH
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+                            {if $d->delivery_enabled == 1}
+                                <a class="btn" n:href="deactivateDelivery! $d->delivery_id"><i class="icon-off"></i>
+                                    Deaktivovat</a>
+                            {else}
+                                <a class="btn" n:href="activateDelivery! $d->delivery_id"><i class="icon-ok"></i>
+                                    Aktivovat</a>
+                            {/if}
+                        </div>
+                    </div>
+                </fieldset>
+            {/form}
+        {/foreach}
+    </div>
+</div>
+<div class="tab-pane" id="tab5">
+    <div class="well">
+        <div style="float: right; margin-bottom: 10px">
+            <a class="btn btn-primary" href="#addSupplier" data-toggle="modal">
+                <i class="icon-plus"></i>
+                Přidat nového dodavatele
+            </a>
+        </div>
+
+        <h3>Dodavatelé</h3>
+
+        <p>Zde je zobrazen seznam Vámi vytvořených dodavatelů.</p>
+        <table id="products" class="table table-striped table-bordered bootstrap-datatable datatable">
+            <thead>
+            <tr>
+                <th>Název</th>
+                <th>Ulice</th>
+                <th>Město</th>
+                <th>PSČ</th>
+                <th>Telefon</th>
+                <th>WWW</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $supplier as $sup}
+                <tr>
+                    <td class="center">{$sup->sup_name}</td>
+                    <td class="center">{$sup->sup_address}</td>
+                    <td class="center">{$sup->sup_city}</td>
+                    <td class="center">{$sup->sup_psc}</td>
+                    <td class="center">{$sup->sup_telefon}</td>
+                    <td class="center">{$sup->sup_website}</td>
+                    <td class="center">
+                        <a class="btn btn-info" n:href="Setting:editSupplier $sup->sup_id">
+                            <i class="icon-edit icon-white"></i>
+                            Upravit
+                        </a>
+                    </td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal -->
+    <div id="addSupplier" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Vytvořit dodavatele</h3>
+        </div>
+        {form addSupplierForm}
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                        <label><strong>Název dodavatele (*povinné)</strong></label>
+                        <input n:input="sup_name" type="text" tabindex="0" class="myinput" autofocus=""/>
+                    </div>
+                    <!--/span-->
+                </div>
+
+                <!--/row-->
+                <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                        <label>Ulice</label>
+                        <input n:input="sup_address" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                    <div class="span6 bgcolor">
+                        <label>Město</label>
+                        <input n:input="sup_city" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                        <label>PSČ</label>
+                        <input n:input="sup_psc" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                        <label>Telefon</label>
+                        <input n:input="sup_telefon" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                    <div class="span6 bgcolor">
+                        <label>Mobil</label>
+                        <input n:input="sup_mobil" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                        <label>Email</label>
+                        <input n:input="sup_email" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                    <div class="span6 bgcolor">
+                        <label>Webové stránky</label>
+                        <input n:input="sup_website" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                <div class="row-fluid">
+                    <div class="span6 bgcolor">
+                        <label>IČO</label>
+                        <input n:input="sup_ico" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                    <div class="span6 bgcolor">
+                        <label>DIČ</label>
+                        <input n:input="sup_dic" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                <div class="row-fluid">
+                    <div class="span12 bgcolor">
+                        <label>Kontaktní osoba</label>
+                        <input n:input="sup_contact_person" type="text" tabindex="0" class="myinput"/>
+                    </div>
+                </div>
+                <!--/row-->
+
+                <div class="row-fluid">
+                    <div class="span12 bgcolor">
+                        <label>Popis</label>
+                        <textarea n:input="sup_describe" rows="2" class="input-block-level"></textarea>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Storno</button>
+                <input n:input="save_change" type="submit" class="btn btn-primary" value="Přidat dodavatele">
+            </div>
+        {/form}
+    </div>
+    <!--/Modal -->
+</div>
+<div class="tab-pane" id="tab6">
+    <div class="well">
+        <h3>Slevy</h3>
+
+        <p>Eshop umožňuje zvolit si procentní slevu na všechny produkty. Je na Vás, jestli
+            si zvolíte slevu pouze pro registrované. Nula znamená žádnou slevu.</p>
+        {form discountForm}
+            <fieldset>
+                <legend style="margin-bottom: 0px">Možnosti slevy</legend>
+                <div class="control-group">
+                    <label class="control-label"><strong>Sleva ceny (v %)</strong></label>
+
+                    <div class="controls">
+                        <input n:input="eshop_discount" class="input-mini" type="number"
+                               value="{$setting->eshop_discount}">
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
+            </div>
+        {/form}
+    </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>

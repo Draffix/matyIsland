@@ -27,6 +27,9 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
     /** @var \EmailTemplateModel */
     protected $emailTemplate;
 
+    /** @var \SupplierModel */
+    protected $supplier;
+
     protected function startup() {
         parent::startup();
         $this->order = $this->context->order;
@@ -36,6 +39,7 @@ class BasePresenter extends \Nette\Application\UI\Presenter {
         $this->users = $this->context->users;
         $this->setting = $this->context->setting;
         $this->emailTemplate = $this->context->emailTemplate;
+        $this->supplier = $this->context->supplier;
 
         // zahájíme session a potlačíme E_NOTICE při znovu zavolání startupu
 //        @session_start();
