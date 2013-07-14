@@ -72,7 +72,7 @@
                             <div class="span6 bgcolor">
                                 <label>Telefon</label>
                                 <input n:input="sup_telefon" type="text" tabindex="0" class="myinput"
-                                       value="{$sup->sup_telefon}" />
+                                       value="{$sup->sup_telefon}"/>
                             </div>
                             <!--/span-->
                             <div class="span6 bgcolor">
@@ -104,7 +104,7 @@
                             <div class="span6 bgcolor">
                                 <label>IČO</label>
                                 <input n:input="sup_ico" type="text" tabindex="0" class="myinput"
-                                       value={$sup->sup_ico}/>
+                                       value="{$sup->sup_ico}"/>
                             </div>
                             <!--/span-->
                             <div class="span6 bgcolor">
@@ -139,6 +139,10 @@
                     <div class="form-actions" style="margin-bottom: -10px;">
                         <input n:input="save_change" type="submit" class="btn btn-primary" value="Uložit změny">
                         <a n:href="Setting:"><input type="button" class="btn" value="Zpět na nastavení"></a>
+                        <a n:href="deleteSupplier!" class="btn btn-danger" style="float: right">
+                            <i class="icon-trash icon-white"></i>
+                            Smazat dodavatele
+                        </a>
                     </div>
                 </div>
             {/form}

@@ -42,4 +42,13 @@ class SupplierModel extends Table {
             ->where('sup_id', $sup_id)
             ->update($values);
     }
+
+    /**
+    Smažeme dodavatele
+     */
+    public function deleteSupplier($sup_id) {
+        $this->getTable()
+            ->where('sup_id', $sup_id)
+            ->delete();
+    }
 }

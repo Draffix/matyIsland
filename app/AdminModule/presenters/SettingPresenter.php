@@ -36,6 +36,12 @@ class SettingPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
+    public function handleDeleteSupplier($sup_id) {
+        $this->supplier->deleteSupplier($sup_id);
+        $this->flashMessage('Dodavatel byl smazán', 'success');
+        $this->redirect('Setting:');
+    }
+
     public function renderDefault() {
         $this->template->setting = $this->setting->fetchAllSettings();
         $this->template->owner = $this->setting->fetchAllOwner();
@@ -46,6 +52,7 @@ class SettingPresenter extends BasePresenter {
 
     public function renderEditSupplier($sup_id) {
         $this->template->sup = $this->supplier->fetchSingleSupplier($sup_id);
+        $this->template->id = $sup_id;
     }
 
     // formulář pro základní nastavení
