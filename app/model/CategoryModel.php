@@ -20,8 +20,9 @@ class CategoryModel extends Table {
     public function countCategoryFilter($id) {
         return $this->connection->query(
                         'SELECT COUNT(*) AS pocet
-                        FROM category_has_product
-                        WHERE `category_cat_id` = ?', $id)->fetch();
+                        FROM category_has_product c JOIN product p ON product_prod_id = prod_id
+                        WHERE p.prod_is_active = 1
+                        AND `category_cat_id` = ?', $id)->fetch();
     }
 
     public function fetchAllCategoryNames() {

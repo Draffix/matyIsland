@@ -31,9 +31,9 @@
                         }
                     ?>
                     {ifset $ancestor_level3}
-                        {if $ancestor_level3 == $node["cat_id"]}
-                            {var $sel='selected'}
-                         {/if}
+                    {if $ancestor_level3 == $node["cat_id"]}
+                        {var $sel='selected'}
+                    {/if}
                     {/ifset}
                     {ifCurrent Category: $node['cat_id'], $template->webalize($node['cat_name'])}
                     {var $sel='selected'}
@@ -50,7 +50,8 @@
                                     <a n:href="Category: $node_level2['cat_id'], $template->webalize($node_level2['cat_name'])">{$node_level2['cat_name']}</a>
                                     <ul n:if="count($node_level2['children'])" class="level3">
                                         {foreach $node_level2["children"] as $node_level3}
-                                            <li class="typeDefault"><a n:href="Category: $node_level3['cat_id'], $template->webalize($node_level3['cat_name'])">{$node_level3['cat_name']}</a>
+                                            <li class="typeDefault"><a
+                                                        n:href="Category: $node_level3['cat_id'], $template->webalize($node_level3['cat_name'])">{$node_level3['cat_name']}</a>
                                             </li>
                                         {/foreach}
                                     </ul>
