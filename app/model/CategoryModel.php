@@ -280,4 +280,16 @@ class CategoryModel extends Table {
         return $tree;
     }
 
+    /***/
+    public function pks($id) {
+        return $this->connection->query('
+                    SELECT cc.*, c.*
+                    FROM `category_closure` AS cc
+                    JOIN category AS c ON cc.ancestor = c.cat_id
+                    WHERE descendant = ?
+                    AND ancestor > 1
+                    AND depth > 0', $id)
+            ->fetch();
+    }
+
 }

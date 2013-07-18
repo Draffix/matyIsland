@@ -502,6 +502,144 @@
 .categories li.parent {display: block;}
 .categories li.parent.active {color: yellow;}
 
+/*******************************************************************************************/
+
+
+
+.side nav {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 10px;
+}
+.side nav ul {
+    list-style: none;
+}
+.side nav a {
+    border-top: 1px solid #8c8282;
+    color: #1a1a1a;
+    display: block;
+    padding: 5px 20px;
+}
+.side nav a:hover {
+    background-color: #f3f3f3;
+}
+.side nav .current > a {
+    background-color: #fff;
+    color: #1a1a1a;
+}
+.side nav .level1 {
+    border-bottom: 1px solid #8c8282;
+}
+.side nav .level1 > li > a {
+    font-weight: bold;
+}
+.side nav .level1 > .subnodes > a {
+    background-image: url(img/icon_down.gif);
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #8c8282;
+}
+.side nav .level1 > .selected > a {
+    background-color: #fff;
+}
+.side nav .level2 {
+    margin-left: 13px;
+}
+.side nav .level2 > li > a {
+    border-top-color: #8c8282;
+}
+.side nav .level2 > .subnodes > a {
+    background-image: url(img/icon_down.gif);
+    background-position: 8px center;
+    background-repeat: no-repeat;
+}
+.side nav .level2 > li:first-child > a {
+    border-top: none;
+}
+.side nav.collapse .level2 { /* "collapse" class force menu to hide 2nd level until parent or child is not selected */
+    display: none;
+}
+.side nav.collapse .current .level2,
+.side nav.collapse .selected .level2 { /* displaying 2nd level */
+    display: block;
+}
+.side nav.collapse .level1 > .subnodes > a { /* fixing style when collapsed */
+    background-image: url(img/icon_right.gif);
+    background-position: 8px center;
+    border-bottom: none;
+}
+.side nav.collapse .level1 > .subnodes.current > a,
+.side nav.collapse .level1 > .subnodes.selected > a { /* fixing style when not collapsed */
+    background-image: url(img/icon_down.gif);
+    background-position: 5px center;
+    border-bottom: 1px solid #8c8282;
+}
+.side nav .level3 {
+    margin-left: 17px;
+}
+.side nav .level3 > li > a {
+    border-top-color: #8c8282;
+}
+.side nav .level3 > .subnodes > a {
+    background-image: url(img/icon_down.gif);
+    background-position: 8px center;
+    background-repeat: no-repeat;
+}
+
+.side nav .level3 > li:first-child > a {
+    border-top: none;
+}
+.side nav.collapse .level3  { /* "collapse" class force menu to hide 3rd level until parent or child is not selected */
+    display: none;
+}
+.side nav.collapse .current > .level3,
+.side nav.collapse .selected > .level3  { /* displaying 3rd level */
+    display: block;
+}
+.side nav.collapse .level2 > .subnodes > a { /* fixing style when collapsed */
+    background-image: url(img/icon_right.gif);
+    background-position: 8px center;
+    border-bottom: none;
+}
+.side nav.collapse .level2 > .subnodes.current > a,
+.side nav.collapse .level2 > .subnodes.selected > a { /* fixing style when not collapsed */
+    background-image: url(img/icon_down.gif);
+    background-position: 8px center;
+    border-bottom: 1px solid #9e9e9e;
+}
+.side nav .level4 {
+    margin-left: 18px;
+}
+.side nav .level4 > li > a {
+    border-top-color: #8c8282;
+}
+.side nav .level4 > li:first-child > a {
+    border-top: none;
+}
+.side nav.collapse .level4  { /* "collapse" class force menu to hide 4th level until parent or child is not selected */
+    display: none;
+}
+.side nav.collapse .current > .level4,
+.side nav.collapse .selected > .level4  { /* displaying 4th level */
+    display: block;
+}
+.side nav.collapse .level3 > .subnodes > a { /* fixing style when collapsed */
+    background-image: url(img/icon_right.gif);
+    background-position: 8px center;
+    border-bottom: none;
+}
+.side nav.collapse .level3 > .subnodes.current > a,
+.side nav.collapse .level3 > .subnodes.selected > a { /* fixing style when not collapsed */
+    background-image: url(img/icon_down.gif);
+    background-position: 8px center;
+    border-bottom: 1px solid #9e9e9e;
+}
+
+
+
+
+/*******************************************************************************************/
+
 #banner
 {
     width: 689px;

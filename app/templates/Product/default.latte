@@ -27,7 +27,7 @@
 <div class="inside-content" style="padding-top: 10px; padding-left: 0px; padding-right: 0px; width: 690px; margin-top: 5px;">
     <div id="breadcrumbs">
         <p style="padding: 0 0 10px 20px; font-family:Tahoma, sans-serif;">
-            <a n:href="Homepage:">Hračky MatyLand</a> > 
+            <a n:href="Homepage:">Hračky MatyLand</a> >
             {foreach $category as $cat}
             <a n:href="Category: $cat->cat_id, $cat->cat_name">{$cat->cat_name}</a> {sep}| {/sep}
             {/foreach}
@@ -35,7 +35,7 @@
             <a n:href="Product: $product->product->prod_id, $product->product->prod_name"><b>{$product->product->prod_name}</b></a>
         </p>
     </div>
-    <div class="itemDetail">        
+    <div class="itemDetail">
         <span class="title"><a n:href="Product: $product->product->prod_id, $product->product->prod_name">{$product->product->prod_name}</a>
             {if $setting->eshop_discount > 0}
             <span class="price">{$product->product->prod_price - ($product->product->prod_price * ($setting->eshop_discount / 100))|number},- Kč</span>
