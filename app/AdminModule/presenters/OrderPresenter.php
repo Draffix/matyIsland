@@ -5,6 +5,7 @@ namespace AdminModule;
 use Nette\Application\UI;
 use Nette\Mail\Message;
 use \DateTime;
+use OndrejBrejla\Eciovni\DeliveryPaymentBuilder;
 use OndrejBrejla\Eciovni\Eciovni;
 use OndrejBrejla\Eciovni\ParticipantBuilder;
 use OndrejBrejla\Eciovni\ItemImpl;
@@ -94,7 +95,8 @@ class OrderPresenter extends BasePresenter {
         foreach ($this->order->fetchAllOrdersWithID($id) as $o) {
             $totalPrice += ($o->quantity * $o->actual_price_of_product);
         }
-        $totalPrice += $this->order->fetchAllOrdersWithID($id)->fetch()->deliveryPrice;
+        $totalPrice += $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($id)->delivery_price;
+        $totalPrice += $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($id)->payment_price;
         $this->template->totalPrice = $totalPrice;
     }
 
@@ -247,6 +249,7 @@ class OrderPresenter extends BasePresenter {
     // vygeneruje objednávku do PDF formátu
     public function createComponentGeneratePdf() {
         $order = $this->order->fetchAllOrdersWithID($this->id)->fetch();
+        $deliveryAndPayment = $this->deliveryPayment->fetchNamePriceOfDeliveryAndPayment($this->id);
 
         $dateNow = $order->ord_date;
         $dateExp = new DateTime();
@@ -258,13 +261,16 @@ class OrderPresenter extends BasePresenter {
         $customerBuilder = new ParticipantBuilder($order->cust_name . ' ' . $order->cust_surname, $order->cust_street, '', $order->cust_city, $order->cust_psc);
         $customer = $customerBuilder->setAccountNumber('123456789 / 1111')->build();
 
+        $deliveryPayment = new DeliveryPaymentBuilder($deliveryAndPayment->delivery_name, $deliveryAndPayment->delivery_price,
+                                                        $deliveryAndPayment->payment_name, $deliveryAndPayment->payment_price);
+
         $items = array();
 
         foreach ($this->order->fetchAllOrdersWithID($this->id) as $product) {
-            $items[] = new ItemImpl($product->prod_name, $product->quantity, $product->actual_price_of_product, TaxImpl::fromPercent(20));
+            $items[] = new ItemImpl($product->prod_name, $product->quantity, $product->actual_price_of_product, TaxImpl::fromPercent(21));
         }
 
-        $dataBuilder = new DataBuilder(date('YmdHis'), 'Daňový doklad, č.', $supplier, $customer, $dateExp, $dateNow, $items);
+        $dataBuilder = new DataBuilder(date('YmdHis'), 'Daňový doklad, č.', $supplier, $customer, $dateExp, $dateNow, $items, $deliveryPayment);
         $dataBuilder->setVariableSymbol($variableSymbol)->setDateOfVatRevenueRecognition($dateNow);
         $data = $dataBuilder->build();
 

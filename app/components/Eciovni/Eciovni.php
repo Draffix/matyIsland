@@ -39,7 +39,7 @@ class Eciovni extends Control {
      */
     public function exportToPdf(mPDF $mpdf, $name = NULL, $dest = NULL) {
         $this->generate($this->template);
-        $mpdf->WriteHTML((string) $this->template);
+        $mpdf->WriteHTML((string)$this->template);
 
         if (($name !== '') && ($dest !== NULL)) {
             $mpdf->Output($name, $dest);
@@ -104,7 +104,7 @@ class Eciovni extends Control {
      */
     private function generate(IFileTemplate $template) {
         $template->setFile(__DIR__ . '/Eciovni.latte');
-        $template->registerHelper('round', function($value, $precision = 2) {
+        $template->registerHelper('round', function ($value, $precision = 2) {
             return number_format(round($value, $precision), $precision, ',', '');
         });
 
@@ -116,6 +116,7 @@ class Eciovni extends Control {
         $this->generateDates($template);
         $this->generateSymbols($template);
         $this->generateFinalValues($template);
+        $this->generateDeliveryPayment($template);
     }
 
     /**
@@ -179,6 +180,20 @@ class Eciovni extends Control {
     }
 
     /**
+     * Generates delivery into template
+     *
+     * @param IFileTemplate $template
+     * @return void
+     */
+    private function generateDeliveryPayment(IFileTemplate $template) {
+        $deliveryPayment = $this->data->getDeliveryPayment();
+        $template->deliveryName = $deliveryPayment->getDeliveryName();
+        $template->deliveryPrice = $deliveryPayment->getDeliveryPrice();
+        $template->paymentName = $deliveryPayment->getPaymentName();
+        $template->paymentPrice = $deliveryPayment->getPaymentPrice();
+    }
+
+    /**
      * Generates final values into template.
      *
      * @param IFileTemplate $template
@@ -200,6 +215,14 @@ class Eciovni extends Control {
         foreach ($this->data->items as $item) {
             $sum += $item->countUntaxedUnitValue() * $item->getUnits();
         }
+
+        $deliveryPayment = $this->data->getDeliveryPayment();
+        $delivery_price = $deliveryPayment->getDeliveryPrice()  - ($deliveryPayment->getDeliveryPrice() * 0.1736);
+        $payment_price = $deliveryPayment->getPaymentPrice()  - ($deliveryPayment->getPaymentPrice() * 0.1736);
+
+        $sum = $sum + $delivery_price;
+        $sum = $sum + $payment_price;
+
         return $sum;
     }
 
@@ -213,6 +236,14 @@ class Eciovni extends Control {
         foreach ($this->data->items as $item) {
             $sum += $item->countTaxValue();
         }
+
+        $deliveryPayment = $this->data->getDeliveryPayment();
+        $delivery_price = $deliveryPayment->getDeliveryPrice() * 0.1736;
+        $payment_price = $deliveryPayment->getPaymentPrice() * 0.1736;
+
+        $sum = $sum + $delivery_price;
+        $sum = $sum + $payment_price;
+
         return $sum;
     }
 
@@ -226,6 +257,14 @@ class Eciovni extends Control {
         foreach ($this->data->items as $item) {
             $sum += $item->countFinalValue();
         }
+
+        $deliveryPayment = $this->data->getDeliveryPayment();
+        $delivery_price = $deliveryPayment->getDeliveryPrice();
+        $payment_price = $deliveryPayment->getPaymentPrice();
+
+        $sum = $sum + $delivery_price;
+        $sum = $sum + $payment_price;
+
         return $sum;
     }
 

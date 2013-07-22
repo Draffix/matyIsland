@@ -47,6 +47,9 @@ class DataImpl extends Object implements Data {
     /** @var Item[] */
     private $items = array();
 
+    /** @var DeliveryPayment */
+    private $deliveryPayment;
+
     public function __construct(DataBuilder $dataBuilder) {
         $this->title = $dataBuilder->getTitle();
         $this->id = $dataBuilder->getId();
@@ -59,6 +62,7 @@ class DataImpl extends Object implements Data {
         $this->dateOfIssuance = $dataBuilder->getDateOfIssuance();
         $this->dateOfVatRevenueRecognition = $dataBuilder->getDateOfVatRevenueRecognition();
         $this->items = $dataBuilder->getItems();
+        $this->deliveryPayment = $dataBuilder->getDeliveryPayment();
     }
 
     /**
@@ -161,6 +165,15 @@ class DataImpl extends Object implements Data {
      */
     public function getItems() {
         return $this->items;
+    }
+
+    /**
+     * Returns the invoice delivery and payment.
+     *
+     * @return DeliveryPayment
+     */
+    public function getDeliveryPayment() {
+        return $this->deliveryPayment;
     }
 
 }

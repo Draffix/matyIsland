@@ -35,7 +35,7 @@ class DeliveryPaymentModel extends Table {
     }
 
     /**
-     * Ziskáme informace jen o jednom typu placení
+     * Ziskáme informace jen o jednom typu dopravy
      * @param type $delivery_id
      * @return type
      */

@@ -47,7 +47,11 @@ class DataBuilder extends Object {
     /** @var Item[] */
     private $items = array();
 
-    public function __construct($id, $title, Participant $supplier, Participant $customer, DateTime $expirationDate, DateTime $dateOfIssuance, array $items) {
+    /** @var DeliveryPaymentBuilder */
+    private $deliveryPayment;
+
+    public function __construct($id, $title, Participant $supplier, Participant $customer, DateTime $expirationDate,
+                                DateTime $dateOfIssuance, array $items, DeliveryPaymentBuilder $deliveryPayment) {
         $this->id = $id;
         $this->title = $title;
         $this->supplier = $supplier;
@@ -55,6 +59,7 @@ class DataBuilder extends Object {
         $this->expirationDate = $expirationDate;
         $this->dateOfIssuance = $dateOfIssuance;
         $this->addItems($items);
+        $this->deliveryPayment = $deliveryPayment;
     }
 
     /**
@@ -220,6 +225,15 @@ class DataBuilder extends Object {
      */
     public function getItems() {
         return $this->items;
+    }
+
+    /**
+     * Returns the invoice delivery and payment
+     *
+     * @return DeliveryPayment
+    */
+    public function getDeliveryPayment() {
+        return $this->deliveryPayment;
     }
 
     /**

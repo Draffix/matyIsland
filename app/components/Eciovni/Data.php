@@ -85,6 +85,13 @@ interface Data {
     public function getDateOfVatRevenueRecognition($format = 'd.m.Y');
 
     /**
+     * Returns the invoice delivery and payment.
+     *
+     * @return DeliveryPayment
+     */
+    public function getDeliveryPayment();
+
+    /**
      * Returns the array of items.
      *
      * @return Item[]
