@@ -1,6 +1,6 @@
 {block title}{$categoryName} | {$setting->eshop_name}{/block}
-<img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41"/>
 {block categories}
+    <img src="{$basePath}/images/kategorie.jpg" alt="" width="233" height="41"/>
     <div class="side grid_3 left">
         <nav class="collapse">
 
@@ -42,16 +42,17 @@
                         <a n:href="Category: $node['cat_id'], $template->webalize($node['cat_name'])">{$node["cat_name"]}</a>
                         <ul n:if="count($node['children'])" class="level2">
                             {foreach $node["children"] as $node_level2}
-                                <li class="{ifCurrent Category: $node_level2['cat_id'], $template->webalize($node_level2['cat_name'])}current subnodes{/ifCurrent}
+                                <li class="{ifCurrent Category: $node_level2['cat_id'], $template->webalize($node_level2['cat_name'])}current {if count($node_level2['children'])}subnodes{/if}{/ifCurrent}
                                            {ifset $current_array["$id"]}
-                                                {if $node_level2["cat_id"] == $current_array[$id]}current subnodes{/if}
+                                                {if $node_level2["cat_id"] == $current_array[$id]}current {if count($node_level2['children'])}subnodes{/if}{/if}
                                             {/ifset}
-                                             typeDefault">
+                                            typeDefault">
                                     <a n:href="Category: $node_level2['cat_id'], $template->webalize($node_level2['cat_name'])">{$node_level2['cat_name']}</a>
                                     <ul n:if="count($node_level2['children'])" class="level3">
                                         {foreach $node_level2["children"] as $node_level3}
-                                            <li class="typeDefault"><a
-                                                        n:href="Category: $node_level3['cat_id'], $template->webalize($node_level3['cat_name'])">{$node_level3['cat_name']}</a>
+                                            <li class="{ifCurrent Category: $node_level3['cat_id'], $template->webalize($node_level3['cat_name'])}current{/ifCurrent}
+                                                typeDefault">
+                                                <a n:href="Category: $node_level3['cat_id'], $template->webalize($node_level3['cat_name'])">{$node_level3['cat_name']}</a>
                                             </li>
                                         {/foreach}
                                     </ul>
