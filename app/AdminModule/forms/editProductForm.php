@@ -46,6 +46,7 @@ class editProductForm extends UI\Form {
         }
 
         // zjistíme si zvoleného dodavatele
+        $selected_sup_id = '';
         if ($id != NULL) {
             $sup_id = $this->product->fetchProductForDetail($id);
             foreach ($this->supplier->fetchAllSuppliers() as $key => $value) {
