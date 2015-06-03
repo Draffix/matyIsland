@@ -1,3 +1,1 @@
-My own bachelor project of simply e-shop
-
-BY DRAFFIX
+My own project of a simply e-shop
